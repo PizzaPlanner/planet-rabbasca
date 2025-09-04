@@ -48,7 +48,7 @@ local map_gen = {
           ["rabbasca-rough"] = {},
           ["rabbasca-rough-2"] = {},
           ["rabbasca-ice"] = {},
-          ["harene-infused-foundation"] = {}
+          -- ["harene-infused-foundation"] = {}
         }
       },
       ["decorative"] =
@@ -72,7 +72,7 @@ local map_gen = {
           ["rabbasca-turbofish"] = {},
           ["rabbasca-moonstone-rock"] = {},
           -- ["moonstone-turret"] = {},
-          ["small-harenide-collider"] = {},
+          ["rabbasca-vault"] = {},
         }
       }
     }

@@ -1,17 +1,17 @@
 local recycling = require("__quality__.prototypes.recycling")
 
-function create_offering_recipe(reward, has_no_prequisite, energy)
+function create_offering_recipe(reward, amount, has_no_prequisite)
 data:extend{
   {
       type = "recipe",
       name = "rabbasca-offering-"..reward,
       preserve_products_in_machine_output = false,
       enabled = has_no_prequisite,
+      hide_from_player_crafting = true,
       allow_decomposition = false,
       always_show_products = true,
-      energy_required = energy,
-      ingredients = { { type = "item", name = "harene-infused-moonstone", amount = 1 } },
-      results = { { type = "item", name = reward, amount = 1, percent_spoiled = 0 } },
+      energy_required = 10,
+      results = { { type = "item", name = reward, amount = amount, percent_spoiled = 0 } },
       reset_freshness_on_craft = true,
       result_is_always_fresh = true,
       main_product = reward,
@@ -25,6 +25,7 @@ function recycle_core(name, retrieved_name)
   local rec  = data.raw["recipe"][name]
   if rec then
     rec.auto_recycle = false
+    rec.allow_as_intermediate = false
   end 
   local item  = data.raw["item"][name]
   if not item then return end
@@ -53,7 +54,7 @@ data:extend {
     },
     {
         type = "recipe-category",
-        name = "harene-offering"
+        name = "harene-offering",
     },
     {
         type = "recipe",
@@ -208,8 +209,9 @@ data:extend {
         enabled = false,
         energy_required = 10,
         ingredients = { 
-            {type = "item", name = "harene-cubic-core", amount = 1 },
+            {type = "item", name = "harene-ears-core", amount = 1 },
             {type = "item", name = "moonstone-pipe",   amount = 10 },
+            {type = "item", name = "haronite",   amount = 10 },
         },
         results = { 
             { type = "item", name = "harene-extractor", amount = 1 },
@@ -358,13 +360,11 @@ data:extend {
     {
         type = "recipe",
         name = "rabbascan-security-key",
-
         enabled = false,
-        result_is_always_fresh = true,
         energy_required = 5,
         ingredients = { 
-            {type = "item", name = "rabbasca-turbofish", amount = 1 },
-            {type = "item", name = "rabbasca-moonstone", amount = 1 },
+            {type = "item", name = "harene-infused-moonstone", amount = 1 },
+            {type = "item", name = "rabbasca-carotene-powder", amount = 20 },
         },
         results = { {type = "item", name = "rabbascan-security-key", amount = 1} },
         main_product = "rabbascan-security-key",
@@ -407,11 +407,30 @@ data:extend {
 recycle_core("harenic-chemical-plant", "harene-ears-core")
 recycle_core("bunnyhop-engine", "harene-ears-core")
 recycle_core("harene-transmuter", "harene-ears-core")
-recycle_core("harene-extractor", "harene-cubic-core")
+recycle_core("harene-extractor", "harene-ears-core")
 recycle_core("moonstone-chest", "harene-glob-core")
 recycle_core("small-harenide-collider", "harene-cubic-core")
 
 
-create_offering_recipe("harene-ears-core", false, 5)
-create_offering_recipe("harene-glob-core", false, 2.5)
-create_offering_recipe("harene-cubic-core", false, 7.5)
+create_offering_recipe("harene-ears-core",  1, false)
+create_offering_recipe("harene-glob-core",  3, false)
+create_offering_recipe("harene-cubic-core", 1, false)
+
+data:extend {
+    {
+        type = "recipe",
+        name = "hack-rabbascan-vault",
+        enabled = false,
+        hidden = true,
+        energy_required = 0.01,
+        ingredients = { 
+            {type = "item", name = "rabbascan-security-key", amount = 1 },
+        },
+        results = { 
+            { type = "item", name = "rabbasca-vault-hacking-bot-capsule", amount = 1  },
+        },
+        main_product = "rabbasca-vault-hacking-bot-capsule",
+        category = "harene-offering",
+        auto_recycle = false
+    },
+}

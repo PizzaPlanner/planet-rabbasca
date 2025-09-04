@@ -18,7 +18,7 @@ end
 data:extend {
 {
     type = "item",
-    icon = "__base__/graphics/icons/stone.png",
+    icon = "__Krastorio2Assets__/icons/items/imersite-2.png",
     name = "haronite",
     stack_size = 50,
     subgroup = "transport",
@@ -26,7 +26,7 @@ data:extend {
 },
 {
     type = "item",
-    icon = "__base__/graphics/icons/steel-plate.png",
+    icon = "__Krastorio2Assets__/icons/items/imersium-plate.png",
     name = "infused-haronite-plate",
     stack_size = 50,
     subgroup = "transport",
@@ -77,7 +77,7 @@ data:extend {
 },
 {
     type = "item",
-    icon = "__space-age__/graphics/icons/spoilage-3.png",
+    icons = {{ icon = "__Krastorio2Assets__/icons/items/imersite-powder-2-light.png", tint = {0.8, 0.32, 0.06} }},
     name = "rabbasca-carotene-powder",
     stack_size = 50,
     subgroup = "transport",
@@ -185,14 +185,19 @@ data:extend {
     auto_barrel = true
 },
 {
-    type = "module",
+    type = "item",
     name = "rabbascan-security-key",
     category = "rabbasca-security",
-    icon = "__space-age__/graphics/icons/fluid/ammoniacal-solution.png",
-    tier = 1,
-    effect = { },
+    icon = "__Krastorio2Assets__/icons/cards/utility-tech-card.png",
     stack_size = 1,
-    spoil_ticks = 10 * second,
+},
+{
+    type = "item",
+    name = "rabbasca-vault-hacking-bot-capsule",
+    category = "rabbasca-security",
+    icon = "__Krastorio2Assets__/icons/cards/utility-tech-card.png",
+    stack_size = 1,
+    spoil_ticks = 1,
     spoil_to_trigger_result =
     {
       items_per_trigger = 1,
@@ -202,11 +207,11 @@ data:extend {
         action_delivery =
         {
           type = "instant",
-          source_effects =
+          target_effects =
           {
             {
               type = "script",
-              effect_id = "rabbasca-hack-monument",
+              effect_id = "rabbasca_change_force_and_despawn"
             }
           }
         }

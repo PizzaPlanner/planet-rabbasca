@@ -51,7 +51,7 @@ data:extend {
     name = "ears-core-technology",
     icon = "__space-age__/graphics/technology/fusion-reactor.png",
     icon_size = 256,
-    prerequisites = { "infusion-reprocessing", "leg-day-everyday" },
+    prerequisites = { "rabbascan-lost-technologies" },
     effects =
     {
       {
@@ -75,7 +75,7 @@ data:extend {
     {
       type = "craft-item",
       item = "harene-ears-core",
-      amount = "2"
+      count = 2
     }
 },
 {
@@ -175,7 +175,7 @@ data:extend {
 },
 {
     type = "technology",
-    name = "infusion-reprocessing",
+    name = "rabbascan-vault-accessibility",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
     prerequisites = { "planet-discovery-rabbasca" },
@@ -183,11 +183,7 @@ data:extend {
     {
       {
         type = "unlock-recipe",
-        recipe = "moonstone-pipe"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-offering-harene-ears-core"
+        recipe = "rabbascan-security-key"
       },
     },
     research_trigger =
@@ -198,10 +194,29 @@ data:extend {
 },
 {
     type = "technology",
+    name = "rabbascan-lost-technologies",
+    icon = "__space-age__/graphics/technology/gleba.png",
+    icon_size = 256,
+    prerequisites = { "rabbascan-vault-accessibility" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-offering-harene-ears-core"
+      },
+    },
+    research_trigger =
+    {
+      type = "craft-item",
+      item = "rabbascan-security-key"
+    }
+},
+{
+    type = "technology",
     name = "energetic-enrichment",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
-    prerequisites = { "infusion-reprocessing" },
+    prerequisites = { "ears-core-technology" },
     effects =
     {
       {
@@ -220,7 +235,7 @@ data:extend {
     name = "transmutation-technology",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
-    prerequisites = { "infusion-reprocessing" },
+    prerequisites = { "ears-core-technology" },
     effects =
     {
       {

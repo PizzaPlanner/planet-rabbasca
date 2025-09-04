@@ -3,7 +3,7 @@ data:extend{
   {
     type = "noise-expression",
     name = "rabbasca_starting_mask",
-    expression = "clamp((distance - 300) / 20, 0, 1)"
+    expression = "clamp((distance - 120) / 20, 0, 1)"
   },
   {
     type = "noise-expression",
@@ -14,7 +14,8 @@ data:extend{
   {
     type = "noise-expression",
     name = "rabbasca_starting_camp",
-    expression = "0"
+    expression = "max(starting_spot_at_angle{angle = aquilo_angle + 150, distance = 120, radius = rabbasca_camp_size, x_distortion = 0, y_distortion = 0},\z
+                      starting_spot_at_angle{angle = aquilo_angle + 310, distance = 35,  radius = rabbasca_camp_size, x_distortion = 0, y_distortion = 0})"
   },
   {
     type = "noise-expression",
@@ -30,7 +31,7 @@ data:extend{
   {
     type = "noise-expression",
     name = "rabbasca_camp_size",
-    expression = "12"
+    expression = "6"
   },
   {
     type = "noise-expression",

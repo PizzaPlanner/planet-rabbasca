@@ -307,6 +307,162 @@ local moonstone_turret = util.merge{ table.deepcopy(data.raw["electric-turret"][
   }
 }}
 
+local harenian_vault = util.merge {
+  table.deepcopy(data.raw["storage-tank"]["storage-tank"]),
+  {
+  name = "rabbasca-vault",
+  max_health = 5000,
+  allow_copy_paste = false,
+  show_fluid_icon = false,
+  collision_box = {{-1.4, -1.4}, {1.4, 1.4}},
+  map_generator_bounding_box = {{-10.5, -10.5}, {10.5, 10.5}},
+  map_color = {0.9, 0.3, 0.4}
+}}
+harenian_vault.autoplace = { probability_expression = "rabbasca_camps" }
+harenian_vault.minable = nil
+harenian_vault.fluid_box = {
+  volume = 100,
+  filter = "harene",
+  hide_connection_info = true,
+  pipe_connections = {
+    { position = {1, 1}, direction = defines.direction.south, connection_category = {"harene"}, hide_connection_info = true }
+  }
+}
+harenian_vault.created_effect = {
+  type = "direct",
+  action_delivery =
+  {
+    type = "instant",
+    target_effects =
+    {
+      {
+        type = "create-entity",
+        entity_name = "rabbasca-vault-terminal",
+        offsets = {{1, 2}}
+      },
+      {
+        type = "script",
+        effect_id = "rabbasca_vault_spawned"
+      },
+    }
+  } 
+}
+harenian_vault.flags = {"placeable-neutral", "not-deconstructable", "not-repairable", "no-automated-item-removal", "no-automated-item-insertion", "not-rotatable" }
+
+local vault_access_console = util.merge{
+  table.deepcopy(data.raw["assembling-machine"]["assembling-machine-2"]),
+  {
+    name = "rabbasca-vault-terminal",
+    fixed_recipe = "hack-rabbascan-vault",
+    max_health = 1,
+    crafting_speed = 1.02, -- 2% buffer for fluid consumption tolerance
+    allow_copy_paste = false,
+    factoriopedia_alternative = "rabbasca-vault-terminal",
+    module_slots = 0,
+    return_ingredients_on_change = false,
+    overload_multiplier = 1,
+    energy_usage = "1GW",
+    collision_box = {{-0.4, -0.4}, {0.4, 0.4}},
+    selection_box = {{-0.6, -1}, {0.6, 0.6}},
+    fluid_boxes_off_when_no_fluid_recipe = true
+  }
+}
+vault_access_console.fluid_boxes = { } 
+--   {
+--     volume = 100,
+--     filter = "harene",
+--     production_type = "input",
+--     hide_connection_info = true,
+--     pipe_connections = {
+--       { position = {0, 0}, direction = defines.direction.north, connection_category = {"harene"}, hide_connection_info = true }
+--     }
+--   }
+-- }
+vault_access_console.allowed_effects = nil
+vault_access_console.energy_source = {type = "void"}
+vault_access_console.resistances = {
+  { type = "physical", percent = 10 },
+  { type = "fire", percent = 80 },
+  { type = "poison", percent = 100 },
+  { type = "laser", percent = 50 },
+}
+vault_access_console.minable = nil
+vault_access_console.flags = harenian_vault.flags
+vault_access_console.surface_conditions = nil
+vault_access_console.crafting_categories = { "harene-offering" }
+vault_access_console.graphics_set =
+{
+  animation =
+  {
+    layers =
+    {
+      {
+        filename = "__Krastorio2Assets__/buildings/singularity-beacon/singularity-beacon.png",
+        priority = "high",
+        width = 512,
+        height = 512,
+        frame_count = 1,
+        scale = 0.25
+      }
+    }
+  },
+}
+
+local vault_spawner = util.merge{ 
+  table.deepcopy(data.raw["unit-spawner"]["spitter-spawner"]), 
+  table.deepcopy(vault_access_console),
+{
+  name = "rabbasca-vault-terminal-spawner",
+  type = "unit-spawner",
+  time_to_capture = 15 * second,
+  captured_spawner_entity = "rabbasca-vault-terminal-hacked"
+}}
+vault_spawner.graphics_set =
+{
+  animations = {
+  {
+    layers =
+    {
+      {
+        filename = "__Krastorio2Assets__/buildings/singularity-beacon/singularity-beacon.png",
+        priority = "high",
+        width = 512,
+        height = 512,
+        frame_count = 1,
+        scale = 0.25
+      }
+    }
+  },
+} }
+
+local vault_hacked = util.merge {
+  table.deepcopy(vault_access_console),
+  {
+    name = "rabbasca-vault-terminal-hacked",
+    fluid_boxes_off_when_no_fluid_recipe = false,
+  }
+}
+vault_hacked.fixed_recipe = nil
+vault_hacked.energy_source = {
+  type = "fluid",
+  burns_fluid = true,
+  fluid_box = {
+    volume = 1,
+    filter = "harene",
+    pipe_connections = {
+      { flow_direction = "input-output", position = {0, 0}, direction = defines.direction.north, connection_category = {"harene"}, hide_connection_info = true }
+    }
+  }
+}
+
+local hacking_bot = util.merge{ table.deepcopy(data.raw["capture-robot"]["capture-robot"]), 
+{
+  name = "rabbasca-vault-hacking-bot",
+  is_military_target = true,
+  hidden = true,
+  capture_animation = { scale = 0.5 }
+}}
+
 data:extend{
   tower_item, tower, 
   assembler, assembler_item, 
@@ -315,44 +471,9 @@ data:extend{
   transmuter, transmuter_item, 
   harene_pipe, harene_pipe_item,
   synthesizer, synthesizer_item,
-  moonstone_turret
+  moonstone_turret, 
+  harenian_vault, vault_access_console, hacking_bot, vault_spawner, vault_hacked
 }
-
-local harenian_monument = util.merge{
-  table.deepcopy(data.raw["assembling-machine"]["assembling-machine-2"]),
-  {
-    name = "harenian-monument",
-    -- fixed_recipe = "rabbasca-offering-1",
-    max_health = 100,
-    crafting_speed = 1.02, -- 2% buffer for fluid consumption tolerance
-    allow_copy_paste = false,
-    hidden = true,
-    energy_usage = "1GW",
-    module_slots = 1,
-  }
-}
-harenian_monument.allowed_effects = { "pollution" }
-harenian_monument.allowed_module_categories = {"rabbasca-security"}
-harenian_monument.energy_source = {
-  type = "fluid",
-  burns_fluid = true,
-  fluid_box = {
-    volume = 100,
-    filter = "harene",
-    pipe_connections = { }
-  }
-}
-harenian_monument.resistances = {
-  { type = "physical", percent = 10 },
-  { type = "fire", percent = 100 },
-  { type = "poison", percent = 100 },
-  { type = "electric", percent = 25 },
-  { type = "laser", percent = 95 },
-}
-harenian_monument.minable = nil
-harenian_monument.flags = {"placeable-neutral", "not-deconstructable", "not-repairable", "no-automated-item-removal", "no-automated-item-insertion" }
-harenian_monument.surface_conditions = nil
-harenian_monument.crafting_categories = {"harene-offering"}
 
 local moon_chest = util.merge{
   table.deepcopy(data.raw["linked-container"]["linked-chest"]),
@@ -368,7 +489,7 @@ local moon_chest = util.merge{
 moon_chest.tile_buildability_rules = restrict_to_harene_pool({{-0.6, -0.6}, { 0.6, 0.6}})
 
 data:extend {
-  harenian_monument,
+  vault_access_console,
   moon_chest,
   {
     type = "item",
