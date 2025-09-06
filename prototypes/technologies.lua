@@ -135,33 +135,8 @@ data:extend {
 },
 {
     type = "technology",
-    name = "prison-break",
-    icon = "__space-age__/graphics/technology/metallurgic-science-pack.png",
-    icon_size = 256,
-    prerequisites = { "ultranutritious-science-pack", "infused-haronite-plate" },
-    effects =
-    {
-      {
-        type = "unlock-recipe",
-        recipe = "bunnyhop-engine",
-      },
-      {
-        type = "unlock-space-location",
-        space_location = "nauvis",
-        use_icon_overlay_constant = true
-      }
-    },
-    research_trigger =
-    {
-      type = "craft-item",
-      item = "ultranutritious-science-pack",
-      amount = "100"
-    }
-},
-{
-    type = "technology",
     name = "rabbascan-vault-accessibility",
-    icon = "__space-age__/graphics/technology/gleba.png",
+    icon = "__Krastorio2Assets__/icons/cards/utility-tech-card.png",
     icon_size = 256,
     prerequisites = { "planet-discovery-rabbasca" },
     effects =
@@ -170,17 +145,21 @@ data:extend {
         type = "unlock-recipe",
         recipe = "rabbascan-security-key-e"
       },
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-console-scrap-recycling"
+      }
     },
     research_trigger =
     {
       type = "mine-entity",
-      entity = "rabbasca-infused-moonstone-rock"
+      entity = "rabbasca-moonstone-rock"
     }
 },
 {
     type = "technology",
     name = "rabbascan-lost-technologies",
-    icon = "__Krastorio2Assets__/icons/cards/matter-research-data.png",
+    icon = "__Krastorio2Assets__/icons/cards/matter-tech-card.png",
     icon_size = 256,
     prerequisites = { "rabbascan-vault-accessibility" },
     effects =

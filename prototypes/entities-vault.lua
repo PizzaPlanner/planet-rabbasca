@@ -20,7 +20,7 @@ access_console.fluid_boxes = { }
 -- access_console.allowed_effects = nil
 access_console.energy_source = {
   type = "void",
-  emissions_per_minute = { transmutives = 1*minute } -- actual numbers are way higher
+  emissions_per_minute = { ["vault-activity"] = 0.75 * minute } -- actual numbers are way higher
 }
 access_console.resistances = {
   { type = "physical", percent = 10 },
@@ -88,18 +88,19 @@ local research_console = util.merge{
 research_console.on_animation = access_console.graphics_set.animation
 research_console.off_animation = access_console.graphics_set.animation
 
-local defender = util.merge{ 
+local defender_1 = util.merge{ 
   table.deepcopy(data.raw["unit"]["small-spitter"]), 
   {
     name = "vault-defender-1",
-    healing_per_tick = 0,
+    max_health = 12,
+    healing_per_tick = -0.1 / second,
     movement_speed = 0.2,
     distance_per_frame = 0.125,
     distraction_cooldown = 20,
     min_pursue_time = 15 * second,
     max_pursue_distance = 50,
-    absorptions_to_join_attack = { transmutives = 500 },
-    loot = { { item = "firearm-magazine", count_min = 3, count_max = 3 } },
+    absorptions_to_join_attack = { ["vault-activity"] = 500 },
+    -- loot = { { item = "firearm-magazine", count_min = 3, count_max = 3 } },
     ai_settings = {
       join_attacks = true,
       size_in_group = 1,
@@ -108,10 +109,10 @@ local defender = util.merge{
     },
   }
 }
-defender.collision_mask = { layers = { } }
-defender.attack_parameters = {
+defender_1.collision_mask = { layers = { } }
+defender_1.attack_parameters = {
   type = "projectile",
-  animation = defender.attack_parameters.animation,
+  animation = defender_1.attack_parameters.animation,
   cooldown = 30,
   cooldown_deviation = 0.2,
   projectile_center = {0, 1},
@@ -147,6 +148,66 @@ defender.attack_parameters = {
     }
   }
 }
+local defender_2 = util.merge {
+    table.deepcopy(data.raw["unit"]["medium-spitter"]), 
+{
+    name = "vault-defender-2",
+    max_health = 24,
+    healing_per_tick = -0.2 / second,
+    movement_speed = 0.3,
+    distance_per_frame = 0.125,
+    distraction_cooldown = 20,
+    min_pursue_time = 15 * second,
+    max_pursue_distance = 50,
+    absorptions_to_join_attack = { ["vault-activity"] = 1000 },
+    -- loot = { { item = "firearm-magazine", count_min = 3, count_max = 3 } },
+    ai_settings = {
+      join_attacks = true,
+      size_in_group = 1,
+      destroy_when_commands_fail = true,
+      do_separation = true,
+    },
+  }
+}
+defender_2.collision_mask = { layers = { } }
+defender_2.attack_parameters = {
+  type = "projectile",
+  animation = defender_2.attack_parameters.animation,
+  cooldown = 19,
+  cooldown_deviation = 0.2,
+  projectile_center = {0, 1},
+  projectile_creation_distance = 0.6,
+  range = 10,
+  sound = sounds.defender_gunshot,
+  ammo_category = "bullet",
+  ammo_type =
+  {
+    action =
+    {
+      type = "direct",
+      action_delivery =
+      {
+        type = "instant",
+        source_effects =
+        {
+          type = "create-explosion",
+          entity_name = "explosion-gunshot-small"
+        },
+        target_effects =
+        {
+          {
+            type = "create-entity",
+            entity_name = "explosion-hit"
+          },
+          {
+            type = "damage",
+            damage = { amount = 5, type = "physical"}
+          }
+        }
+      }
+    }
+  }
+}
 
 local vault = util.merge{ 
   table.deepcopy(data.raw["unit-spawner"]["spitter-spawner"]), 
@@ -165,7 +226,7 @@ local vault = util.merge{
   collision_box = {{-2.5, -2},{2.5, 3}},
   selection_priority = 30
 }}
-vault.absorptions_per_second = { transmutives = { absolute = 100, proportional = 0.5 }}
+vault.absorptions_per_second = { ["vault-activity"] = { absolute = 100, proportional = 0.5 }}
 vault.autoplace = { probability_expression = "rabbasca_camps", force = "neutral" }
 vault.created_effect = {
   type = "direct",
@@ -204,24 +265,28 @@ vault.created_effect = {
 vault.result_units = {
   { unit = "vault-defender-1", spawn_points = {
     {evolution_factor = 0, spawn_weight = 0.1}, 
-    {evolution_factor = 0.06, spawn_weight = 1},
-    {evolution_factor = 0.1, spawn_weight = 0},
-  }},
-  { unit = "small-spitter", spawn_points = {
-    {evolution_factor = 0.08, spawn_weight = 0}, 
-    {evolution_factor = 0.09, spawn_weight = 1},
+    {evolution_factor = 0.1, spawn_weight = 1},
     {evolution_factor = 0.2, spawn_weight = 0},
   }},
-  { unit = "medium-biter", spawn_points = {
+  { unit = "vault-defender-2", spawn_points = {
     {evolution_factor = 0.14, spawn_weight = 0}, 
-    {evolution_factor = 0.15, spawn_weight = 1},
+    {evolution_factor = 0.25, spawn_weight = 1},
     {evolution_factor = 0.3, spawn_weight = 0},
   }},
+  { unit = "medium-biter", spawn_points = {
+    {evolution_factor = 0.2, spawn_weight = 0}, 
+    {evolution_factor = 0.3, spawn_weight = 1},
+    {evolution_factor = 0.5, spawn_weight = 0},
+  }},
     { unit = "big-biter", spawn_points = {
-    {evolution_factor = 0.25, spawn_weight = 0}, 
-    {evolution_factor = 0.3, spawn_weight = 0.5},
-    {evolution_factor = 0.8, spawn_weight = 1},
+    {evolution_factor = 0.3, spawn_weight = 0}, 
+    {evolution_factor = 0.4, spawn_weight = 0.5},
+    {evolution_factor = 0.7, spawn_weight = 1},
     {evolution_factor = 1, spawn_weight = 0},
+  }},
+    { unit = "behemoth-biter", spawn_points = {
+    {evolution_factor = 0.9, spawn_weight = 0}, 
+    {evolution_factor = 0.91, spawn_weight = 0.5},
   }},
 }
 vault.graphics_set =
@@ -284,5 +349,6 @@ data:extend {
   access_console, 
   extraction_console, 
   research_console,
-  defender, timer_dummy
+  timer_dummy,
+  defender_1, defender_2,
 }

@@ -103,7 +103,7 @@ local rabbasca =
     starmap_icon_size = 1482,
     subgroup = "satellites",
     magnitude = nauvis.magnitude*3/5,
-    pollutant_type = "transmutives",
+    pollutant_type = "vault-activity",
     persistent_ambient_sounds=data.raw["space-platform-hub"]["space-platform-hub"].persistent_ambient_sounds,
     localised_description={"planetslib-templates.moon-description",{"space-location-description.rabbasca"},"[planet="..parent_planet.."]"},
     surface_properties = {
@@ -172,7 +172,7 @@ data:extend{
 },
   {
   type = "airborne-pollutant",
-  name = "transmutives",
+  name = "vault-activity",
   chart_color = {r = 133, g = 13, b = 240, a = 149},
   icon =
   {

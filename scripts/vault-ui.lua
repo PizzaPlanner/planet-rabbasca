@@ -21,19 +21,18 @@ end
 -- Compute probabilities
 local function get_spawn_probabilities()
     local evo = game.forces.enemy.get_evolution_factor("rabbasca")
-    local proto = game.entity_prototypes[SPAWNER]
+    local proto = prototypes.entity[SPAWNER]
 
     local units = {}
     local total = 0
     for _, def in ipairs(proto.result_units) do
         local w = interpolate_weight(def.spawn_points, evo)
-        if w > 0 then
-            table.insert(units, {name = def.unit, weight = w})
-            total = total + w
-        end
+        if w ~= w then w = 0 end
+        table.insert(units, {name = def.unit, weight = w})
+        total = total + w
     end
-
-    for _, u in ipairs(units) do
+    if total == 0 then return units end
+    for _, u in ipairs(units) do 
         u.prob = u.weight / total
     end
     return units
@@ -49,13 +48,13 @@ local function create_evolution_bar(player)
         direction = "horizontal",
         style = "slot_window_frame"
     }
-    frame.add{
-        type = "sprite-button",
-        sprite= "item/rabbasca-vault-access-protocol",
-        style = "slot_button",
-        name = "icon",
-        number = 0
-    }
+    -- frame.add{
+    --     type = "sprite-button",
+    --     sprite= "item/rabbasca-vault-access-protocol",
+    --     style = "slot_button",
+    --     name = "icon",
+    --     number = 0
+    -- }
     local right = frame.add {
         type = "flow",
         direction = "vertical",
@@ -65,13 +64,22 @@ local function create_evolution_bar(player)
     right.add{
         type = "label", 
         name = "evolution_title",
-        caption = "Rabbasca Alertness:\t\t100%"
+        caption = "Alertness",
+        style = "caption_label"
     }
-    right.add{
-        type = "progressbar",
-        name = "evolution_bar",
-        value = 0
-    }.style.horizontally_stretchable = true
+    local list = right.add{
+        type = "flow",
+        direction = "horizontal",
+        name = "spawns",
+    }
+    for _, unit in pairs(get_spawn_probabilities()) do
+        list.add{
+            type = "sprite-button",
+            sprite= "entity/"..unit.name,
+            style = "red_slot_button",
+            name = unit.name,
+    }
+    end
 end
 
 -- Remove UI if not needed
@@ -90,18 +98,28 @@ function M.update()
     return end
 
     create_evolution_bar(player)
-    local icon = gui(player).rabbasca_evo_frame.icon
     local evo = storage.rabbasca_evo_last
-    if bar then
-        icon.number = evo * 100
+    local spawns = gui(player).rabbasca_evo_frame.right.spawns
+    if spawns then
+        for _, prob in  pairs(get_spawn_probabilities()) do
+            if spawns[prob.name] then
+                local chance = prob.prob or 0
+                spawns[prob.name].number = math.floor(chance * 100)
+                spawns[prob.name].visible = chance > 0
+            end
+        end
+    end
+    local icon = gui(player).rabbasca_evo_frame.icon
+    if icon then
+        icon.number = math.floor(evo * 100)
     end
     local bar = gui(player).rabbasca_evo_frame.right.evolution_bar
     if bar then
         bar.value = evo
     end
-    local bar = gui(player).rabbasca_evo_frame.right.evolution_title
+    local title = gui(player).rabbasca_evo_frame.right.evolution_title
     if title then
-        title.caption = string.format("[img=item/rabbasca-vault-access-protocol] Rabbasca Alertness:\t\t%i%%", evo * 100)
+        title.caption = string.format("[img=space-location/rabbasca] Alertness:\t\t%i%%", evo * 100)
     end
   end
 end

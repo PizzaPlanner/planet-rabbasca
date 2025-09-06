@@ -1,5 +1,26 @@
 local recycling = require("__quality__.prototypes.recycling")
 
+function create_duplication_recipe(item, input, output)
+data:extend {
+    {
+        type = "recipe",
+        name = "rabbasca-"..item.."-duplication",
+        enabled = false,
+        energy_required = 30,
+        ingredients = {
+            { type = "item", name = "harene-glob-core", amount = 1},
+            { type = "item", name = item, amount = input},
+        },
+        results = { { type = "item", name = item, amount = output } },
+        main_product = item,
+        category = "rabbasca-vault-extraction",
+        reset_freshness_on_craft = true,
+        result_is_always_fresh = true,
+        auto_recycle = false,
+    },
+}
+end
+
 function create_vault_recipe(reward, amount, cost, has_no_prequisite)
 data:extend{
   {
@@ -415,39 +436,7 @@ data:extend {
         results = { {type = "item", name = "rabbascan-security-key-e", amount = 3} },
         main_product = "rabbascan-security-key-e",
         category = "crafting",
-    }
-    -- {
-    --     type = "recipe",
-    --     name = "harene-ears-core",
-    --     enabled = false,
-    --     energy_required = 30,
-    --     ingredients = { 
-    --         { type = "item", name = "harene-engine", amount = 1 },
-    --         { type = "item", name = "harene-cubic-core", amount = 3 },
-    --     },
-    --     results = { 
-    --         { type = "item", name = "harene-ears-core", amount = 1 },
-    --         { type = "item", name = "harene-cubic-core", amount = 1 },
-    --     },
-    --     main_product = "harene-ears-core",
-    --     category = "crafting",
-    -- },
-    -- {
-    --     type = "recipe",
-    --     name = "harene-glob-core",
-    --     enabled = false,
-    --     energy_required = 30,
-    --     ingredients = { 
-    --         { type = "item", name = "harene-infused-moonstone", amount = 4 },
-    --         { type = "item", name = "harene-cubic-core", amount = 3 },
-    --     },
-    --     results = { 
-    --         { type = "item", name = "harene-glob-core", amount = 1 },
-    --         { type = "item", name = "harene-cubic-core", amount = 1 },
-    --     },
-    --     main_product = "harene-glob-core",
-    --     category = "crafting",
-    -- },
+    },
 }
 
 recycle_core("harenic-chemical-plant", "harene-ears-core")
@@ -463,6 +452,25 @@ create_vault_recipe("harene-glob-core",  3, 5,  false)
 create_vault_recipe("harene-cubic-core", 1, 10, false)
 create_vault_recipe("rabbascan-encrypted-vault-data", 5, 3, true)
 -- create_vault_recipe("harene-cubic-core", 1, 10, false)
+
+create_duplication_recipe("iron-plate", 1, 100)
+create_duplication_recipe("steel-plate", 1, 20)
+create_duplication_recipe("electronic-circuit", 1, 150)
+create_duplication_recipe("infused-haronite-plate", 1, 5)
+
+recycling.generate_self_recycling_recipe(data.raw["item"]["rabbasca-console-scrap"])
+local recipe = data.raw["recipe"]["rabbasca-console-scrap-recycling"]
+recipe.enabled = false
+recipe.hidden = false
+recipe.category = "recycling-or-hand-crafting"
+recipe.energy_required = 0.5
+recipe.results = {
+    { type = "item", name = "iron-plate", amount = 1, probability = 0.18 },
+    { type = "item", name = "electronic-circuit", amount = 1, probability = 0.1 },
+    { type = "item", name = "steel-plate", amount = 1, probability = 0.05 },
+    { type = "item", name = "advanced-circuit",  amount = 1, probability = 0.01 },
+}
+data:extend { recipe }
 
 data:extend {
     {
