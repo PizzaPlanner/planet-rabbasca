@@ -2,9 +2,9 @@
 teleporter_targets = teleporter_targets or {
     ["nauvis"] = {unlocked_by = "infused-haronite-plate"},
     ["vulcanus"] = {unlocked_by = "metallurgic-science-pack", extra_inputs = {{type = "item", name = "steel-plate", amount = 5}}},
-    ["gleba"] = {unlocked_by = "agricultural-science-pack", extra_inputs = {{type = "item", name = "landfill", amount = 1}}},
-    ["fulgora"] = {},
-    ["rabbasca"] = {unlocked_by = "infused-haronite-plate"},
+    ["gleba"] = {unlocked_by = "bunnyhop-engine"},
+    ["fulgora"] = {unlocked_by = "electromagnetic-science-pack"},
+    ["rabbasca"] = {unlocked_by = "bunnyhop-engine"},
     ["aquilo"] = {unlocked_by = "cryogenic-science-pack", extra_inputs = {{type = "item", name = "ice", amount = 10}}}
 }
 

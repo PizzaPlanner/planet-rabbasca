@@ -54,22 +54,7 @@ data:extend {
     prerequisites = { "rabbascan-lost-technologies" },
     effects =
     {
-      {
-        type = "unlock-recipe",
-        recipe = "harenic-chemical-plant-recycling"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "harenic-chemical-plant",
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "energetic-residue"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "beta-carotene"
-      },
+      
     },
     research_trigger =
     {
@@ -112,7 +97,7 @@ data:extend {
     {
       {
         type = "unlock-recipe",
-        recipe = "rabbascan-security-key"
+        recipe = "rabbasca-turbofin"
       },
       {
         type = "unlock-recipe",
@@ -183,7 +168,7 @@ data:extend {
     {
       {
         type = "unlock-recipe",
-        recipe = "rabbascan-security-key"
+        recipe = "rabbascan-security-key-e"
       },
     },
     research_trigger =
@@ -195,20 +180,20 @@ data:extend {
 {
     type = "technology",
     name = "rabbascan-lost-technologies",
-    icon = "__space-age__/graphics/technology/gleba.png",
+    icon = "__Krastorio2Assets__/icons/cards/matter-research-data.png",
     icon_size = 256,
     prerequisites = { "rabbascan-vault-accessibility" },
     effects =
     {
       {
         type = "unlock-recipe",
-        recipe = "rabbasca-offering-harene-ears-core"
+        recipe = "rabbascan-security-key-a"
       },
     },
     research_trigger =
     {
       type = "craft-item",
-      item = "rabbascan-security-key"
+      item = "rabbascan-encrypted-vault-data"
     }
 },
 {

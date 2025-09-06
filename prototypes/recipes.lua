@@ -1,6 +1,6 @@
 local recycling = require("__quality__.prototypes.recycling")
 
-function create_offering_recipe(reward, amount, has_no_prequisite)
+function create_vault_recipe(reward, amount, cost, has_no_prequisite)
 data:extend{
   {
       type = "recipe",
@@ -10,13 +10,14 @@ data:extend{
       hide_from_player_crafting = true,
       allow_decomposition = false,
       always_show_products = true,
-      energy_required = 10,
+      energy_required = cost,
       results = { { type = "item", name = reward, amount = amount, percent_spoiled = 0 } },
       reset_freshness_on_craft = true,
       result_is_always_fresh = true,
       main_product = reward,
-      category = "harene-offering",
+      category = "rabbasca-vault-extraction",
       auto_recycle = false,
+      overload_multiplier = 1,
   }
 }
 end
@@ -54,7 +55,11 @@ data:extend {
     },
     {
         type = "recipe-category",
-        name = "harene-offering",
+        name = "rabbasca-vault-extraction",
+    },
+    {
+        type = "recipe-category",
+        name = "rabbasca-vault-hacking",
     },
     {
         type = "recipe",
@@ -98,13 +103,13 @@ data:extend {
             { type = "fluid", name = "energetic-residue", amount = 50 },
             { type = "item", name = "rabbasca-moonstone", amount = 1 } 
         },
+        hide_from_player_crafting = true,
         main_product = "energetic-residue",
         category = "organic-or-chemistry",
     },
     {
         type = "recipe",
         name = "beta-carotene",
-        enabled = false,
         energy_required = 5.0,
         ingredients = { 
             {type = "fluid", name = "energetic-residue", amount = 10 },
@@ -112,6 +117,7 @@ data:extend {
         },
         results = { { type = "fluid", name = "beta-carotene", amount = 200 } },
         main_product = "beta-carotene",
+        hide_from_player_crafting = true,
         category = "organic-or-chemistry",
     },
     {
@@ -195,7 +201,6 @@ data:extend {
         energy_required = 10,
         ingredients = { 
             {type = "item", name = "harene-ears-core", amount = 1 },
-            {type = "item", name = "moonstone-pipe",   amount = 1 },
         },
         results = { 
             { type = "item", name = "harene-transmuter", amount = 1 },
@@ -210,7 +215,6 @@ data:extend {
         energy_required = 10,
         ingredients = { 
             {type = "item", name = "harene-ears-core", amount = 1 },
-            {type = "item", name = "moonstone-pipe",   amount = 10 },
             {type = "item", name = "haronite",   amount = 10 },
         },
         results = { 
@@ -226,7 +230,6 @@ data:extend {
         energy_required = 10,
         ingredients = { 
             {type = "item", name = "harene-ears-core", amount = 1 },
-            {type = "item", name = "moonstone-pipe", amount = 1 },
         },
         results = { 
             { type = "item", name = "harenic-chemical-plant", amount = 1 },
@@ -283,16 +286,33 @@ data:extend {
     },
     {
         type = "recipe",
+        name = "supercharged-jellynut-seed",
+        enabled = false,
+        energy_required = 5,
+        ingredients = { 
+            {type = "item", name = "jellynut-seed", amount = 5 },
+            {type = "fluid", name = "energetic-residue", amount = 100 },
+        },
+        results = { 
+            { type = "item", name = "supercharged-jellynut-seed", amount = 5 },
+        },
+        main_product = "supercharged-jellynut-seed",
+        category = "organic",
+    },
+    {
+        type = "recipe",
         name = "bunnyhop-engine",
         enabled = false,
         energy_required = 15,
         ingredients = { 
             {type = "item", name = "harene-ears-core", amount = 1 },
+            {type = "item", name = "harene-glob-core", amount = 1 },
             {type = "item", name = "smart-solution", amount = 20 },
-            {type = "item", name = "infused-haronite-plate", amount = 3 },
+            {type = "item", name = "infused-haronite-plate", amount = 20 },
+            {type = "item", name = "rabbasca-turbofin", amount = 100 },
         },
         results = { 
-            { type = "item", name = "bunnyhop-engine", amount = 10 },
+            { type = "item", name = "bunnyhop-engine", amount = 1 },
         },
         main_product = "bunnyhop-engine",
         category = "crafting",
@@ -332,7 +352,7 @@ data:extend {
         type = "recipe",
         name = "moonstone-chest",
         enabled = false,
-        energy_required = 3,
+        energy_required = 2,
         ingredients = { 
             {type = "item", name = "harene-glob-core", amount = 1 },
             {type = "item", name = "infused-haronite-plate", amount = 5 },
@@ -359,15 +379,41 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "rabbascan-security-key",
+        name = "rabbasca-turbofin",
+        enabled = false,
+        energy_required = 1,
+        ingredients = { 
+            {type = "item", name = "rabbasca-turbofish", amount = 1 },
+        },
+        results = { {type = "item", name = "rabbasca-turbofin", amount = 2} },
+        main_product = "rabbasca-turbofin",
+        category = "crafting",
+    },
+    {
+        type = "recipe",
+        name = "rabbascan-security-key-a",
+        enabled = false,
+        energy_required = 0.5,
+        ingredients = { 
+            {type = "item", name = "infused-haronite-plate", amount = 1 },
+            {type = "item", name = "rabbasca-turbofin", amount = 2 },
+        },
+        results = { {type = "item", name = "rabbascan-security-key-a", amount = 3} },
+        main_product = "rabbascan-security-key-a",
+        category = "crafting",
+    },
+    {
+        type = "recipe",
+        name = "rabbascan-security-key-e",
         enabled = false,
         energy_required = 5,
         ingredients = { 
-            {type = "item", name = "harene-infused-moonstone", amount = 1 },
+            {type = "item", name = "infused-haronite-plate", amount = 1 },
+            {type = "item", name = "rabbasca-turbofin", amount = 1 },
             {type = "item", name = "rabbasca-carotene-powder", amount = 20 },
         },
-        results = { {type = "item", name = "rabbascan-security-key", amount = 1} },
-        main_product = "rabbascan-security-key",
+        results = { {type = "item", name = "rabbascan-security-key-e", amount = 3} },
+        main_product = "rabbascan-security-key-e",
         category = "crafting",
     }
     -- {
@@ -412,25 +458,76 @@ recycle_core("moonstone-chest", "harene-glob-core")
 recycle_core("small-harenide-collider", "harene-cubic-core")
 
 
-create_offering_recipe("harene-ears-core",  1, false)
-create_offering_recipe("harene-glob-core",  3, false)
-create_offering_recipe("harene-cubic-core", 1, false)
+create_vault_recipe("harene-ears-core",  1, 8,  false)
+create_vault_recipe("harene-glob-core",  3, 5,  false)
+create_vault_recipe("harene-cubic-core", 1, 10, false)
+create_vault_recipe("rabbascan-encrypted-vault-data", 5, 3, true)
+-- create_vault_recipe("harene-cubic-core", 1, 10, false)
 
 data:extend {
     {
         type = "recipe",
-        name = "hack-rabbascan-vault",
-        enabled = false,
-        hidden = true,
-        energy_required = 0.01,
+        name = "hack-rabbascan-vault-extraction",
+        icon = "__Krastorio2Assets__/icons/cards/utility-tech-card.png",
+        -- enabled = false,
+        -- hidden = true,
+        energy_required = 5,
         ingredients = { 
-            {type = "item", name = "rabbascan-security-key", amount = 1 },
+            {type = "item", name = "rabbascan-security-key-e", amount = 1 },
         },
         results = { 
-            { type = "item", name = "rabbasca-vault-hacking-bot-capsule", amount = 1  },
+            { type = "item", name = "rabbasca-vault-access-protocol", amount = 1  },
         },
-        main_product = "rabbasca-vault-hacking-bot-capsule",
-        category = "harene-offering",
-        auto_recycle = false
+        category = "rabbasca-vault-hacking",
+        auto_recycle = false,
+        reset_freshness_on_craft = true,
+        result_is_always_fresh = true,
+        overload_multiplier = 1,
+        allow_inserter_overload = false,
+        hide_from_player_crafting = true
+    },
+    {
+        type = "recipe",
+        name = "hack-rabbascan-vault-research",
+        icon = "__Krastorio2Assets__/icons/cards/matter-tech-card.png",
+        -- enabled = false,
+        -- hidden = true,
+        energy_required = 5,
+        ingredients = { 
+            {type = "item", name = "rabbascan-security-key-a", amount = 1 },
+        },
+        results = { 
+            { type = "item", name = "rabbasca-vault-access-protocol", amount = 1  },
+        },
+        category = "rabbasca-vault-hacking",
+        auto_recycle = false,
+        reset_freshness_on_craft = true,
+        result_is_always_fresh = true,
+        overload_multiplier = 1,
+        allow_inserter_overload = false,
+        hide_from_player_crafting = true
+    },
+    {
+        type = "recipe",
+        name = "rabbasca-sabotage-console",
+        -- enabled = false,
+        -- hidden = true,
+        energy_required = 7,
+        ingredients = { 
+            {type = "item", name = "rabbasca-moonstone", amount = 1 },
+        },
+        results = { 
+            { type = "item", name = "rabbasca-vault-access-protocol", amount = 1  },
+            { type = "item", name = "rabbasca-console-scrap", amount = 35  },
+            { type = "item", name = "infused-haronite-plate", amount = 3  },
+        },
+        main_product = "rabbasca-console-scrap",
+        category = "rabbasca-vault-hacking",
+        auto_recycle = false,
+        reset_freshness_on_craft = true,
+        result_is_always_fresh = true,
+        overload_multiplier = 1,
+        allow_inserter_overload = false,
+        hide_from_player_crafting = true
     },
 }

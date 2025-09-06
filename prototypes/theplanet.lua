@@ -103,18 +103,18 @@ local rabbasca =
     starmap_icon_size = 1482,
     subgroup = "satellites",
     magnitude = nauvis.magnitude*3/5,
-    --pollutant_type = "radiation",
+    pollutant_type = "transmutives",
     persistent_ambient_sounds=data.raw["space-platform-hub"]["space-platform-hub"].persistent_ambient_sounds,
     localised_description={"planetslib-templates.moon-description",{"space-location-description.rabbasca"},"[planet="..parent_planet.."]"},
     surface_properties = {
         ["solar-power"] = 0,
-        ["pressure"] = 15,
+        ["pressure"] = 0,
         ["magnetic-field"] = 0.01,
         ["day-night-cycle"] = 0,
-        ["mooniness"] = 1,
+        ["harenic-energy-signatures"] = 1,
     },
     map_gen_settings = map_gen,
-    parked_platforms_orientation=0.70,
+    parked_platforms_orientation=0.53,
     orbit = {
       orientation = 0.93,
       distance = 1.7,
@@ -152,7 +152,10 @@ local rabbasca =
     
 }
 
-local rabbasca_connection = {
+PlanetsLib:extend({rabbasca})
+
+data:extend{
+  {
   type = "space-connection",
   name = "gleba-rabbasca",
   order = "a-b-c",
@@ -161,8 +164,26 @@ local rabbasca_connection = {
   subgroup = data.raw["space-connection"]["gleba-fulgora"].subgroup,
   length = 1000,
   --asteroid_spawn_definitions = asteroid_spawn_definitions_connection
+},
+{
+  type = "surface-property",
+  name = "harenic-energy-signatures",
+  default_value = 0
+},
+  {
+  type = "airborne-pollutant",
+  name = "transmutives",
+  chart_color = {r = 133, g = 13, b = 240, a = 149},
+  icon =
+  {
+    filename = "__core__/graphics/icons/mip/side-map-menu-buttons.png",
+    priority = "high",
+    size = 64,
+    mipmap_count = 2,
+    y = 3 * 64,
+    flags = {"gui-icon"}
+  },
+  affects_evolution = true,
+  affects_water_tint = false,
 }
-
-PlanetsLib:extend({rabbasca})
-
-data:extend{rabbasca_connection}
+}

@@ -1,33 +1,115 @@
+local rui = require("__planet-rabbasca__.scripts.vault-ui")
+
 local function handle_teleport_effect(event)
   local effect_id = event.effect_id
-  if effect_id == "rabbasca_change_force_and_despawn" then
+  if effect_id == "rabbasca_init_terminal" then
+    local console = event.target_entity or event.source_entity
+    if not console then return end
+    if console.name ~= "rabbasca-vault-access-terminal" then
+      console.active = false
+      -- console.operable = false
+    end
+    if console.name == "rabbasca-vault-timer" then
+      console.operable = false
+      console.destructible = false
+    end
+    console.force = game.forces.neutral
+  end
+  if effect_id == "make_invulnerable" then
     local monument = event.target_entity or event.source_entity
     if not monument then return end
-    if not monument.force == game.forces.neutral then return end
-    local surface = monument.surface
-    local position = monument.position
-    monument.force = game.forces.player
-    monument.destroy{}
-    local spawner = surface.create_entity {
-      name = "rabbasca-vault-terminal-spawner",
-      position = position,
-      force = game.forces.enemy,
-      raise_built = true
-    }
-    if not spawner then return end
-    game.forces.enemy.set_evolution_factor(game.forces.enemy.get_evolution_factor() + 0.02, surface)
-    surface.create_entity {
-      name = "rabbasca-vault-hacking-bot",
-      position = position,
-      force = game.forces.player,
-      raise_built = true
-    }
+    monument.destructible = false
+    monument.active = false
     return
   end
-  if effect_id == "rabbasca_vault_spawned" then
-    event.target_entity.insert_fluid({name = "harene", amount = 100}) 
+  if effect_id == "rabbasca_on_hack_expire" then
+    local dummy = event.target_entity or event.source_entity 
+    if not dummy then return end
+    local vault = dummy.surface.find_entity("rabbasca-vault", dummy.position)
+    if not vault then return end
+    vault.health = vault.max_health
+    vault.force = game.forces.neutral
+    vault.active = false
+    local surface = vault.surface
+    local position = vault.position
+    local terminal_area = {{vault.position.x - 2, vault.position.y + 2},{vault.position.x + 2, vault.position.y + 3}}
+    for _, console in pairs(surface.find_entities(terminal_area)) do
+      if console.name == "rabbasca-vault-access-terminal" then
+        console.active = true
+        -- console.operable = true
+      elseif console.name == "rabbasca-vault-extraction-terminal" then
+        surface.spill_inventory{position = position, inventory = console.get_output_inventory(), enable_looted = true}
+        console.active = false
+        console.force = game.forces.neutral
+      elseif console.name == "rabbasca-vault-research-terminal" then
+        console.active = false
+        console.force = game.forces.neutral
+      end
+    end
+    -- surface.create_entity {
+    --   name = "rabbasca-vault",
+    --   position = position,
+    --   force = game.forces.neutral,
+    --   raise_built = true
+    -- }
+  end
+  if effect_id == "rabbasca_on_hack_console" then
+    local console = event.target_entity or event.source_entity
+    if not console then return end
+    if console.name ~= "rabbasca-vault-access-terminal" then return end
+    local surface = console.surface
+    local position = console.position
+    local vault = surface.find_entity("rabbasca-vault", position)
+    if not vault then return end
+    vault.active = true
+    vault.force = game.forces.enemy
+    local info = surface.find_entity("rabbasca-vault-timer", vault.position)
+    if info then
+      info.insert({name="rabbasca-vault-access-timer", count=1}) 
+      for i = 0, 20 do
+        info.insert({name="rabbasca-vault-access-indicator", count=5, spoil_percent=i * 0.05})
+      end
+    end
+    local recipe = console.get_recipe()
+    surface.spill_inventory{position = position, inventory = console.get_inventory(defines.inventory.crafter_input), enable_looted = true}
+    surface.spill_inventory{position = position, inventory = console.get_output_inventory(), enable_looted = true}
+    console.set_recipe(nil)
+    -- console.set_recipe(nil)
+    console.active = false
+    -- console.operable = false
+    -- local timer = surface.create_entity {
+    --   name = "rabbasca-vault-timer",
+    --   position = vault.position,
+    --   force = game.forces.neutral,
+    --   raise_built = true
+    -- }
+    -- timer.active = true
+    -- if timer.active == false then
+    --   game.print("TIEMR NOT ACTIVE")
+    -- end
+    if not recipe then return end
+    local terminal_area = {{vault.position.x - 2, vault.position.y + 2},{vault.position.x + 2, vault.position.y + 3}}
+    if recipe.name == "hack-rabbascan-vault-extraction" then
+      for _, console2 in pairs(surface.find_entities_filtered({area = terminal_area, name = "rabbasca-vault-extraction-terminal"})) do
+        -- console2.operable = true
+        console2.active = true
+        console2.force = game.forces.player
+      end
+    elseif recipe.name == "hack-rabbascan-vault-research" then
+      for _, console2 in pairs(surface.find_entities_filtered({area = terminal_area, name = "rabbasca-vault-research-terminal"})) do
+        -- console2.operable = true
+        console2.active = true
+        console2.force = game.forces.player
+      end
+    elseif recipe.name == "rabbasca-sabotage-console" then
+      console.damage(console.max_health / 1.5, game.forces.player)
+    end
     return
   end
+  -- if effect_id == "rabbasca_vault_spawned" then
+  --   event.target_entity.insert_fluid({name = "harene", amount = 100}) 
+  --   return
+  -- end
   if not effect_id or not effect_id:find("^rabbasca_teleport_") then return end
 
   -- Extract planet name
@@ -64,42 +146,20 @@ script.on_event(defines.events.on_script_trigger_effect, handle_teleport_effect)
 
 script.on_event(defines.events.on_surface_created, function(event)
   if event.surface_index ~= game.planets["rabbasca"].surface.index then return end
+  game.forces.enemy.set_evolution_factor_by_time(0, event.surface_index)
+  game.forces.enemy.set_evolution_factor_by_pollution(1, event.surface_index)
+  game.planets["rabbasca"].surface.create_global_electric_network()
 end)
 
-script.on_event(defines.events.on_chunk_generated, function(event)
-  if event.surface ~= game.planets["rabbasca"].surface then return end
-  local surface = event.surface
+script.on_nth_tick(120,
+function(event) 
+  local surface = game.surfaces["rabbasca"]
+  if not surface then return end
+  local last_evo = storage.rabbasca_evo_last or 0.01
+  local now_evo = game.forces.enemy.get_evolution_factor(surface)
+  local delta = math.max(now_evo - last_evo, 0) * 100
+  storage.rabbasca_evo_last = math.max(0, math.min(last_evo + delta, 1)) * 0.9
+  game.forces.enemy.set_evolution_factor(storage.rabbasca_evo_last, surface)
 
-  for _, power in pairs(surface.find_entities_filtered({area = event.area, name = "rabbasca-vault"})) do
-      if power.force == game.forces.neutral then return end -- make sure this only triggers once per entity
-      power.clear_fluid_inside()
-      power.insert_fluid({name = "harene", amount = 50}) 
-      -- local left_top = { power.position.x - 12, power.position.y - 12}
-      -- local right_bottom = { power.position.x + 12, power.position.y + 12}
-
-      -- local tiles = {}
-      -- for x = left_top.x, right_bottom.x do
-      --   for y = left_top.y, right_bottom.y do
-      --     table.insert(tiles, {name = "harene-infused-foundation", position = {x, y}})
-      --   end
-      -- end
-      -- surface.set_tiles(tiles)
-
-      -- requires never version lol
-      -- local territory = surface.create_territory{chunk = event.position}
-      if math.abs(event.position.x) + math.abs(event.position.y) < 8 then return end
-      surface.create_entity{
-          name = "moonstone-turret",
-          position = surface.find_non_colliding_position("moonstone-turret", {power.position.x - 8, power.position.y}, 4, 1),
-          force = power.force,
-          raise_built = true
-      }
-      surface.create_entity{
-          name = "moonstone-turret",
-          position = surface.find_non_colliding_position("moonstone-turret", {x = power.position.x + 8, y = power.position.y}, 4, 1),
-          force = power.force,
-          raise_built = true
-      }
-      power.force = game.forces.neutral
-  end
+  rui.update()
 end)

@@ -2,7 +2,7 @@ function make_capsule(proto)
 return {
     type = "capsule",
     icon = proto.icon,
-    name = "rabbasca-teleporter-"..proto.name,
+    name = "bunnyhop-engine-"..proto.name,
     stack_size = 1,
     subgroup = "transport",
     order = "b[personal-transport]-c[startertron]",
@@ -42,8 +42,7 @@ end
 function make_recipe(proto, settings) 
    -- build ingredient list
   local ingredients = {
-    {type = "item", name = "harene-glob-core", amount = 1},
-    {type = "item", name = "infused-haronite-plate", amount = 10 }, 
+    {type = "item", name = "bunnyhop-engine", amount = 1},
   }
   if settings.extra_inputs then
     for _, ing in pairs(settings.extra_inputs) do
@@ -53,14 +52,14 @@ function make_recipe(proto, settings)
 
   local recipe = {
     type = "recipe",
-    name = "rabbasca-teleporter-" .. proto.name,
+    name = "bunnyhop-engine-" .. proto.name,
     icon = proto.icon,
     energy_required = 180,
     enabled = settings.unlocked_by == nil,
     ingredients = ingredients,
     unlock_results = true,
-    results = {{type = "item", name = "rabbasca-teleporter-" .. proto.name, amount = 1}},
-    category = "harene-transmutation",
+    results = {{type = "item", name = "bunnyhop-engine-" .. proto.name, amount = 1}},
+    category = "crafting",
   }
 
   -- gate behind tech if specified
@@ -83,4 +82,12 @@ for planet, settings in pairs(require("__planet-rabbasca__.teleporters").get_pla
     if settings ~= nil and proto ~= nil then
         data:extend{ make_capsule(proto), make_recipe(proto, settings) }
     end
+end
+
+for _, pole in pairs(data.raw["electric-pole"]) do 
+  if pole.surface_conditions then
+    table.insert(pole.surface_conditions, {property = "harenic-energy-signatures", max = 0.5})
+  else
+    pole.surface_conditions = {{property = "harenic-energy-signatures", max = 0.5}}
+  end
 end
