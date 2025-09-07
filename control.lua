@@ -5,15 +5,15 @@ local function handle_teleport_effect(event)
   if effect_id == "rabbasca_init_terminal" then
     local console = event.target_entity or event.source_entity
     if not console then return end
-    if console.name ~= "rabbasca-vault-access-terminal" then
-      console.active = false
-      console.operable = false
-    end
-    if console.name == "rabbasca-vault-timer" then
+    if console.name == "rabbasca-vault-access-terminal" then
+      -- console.active = false
+      -- console.operable = false
+      -- console.force = game.forces.neutral
+    elseif console.name == "rabbasca-vault-timer" then
       console.operable = false
       console.destructible = false
+      -- console.force = game.forces.neutral
     end
-    console.force = game.forces.neutral
   end
   if effect_id == "make_invulnerable" then
     local monument = event.target_entity or event.source_entity
@@ -33,31 +33,6 @@ local function handle_teleport_effect(event)
     local surface = vault.surface
     local position = vault.position
     local terminal_area = {{vault.position.x - 2, vault.position.y + 2},{vault.position.x + 2, vault.position.y + 3}}
-    for _, console in pairs(surface.find_entities(terminal_area)) do
-      if console.name == "rabbasca-vault-access-terminal" then
-        console.active = true
-        -- console.operable = true
-      elseif console.name == "rabbasca-vault-extraction-terminal" then
-        surface.spill_inventory{position = position, inventory = console.get_output_inventory(), enable_looted = true}
-        if console.active then storage.rabbasca_active_vault_crafting = (storage.rabbasca_active_vault_crafting or 1) - 1 end
-        console.active = false
-        -- console.operable = false
-        -- console.force = game.forces.neutral
-      elseif console.name == "rabbasca-vault-research-terminal" then
-        if console.active then storage.rabbasca_active_vault_research = (storage.rabbasca_active_vault_research or 1) - 1 end
-        console.active = false
-        -- console.operable = false
-        -- console.force = game.forces.neutral
-      elseif console.name == "rabbasca-vault-power-node" then
-        if console.active then storage.rabbasca_active_vault_power = (storage.rabbasca_active_vault_power or 1) - 1 end
-      end
-    end
-    -- surface.create_entity {
-    --   name = "rabbasca-vault",
-    --   position = position,
-    --   force = game.forces.neutral,
-    --   raise_built = true
-    -- }
   end
   if effect_id == "rabbasca_on_hack_console" then
     local console = event.target_entity or event.source_entity
@@ -73,40 +48,39 @@ local function handle_teleport_effect(event)
       name = "rabbasca-vault-timer",
       position = vault.position,
       force = game.forces.neutral,
-      raise_built = true
     }
     local recipe = console.get_recipe()
-    console.active = false
-    -- console.operable = false
     if not recipe then return end
     local terminal_area = {{vault.position.x - 2, vault.position.y - 2},{vault.position.x + 2, vault.position.y + 3}}
     local alert_duration_multiplier = 1
-
+    local console_damage = console.max_health - console.health
     if recipe.name == "hack-rabbascan-vault-extraction" then
-      for _, console2 in pairs(surface.find_entities_filtered({area = terminal_area, name = "rabbasca-vault-extraction-terminal"})) do
-        console2.operable = true
-        console2.active = true
-        console2.force = game.forces.player
-        alert_duration_multiplier = 0.6
-        storage.rabbasca_active_vault_crafting = (storage.rabbasca_active_vault_crafting or 0) + 1
-      end
+      surface.spill_inventory{position = position, inventory = console.get_inventory(defines.inventory.crafter_input), enable_looted = true}
+      console.destroy{}
+      local next = surface.create_entity {
+        name = "rabbasca-vault-extraction-terminal",
+        position = position,
+        force = game.forces.player,
+      }
+      next.damage(console_damage, game.forces.neutral)
     elseif recipe.name == "hack-rabbascan-vault-research" then
-      for _, console2 in pairs(surface.find_entities_filtered({area = terminal_area, name = "rabbasca-vault-research-terminal"})) do
-        console2.operable = true
-        console2.active = true
-        console2.force = game.forces.player
-        alert_duration_multiplier = 1
-        storage.rabbasca_active_vault_research = (storage.rabbasca_active_vault_research or 0) + 1
-      end
+      surface.spill_inventory{position = position, inventory = console.get_inventory(defines.inventory.crafter_input), enable_looted = true}
+      console.destroy{}
+      local next = surface.create_entity {
+        name = "rabbasca-vault-research-terminal",
+        position = position,
+        force = game.forces.player,
+      }
+      next.damage(console_damage, game.forces.neutral)
     elseif recipe.name == "hack-rabbascan-vault-power" then
-      for _, console2 in pairs(surface.find_entities_filtered({area = terminal_area, name = "rabbasca-vault-power-node"})) do
-        console2.operable = true
-        console2.active = true
-        console2.force = game.forces.player
-        console2.insert_fluid({ name = "harene", amount = 50 })
-        alert_duration_multiplier = 0.5
-        storage.rabbasca_active_vault_power = (storage.rabbasca_active_vault_power or 0) + 1
-      end
+      surface.spill_inventory{position = position, inventory = console.get_inventory(defines.inventory.crafter_input), enable_looted = true}
+      console.destroy{}
+      local next = surface.create_entity {
+        name = "rabbasca-vault-power-node",
+        position = position,
+        force = game.forces.player,
+      }
+      next.damage(console_damage, game.forces.neutral)
     elseif recipe.name == "rabbasca-sabotage-console" then
       surface.spill_inventory{position = position, inventory = console.get_inventory(defines.inventory.crafter_input), enable_looted = true}
       surface.spill_inventory{position = position, inventory = console.get_output_inventory(), enable_looted = true}

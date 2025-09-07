@@ -1,6 +1,15 @@
 require("__base__.prototypes.entity.combinator-pictures")
-local hit_effects = require ("__base__.prototypes.entity.hit-effects")
-local sounds = require("__base__.prototypes.entity.sounds")
+
+local function vault_access_burner_source(suffix, emissions)
+return {
+  type = "burner",
+  fuel_inventory_size = 1,
+  fuel_categories = {"rabbasca-security-fuel-"..suffix},
+  initial_fuel = "rabbascan-security-key-"..suffix,
+  initial_fuel_percent = 1,
+  emissions_per_minute = { ["vault-activity"] = emissions * minute / 50 } -- actual numbers are way higher
+}
+end
 
 local access_console = util.merge{
   table.deepcopy(data.raw["assembling-machine"]["assembling-machine-2"]),
@@ -8,7 +17,7 @@ local access_console = util.merge{
     name = "rabbasca-vault-access-terminal",
     max_health = 2400,
     crafting_speed = 1,
-    energy_usage = "100MW",
+    energy_usage = "1MW",
     allow_copy_paste = false,
     module_slots = 1,
     return_ingredients_on_change = true,
@@ -17,6 +26,7 @@ local access_console = util.merge{
     is_military_target = false
   }
 }
+access_console.next_upgrade = nil
 access_console.fluid_boxes = { } 
 -- access_console.allowed_effects = nil
 access_console.energy_source = {
@@ -62,7 +72,7 @@ access_console.graphics_set =
         width = 360,
         height = 360,
         frame_count = 1,
-        scale = 0.25
+        scale = 0.2
       }
     }
   },
@@ -72,172 +82,45 @@ local extraction_console = util.merge{
   table.deepcopy(access_console),
   {
     name = "rabbasca-vault-extraction-terminal",
-    energy_usage = "1GW",
+    energy_usage = "1MW",
     vector_to_place_result = {0.5, 1}
   } 
 }
 extraction_console.crafting_categories = { "rabbasca-vault-extraction" }
+extraction_console.energy_source = vault_access_burner_source("e", 1.2)
 
 local research_console = util.merge{
   table.deepcopy(extraction_console),
   {
     name = "rabbasca-vault-research-terminal",
     type = "lab",
-    energy_usage = "200MW",
     inputs = {"rabbascan-encrypted-vault-data"}
   }
 }
 research_console.on_animation = access_console.graphics_set.animation
 research_console.off_animation = access_console.graphics_set.animation
-research_console.energy_source.emissions_per_minute = { ["vault-activity"] = 0.4 * minute } -- actual numbers are way higher
+research_console.energy_source = vault_access_burner_source("a", 0.4)
 
 local power_node = util.merge{ 
-    table.deepcopy(data.raw["generator"]["steam-turbine"]),
     extraction_console,
 {  
   name = "rabbasca-vault-power-node",
-  type = "generator",
-  burns_fluid = true,
-  scale_fluid_usage = true,
-  fluid_usage_per_tick = 0.05 / second,
+  type = "burner-generator",
+  -- burns_fluid = true,
+  -- scale_fluid_usage = true,
+  -- fluid_usage_per_tick = 0.05 / second,
   collision_box = {{-1, -1}, {1, 1}},
   selection_box = {{-1, -1}, {1, 1}},
   effectivity = 1,
   maximum_temperature = 10,
-  max_power_output = nil
+  max_power_output = "50MW",
 }}
-power_node.fluid_box = {
-    volume = 5,
-    pipe_connections = { },
-    filter = "harene"
-}
+power_node.burner = vault_access_burner_source("p", 2)
 power_node.energy_source = {
   type = "electric",
-  buffer_capacity = "50MJ",
+  buffer_capacity = "5MJ",
   usage_priority = "secondary-output",
   emissions_per_minute = { ["vault-activity"] = 0.5 * minute } -- actual numbers are way higher
-}
--- power_node.graphics_set = require ("__planet-rabbasca__.prototypes.fusion-system-pictures").generator_graphics_set
-
-local defender_1 = util.merge{ 
-  table.deepcopy(data.raw["unit"]["small-spitter"]), 
-  {
-    name = "vault-defender-1",
-    max_health = 12,
-    healing_per_tick = -0.1 / second,
-    movement_speed = 0.2,
-    distance_per_frame = 0.125,
-    distraction_cooldown = 20,
-    min_pursue_time = 15 * second,
-    max_pursue_distance = 50,
-    absorptions_to_join_attack = { ["vault-activity"] = 500 },
-    -- loot = { { item = "firearm-magazine", count_min = 3, count_max = 3 } },
-    ai_settings = {
-      join_attacks = true,
-      size_in_group = 1,
-      destroy_when_commands_fail = true,
-      do_separation = true,
-    },
-  }
-}
-defender_1.collision_mask = { layers = { } }
-defender_1.attack_parameters = {
-  type = "projectile",
-  animation = defender_1.attack_parameters.animation,
-  cooldown = 30,
-  cooldown_deviation = 0.2,
-  projectile_center = {0, 1},
-  projectile_creation_distance = 0.6,
-  range = 5,
-  sound = sounds.defender_gunshot,
-  ammo_category = "bullet",
-  ammo_type =
-  {
-    action =
-    {
-      type = "direct",
-      action_delivery =
-      {
-        type = "instant",
-        source_effects =
-        {
-          type = "create-explosion",
-          entity_name = "explosion-gunshot-small"
-        },
-        target_effects =
-        {
-          {
-            type = "create-entity",
-            entity_name = "explosion-hit"
-          },
-          {
-            type = "damage",
-            damage = { amount = 1, type = "physical"}
-          }
-        }
-      }
-    }
-  }
-}
-local defender_2 = util.merge {
-    table.deepcopy(data.raw["unit"]["medium-spitter"]), 
-{
-    name = "vault-defender-2",
-    max_health = 24,
-    healing_per_tick = -0.2 / second,
-    movement_speed = 0.3,
-    distance_per_frame = 0.125,
-    distraction_cooldown = 20,
-    min_pursue_time = 15 * second,
-    max_pursue_distance = 50,
-    absorptions_to_join_attack = { ["vault-activity"] = 1000 },
-    -- loot = { { item = "firearm-magazine", count_min = 3, count_max = 3 } },
-    ai_settings = {
-      join_attacks = true,
-      size_in_group = 1,
-      destroy_when_commands_fail = true,
-      do_separation = true,
-    },
-  }
-}
-defender_2.collision_mask = { layers = { } }
-defender_2.attack_parameters = {
-  type = "projectile",
-  animation = defender_2.attack_parameters.animation,
-  cooldown = 19,
-  cooldown_deviation = 0.2,
-  projectile_center = {0, 1},
-  projectile_creation_distance = 0.6,
-  range = 10,
-  sound = sounds.defender_gunshot,
-  ammo_category = "bullet",
-  ammo_type =
-  {
-    action =
-    {
-      type = "direct",
-      action_delivery =
-      {
-        type = "instant",
-        source_effects =
-        {
-          type = "create-explosion",
-          entity_name = "explosion-gunshot-small"
-        },
-        target_effects =
-        {
-          {
-            type = "create-entity",
-            entity_name = "explosion-hit"
-          },
-          {
-            type = "damage",
-            damage = { amount = 5, type = "physical"}
-          }
-        }
-      }
-    }
-  }
 }
 
 local vault = util.merge{ 
@@ -273,19 +156,19 @@ vault.created_effect = {
       },
       {
         type = "create-entity",
-        entity_name = "rabbasca-vault-extraction-terminal",
-        offsets = {{1.5, 2.5}},
+        entity_name = "rabbasca-vault-access-terminal",
+        offsets = {{2, 2.5}},
       },
       {
         type = "create-entity",
-        entity_name = "rabbasca-vault-research-terminal",
-        offsets = {{-1.5, 2.5}},
+        entity_name = "rabbasca-vault-access-terminal",
+        offsets = {{-2, 2.5}},
       },
-      {
-        type = "create-entity",
-        entity_name = "rabbasca-vault-power-node",
-        offsets = {{1.7, 0.7}},
-      },
+      -- {
+      --   type = "create-entity",
+      --   entity_name = "rabbasca-vault-power-node",
+      --   offsets = {{1.7, 0.7}},
+      -- },
       {
         type = "create-entity",
         entity_name = "rabbasca-vault-timer",
@@ -387,5 +270,4 @@ data:extend {
   research_console,
   power_node,
   timer_dummy,
-  defender_1, defender_2,
 }

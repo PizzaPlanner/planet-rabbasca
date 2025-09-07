@@ -48,23 +48,6 @@ data:extend {
 },
 {
     type = "technology",
-    name = "ears-core-technology",
-    icon = "__space-age__/graphics/technology/fusion-reactor.png",
-    icon_size = 256,
-    prerequisites = { "rabbascan-lost-technologies" },
-    effects =
-    {
-      
-    },
-    research_trigger =
-    {
-      type = "craft-item",
-      item = "harene-ears-core",
-      count = 2
-    }
-},
-{
-    type = "technology",
     name = "infused-haronite-plate",
     icon = "__space-age__/graphics/technology/steel-plate-productivity.png",
     icon_size = 256,
@@ -180,7 +163,7 @@ data:extend {
     name = "energetic-enrichment",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
-    prerequisites = { "ears-core-technology" },
+    prerequisites = { "rabbasca-ears-technology" },
     effects =
     {
       {
@@ -218,7 +201,7 @@ data:extend {
     name = "transmutation-technology",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
-    prerequisites = { "ears-core-technology" },
+    prerequisites = { "rabbasca-ears-technology" },
     effects =
     {
       {
@@ -238,29 +221,6 @@ data:extend {
     {
       type = "craft-item",
       item = "moonstone-pipe"
-    }
-},
-{
-    type = "technology",
-    name = "moonstone-glob-technology",
-    icon = "__space-age__/graphics/technology/gleba.png",
-    icon_size = 256,
-    prerequisites = { "planet-discovery-rabbasca" },
-    effects =
-    {
-      {
-        type = "unlock-recipe",
-        recipe = "moonstone-chest"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "moonstone-chest-recycling"
-      },
-    },
-    research_trigger =
-    {
-      type = "mine-entity",
-      entity = "moonstone-chest"
     }
 },
 {

@@ -4,7 +4,7 @@ data:extend{
     name = "rabbasca-ears-technology",
     icon = "__Krastorio2Assets__/icons/cards/matter-research-data.png",
     icon_size = 256,
-    prerequisites = { "rabbasca-glob-technology" },
+    prerequisites = { "rabbascan-lost-technologies" },
     effects =
     {
       {
@@ -14,7 +14,7 @@ data:extend{
     },
     unit = {
         count = 100,
-        time = 30,
+        time = 10,
         ingredients = {{"rabbascan-encrypted-vault-data", 1}}
     }
 },
@@ -55,8 +55,8 @@ data:extend{
       },
     },
     unit = {
-        count = 200,
-        time = 30,
+        count = 100,
+        time = 10,
         ingredients = {{"rabbascan-encrypted-vault-data", 1}}
     }
 },
@@ -83,7 +83,7 @@ data:extend{
 {
     type = "technology",
     name = "rabbascan-security-key-p",
-    icon = "__Krastorio2Assets__/icons/cards/matter-research-data.png",
+    icon = "__Krastorio2Assets__/icons/cards/production-tech-card.png",
     icon_size = 256,
     prerequisites = { "rabbascan-lost-technologies" },
     effects =
@@ -123,6 +123,25 @@ data:extend{
     time = 30,
     ingredients = {{"rabbascan-encrypted-vault-data", 1}}
   }
+},
+{
+    type = "technology",
+    name = "rabbasca-global-chest",
+    icon = "__space-age__/graphics/technology/gleba.png",
+    icon_size = 256,
+    prerequisites = { "rabbasca-glob-technology" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "moonstone-chest"
+      },
+    },
+    unit = {
+      count = 30,
+      time = 15,
+      ingredients = {{"rabbascan-encrypted-vault-data", 1}}
+    }
 },
 {
     type = "technology",

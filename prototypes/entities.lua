@@ -242,13 +242,6 @@ local transmuter_item = {
     place_result = "harene-transmuter",
 }
 
-local surface_property = {
-    type = "surface-property",
-    name = "mooniness",
-    default_value = 1.0,
-    hidden = true
-}
-
 local thruster_graphics = table.deepcopy(data.raw["thruster"]["thruster"]["graphics_set"])
 thruster_graphics.working_visualisations[5] = {
   fadeout = true,
@@ -309,7 +302,6 @@ data:extend{
   tower_item, tower, 
   assembler, assembler_item, 
   pump_item, pump, 
-  surface_property, 
   transmuter, transmuter_item, 
   harene_pipe, harene_pipe_item,
   synthesizer, synthesizer_item,
@@ -324,7 +316,8 @@ local moon_chest = util.merge{
     hidden = false,
     gui_mode = "none",
     link_id = 12141413,
-    loot = {{item = "harene-glob-core"}}
+    inventory_type = "with_filters_and_bar",
+    inventory_size = 30,
   }
 }
 moon_chest.tile_buildability_rules = restrict_to_harene_pool({{-0.6, -0.6}, { 0.6, 0.6}})

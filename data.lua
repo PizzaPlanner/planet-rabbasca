@@ -1,3 +1,4 @@
+require("prototypes.units-vault")
 require("prototypes.entities")
 require("prototypes.entities-vault")
 require("prototypes.resources")

@@ -201,22 +201,43 @@ data:extend {
     type = "item",
     name = "rabbascan-security-key-e",
     category = "rabbasca-security",
+    fuel_value = "3GW",
+    fuel_category = "rabbasca-security-fuel-e",
     icon = "__Krastorio2Assets__/icons/cards/utility-tech-card.png",
     stack_size = 5,
+},
+{
+    type = "fuel-category",
+    name = "rabbasca-security-fuel-e",
+    fuel_value_type = {"description.rabbasca-security-energy-value"}
 },
 {
     type = "item",
     name = "rabbascan-security-key-p",
     category = "rabbasca-security",
+    fuel_value = "3GW",
+    fuel_category = "rabbasca-security-fuel-p",
     icon = "__Krastorio2Assets__/icons/cards/production-tech-card.png",
     stack_size = 5,
+},
+{
+    type = "fuel-category",
+    name = "rabbasca-security-fuel-p",
+    fuel_value_type = {"description.rabbasca-security-energy-value"}
 },
 {
     type = "item",
     name = "rabbascan-security-key-a",
     category = "rabbasca-security",
+    fuel_value = "3GW",
+    fuel_category = "rabbasca-security-fuel-a",
     icon = "__Krastorio2Assets__/icons/cards/matter-tech-card.png",
     stack_size = 5,
+},
+{
+    type = "fuel-category",
+    name = "rabbasca-security-fuel-a",
+    fuel_value_type = {"description.rabbasca-security-energy-value"}
 },
 {
     type = "item",
