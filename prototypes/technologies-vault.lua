@@ -84,7 +84,7 @@ data:extend{
     },
     {
       type = "unlock-recipe",
-      recipe = "space-science",
+      recipe = "space-science-pack",
     },
   },
   unit = {

@@ -22,6 +22,7 @@ data:extend {
         type = "recipe",
         name = "rabbasca-chemical-science-pack",
         enabled = false,
+        energy_required = 12,
         icons = {
             { icon = "__space-age__/graphics/icons/bioflux.png", scale = 0.4, shift = { 12, -12 } },
             { icon = "__base__/graphics/icons/chemical-science-pack.png", scale = 0.5 },
@@ -32,7 +33,7 @@ data:extend {
             { type = "item", name = "advanced-circuit", amount = 2 }, 
             { type = "item", name = "engine-unit", amount = 1 }, 
         },
-        results = { { type = "item", name = "chemical-science-pack", amount = 4 } },
+        results = { { type = "item", name = "chemical-science-pack", amount = 1 } },
         category = "crafting",
     },
 }
@@ -40,13 +41,19 @@ data:extend {
 -- earlier/easier
 utils.add_recipes("steam-power", { "inserter", "lab" })
 utils.set_prerequisites("automation-science-pack", {"steam-power"})
-utils.set_prerequisites("chemical-science-pack", {"harene-gas-processing"})
+utils.set_prerequisites("chemical-science-pack", {"harene-gas-processing", "engine", "item-duplication-2"})
 utils.add_recipes("automation-science-pack", { "rabbasca-automation-science-pack" })
 utils.add_recipes("chemical-science-pack", { "rabbasca-chemical-science-pack" })
-utils.remove_tech("automation-2", false, true)
-utils.add_recipes("automation", { "assembling-machine-2" })
+-- utils.remove_tech("automation-2", false, true)
+-- utils.add_recipes("automation", { "assembling-machine-2" })
 utils.set_prerequisites("oil-gathering", {"steel-processing", "logistic-science-pack"})
 utils.ignore_multiplier("oil-gathering")
+utils.ignore_multiplier("steel-processing")
+utils.ignore_multiplier("logistic-science-pack")
+utils.set_trigger("oil-processing", {
+    type = "mine-entity",
+    entity = "harene-vent"
+})
 
 -- delayed/unavailable
 utils.add_prerequisites("oil-processing", {"fluid-handling"})

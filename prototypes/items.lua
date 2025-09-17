@@ -435,7 +435,7 @@ util.merge{
         action_delivery =
         {
           type = "instant",
-          target_effects =
+          source_effects =
           {
             {
               type = "script",

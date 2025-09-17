@@ -92,12 +92,12 @@ data:extend {
     name = "harene-gas-processing",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
-    prerequisites = { "oil-gathering", "concrete", "planet-discovery-rabbasca" },
+    prerequisites = { "oil-gathering", "planet-discovery-rabbasca" },
     effects =
     {
       {
-          type = "unlock-recipe",
-          recipe = "chemical-plant"
+        type = "unlock-recipe",
+        recipe = "chemical-plant"
       },
       {
         type = "unlock-recipe",
@@ -105,7 +105,7 @@ data:extend {
       },
       {
         type = "unlock-recipe",
-        recipe = "power-solution"
+        recipe = "harenic-sludge-filtration"
       },
     },
     research_trigger =
@@ -116,10 +116,34 @@ data:extend {
 },
 {
     type = "technology",
+    name = "rabbasca-healthy-fluids",
+    icon = "__space-age__/graphics/technology/gleba.png",
+    icon_size = 256,
+    prerequisites = { "harene-gas-processing" },
+    effects =
+    {
+      {
+          type = "unlock-recipe",
+          recipe = "beta-carotene"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "power-solution"
+      },
+    },
+    research_trigger =
+    {
+      type = "craft-fluid",
+      fluid = "energetic-residue",
+      count = 10
+    }
+},
+{
+    type = "technology",
     name = "blank-vault-key",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
-    prerequisites = { "rabbascan-vault-accessibility", "beta-carotene" },
+    prerequisites = { "rabbascan-vault-accessibility", "rabbasca-healthy-fluids" },
     effects =
     {
       {
@@ -129,8 +153,8 @@ data:extend {
     },
     research_trigger =
     {
-      type = "craft-item",
-      item = "blank-vault-key",
+      type = "craft-fluid",
+      fluid = "beta-carotene",
       count = 10
     }
 },
@@ -139,7 +163,7 @@ data:extend {
     name = "rabbasca-vault-core-extraction",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
-    prerequisites = { "harene-gas-processing" },
+    prerequisites = { "blank-vault-key", "concrete" },
     effects =
     {
       {
@@ -159,7 +183,7 @@ data:extend {
     name = "rabbasca-ears-technology",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
-    prerequisites = { "rabbasca-vault-core-extraction", "blank-vault-key" },
+    prerequisites = { "rabbasca-vault-core-extraction" },
     effects =
     {
 

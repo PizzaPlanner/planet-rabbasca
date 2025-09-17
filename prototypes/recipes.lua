@@ -230,13 +230,13 @@ data:extend {
     {
         type = "recipe",
         name = "harenic-sludge-filtration",
-        enabled = true, -- todo
+        enabled = false,
         energy_required = 4,
         ingredients = { 
             {type = "fluid",  name = "harenic-sludge", amount = 1000 },
         },
         results = { 
-            { type = "item",  name = "chemical-science-pack", amount = 1},
+            { type = "item",  name = "rabbasca-turbofish", amount = 1, probability = 0.04},
             { type = "fluid", name = "energetic-residue", amount = 50, },
             { type = "fluid", name = "harenic-sludge", amount = 950, },
         },
@@ -492,7 +492,7 @@ data:extend {
         hidden = true,
         energy_required = 3600,
         ingredients = { },
-        results = { {type = "item", name = "harene-ears-core-protocol", amount = 1} },
+        results = { {type = "item", name = "rabbasca-vault-access-protocol", amount = 1} },
         category = "rabbasca-vault-hacking",
         auto_recycle = false,
     }
