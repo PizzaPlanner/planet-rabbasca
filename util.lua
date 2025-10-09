@@ -23,7 +23,7 @@ function output.harene_burner()
 end
 
 
-function output.create_vault_recipe(reward, amount, cost, has_no_prequisite)
+function output.create_vault_recipe(reward, cost, has_no_prequisite)
 data:extend{
   {
       type = "recipe",
@@ -34,13 +34,14 @@ data:extend{
       allow_decomposition = false,
       always_show_products = true,
       energy_required = cost,
-      results = { { type = "item", name = reward, amount = amount, percent_spoiled = 0 } },
+    --   ingredients = { { type = "item", name = "blank-vault-key", amount = 1 } },
+      results = { { type = "item", name = "rabbasca-vault-core-extraction-protocol", amount = 1, percent_spoiled = 0 } },
       reset_freshness_on_craft = true,
       result_is_always_fresh = true,
-      main_product = reward,
+    --   main_product = reward,
       category = "rabbasca-vault-extraction",
       subgroup = "rabbasca-vault-extraction",
-    --   auto_recycle = false, -- recycle to themselves to allow quality upcycling
+      auto_recycle = false, 
       overload_multiplier = 1,
   }
 }
@@ -119,16 +120,16 @@ function output.create_duplication_recipe(item, input, output)
 end
 
 function get_type(crafter)
-    for _, type in pairs({"assembling-machine", "lab", "rocket-silo", "furnace"}) do
+    for _, type in pairs({"assembling-machine", "lab", "rocket-silo", "furnace", "inserter"}) do
         if data.raw[type][crafter] then return type end
     end
     return nil
 end
 
-function create_infused_crafter_with_effect(crafter, effect, add_effect_amount)
+function create_infused_thing_with_effect(crafter, effect, add_effect_amount)
     local type = get_type(crafter) -- TODO: how to raise error?
     local original = data.raw[type][crafter]
-    local new_name = "harene-infused-"..original.name.."-"..effect
+    local new_name = effect and "harene-infused-"..original.name.."-"..effect or "harene-infused-"..original.name
     local new = table.deepcopy(original)
     local icons = {}
     if data.raw["item"][crafter].icon then
@@ -139,14 +140,17 @@ function create_infused_crafter_with_effect(crafter, effect, add_effect_amount)
             table.insert(icons, icon)
         end
     end
-    table.insert(icons, { icon = data.raw["item"]["harene-ears-core"].icon, scale = 0.5, shift = {0, 12} })
-    local effect_icon = "efficiency-module-3"
-    if effect == "speed" then effect_icon = "speed-module-3"
-    elseif effect == "quality" then effect_icon = "quality-module-3"
-    elseif effect == "productivity" then effect_icon = "productivity-module-3"
-    end
-    if data.raw["module"][effect_icon] then
-        table.insert(icons, { icon = data.raw["module"][effect_icon].icon, scale = 0.3, shift = {12, -12} })
+    local needed_core = type == "inserter" and "harene-ears-subcore" or "harene-ears-core"
+    table.insert(icons, { icon = data.raw["item"][needed_core].icon, scale = 0.5, shift = {0, 12} })
+    if effect then
+        local effect_icon = "efficiency-module-3"
+        if effect == "speed" then effect_icon = "speed-module-3"
+        elseif effect == "quality" then effect_icon = "quality-module-3"
+        elseif effect == "productivity" then effect_icon = "productivity-module-3"
+        end
+        if data.raw["module"][effect_icon] then
+            table.insert(icons, { icon = data.raw["module"][effect_icon].icon, scale = 0.3, shift = {12, -12} })
+        end
     end
     local new_item = table.deepcopy(data.raw["item"][crafter])
     new_item.name = new_name
@@ -154,7 +158,7 @@ function create_infused_crafter_with_effect(crafter, effect, add_effect_amount)
     new_item.hidden = true
     new_item.icons = icons
     new_item.place_result = new_name
-    new_item.subgroup = "production-machine-infused"
+    new_item.subgroup = type == inserter and "inserter-infused" or "production-machine-infused" 
     new_item.factoriopedia_alternative = original.name
 
     new.name = new_name
@@ -163,9 +167,11 @@ function create_infused_crafter_with_effect(crafter, effect, add_effect_amount)
     new.hidden = true
     new.icons = icons
     new.next_upgrade = nil
-    new.effect_receiver = new.effect_receiver or { base_effect = { } }
-    local prev_effect = new.effect_receiver.base_effect[effect] or 0
-    new.effect_receiver.base_effect[effect] = prev_effect + add_effect_amount
+    if effect then 
+        new.effect_receiver = new.effect_receiver or { base_effect = { } }
+        local prev_effect = new.effect_receiver.base_effect[effect] or 0
+        new.effect_receiver.base_effect[effect] = prev_effect + add_effect_amount
+    end
     new.placeable_by = { item = new_name, count = 1 }
     new.minable.result = new_name
     new.factoriopedia_alternative = crafter
@@ -185,13 +191,13 @@ function create_infused_crafter_with_effect(crafter, effect, add_effect_amount)
         enabled = false,
         energy_required = 30,
         ingredients = {
-            { type = "item", name = "harene-ears-core", amount = 1 },
-            { type = "fluid", name = "harene-gas", amount = 50 },
+            { type = "item", name = needed_core, amount = 1 },
+            { type = "fluid", name = "harene-gas", amount = needed_core == "harene_ears_core" and 50 or 3 },
             { type = "item", name = original.name, amount = 1},
         },
         results = { { type = "item", name = new_name, amount = 1 } },
         main_product = new_name,
-        category = "harene-infusion",
+        category = "install-ears-core",
         maximum_productivity = 0
       }
     }
@@ -205,9 +211,13 @@ end
 
 -- should be called in data-updates or later to ensure crafter item exists
 function output.create_infused_crafter(crafter)
-    create_infused_crafter_with_effect(crafter, "speed", 0.5)
-    create_infused_crafter_with_effect(crafter, "quality", 5)
-    create_infused_crafter_with_effect(crafter, "productivity", 0.5)
+    -- create_infused_crafter_with_effect(crafter, "speed", 0.5)
+    -- create_infused_crafter_with_effect(crafter, "quality", 5)
+    -- create_infused_crafter_with_effect(crafter, "productivity", 0.5)
+    create_infused_thing_with_effect(crafter, nil, 0)
+end
+function output.create_infused_mini(thing)
+    create_infused_thing_with_effect(thing, nil, 0)
 end
 
 function output.create_duplication_recipe_triggered(item)
@@ -240,7 +250,7 @@ end
 
 function output.not_on_harenic_surface(proto)
   proto.surface_conditions = proto.surface_conditions or { }
-  table.insert(proto.surface_conditions, {property = "harenic-energy-signatures", max = 0.5})
+  table.insert(proto.surface_conditions, {property = "harenic-energy-signatures", max = 50})
 end
 
 function output.make_complex_machinery(proto)

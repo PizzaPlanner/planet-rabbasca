@@ -60,6 +60,12 @@ for _, lab in pairs(data.raw["lab"]) do
   end
 end
 
+for _, thing in pairs(data.raw["inserter"]) do
+  if thing.name ~= "burner-inserter" then
+    rutil.create_infused_mini(thing)
+  end
+end
+
 rutil.create_infused_crafter("assembling-machine-2")
 rutil.create_infused_crafter("assembling-machine-3")
 rutil.create_infused_crafter("chemical-plant")
@@ -69,3 +75,5 @@ rutil.create_infused_crafter("electromagnetic-plant")
 rutil.create_infused_crafter("cryogenic-plant")
 rutil.create_infused_crafter("lab")
 rutil.create_infused_crafter("biolab")
+rutil.create_infused_crafter("machining-assembler")
+

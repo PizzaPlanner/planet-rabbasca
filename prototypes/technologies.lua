@@ -48,7 +48,7 @@ data:extend {
 },
 {
     type = "technology",
-    name = "rabbascan-vault-accessibility",
+    name = "rabbascan-vault-access",
     icon = "__Krastorio2Assets__/icons/cards/utility-tech-card.png",
     icon_size = 256,
     prerequisites = { "planet-discovery-rabbasca" },
@@ -66,10 +66,6 @@ data:extend {
         type = "unlock-recipe",
         recipe = "lubricant-from-copyslop"
       },
-      {
-        type = "unlock-recipe",
-        recipe = "machining-assembler"
-      },
     },
     research_trigger =
     {
@@ -82,16 +78,16 @@ data:extend {
     name = "harene-gas-processing",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
-    prerequisites = { "oil-gathering", "planet-discovery-rabbasca" },
+    prerequisites = { "oil-gathering", "rabbasca-healthy-fluids" },
     effects =
     {
       {
         type = "unlock-recipe",
-        recipe = "chemical-plant"
+        recipe = "power-solution"
       },
       {
         type = "unlock-recipe",
-        recipe = "harene-enrichment-center"
+        recipe = "haronite"
       },
     },
     research_trigger =
@@ -105,7 +101,7 @@ data:extend {
     name = "rabbasca-healthy-fluids",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
-    prerequisites = { "harene-gas-processing" },
+    prerequisites = { "planet-discovery-rabbasca" },
     effects =
     {
       {
@@ -114,38 +110,13 @@ data:extend {
       },
       {
         type = "unlock-recipe",
-        recipe = "power-solution"
-      },
-      {
-        type = "unlock-recipe",
         recipe = "vision-circuit",
       },
     },
     research_trigger =
     {
-      type = "craft-fluid",
-      fluid = "energetic-residue",
-      count = 10
-    }
-},
-{
-    type = "technology",
-    name = "blank-vault-key",
-    icon = "__space-age__/graphics/technology/gleba.png",
-    icon_size = 256,
-    prerequisites = { "rabbascan-vault-accessibility", "rabbasca-healthy-fluids" },
-    effects =
-    {
-      {
-        type = "unlock-recipe",
-        recipe = "blank-vault-key"
-      }
-    },
-    research_trigger =
-    {
-      type = "craft-fluid",
-      fluid = "beta-carotene",
-      count = 10
+      type = "mine-entity",
+      entity = "carotenoid",
     }
 },
 {
@@ -153,19 +124,18 @@ data:extend {
     name = "rabbasca-vault-core-extraction",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
-    prerequisites = { "blank-vault-key", "concrete" },
+    prerequisites = { "machining-assembler" },
     effects =
     {
       {
         type = "unlock-recipe",
-        recipe = "harene-ears-core-protocol"
+        recipe = "harene-ears-core-capsule"
       }
     },
     research_trigger =
     {
       type = "craft-item",
-      item = "rabbasca-energetic-concrete",
-      count = 50
+      item = "machining-assembler"
     }
 },
 {
@@ -176,10 +146,7 @@ data:extend {
     prerequisites = { "rabbasca-vault-core-extraction" },
     effects =
     {
-      {
-        type = "unlock-recipe",
-        recipe = "harene-ears-core-protocol"
-      }
+      -- added later
     },
     research_trigger =
     {
@@ -189,44 +156,44 @@ data:extend {
 },
 {
     type = "technology",
-    name = "ultranutritious-science-pack",
-    icon = "__Krastorio2Assets__/icons/cards/matter-research-data.png",
+    name = "harenic-stabilizer",
+    icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
-    prerequisites = { "harene-gas-processing", "rabbasca-ears-technology" },
+    prerequisites = { "planet-discovery-rabbasca" },
     effects =
     {
       {
         type = "unlock-recipe",
-        recipe = "smart-solution"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "ultranutritious-science-pack"
+        recipe = "harenic-stabilizer"
       },
     },
     research_trigger =
     {
-      type = "craft-item",
-      item = "power-solution"
+      type = "mine-entity",
+      entity = "moonstone-rock"
     }
 },
 {
     type = "technology",
-    name = "haronite-catalyst",
-    icon = "__space-age__/graphics/technology/gleba.png",
+    name = "machining-assembler",
+    icon = "__space-age__/graphics/technology/foundry.png",
     icon_size = 256,
-    prerequisites = { "ultranutritious-science-pack" },
+    prerequisites = { "harenic-stabilizer", "harene-gas-processing", "leg-day-everyday", "item-duplication-2" },
     effects =
     {
       {
         type = "unlock-recipe",
-        recipe = "haronite-catalyst"
-      }
+        recipe = "rabbasca-energetic-concrete"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "machining-assembler"
+      },
     },
     research_trigger =
     {
       type = "craft-item",
-      item = "smart-solution"
+      item = "haronite-brick"
     }
 },
 {
@@ -262,7 +229,7 @@ data:extend {
     name = "harene-synthesis",
     icon = "__space-age__/graphics/technology/steel-plate-productivity.png",
     icon_size = 256,
-    prerequisites = { "haronite-catalyst", "foundry" },
+    prerequisites = { "harene-ears-core", "metallurgic-science-pack", "cryogenic-science-pack" },
     effects =
     {
       {
@@ -275,36 +242,11 @@ data:extend {
       },
     },
     unit = {
-        count = 100,
-        time = 10,
-        ingredients = {{"automation-science-pack", 1}}
-    }
-},
-{
-    type = "technology",
-    name = "rabbasca-glob-technology",
-    icon = "__Krastorio2Assets__/icons/cards/matter-research-data.png",
-    icon_size = 256,
-    prerequisites = { "ultranutritious-science-pack" },
-    effects =
-    {
-      {
-        type = "unlock-recipe",
-        recipe = "harene-glob-core"
-      },
-    },
-    unit = {
-        count = 1000,
-        time = 30,
+        count = 2000,
+        time = 60,
         ingredients = {
-          {"automation-science-pack", 1},
-          {"logistic-science-pack", 1},
-          {"chemical-science-pack", 1},
-          {"space-science-pack", 1},
-          {"metallurgic-science-pack", 1},
-          {"agricultural-science-pack", 1},
-          {"electromagnetic-science-pack", 1},
-          {"ultranutritious-science-pack", 1},
+          { "metallurgic-science-pack", 1},
+          { "cryogenic-science-pack", 1}
         }
     }
 },
@@ -407,7 +349,7 @@ data:extend {
     name = "item-duplication-1",
     icon = "__space-age__/graphics/technology/metallurgic-science-pack.png",
     icon_size = 256,
-    prerequisites = { "rabbascan-vault-accessibility" },
+    prerequisites = { "rabbascan-vault-access" },
     effects =
     {
       {
@@ -455,7 +397,31 @@ data:extend {
     {
       type = "craft-item",
       item = "harene-copy-core",
-      count = 50,
+      count = 15,
+    }
+},
+{
+    type = "technology",
+    name = "self-replicating-firearm-magazine",
+    icon = "__base__/graphics/technology/military.png",
+    icon_size = 256,
+    prerequisites = { "harene-ears-core", "military-3" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "self-replicating-firearm-magazine",
+      },
+    },
+    unit = {
+      time = 30,
+      count = 200,
+      ingredients = {
+        {"automation-science-pack", 1},
+        {"logistic-science-pack", 1},
+        {"military-science-pack", 1},
+        {"space-science-pack", 1}
+      }
     }
 },
 }

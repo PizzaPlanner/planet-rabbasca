@@ -38,7 +38,7 @@ local assembler = util.merge { data.raw["assembling-machine"]["assembling-machin
     module_slots = 6,
 }}
 
-assembler.crafting_categories = {"complex-machinery"}
+assembler.crafting_categories = { "complex-machinery", "install-ears-core" }
 assembler.fluid_boxes = { 
 {
   volume = 1000,
@@ -88,56 +88,6 @@ assembler.graphics_set = {
   }
 }
 
-local transmuter = table.deepcopy(data.raw["assembling-machine"]["centrifuge"])
-transmuter.minable.result = "harene-enrichment-center"
-transmuter.crafting_categories = {"harene-infusion"}
--- transmuter.tile_buildability_rules = restrict_to_harene_pool({{-0.6, -0.6}, { 0.6, 0.6}})
-transmuter = util.merge{transmuter, {
-    name = "harene-enrichment-center",
-    energy_source = { type = "void" },
-    energy_usage = "100MW",
-    module_slots = 2,
-    crafting_speed = 2.0,
-}}
-transmuter.fluid_boxes = {
-  {
-    volume = 1000,
-    production_type = "input",
-    pipe_connections = 
-    {
-        {
-          flow_direction = "input",
-          position = {-1, -1},
-          direction = defines.direction.north,
-        },
-    },
-  },
-  {
-    volume = 1000,
-    production_type = "input",
-    pipe_connections = 
-    {
-        {
-          flow_direction = "input",
-          position = {1, -1},
-          direction = defines.direction.north,
-        },
-    },
-  },
-  {
-    volume = 50,
-    production_type = "output",
-    pipe_connections = 
-    {
-        {
-          flow_direction = "output",
-          position = {0, 1},
-          direction = defines.direction.south,
-        },
-    },
-  }
-}
-
 local harene_platform = util.merge{ data.raw["space-platform-hub"]["space-platform-hub"],
   {
     name = "harene-space-platform-hub",
@@ -145,8 +95,7 @@ local harene_platform = util.merge{ data.raw["space-platform-hub"]["space-platfo
     surface_conditions = {
       {
         property = "harenic-energy-signatures",
-        min = 0.5,
-        max = 1
+        min = 50,
       }
     }
   }
@@ -154,7 +103,6 @@ local harene_platform = util.merge{ data.raw["space-platform-hub"]["space-platfo
 
 data:extend {
   assembler,
-  transmuter, 
   harene_platform,
   {
     type = "roboport",
@@ -179,7 +127,7 @@ data:extend {
     inventory_type = "with_filters_and_bar",
     inventory_size = 30,
     surface_conditions = {
-      { property = "harenic-energy-signatures", min = 0.5 }
+      { property = "harenic-energy-signatures", min = 50 }
     },
     collision_box = {{-2.4, -2.4}, {2.4, 2.4}},
     selection_box = {{-2.5, -2.5}, {2.5, 2.5}}
@@ -217,7 +165,7 @@ data:extend {
     gui_mode = "none",
     flags = { "placeable-neutral", "placeable-off-grid", "not-on-map", "not-deconstructable", "not-selectable-in-game" },
     autoplace = {
-      probability_expression = "distance < 2",
+      probability_expression = "distance == 0",
     },
     collision_mask = { layers = { } },
     map_generator_bounding_box = {{-20, -20}, {20,  20}}
@@ -266,9 +214,17 @@ data:extend {
       map_color = {0.09, 0.12, 0.17}
   }},
   util.merge {
-    table.deepcopy(data.raw["simple-entity"]["big-volcanic-rock"]),
+    table.deepcopy(data.raw["simple-entity"]["fulgoran-ruin-small"]),
     {
       name = "harene-ears-core-capsule",
+      minable = { 
+        mining_time = 3,
+      }
+  }},
+  util.merge {
+    table.deepcopy(data.raw["simple-entity"]["fulgoran-ruin-small"]),
+    {
+      name = "harene-copy-core-capsule",
       minable = { 
         mining_time = 3,
       }
@@ -350,9 +306,19 @@ fish_action.attack_parameters.ammo_type.action.action_delivery.target_effects[1]
 
 data.raw["electric-energy-interface"]["rabbasca-energy-source"].collision_box = nil
 data.raw["capsule"]["rabbasca-turbofish"].capsule_action = fish_action
-data.raw["simple-entity"]["moonstone-rock"].minable.results = {{type = "item", name = "stone", amount_min = 18, amount_max = 23}}
+data.raw["simple-entity"]["moonstone-rock"].minable.results = {
+  {type = "item", name = "haronite", amount_min = 18, amount_max = 23}, 
+  {type = "item", name = "calcite", amount_min = 25, amount_max = 29 }
+}
 data.raw["simple-entity"]["carotenoid"].minable.results = {{type = "item", name = "rabbasca-carotene-powder", amount_min = 40, amount_max = 55}}
-data.raw["simple-entity"]["harene-ears-core-capsule"].minable.results = {{type = "item", name = "harene-ears-core", amount_min = 2, amount_max = 2}}
+data.raw["simple-entity"]["harene-ears-core-capsule"].minable.results = {
+  {type = "item", name = "harene-ears-core", amount_min = 1, amount_max  = 1 },
+  {type = "item", name = "haronite-brick", amount_min = 10, amount_max  = 15 },
+}
+data.raw["simple-entity"]["harene-copy-core-capsule"].minable.results = {
+  {type = "item", name = "harene-copy-core-recharging", amount_min = 8, amount_max  = 8 },
+  {type = "item", name = "haronite-brick", amount_min = 10, amount_max  = 15 },
+}
 
 local beacon_anims = { }
 for _, anim in pairs(fff339.animation_list) do

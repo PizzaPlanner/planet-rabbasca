@@ -36,11 +36,7 @@ data:extend {
     },
     {
         type = "recipe-category",
-        name = "harene-infusion"
-    },
-    {
-        type = "recipe-category",
-        name = "harene-synthesis"
+        name = "install-ears-core",
     },
     {
         type = "recipe-category",
@@ -109,7 +105,7 @@ data:extend {
             { type = "item", name = "haronite", amount = 5  },
         },
         main_product = "haronite",
-        category = "harene-infusion",
+        category = "chemistry",
         hide_from_player_crafting = true,
         result_is_always_fresh = true,
         reset_freshness_on_craft = true,
@@ -117,38 +113,19 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "haronite-catalyst",
-        enabled = false,
-        energy_required = 3,
-        ingredients = { 
-            {type = "fluid", name = "energetic-residue", amount = 50 },
-            {type = "fluid", name = "harene-gas", amount = 50 },
-            {type = "item",  name = "calcite", amount = 10 },
-            {type = "item",  name = "smart-solution", amount = 2 },
-        },
-        results = { 
-            { type = "item", name = "haronite-catalyst", amount = 10  },
-        },
-        main_product = "haronite-catalyst",
-        category = "harene-infusion",
-        hide_from_player_crafting = true,
-    },
-    {
-        type = "recipe",
         name = "harene",
         enabled = false,
         energy_required = 80,
         ingredients = { 
-            {type = "item",  name = "haronite-catalyst", amount = 10 },
-            {type = "item",  name = "haronite", amount = 50 },
+            {type = "item",  name = "harenic-stabilizer", amount = 5 },
+            {type = "item",  name = "haronite", amount = 10 },
+            {type = "fluid",  name = "ammonia", amount = 50 },
         },
         results = { 
-            { type = "fluid", name = "harene", amount =  5   },
-            { type = "item",  name = "calcite", amount = 12  },
-            { type = "item",  name = "stone",   amount = 20  },
+            { type = "fluid", name = "harene", amount = 15 },
         },
         main_product = "harene",
-        category = "metallurgy",
+        category = "cryogenics",
     },
     {
         type = "recipe",
@@ -156,29 +133,17 @@ data:extend {
         enabled = false,
         energy_required = 8,
         ingredients = { 
-            {type = "fluid", name = "harene", amount = 20 },
+            {type = "item",  name = "steel-plate",    amount = 20 },
+            {type = "item",  name = "tungsten-plate", amount = 5  },
+            {type = "fluid", name = "harene", amount = 5 },
         },
         results = { 
-            { type = "item", name = "infused-haronite-plate", amount = 50  },
+            { type = "item", name = "infused-haronite-plate", amount = 10  },
+            { type = "item", name = "tungsten-carbide", amount = 2 },
+            { type = "fluid", name = "molten-iron", amount = 20 },
         },
         main_product = "infused-haronite-plate",
-        category = "harene-infusion",
-    },
-    {
-        type = "recipe",
-        name = "lubricant-from-copyslop",
-        icons = { 
-            { icon = data.raw["fluid"]["rabbasca-copyslop"].icon, scale = 0.7, shift = { 0, -6 } },
-            { icon = data.raw["fluid"]["lubricant"].icon, scale = 0.7, shift = { 0, 6 } },
-        },
-        enabled = false,
-        energy_required = 5.0,
-        ingredients = { 
-            {type = "fluid", name = "rabbasca-copyslop", amount = 50 },
-        },
-        results = { { type = "fluid", name = "lubricant", amount = 10 } },
-        main_product = "lubricant",
-        category = "crafting-with-fluid",
+        category = "metallurgy",
     },
     {
         type = "recipe",
@@ -188,33 +153,16 @@ data:extend {
         ingredients = { 
             -- {type = "item", name = "infused-haronite-plate", amount = 10 },
             {type = "item", name = "steel-plate", amount = 200 },
-            {type = "item", name = "tungsten-plate", amount = 20 },
+            {type = "item", name = "tungsten-plate", amount = 10 },
             {type = "item", name = "iron-gear-wheel", amount = 69 },
-            {type = "item", name = "refined-concrete", amount = 50 },
+            {type = "item", name = "rabbasca-energetic-concrete", amount = 50 },
             {type = "item", name = "advanced-circuit", amount = 50 },
             {type = "fluid", name = "lubricant", amount = 200 },
         },
         results = { { type = "item", name = "machining-assembler", amount = 1 } },
-        surface_conditions = {{property = "harenic-energy-signatures", min = 0.5}},
+        surface_conditions = {{property = "harenic-energy-signatures", min = 50 }},
         main_product = "machining-assembler",
         category = "crafting-with-fluid",
-    },
-    {
-        type = "recipe",
-        name = "harene-enrichment-center",
-        enabled = false,
-        energy_required = 10,
-        ingredients = { 
-            {type = "item", name = "iron-plate", amount = 80 },
-            {type = "item", name = "steel-plate", amount = 20 },
-            {type = "item", name = "advanced-circuit", amount = 20 },
-            {type = "item", name = "pipe", amount = 10 },
-        },
-        results = { 
-            { type = "item", name = "harene-enrichment-center", amount = 1 },
-        },
-        main_product = "harene-enrichment-center",
-        category = "crafting"
     },
     {
         type = "recipe",
@@ -247,7 +195,7 @@ data:extend {
         results = { 
             { type = "item", name = "rabbasca-remote-receiver", amount = 1 },
         },
-        surface_conditions = {{property = "harenic-energy-signatures", min = 0.5}},
+        surface_conditions = {{property = "harenic-energy-signatures", min = 50}},
         main_product = "rabbasca-remote-receiver",
         category = "crafting"
     },
@@ -264,9 +212,63 @@ data:extend {
         results = { 
             { type = "item", name = "rabbasca-remote-builder", amount = 1 },
         },
-        surface_conditions = {{property = "harenic-energy-signatures", min = 0.5}},
+        surface_conditions = {{property = "harenic-energy-signatures", min = 50}},
         main_product = "rabbasca-remote-builder",
         category = "crafting"
+    },
+    {
+        type = "recipe",
+        name = "solid-fuel-from-energetic-residue",
+        category = "chemistry",
+        energy_required = 1,
+        ingredients =
+        {
+            {type = "fluid", name = "energetic-residue", amount = 20 },
+            {type = "item", name = "ice", amount = 5 },
+        },
+        results =
+        {
+            { type = "item", name = "solid-fuel", amount = 5 }
+        },
+        allow_productivity = true,
+        icon = "__base__/graphics/icons/solid-fuel-from-light-oil.png",
+        subgroup = "fluid-recipes",
+        enabled = false,
+        order = "b[fluid-chemistry]-d[solid-fuel-from-energetic-residue]",
+        crafting_machine_tint =
+        {
+            primary = {r = 0.710, g = 0.633, b = 0.482, a = 1.000},
+            secondary = {r = 0.745, g = 0.672, b = 0.527, a = 1.000},
+            tertiary = {r = 0.894, g = 0.773, b = 0.596, a = 1.000},
+            quaternary = {r = 0.812, g = 0.583, b = 0.202, a = 1.000},
+        }
+    },
+    {
+        type = "recipe",
+        name = "rocket-fuel-from-energetic-residue",
+        category = "chemistry",
+        energy_required = 30,
+        ingredients =
+        {
+            {type = "fluid", name = "energetic-residue", amount = 10 },
+            { type = "item", name = "solid-fuel", amount = 50 }
+        },
+        results =
+        {
+            { type = "item", name = "rocket-fuel", amount = 5 }
+        },
+        allow_productivity = true,
+        icon = "__base__/graphics/icons/solid-fuel-from-light-oil.png",
+        subgroup = "fluid-recipes",
+        enabled = false,
+        order = "b[fluid-chemistry]-d[solid-fuel-from-energetic-residue]",
+        crafting_machine_tint =
+        {
+            primary = {r = 0.710, g = 0.633, b = 0.482, a = 1.000},
+            secondary = {r = 0.745, g = 0.672, b = 0.527, a = 1.000},
+            tertiary = {r = 0.894, g = 0.773, b = 0.596, a = 1.000},
+            quaternary = {r = 0.812, g = 0.583, b = 0.202, a = 1.000},
+        }
     },
     {
         type = "recipe",
@@ -325,8 +327,8 @@ data:extend {
         enabled = false,
         energy_required = 15,
         ingredients = { 
-            {type = "item", name = "rabbasca-turbofish", amount = 2 },
-            {type = "item", name = "protein-powder", amount = 5  },
+            {type = "item",  name = "rabbasca-turbofish", amount = 2 },
+            {type = "item",  name = "protein-powder", amount = 5  },
             {type = "fluid", name = "beta-carotene", amount = 50 },
         },
         results = { 
@@ -337,21 +339,6 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "ultranutritious-science-pack",
-        enabled = false,
-        energy_required = 17,
-        ingredients = { 
-            {type = "item", name = "smart-solution", amount = 2 },
-            {type = "item", name = "power-solution", amount = 3 },
-        },
-        results = { 
-            { type = "item", name = "ultranutritious-science-pack", amount = 6 },
-        },
-        main_product = "ultranutritious-science-pack",
-        category = "crafting",
-    },
-    {
-        type = "recipe",
         name = "protein-powder",
         enabled = false,
         energy_required = 1,
@@ -359,7 +346,7 @@ data:extend {
             {type = "item", name = "rabbasca-turbofish", amount = 1 },
         },
         results = { 
-            { type = "item", name = "protein-powder", amount = 20 },
+            { type = "item", name = "protein-powder", amount = 5 },
         },
         main_product = "protein-powder",
         category = "crafting",
@@ -372,7 +359,7 @@ data:extend {
         ingredients = { 
             {type = "item", name = "rabbasca-turbofish", amount = 1 },
         },
-        results = { {type = "item", name = "rabbasca-turbofin", amount = 2} },
+        results = { {type = "item", name = "rabbasca-turbofin", amount = 2 } },
         main_product = "rabbasca-turbofin",
         category = "crafting",
     },
@@ -382,13 +369,13 @@ data:extend {
         enabled = false,
         energy_required = 8,
         ingredients = { 
-            {type = "fluid", name = "rabbasca-copyslop", amount = 50 },
+            { type = "fluid", name = "rabbasca-copyslop", amount = 100 },
             -- {type = "fluid", name = "energetic-residue", amount = 5 },
         },
         results = { {type = "item", name = "harene-copy-core", amount = 1, ignored_by_productivity = 1} },
         main_product = "harene-copy-core",
         category = "crafting-with-fluid",
-        surface_conditions = {{property = "harenic-energy-signatures", min = 0.5}}
+        surface_conditions = {{property = "harenic-energy-signatures", min = 50}}
     },
     {
         type = "recipe",
@@ -398,10 +385,39 @@ data:extend {
         ingredients = { 
             { type = "item", name = "harene-copy-core-recharging", amount = 1 }
         },
-        
-        results = { {type = "fluid", name = "rabbasca-copyslop", amount = 50, ignored_by_productivity = 50 } },
+        results = { {type = "fluid", name = "rabbasca-copyslop", amount = 100, ignored_by_productivity = 100 } },
+        hide_from_player_crafting = true,
         main_product = "rabbasca-copyslop",
         category = "crafting-with-fluid",
+    },
+    {
+        type = "recipe",
+        name = "lubricant-from-copyslop",
+        icons = { 
+            { icon = data.raw["fluid"]["rabbasca-copyslop"].icon, scale = 0.7, shift = { 0, -6 } },
+            { icon = data.raw["fluid"]["lubricant"].icon, scale = 0.7, shift = { 0, 6 } },
+        },
+        enabled = false,
+        energy_required = 5.0,
+        hide_from_player_crafting = true,
+        ingredients = { 
+            {type = "fluid", name = "rabbasca-copyslop", amount = 10 },
+        },
+        results = { { type = "fluid", name = "lubricant", amount = 100 } },
+        main_product = "lubricant",
+        category = "crafting-with-fluid",
+    },
+    {
+        type = "recipe",
+        name = "self-replicating-firearm-magazine",
+        enabled = false,
+        energy_required = 12,
+        ingredients = {
+            { type = "item", name = "harene-copy-core", amount = 1 },
+            { type = "item", name = "firearm-magazine", amount = 100 },
+        },
+        results = { { type = "item", name = "self-replicating-firearm-magazine", amount = 1 } },
+        category = "crafting"
     },
     {
         type = "recipe",
@@ -432,10 +448,10 @@ data:extend {
     }
 }
 
-r.create_vault_recipe("harene-ears-core-protocol", 1, 120,  true)
-r.create_vault_recipe("harene-glob-core",  3, 35,  false)
-r.create_vault_recipe("harene-copy-core-recharging",  1, 18,  true)
--- r.create_vault_recipe("harene-solvent",    1, 2.5, false)
+-- r.create_vault_recipe("harene-glob-core",  3, 35,  false)
+r.create_vault_recipe("harene-ears-core-capsule", 120,  false)
+r.create_vault_recipe("harene-copy-core-capsule", 60,   true)
+-- r.create_vault_recipe("harenic-stabilizer",    1, 2.5, false)
 -- create_vault_recipe("rabbascan-encrypted-vault-data", 10, 3, true)
 -- create_vault_recipe("harene-cubic-core", 1, 10, false)
 
@@ -453,51 +469,49 @@ r.create_duplication_recipe("advanced-circuit",   1, 25)
 -- r.create_duplication_recipe_triggered("explosives")
 -- r.create_duplication_recipe("explosives", 1, 10)
 
-recycling.generate_self_recycling_recipe(data.raw["item"]["rabbasca-console-scrap"])
-local recipe = data.raw["recipe"]["rabbasca-console-scrap-recycling"]
-recipe.enabled = false
-recipe.hidden = false
-recipe.category = "recycling-or-hand-crafting"
-recipe.energy_required = 0.25
-recipe.results = {
-    { type = "item", name = "iron-plate", amount = 1, probability = 0.25 },
-    { type = "item", name = "electronic-circuit", amount = 1, probability = 0.14 },
-    { type = "item", name = "steel-plate", amount = 1, probability = 0.04 },
-    { type = "item", name = "advanced-circuit",  amount = 1, probability = 0.01 },
-    { type = "item", name = "blank-vault-key",  amount = 1, probability = 0.01 },
-}
-data:extend { recipe }
-
 data:extend {
     {
         type = "recipe",
-        name = "harene-infused-brick",
-        main_product = "harene-infused-brick",
-        category = "harene-infusion",
+        name = "harenic-stabilizer",
+        main_product = "harenic-stabilizer",
+        category = "chemistry",
+        hide_from_player_crafting = true,
+        energy_required = 7,
+        results = {{type = "item", name = "harenic-stabilizer", amount = 3 }},
+        ingredients = {
+            { type = "item", name = "calcite", amount = 2 },
+            { type = "item", name = "rabbasca-carotene-powder", amount = 15 },
+            { type = "fluid", name = "water", amount = 20 },
+        }
+    },
+    {
+        type = "recipe",
+        name = "haronite-brick",
+        main_product = "haronite-brick",
+        category = "smelting",
         reset_freshness_on_craft = true,
         result_is_always_fresh = true,
         hide_from_player_crafting = true,
         energy_required = 10,
-        results = {{type = "item", name = "harene-infused-brick", amount = 2 }},
+        results = {{type = "item", name = "haronite-brick", amount = 3 }},
         ingredients = {
-            { type = "item", name = "stone", amount = 10 },
-            { type = "fluid", name = "harene-gas", amount = 10 },
-            { type = "fluid", name = "beta-carotene", amount = 200 },
+            { type = "item", name = "haronite", amount = 2 },
         }
     },
     {
         type = "recipe",
         name = "rabbasca-energetic-concrete",
         main_product = "rabbasca-energetic-concrete",
-        category = "harene-infusion",
+        category = "crafting-with-fluid",
         hide_from_player_crafting = true,
         energy_required = 5,
         results = {{type = "item", name = "rabbasca-energetic-concrete", amount = 10 }},
         ingredients = {
-            { type = "item", name = "harene-infused-brick", amount = 5 },
+            { type = "item", name = "harenic-stabilizer", amount = 1 },
+            { type = "item", name = "haronite-brick", amount = 5 },
             { type = "item", name = "rabbasca-turbofin", amount = 5 },
             { type = "item", name = "iron-stick", amount = 16 },
-            { type = "fluid", name = "energetic-residue", amount = 50 },
+            { type = "fluid", name = "energetic-residue", amount = 20 },
         }
     },
     {
@@ -538,13 +552,14 @@ data:extend {
     {
         type = "recipe",
         name = "rabbasca-vault-activate",
-        -- enabled = true,
-        -- hidden = true,
+        enabled = true,
+        hidden = true,
         energy_required = 3,
-        -- ingredients = {{ type = "item", name = "blank-vault-key", amount = 1 }},
+        ingredients = {{ type = "item", name = "blank-vault-key", amount = 1 }},
         results = {{ type = "item", name = "rabbasca-vault-access-protocol", amount = 1 }},
         main_product = "rabbasca-vault-access-protocol",
         category = "rabbasca-vault-hacking",
+        subgroup = "rabbasca-vault-extraction",
         auto_recycle = false,
         overload_multiplier = 1,
         result_is_always_fresh = true,
@@ -560,7 +575,7 @@ data:extend {
         ingredients = { },
         results = {{ type = "item", name = "rabbasca-vault-access-protocol", amount = 1 }},
         main_product = "rabbasca-vault-access-protocol",
-        category = "rabbasca-vault-extraction",
+        category = "rabbasca-vault-hacking",
         subgroup = "rabbasca-vault-extraction",
         order = "z[vault]-z[shutdown]",
         auto_recycle = false,
@@ -571,7 +586,7 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "rabbasca-vault-regenerate-ears-core",
+        name = "rabbasca-vault-regenerate-core",
         icon = "__base__/graphics/icons/stone.png",
         enabled = true,
         hidden = true,

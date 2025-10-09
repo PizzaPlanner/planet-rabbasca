@@ -13,11 +13,13 @@ scrap_resource.minable =
   mining_time = 0.25,
   results =
   {
+    { type = "item", name = "electronic-circuit", amount_min = 2, amount_max = 5, probability = 0.29 },
     { type = "item", name = "iron-plate", amount_min = 3, amount_max = 7, probability = 0.25 },
-    { type = "item", name = "electronic-circuit", amount_min = 2, amount_max = 5, probability = 0.33 },
-    { type = "item", name = "steel-plate", amount = 1, probability = 0.15 },
+    { type = "item", name = "steel-plate", amount = 1, probability = 0.12 },
+    { type = "item", name = "ice",  amount = 1, probability = 0.1 },
     { type = "item", name = "advanced-circuit",  amount = 1, probability = 0.1 },
-    { type = "item", name = "blank-vault-key",  amount = 1, probability = 0.05 },
+    { type = "item", name = "tungsten-plate",   amount = 1, probability = 0.05 },
+    { type = "item", name = "blank-vault-key",  amount = 1, probability = 0.01 },
   }
 }
 scrap_resource.collision_mask = { layers = { resource = true } }
@@ -67,10 +69,10 @@ local harene_resource = {
   }},
   collision_box = {{ -1.5, -1.5}, {1.5, 1.5}},
   selection_box = {{-1.5, -1.5}, {1.5, 1.5}},
-  map_generator_bounding_box = {{-5, -5}, {5, 5}},
+  map_generator_bounding_box = {{-15, -15}, {15, 15}},
   autoplace = {
     tile_restriction = { "rabbasca-rough", "rabbasca-rough-2" },
-    probability_expression = "(rabbasca_down > 0)\z
+    probability_expression = "(rabbasca_down > 0) * (rabbasca_harene_pools < 0)\z
       * multioctave_noise{x = x, y = y, persistence = 0.44, seed0 = map_seed, input_scale = 3.6, seed1 = 'atomizedfish', octaves = 4 }\z
       * multioctave_noise{x = x, y = y, persistence = 0.62, seed0 = map_seed, input_scale = 4.3, seed1 = 'unlimitedpower', octaves = 7 }\z
       * multioctave_noise{x = x, y = y, persistence = 0.62, seed0 = map_seed, input_scale = 4.3, seed1 = 'canthisspreadbetterplease', octaves = 7 }",

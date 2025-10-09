@@ -27,15 +27,6 @@ data:extend {
 },
 {
     type = "item",
-    icon = "__base__/graphics/icons/centrifuge.png",
-    name = "harene-enrichment-center",
-    stack_size = 5,
-    subgroup = "production-machine",
-    order = "fr[harene-enrichment-center]",
-    place_result = "harene-enrichment-center",
-},
-{
-    type = "item",
     name = "rabbasca-remote-builder",
     icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png",
     stack_size = 5,
@@ -83,7 +74,7 @@ data:extend {
 {
     type = "item",
     icon = "__base__/graphics/icons/sulfur.png",
-    name = "harene-solvent",
+    name = "harenic-stabilizer",
     stack_size = 50,
     subgroup = "rabbasca",
     order = "b[personal-transport]-c[startertron]",
@@ -109,14 +100,6 @@ data:extend {
     type = "item",
     icon = "__space-age__/graphics/icons/bioflux.png",
     name = "power-solution",
-    stack_size = 100,
-    subgroup = "rabbasca",
-    order = "b[personal-transport]-c[startertron]",
-},
-{
-    type = "item",
-    icon = "__space-age__/graphics/icons/bioflux.png",
-    name = "haronite-catalyst",
     stack_size = 100,
     subgroup = "rabbasca",
     order = "b[personal-transport]-c[startertron]",
@@ -307,7 +290,7 @@ data:extend {
 },
 {
     type = "item",
-    name = "harene-infused-brick",
+    name = "haronite-brick",
     icons = { { icon = "__base__/graphics/icons/stone-brick.png", tint = {r=0.65, g=0.31, b=0.92} } },
     stack_size = 50,
     spoil_ticks = 90 * second,
@@ -327,6 +310,23 @@ util.merge{
   }
 },
 {
+    type = "ammo",
+    name = "self-replicating-firearm-magazine",
+    category = data.raw["ammo"]["firearm-magazine"].category,
+    icons = {
+      { icon = "__base__/graphics/icons/firearm-magazine.png", tint = { r = 0.95, g = 1, b = 1 }, shift = { -8, -8 } },
+      { icon = "__base__/graphics/icons/firearm-magazine.png", tint = { r = 0.95, g = 1, b = 1 }, shift = { 0,   0 } },
+      { icon = "__base__/graphics/icons/firearm-magazine.png", tint = { r = 0.95, g = 1, b = 1 }, shift = { 8,   8 } } 
+    },
+    stack_size = 10,
+    weight = 25 * kg,
+    ammo_type = table.deepcopy(data.raw["ammo"]["firearm-magazine"].ammo_type),
+    ammo_category = "bullet",
+    magazine_size = 500,
+    spoil_ticks = 20 * second,
+    spoil_result = "self-replicating-firearm-magazine"
+},
+{
     type = "item",
     name = "blank-vault-key",
     category = "rabbasca-security",
@@ -338,6 +338,7 @@ util.merge{
     name = "rabbasca-console-scrap",
     icon = "__space-age__/graphics/icons/scrap-5.png",
     stack_size = 500,
+    weight = 0.1 * kg,
 },
 {
     type = "tool",
@@ -381,7 +382,7 @@ util.merge{
 },
 {
     type = "item",
-    name = "harene-ears-core-protocol",
+    name = "rabbasca-vault-core-extraction-protocol",
     category = "rabbasca-security",
     icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png",
     hidden = true,

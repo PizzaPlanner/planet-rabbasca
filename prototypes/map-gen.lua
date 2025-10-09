@@ -58,12 +58,12 @@ data:extend{
   {
     type = "noise-expression",
     name = "rabbasca_rocks",
-    expression = "rabbasca_rocky * 0.3 * aquilo_spot_noise{seed = 442,\z
-                                    count = 4,\z
+    expression = "aquilo_spot_noise{seed = 442,\z
+                                    count = 5,\z
                                     skip_offset = 1,\z
-                                    region_size = 75 + 60 / control:rabbasca_rocks:frequency,\z
+                                    region_size = 40 + 60 / control:rabbasca_rocks:frequency,\z
                                     density = 0.32,\z
-                                    radius = 2 + 0.5 * sqrt(control:rabbasca_rocks:size),\z
+                                    radius = 1 + 0.7 * sqrt(control:rabbasca_rocks:size),\z
                                     favorability = 1} * control:rabbasca_rocks:size"
   },
   {

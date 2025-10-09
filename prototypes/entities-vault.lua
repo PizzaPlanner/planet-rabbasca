@@ -16,12 +16,14 @@ local access_console = util.merge{
     is_military_target = false
   }
 }
+access_console.allowed_effects = { "speed", "consumption", "pollution" }
 access_console.next_upgrade = nil -- "rabbasca-vault-extraction-terminal"
 access_console.fluid_boxes = { } 
 -- access_console.allowed_effects = nil
 access_console.energy_source = {
-  type = "void",
-  -- emissions_per_minute = { ["vault-activity"] = 0.75 * minute } -- actual numbers are way higher
+  type = "electric",
+  usage_priority = "primary-input",
+  emissions_per_minute = { ["vault-activity"] = 0.75 } -- actual numbers are way higher
 }
 access_console.resistances = {
   { type = "physical", percent = 70 },
@@ -49,7 +51,7 @@ access_console.loot = {{ item = "rabbasca-console-scrap", count_min = 165, count
 access_console.minable = nil -- { mining_time = 5, results = {{ type = "item", name = "rabbasca-console-scrap", amount_min = 165, amount_max = 173 }} }
 access_console.flags = {"placeable-player", "not-deconstructable", "not-rotatable", "placeable-off-grid"}
 access_console.surface_conditions = nil
-access_console.crafting_categories = { "rabbasca-vault-hacking" }
+access_console.crafting_categories = { "rabbasca-vault-hacking", "rabbasca-vault-extraction" }
 access_console.graphics_set =
 {
   animation =
@@ -67,16 +69,6 @@ access_console.graphics_set =
     }
   },
 }
-
-local extraction_console = util.merge{ 
-  table.deepcopy(access_console),
-  {
-    name = "rabbasca-vault-extraction-terminal",
-    energy_usage = "1MW",
-  } 
-}
-extraction_console.crafting_categories = { "rabbasca-vault-extraction" }
-extraction_console.energy_source = { type = "void" }
 
 local vault = util.merge{ 
   table.deepcopy(data.raw["unit-spawner"]["spitter-spawner"]), 
@@ -186,6 +178,4 @@ vault.graphics_set =
 data:extend {
   vault, 
   access_console, 
-  extraction_console, 
-  power_node,
 }

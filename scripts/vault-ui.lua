@@ -146,13 +146,13 @@ script.on_event(defines.events.on_gui_closed, function(event)
 end)
 
 script.on_event(defines.events.on_gui_opened, function(event)
-    if not event.entity or not event.entity.name:find("^rabbasca%-vault%-") then return end
+    if not event.entity then return end
     if storage.console_gui then return end
     local entity = event.entity
     local player = game.get_player(event.player_index)
     local anchor = {
         gui = defines.relative_gui_type.assembling_machine_gui, 
-        position = defines.relative_gui_position.right
+        position = defines.relative_gui_position.top
     }
     storage.console_gui = player.gui.relative.add{type="frame", anchor=anchor, direction = "vertical"}
     local frame = storage.console_gui
@@ -162,41 +162,6 @@ script.on_event(defines.events.on_gui_opened, function(event)
         sprite = "space-location/rabbasca",
         style = "frame_action_button"
     }
-    local current_index = 0
-    if entity.name == "rabbasca-vault-extraction-terminal" then current_index = 2 end
-    -- if entity.name == "rabbasca-vault-power-node"          then current_index = 3 end
-    frame.add{type = "label", caption = "Change vault mode", style = "caption_label"}
-    local list = frame.add{ type = "list-box", 
-    name = "rabbasca-vault-selector",
-    selected_index = current_index,
-    items = {
-        {"", "[img=item/blank-vault-key] Turn Off"},
-        {"", "[img=item/harene-ears-core] Regenerate Core"},
-        {"", "[img=item/rabbascan-security-key-e] Extraction Module"},
-        {"", "[img=item/rabbascan-security-key-p] Power Module"}
-    } }
-    -- list.add{
-    --     type = "list-box-item",
-    --     sprite= "item/rabbascan-security-key-e",
-    --     name = "rabbasca-switch-console-e"
-    -- }
-    -- list.add{
-    --     type = "list-box-item",
-    --     sprite= "item/rabbascan-security-key-p",
-    --     name = "rabbasca-switch-console-p"
-    -- }
-    -- frame.add{
-    --     type = "sprite-button",
-    --     sprite= "item/rabbascan-security-key-e",
-    --     style = "slot_button",
-    --     name = "rabbasca-switch-console-e"
-    -- }
-    -- frame.add{
-    --     type = "sprite-button",
-    --     sprite= "item/rabbascan-security-key-p",
-    --     style = "slot_button",
-    --     name = "rabbasca-switch-console-p"
-    -- }
 end)
 
 script.on_event(defines.events.on_gui_click, function(event)

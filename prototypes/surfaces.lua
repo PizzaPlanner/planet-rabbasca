@@ -1,6 +1,6 @@
 local planet_lib = require("__PlanetsLib__.lib.planet")
 local parent_planet = "gleba"
-local nauvis = data.raw["planet"][parent_planet]
+local gleba = data.raw["planet"][parent_planet]
 local tau = 2*math.pi
 local planet_catalogue_aquilo = require("__space-age__.prototypes.planet.procession-catalogue-aquilo")
 
@@ -85,10 +85,10 @@ PlanetsLib:extend({
     type = "planet",
     name = "rabbasca",
     draw_orbit = false,
-    solar_power_in_space = nauvis.solar_power_in_space,
+    solar_power_in_space = gleba.solar_power_in_space,
     auto_save_on_first_trip = true,
     gravity_pull = 10,
-    order = nauvis.order .. "a",
+    order = gleba.order .. "a",
     
     icons = {
       {
@@ -98,11 +98,11 @@ PlanetsLib:extend({
     },
     icon = "__muluna-graphics__/graphics/moon-icon-mipped.png",
     icon_size = 64,
-    label_orientation = 0.55,
+    label_orientation = 0.75,
     starmap_icon = "__muluna-graphics__/graphics/moon-icon.png",
-    starmap_icon_size = 1482,
+    starmap_icon_size = 1215,
     subgroup = "satellites",
-    magnitude = nauvis.magnitude*3/5,
+    magnitude = gleba.magnitude*3/5,
     pollutant_type = "vault-activity",
     persistent_ambient_sounds=data.raw["space-platform-hub"]["space-platform-hub"].persistent_ambient_sounds,
     localised_description={"planetslib-templates.moon-description",{"space-location-description.rabbasca"},"[planet="..parent_planet.."]"},
@@ -111,12 +111,14 @@ PlanetsLib:extend({
         ["pressure"] = 0,
         ["day-night-cycle"] = 0,
         ["magnetic-field"] = 0.01,
-        ["harenic-energy-signatures"] = 1,
+        ["harenic-energy-signatures"] = 100,
+        ["atmospheric-oxygen"] = 0,
+        ["atmospheric-carbon-dioxide"] = 0,
     },
     map_gen_settings = map_gen,
-    parked_platforms_orientation=0.53,
+    parked_platforms_orientation = 0.27,
     orbit = {
-      orientation = 0.93,
+      orientation = 0.74,
       distance = 1.7,
       parent = {
         type = "planet",
@@ -139,13 +141,7 @@ PlanetsLib:extend({
       arrival = {"platform-to-planet-b"},
       departure = {"planet-to-platform-a"}
     },
-    procession_graphic_catalogue = planet_catalogue_aquilo,
-
-    --Player effects, based on Varaxia's work on Celestial weather
-    ticks_between_player_effects = 1,
-    --player_effects = require("player_effects").player_effects
-
-    
+    procession_graphic_catalogue = planet_catalogue_aquilo
 }
 })
 
@@ -158,7 +154,7 @@ util.merge{ data.raw["surface"]["space-platform"], {
     pressure = 0,
     ["magnetic-field"] = 0,
     ["day-night-cycle"] = 0 ,
-    ["harenic-energy-signatures"] = 0.7, 
+    ["harenic-energy-signatures"] = 60, 
   }
 }},
 {
