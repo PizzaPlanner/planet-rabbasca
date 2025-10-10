@@ -40,32 +40,15 @@ local function show_teleport_ui(player, max_range)
     rui.extend_bunnyhop_ui(player)
 end
 
-local function handle_teleport_effect(event)
+local function handle_script_events(event)
   local effect_id = event.effect_id
-  -- if effect_id == "reevaluate_harene_fuel_source" then
-  --   local fuel = event.source_entity
-  --   if not fuel then return end
-  --   local burner = fuel.owner_location
-  --   if not burner.entity or not burner.burner then return end
-  --   local position = burner.position
-  --   local tile = burner.surface.get_tile(position.x, position.y)
-  --   if tile.collides_with("harene") == false then return end
-  --   burner.burner.inventory.insert({name = "rabbasca-infused-haronite-core"})
-  -- end
   if effect_id == "rabbasca_init_terminal" then
     local console = event.target_entity or event.source_entity
     if not console then return end
-    if console.name == "rabbasca-vault-extraction-terminal" then
-      -- console.active = false
-      -- console.operable = false
-      console.force = game.forces.player
-    elseif console.name == "rabbasca-vault-access-terminal" then
-      console.force = game.forces.neutral
+    if console.name == "rabbasca-vault-access-terminal" then
       console.set_recipe("rabbasca-vault-activate")
-    elseif console.name == "rabbasca-vault-timer" then
-      console.operable = false
-      console.destructible = false
-      -- console.force = game.forces.neutral
+      console.recipe_locked = true
+      console.force = game.forces.neutral
     end
   elseif effect_id == "rabbasca_terminal_died" then
     local console = event.target_entity or event.source_entity
@@ -144,7 +127,7 @@ local function handle_teleport_effect(event)
 end
 
 -- Register event
-script.on_event(defines.events.on_script_trigger_effect, handle_teleport_effect)
+script.on_event(defines.events.on_script_trigger_effect, handle_script_events)
 
 script.on_event(defines.events.on_surface_created, function(event)
   if not game.planets["rabbasca"] or not game.planets["rabbasca"].surface then return end

@@ -1,9 +1,10 @@
 {
     "name": "planet-rabbasca",
     "version": "0.0.1",
-    "title": "○🌐 Rabbasca and the lost remnant",
+    "title": "○🌐 Rabbasca, the forgotten Moon",
+    "description": "This Moon of Gleba emits strange energy signatures which interfere with conventional energy sources. Use the limited power it provides to explore ancient vaults of a long gone civilization. Discover new ways to construct your machines and conquer space with your very own tool-assisted legs.",
     "factorio_version": "2.0",
-    "author": "Me",    
+    "author": "PizzaPlanner",    
     "dependencies": [
         "space-age", 
         "PlanetsLib", 

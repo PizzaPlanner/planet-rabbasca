@@ -21,7 +21,8 @@ data:extend {
     icon = "__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-icon.png",
     name = "machining-assembler",
     place_result = "machining-assembler",
-    stack_size = 1,
+    stack_size = 5,
+    weight = 200 * kg,
     subgroup = "production-machine",
     order = "fr[machining-assembler]",
 },
@@ -94,7 +95,7 @@ data:extend {
     name = "power-solution",
     stack_size = 100,
     subgroup = "rabbasca-processes",
-    order = "b[personal-transport]-c[startertron]",
+    order = "b[personal-transport]-c[power-solution]",
 },
 {
     type = "item",
@@ -102,7 +103,7 @@ data:extend {
     name = "harene-ears-core",
     stack_size = 5,
     subgroup = "rabbasca-processes",
-    order = "b[personal-transport]-c[startertron]",
+    order = "b[personal-transport]-d[harene-ears-core]",
     auto_recycle = false,
 },
 {
@@ -114,16 +115,8 @@ data:extend {
     name = "harene-ears-subcore",
     stack_size = 50,
     subgroup = "rabbasca-processes",
-    order = "b[personal-transport]-c[startertron]",
+    order = "b[personal-transport]-d[harene-ears-subcore]",
     auto_recycle = false,
-},
-{
-    type = "item",
-    icon = "__space-age__/graphics/icons/small-wriggler.png",
-    name = "harene-glob-core",
-    stack_size = 10,
-    subgroup = "rabbasca-processes",
-    order = "b[personal-transport]-c[startertron]",
 },
 {
     type = "item",
@@ -133,7 +126,7 @@ data:extend {
     name = "harene-copy-core",
     stack_size = 10,
     subgroup = "rabbasca-processes",
-    order = "b[personal-transport]-c[startertron]",
+    order = "b[personal-transport]-d[harene-copy-core]",
 },
 {
     type = "item",
@@ -143,7 +136,7 @@ data:extend {
     name = "harene-copy-core-recharging",
     stack_size = 10,
     subgroup = "rabbasca-processes",
-    order = "b[personal-transport]-c[startertron]",
+    order = "b[personal-transport]-d[harene-copy-core-recharging]",
 },
 {
     type = "capsule",
@@ -151,10 +144,10 @@ data:extend {
     name = "bunnyhop-engine",
     stack_size = 1,
     subgroup = "rabbasca-processes",
-    order = "b[personal-transport]-c[startertron]",
+    order = "c[personal-transport]-a[bunnyhop-engine]",
     capsule_action = {
       type = "use-on-self",
-      uses_stack = false,
+      uses_stack = true,
       attack_parameters = {
         type = "projectile",
         activation_type = "consume",
@@ -229,7 +222,7 @@ data:extend {
     subgroup = "rabbasca-processes",
     order = "b[personal-transport]-c[startertron]",
     fuel_category = "nutrients",
-    fuel_value = "2MJ",
+    fuel_value = "8.7MJ",
 },
 {
   type = "fluid",
@@ -238,6 +231,7 @@ data:extend {
       { icon = "__space-age__/graphics/icons/fluid/fluorine.png", tint = { r=0.65, g=0.31, b=0.92 } },
       { icon = "__space-age__/graphics/icons/fluid/electrolyte.png", tint = { 0.9, 0.8, 1 } },
     },
+    subgroup = "fluid",
     base_color = {r=0.65, g=0.31, b=0.92},
     flow_color = {r=0.65, g=0.31, b=0.92},
     default_temperature = 1032.0,
@@ -245,12 +239,13 @@ data:extend {
     auto_barrel = false
 },
 {
-  type = "fluid",
+    type = "fluid",
     name = "harene-gas",
     icons = {{ icon = "__space-age__/graphics/icons/fluid/fluorine.png", tint = {r=0.65, g=0.31, b=0.92} }},
+    subgroup = "fluid",
     base_color = {r=0.65, g=0.31, b=0.92},
     flow_color = {r=0.65, g=0.31, b=0.92},
-    default_temperature = -35.0,
+    default_temperature = 35.0,
     fuel_value = "1MJ",
     auto_barrel = false
 },
@@ -258,15 +253,17 @@ data:extend {
     type = "fluid",
     name = "beta-carotene",
     icon = "__space-age__/graphics/icons/fluid/thruster-fuel.png",
+    subgroup = "fluid",
     base_color = { 0.8, 0.42, 0.02 },
     flow_color = { 0.8, 0.42, 0.02 },
     default_temperature = 14.0,
-    auto_barrel = true
+    auto_barrel = true,
 },
 {
     type = "fluid",
     name = "energetic-residue",
     icon = "__space-age__/graphics/icons/fluid/ammoniacal-solution.png",
+    subgroup = "fluid",
     base_color = {0, 0.14, 0.53},
     flow_color = {0, 0.14, 0.53},
     default_temperature = 72.0,
@@ -278,8 +275,8 @@ data:extend {
     name = "rabbasca-copyslop",
     icon = "__space-age__/graphics/icons/fluid/ammoniacal-solution.png",
     subgroup = "fluid",
-    base_color = {0.17, 0.42, 0.53},
-    flow_color = {0.17, 0.42, 0.53},
+    base_color = {0.37, 0.42, 0.23},
+    flow_color = {0.37, 0.42, 0.23},
     default_temperature = -32.0,
     auto_barrel = false
 },
@@ -323,7 +320,7 @@ util.merge{
 },
 {
     type = "item",
-    name = "blank-vault-key",
+    name = "vault-access-key",
     category = "rabbasca-security",
     icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png",
     stack_size = 20,

@@ -5,11 +5,11 @@ local access_console = util.merge{
   {
     name = "rabbasca-vault-access-terminal",
     -- fixed_recipe = "rabbasca-vault-activate",
-    max_health = 2400,
-    healing_per_tick = 0.1 / second,
+    max_health = 3200,
+    healing_per_tick = 0.2 / second,
     crafting_speed = 1,
     energy_usage = "2MW",
-    allow_copy_paste = false,
+    allow_copy_paste = true,
     module_slots = 2,
     return_ingredients_on_change = true,
     collision_box = {{-0.4, -0.4}, {0.4, 0.4}},
@@ -24,7 +24,7 @@ access_console.fluid_boxes = { }
 access_console.energy_source = {
   type = "electric",
   usage_priority = "primary-input",
-  emissions_per_minute = { ["vault-activity"] = 2 }, -- actual numbers are way higher
+  emissions_per_minute = { ["vault-activity"] = 6 }, -- actual numbers are way higher
   drain = "0kW"
 }
 access_console.resistances = {
@@ -55,7 +55,7 @@ access_console.created_effect = {
 access_console.collision_mask = { layers = { } }
 -- access_console.loot = {{ item = "rabbasca-console-scrap", count_min = 165, count_max = 173 }}
 access_console.minable = nil -- { mining_time = 5, results = {{ type = "item", name = "rabbasca-console-scrap", amount_min = 165, amount_max = 173 }} }
-access_console.flags = {"placeable-player", "not-deconstructable", "not-rotatable", "placeable-off-grid"}
+access_console.flags = { "placeable-player", "not-deconstructable", "not-rotatable", "placeable-off-grid" }
 access_console.surface_conditions = nil
 access_console.crafting_categories = { "rabbasca-vault-hacking", "rabbasca-vault-extraction" }
 access_console.graphics_set =

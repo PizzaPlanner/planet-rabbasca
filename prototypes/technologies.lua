@@ -66,7 +66,7 @@ data:extend {
     research_trigger =
     {
       type = "craft-item",
-      item = "blank-vault-key"
+      item = "vault-access-key"
     }
 },
 {
@@ -142,7 +142,11 @@ data:extend {
     prerequisites = { "rabbasca-vault-core-extraction" },
     effects =
     {
-      -- added later
+      {
+        type = "unlock-recipe",
+        recipe = "harene-ears-subcore"
+      }
+      -- more in data-updates
     },
     research_trigger =
     {
@@ -226,6 +230,29 @@ data:extend {
 },
 {
     type = "technology",
+    name = "rabbasca-turbofish-breeding",
+    icon = "__space-age__/graphics/technology/fish-breeding.png",
+    icon_size = 256,
+    prerequisites = { "rabbasca-ears-technology", "fish-breeding" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-turbofish-breeding"
+      },
+    },
+    unit = {
+        count = 500,
+        time = 60,
+        ingredients = {
+          { "chemical-science-pack", 1},
+          { "space-science-pack", 1},
+          { "agricultural-science-pack", 1},
+        }
+    }
+},
+{
+    type = "technology",
     name = "harene-synthesis",
     icon = "__space-age__/graphics/technology/steel-plate-productivity.png",
     icon_size = 256,
@@ -245,6 +272,9 @@ data:extend {
         count = 2000,
         time = 60,
         ingredients = {
+          {"automation-science-pack", 1},
+          {"logistic-science-pack", 1},
+          {"chemical-science-pack", 1},
           { "metallurgic-science-pack", 1},
           { "cryogenic-science-pack", 1}
         }
@@ -293,7 +323,7 @@ data:extend {
     },
   },
   unit = {
-    count = 400,
+    count = 250,
     time = 30,
     ingredients = {
       {"automation-science-pack", 1},

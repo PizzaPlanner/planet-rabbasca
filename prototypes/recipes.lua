@@ -73,6 +73,7 @@ data:extend {
         hide_from_player_crafting = true,
         main_product = "power-solution",
         category = "organic-or-chemistry",
+        allow_productivity = true,
     },
     {
         type = "recipe",
@@ -87,6 +88,7 @@ data:extend {
         main_product = "beta-carotene",
         hide_from_player_crafting = true,
         category = "organic-or-chemistry",
+        allow_productivity = true,
     },
     {
         type = "recipe",
@@ -106,7 +108,8 @@ data:extend {
         hide_from_player_crafting = true,
         result_is_always_fresh = true,
         reset_freshness_on_craft = true,
-        preserve_products_in_machine_output = true
+        preserve_products_in_machine_output = true,
+        allow_productivity = true,
     },
     {
         type = "recipe",
@@ -283,6 +286,7 @@ data:extend {
         },
         main_product = "vision-circuit",
         category = "electronics-with-fluid",
+        allow_productivity = true,
     },
     {
         type = "recipe",
@@ -306,7 +310,7 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "rabbasca-turbofish",
+        name = "rabbasca-turbofish-breeding",
         enabled = false,
         energy_required = 15,
         ingredients = { 
@@ -319,6 +323,7 @@ data:extend {
         },
         main_product = "rabbasca-turbofish",
         category = "organic",
+        allow_productivity = true,
     },
     {
         type = "recipe",
@@ -333,6 +338,7 @@ data:extend {
         },
         main_product = "protein-powder",
         category = "crafting",
+        allow_productivity = true,
     },
     {
         type = "recipe",
@@ -345,6 +351,19 @@ data:extend {
         results = { {type = "item", name = "rabbasca-turbofin", amount = 2 } },
         main_product = "rabbasca-turbofin",
         category = "crafting",
+    },
+    {
+        type = "recipe",
+        name = "harene-ears-subcore",
+        enabled = false,
+        energy_required = 4,
+        ingredients = { 
+            {type = "item", name = "harene-ears-core", amount = 1 },
+        },
+        results = { {type = "item", name = "harene-ears-subcore", amount = 20 } },
+        main_product = "harene-ears-subcore",
+        category = "crafting",
+
     },
     {
         type = "recipe",
@@ -405,17 +424,19 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "blank-vault-key",
+        name = "vault-access-key",
         enabled = false,
         energy_required = 3,
         ingredients = { 
-            {type = "item", name = "advanced-circuit", amount = 2 },
+            {type = "item", name = "advanced-circuit", amount = 20 },
+            {type = "item", name = "vision-circuit", amount = 5 },
             {type = "item", name = "rabbasca-turbofin", amount = 1 },
             {type = "fluid", name = "beta-carotene", amount = 20 },
         },
-        results = { {type = "item", name = "blank-vault-key", amount = 1} },
-        main_product = "blank-vault-key",
+        results = { {type = "item", name = "vault-access-key", amount = 1} },
+        main_product = "vault-access-key",
         category = "crafting-with-fluid",
+        allow_productivity = true,
     },
     {
         type = "recipe",
@@ -444,7 +465,7 @@ r.create_duplication_recipe("steel-plate", 1, 20)
 r.create_duplication_recipe("rabbasca-carotene-powder", 1, 200)
 r.create_duplication_recipe("electronic-circuit", 1, 150)
 r.create_duplication_recipe("advanced-circuit",   1, 25)
--- create_duplication_recipe("blank-vault-key",    1, 2)
+-- create_duplication_recipe("vault-access-key",    1, 2)
 
 -- r.create_duplication_recipe_triggered("uranium-rounds-magazine")
 -- r.create_duplication_recipe("uranium-rounds-magazine", 1, 10)
@@ -466,7 +487,8 @@ data:extend {
             { type = "item", name = "calcite", amount = 6 },
             { type = "item", name = "rabbasca-carotene-powder", amount = 15 },
             { type = "fluid", name = "water", amount = 120 },
-        }
+        },
+        allow_productivity = true,
     },
     {
         type = "recipe",
@@ -480,7 +502,8 @@ data:extend {
         results = {{type = "item", name = "haronite-brick", amount = 1 }},
         ingredients = {
             { type = "item", name = "haronite", amount = 1 },
-        }
+        },
+        allow_productivity = true,
     },
     {
         type = "recipe",
@@ -496,7 +519,7 @@ data:extend {
             { type = "item", name = "rabbasca-turbofin", amount = 5 },
             { type = "item", name = "iron-stick", amount = 16 },
             { type = "fluid", name = "energetic-residue", amount = 20 },
-        }
+        },
     },
     {
         type = "recipe",
@@ -504,7 +527,7 @@ data:extend {
         energy_required = 20,
         enabled = false,
         ingredients = { 
-            {type = "item", name = "harene-glob-core", amount = 1 },
+            -- {type = "item", name = "harene-glob-core", amount = 1 },
             {type = "item", name = "infused-haronite-plate", amount = 4 },
             {type = "item", name = "foundation", amount = 1 },
         },
@@ -520,7 +543,7 @@ data:extend {
         enabled = false,
         energy_required = 20,
         ingredients = { 
-            {type = "item", name = "harene-glob-core", amount = 1 },
+            -- {type = "item", name = "harene-glob-core", amount = 1 },
             {type = "item", name = "infused-haronite-plate", amount = 4 },
             {type = "item", name = "space-platform-foundation", amount = 1 },
         },
@@ -539,7 +562,7 @@ data:extend {
         enabled = true,
         hidden = true,
         energy_required = 3,
-        ingredients = {{ type = "item", name = "blank-vault-key", amount = 1 }},
+        ingredients = {{ type = "item", name = "vault-access-key", amount = 1 }},
         results = {{ type = "item", name = "rabbasca-vault-access-protocol", amount = 1 }},
         main_product = "rabbasca-vault-access-protocol",
         category = "rabbasca-vault-hacking",

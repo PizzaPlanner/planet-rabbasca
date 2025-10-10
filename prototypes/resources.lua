@@ -20,7 +20,7 @@ scrap_resource.minable =
     { type = "item", name = "advanced-circuit",  amount = 1, probability = 0.1 },
     { type = "item", name = "tungsten-plate",   amount = 1, probability = 0.06 },
     { type = "item", name = "battery",   amount = 1, probability = 0.02 },
-    { type = "item", name = "blank-vault-key",  amount = 1, probability = 0.015 },
+    { type = "item", name = "vault-access-key",  amount = 1, probability = 0.015 },
   }
 }
 scrap_resource.collision_mask = { layers = { resource = true } }
@@ -44,7 +44,7 @@ local harene_resource = {
   minimum = 20000,
   normal = 100000,
   infinite_depletion_amount = 10,
-  resource_patch_search_radius = 5,
+  resource_patch_search_radius = 48,
   tree_removal_probability = 1.0,
   cliff_removal_probability = 1.0,
   tree_removal_max_distance = 64 * 64,

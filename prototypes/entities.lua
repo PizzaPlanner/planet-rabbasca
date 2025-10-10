@@ -265,6 +265,8 @@ local unpacker = util.merge{
     energy_usage = "55kW",
     vector_to_place_result = {0, 0.7},
     minable = { result = "rabbasca-copy-unpacker" },
+    show_recipe_icon = false,
+    
   }
 }
 unpacker.collision_box = {{-0.4, -0.4}, {0.4, 0.4}}
@@ -315,10 +317,19 @@ data.raw["simple-entity"]["harene-ears-core-capsule"].minable.results = {
   {type = "item", name = "harene-ears-core", amount_min = 1, amount_max  = 1 },
   {type = "item", name = "haronite-brick", amount_min = 10, amount_max  = 15 },
 }
+data.raw["simple-entity"]["harene-ears-core-capsule"].icons = {
+  { icon = data.raw["simple-entity"]["harene-ears-core-capsule"].icon, scale = 0.6, shift = { -4, -4 } },
+  { icon = data.raw["item"]["harene-ears-core"].icon, scale = 0.4, shift = { 8, 8 } }
+}
 data.raw["simple-entity"]["harene-copy-core-capsule"].minable.results = {
   {type = "item", name = "harene-copy-core-recharging", amount_min = 8, amount_max  = 8 },
   {type = "item", name = "haronite-brick", amount_min = 10, amount_max  = 15 },
 }
+data.raw["simple-entity"]["harene-copy-core-capsule"].icons = {
+  { icon = data.raw["simple-entity"]["harene-copy-core-capsule"].icon, scale = 0.6, shift = { -4, -4 } },
+  { icon = "__space-age__/graphics/icons/jelly.png", scale = 0.4, shift = { 8, 8 } }
+}
+data.raw["simple-entity"]["harene-copy-core-capsule"].icon = nil
 
 local beacon_anims = { }
 for _, anim in pairs(fff339.animation_list) do
