@@ -28,7 +28,6 @@ local function show_teleport_ui(player, max_range)
         value = 1
     }
     pb.style.horizontally_stretchable = true
-    -- pb.tags = { last_x = player.position.x, last_y = player.position.y }
 
     local list = frame.add{ 
       type = "list-box", 
@@ -60,11 +59,10 @@ local function handle_script_events(event)
     vault.active = false
     vault.force = game.forces.neutral
   elseif effect_id == "make_invulnerable" then
-    local monument = event.target_entity or event.source_entity
-    if not monument then return end
-    monument.destructible = false
-    monument.active = false
-    return
+    local vault = event.target_entity or event.source_entity
+    if not vault then return end
+    vault.destructible = false
+    vault.active = false
   elseif effect_id == "rabbasca_on_hack_console" then
     local console = event.target_entity or event.source_entity
     if not console then return end
@@ -82,13 +80,18 @@ local function handle_script_events(event)
     elseif recipe.name == "rabbasca-vault-activate" then
       vault.active = true
       vault.force = game.forces.enemy
-      local input = console.get_inventory(defines.inventory.crafter_input)
-      if input then 
-        surface.spill_inventory{position = position, inventory = input, enable_looted = true}
+      if console.is_crafting() then
+        -- set_recipe returns nothing and remaining items are not placed in crafter_trash
+        -- workaround: re-create the item consumed by next craft and spill whole input
+        local input = console.get_inventory(defines.inventory.crafter_input)
+        input.insert({name = "vault-access-key"}) -- one already removed from input on craft
+        if input then 
+          surface.spill_inventory{position = position, inventory = input, enable_looted = true}
+        end
       end
+      console.force = game.forces.player
       console.recipe_locked = false
       console.set_recipe(nil)
-      console.force = game.forces.player
     elseif recipe.name == "rabbasca-vault-deactivate" then
       vault.active = false
       vault.force = game.forces.neutral
@@ -108,32 +111,30 @@ local function handle_script_events(event)
       console.set_recipe("rabbasca-vault-regenerate-core")
       console.recipe_locked = true
     end
-    -- info.insert({name="rabbasca-vault-access-timer", count=1, spoil_percent = 1 - alert_duration_multiplier}) 
-    -- for i = 0, 20 do
-    --   info.insert({name="rabbasca-vault-access-indicator", count=5, spoil_percent= 1 - (i * 0.05 * alert_duration_multiplier)})
-    -- end
-    return
-  end
-  -- if effect_id == "rabbasca_vault_spawned" then
-  --   event.target_entity.insert_fluid({name = "harene", amount = 100}) 
-  --   return
-  -- end
-  if not effect_id or not effect_id:find("^rabbasca_teleport") then return end
-  local engine = event.source_entity or event.target_entity
-  local player = engine.player or engine.owner_location.player
-  if player then 
-    show_teleport_ui(player, 1000)
+  elseif effect_id == "rabbasca_teleport" then
+    local engine = event.source_entity or event.target_entity
+    local player = engine.player or engine.owner_location.player
+    if not player then return end
+    local armor = player.get_inventory(defines.inventory.character_armor)[1]
+    if armor and armor.valid_for_read and armor.grid then 
+      for _, eq in pairs(armor.grid.equipment) do
+        if eq.name == "bunnyhop-engine-equipment" then
+          player.create_local_flying_text { text = "Initiating bunnyhop...", create_at_cursor = true }
+          show_teleport_ui(player, 1000)
+          return
+        end
+      end
+    -- TODO: This still consumes the cooldown. Can it be reset?
+    player.create_local_flying_text { text = "No bunnyhop engine equipped", create_at_cursor = true }
+    end
   end
 end
 
--- Register event
 script.on_event(defines.events.on_script_trigger_effect, handle_script_events)
 
 script.on_event(defines.events.on_surface_created, function(event)
   if not game.planets["rabbasca"] or not game.planets["rabbasca"].surface then return end
   if event.surface_index ~= game.planets["rabbasca"].surface.index then return end
-  game.forces.enemy.set_evolution_factor_by_time(0, event.surface_index)
-  game.forces.enemy.set_evolution_factor_by_pollution(1, event.surface_index)
   game.planets["rabbasca"].surface.create_global_electric_network()
 end)
 

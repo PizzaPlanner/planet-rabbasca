@@ -99,19 +99,21 @@ data:extend {
 },
 {
     type = "item",
-    icon = "__space-age__/graphics/icons/fusion-generator.png",
+    icon = "__planet-rabbasca__/graphics/icons/harene-ears-core.png",
     name = "harene-ears-core",
     stack_size = 5,
+    weight = 50 * kg,
     subgroup = "rabbasca-processes",
     order = "b[personal-transport]-d[harene-ears-core]",
     auto_recycle = false,
 },
 {
     type = "item",
-    icon = "__space-age__/graphics/icons/fusion-generator.png",
-    -- icons = {
-    --   { icon = "__space-age__/graphics/icons/fusion-generator.png", scale = 0.4 }
-    -- },
+    icons = {
+      { icon = "__planet-rabbasca__/graphics/icons/harene-ears-core.png", scale = 0.5, shift = { -8, 0 } },
+      { icon = "__planet-rabbasca__/graphics/icons/harene-ears-core.png", scale = 0.5 },
+      { icon = "__planet-rabbasca__/graphics/icons/harene-ears-core.png", scale = 0.5, shift = { 8, 0 } },
+    },
     name = "harene-ears-subcore",
     stack_size = 50,
     subgroup = "rabbasca-processes",
@@ -120,9 +122,7 @@ data:extend {
 },
 {
     type = "item",
-    icons = {
-      { icon = "__space-age__/graphics/icons/jelly.png", tint = { 0.7, 0.6, 0.8 } }
-    },
+    icon = "__planet-rabbasca__/graphics/icons/harene-copy-core.png",
     name = "harene-copy-core",
     stack_size = 10,
     subgroup = "rabbasca-processes",
@@ -130,21 +130,35 @@ data:extend {
 },
 {
     type = "item",
-    icons = {
-      { icon = "__space-age__/graphics/icons/jelly.png", tint = { 0.7, 0.4, 0.5 } }
-    },
-    name = "harene-copy-core-recharging",
-    stack_size = 10,
+    icon = "__base__/graphics/icons/steam-engine.png",
+    name = "bunnyhop-engine-equipment",
+    stack_size = 1,
     subgroup = "rabbasca-processes",
-    order = "b[personal-transport]-d[harene-copy-core-recharging]",
+    order = "c[personal-transport]-a[bunnyhop-engine]",
+    place_as_equipment_result = "bunnyhop-engine-equipment"
+},
+util.merge {
+  data.raw["item-with-entity-data"]["cargo-wagon"],
+  {
+    name = "rabbasca-cargo-wagon",
+    stack_size = 1,
+    place_result = "rabbasca-cargo-wagon"
+  }
+},
+util.merge {
+  data.raw["item"]["fusion-reactor-equipment"],
+  {
+    name = "ears-subcore-reactor-equipment",
+    place_as_equipment_result = "ears-subcore-reactor-equipment",
+  }
 },
 {
     type = "capsule",
     icon = "__base__/graphics/icons/steam-engine.png",
     name = "bunnyhop-engine",
+    flags = {"only-in-cursor", "not-stackable", "spawnable"},
+    auto_recycle = false,
     stack_size = 1,
-    subgroup = "rabbasca-processes",
-    order = "c[personal-transport]-a[bunnyhop-engine]",
     capsule_action = {
       type = "use-on-self",
       uses_stack = true,
@@ -152,7 +166,7 @@ data:extend {
         type = "projectile",
         activation_type = "consume",
         ammo_category = "capsule",
-        cooldown = 1 * minute,
+        cooldown = 3 * minute,
         range = 0,
         ammo_type =
         {
@@ -174,7 +188,8 @@ data:extend {
           }
         }
       }
-    }
+    },
+    order = "c[personal-transport]-a[bunnyhop-engine]",
 },
 {
     type = "item",
@@ -252,7 +267,7 @@ data:extend {
 {
     type = "fluid",
     name = "beta-carotene",
-    icon = "__space-age__/graphics/icons/fluid/thruster-fuel.png",
+    icon = "__planet-rabbasca__/graphics/icons/beta-carotene.png",
     subgroup = "fluid",
     base_color = { 0.8, 0.42, 0.02 },
     flow_color = { 0.8, 0.42, 0.02 },
@@ -262,7 +277,7 @@ data:extend {
 {
     type = "fluid",
     name = "energetic-residue",
-    icon = "__space-age__/graphics/icons/fluid/ammoniacal-solution.png",
+    icon = "__planet-rabbasca__/graphics/icons/energetic-residue.png",
     subgroup = "fluid",
     base_color = {0, 0.14, 0.53},
     flow_color = {0, 0.14, 0.53},
@@ -273,12 +288,12 @@ data:extend {
 {
     type = "fluid",
     name = "rabbasca-copyslop",
-    icon = "__space-age__/graphics/icons/fluid/ammoniacal-solution.png",
+    icon = "__planet-rabbasca__/graphics/icons/copyslop.png",
     subgroup = "fluid",
     base_color = {0.37, 0.42, 0.23},
     flow_color = {0.37, 0.42, 0.23},
     default_temperature = -32.0,
-    auto_barrel = false
+    auto_barrel = true
 },
 {
     type = "item",

@@ -30,6 +30,7 @@ local assembler = util.merge { data.raw["assembling-machine"]["assembling-machin
     name = "machining-assembler",
     icon = data.raw["item"]["machining-assembler"].icon,
     minable = { result = "machining-assembler" },
+    placeable_by = { item = "machining-assembler", count = 1 },
     crafting_speed = 1,
     perceived_performance = 0.5,
     collision_box = {{-2.2, -2.2}, {2.2, 2.2}},
@@ -38,6 +39,7 @@ local assembler = util.merge { data.raw["assembling-machine"]["assembling-machin
     module_slots = 6,
 }}
 
+assembler.deconstruction_alternative = nil
 assembler.crafting_categories = { "complex-machinery", "install-ears-core" }
 assembler.fluid_boxes = { 
 {
@@ -88,6 +90,13 @@ assembler.graphics_set = {
   }
 }
 
+local train_wagon = util.merge { data.raw["cargo-wagon"]["cargo-wagon"],
+{
+  name = "rabbasca-cargo-wagon",
+  equipment_grid = "train-equipment-grid",
+  mineable = { result = "rabbasca-cargo-wagon" }
+}}
+
 local harene_platform = util.merge{ data.raw["space-platform-hub"]["space-platform-hub"],
   {
     name = "harene-space-platform-hub",
@@ -103,6 +112,7 @@ local harene_platform = util.merge{ data.raw["space-platform-hub"]["space-platfo
 
 data:extend {
   assembler,
+  train_wagon,
   harene_platform,
   {
     type = "roboport",
@@ -159,7 +169,7 @@ data:extend {
   {
     type = "electric-energy-interface",
     name = "rabbasca-energy-source",
-    icon = "__muluna-graphics__/graphics/moon-icon-mipped.png",
+    icon = "__planet-rabbasca__/graphics/icons/vulcanus-bw.png",
     energy_production = "50MW",
     energy_source = { type = "electric", usage_priority = "primary-output", buffer_capacity = "10MJ" },
     gui_mode = "none",
@@ -186,7 +196,7 @@ data:extend {
 
 data:extend {
   util.merge {
-  table.deepcopy(data.raw["simple-entity"]["vulcanus-chimney"]),
+  table.deepcopy(data.raw["simple-entity"]["copper-stromatolite"]),
   { minable = {0} },
   { 
     name = "carotenoid",
@@ -198,17 +208,17 @@ data:extend {
       tile_restriction = { "rabbasca-fertile" },
     },
     map_color = {0.73, 0.55, 0.1},
-    map_generator_bounding_box = {{-3.5, -3.5}, {3.5, 3.5}},
+    -- map_generator_bounding_box = {{-3.5, -3.5}, {3.5, 3.5}},
   }},
   util.merge {
     table.deepcopy(data.raw["simple-entity"]["big-volcanic-rock"]),
     {
-      name = "moonstone-rock",
+      name = "rabbasca-big-rock",
       minable = { 
         mining_time = 1.5,
       },
       autoplace = {
-        probability_expression = "rabbasca_rocks",
+        probability_expression = "rabbasca_rocks(0.5)",
         tile_restriction = { "rabbasca-rough", "rabbasca-rough-2" },
       },
       map_color = {0.09, 0.12, 0.17}
@@ -234,7 +244,7 @@ data:extend {
     {
       name = "rabbasca-turbofish",
       spoil_ticks = 3 * minute,
-      spoil_result = "protein-powder",
+      spoil_result = "raw-fish",
     },
   },
   util.merge{
@@ -257,62 +267,15 @@ data:extend {
   },
 }
 
-local unpacker = util.merge{
-  table.deepcopy(data.raw["furnace"]["electric-furnace"]),
-  {
-    name = "rabbasca-copy-unpacker",
-    result_inventory_size = 2,
-    energy_usage = "55kW",
-    vector_to_place_result = {0, 0.7},
-    minable = { result = "rabbasca-copy-unpacker" },
-    show_recipe_icon = false,
-    
-  }
-}
-unpacker.collision_box = {{-0.4, -0.4}, {0.4, 0.4}}
-unpacker.selection_box = {{-0.5, -0.5}, {0.5, 0.5}}
-unpacker.crafting_categories = { "rabbasca-matter-printer-unpack" }
-unpacker.graphics_set =
-{
-  animation =
-  {
-    layers =
-    {
-      {
-        filename = "__Krastorio2Assets__/buildings/loader/kr-loader.png",
-        priority = "high",
-        width = 424 / 4,
-        height = 170 / 2,
-        frame_count = 8,
-        line_length = 4,
-        scale = 0.4,
-        shift = { 0.08, 0.04 }
-      }
-    }
-  },
-}
-data:extend{ unpacker,
-{
-    type = "item",
-    icon = "__base__/graphics/icons/distractor-capsule.png",
-    name = "rabbasca-copy-unpacker",
-    stack_size = 50,
-    place_result = "rabbasca-copy-unpacker",
-    subgroup = "smelting-machine",
-    order = "r[copy-unpacker]",
-}
-}
-
 local fish_action = table.deepcopy(require("__space-age__.prototypes.item-effects").jellynut_speed)
 fish_action.attack_parameters.ammo_type.action.action_delivery.target_effects[1].sticker = "turbofish-speed-sticker"
 
 data.raw["electric-energy-interface"]["rabbasca-energy-source"].collision_box = nil
 data.raw["capsule"]["rabbasca-turbofish"].capsule_action = fish_action
-data.raw["simple-entity"]["moonstone-rock"].minable.results = {
+data.raw["simple-entity"]["rabbasca-big-rock"].minable.results = {
   {type = "item", name = "haronite", amount_min = 12, amount_max = 18}, 
   {type = "item", name = "calcite", amount_min = 4, amount_max = 7 }
 }
-data.raw["simple-entity"]["carotenoid"].minable.results = {{type = "item", name = "rabbasca-carotene-powder", amount_min = 40, amount_max = 55}}
 data.raw["simple-entity"]["harene-ears-core-capsule"].minable.results = {
   {type = "item", name = "harene-ears-core", amount_min = 1, amount_max  = 1 },
   {type = "item", name = "haronite-brick", amount_min = 10, amount_max  = 15 },
@@ -322,14 +285,22 @@ data.raw["simple-entity"]["harene-ears-core-capsule"].icons = {
   { icon = data.raw["item"]["harene-ears-core"].icon, scale = 0.4, shift = { 8, 8 } }
 }
 data.raw["simple-entity"]["harene-copy-core-capsule"].minable.results = {
-  {type = "item", name = "harene-copy-core-recharging", amount_min = 8, amount_max  = 8 },
+  {type = "item", name = "rabbasca-copyslop-barrel", amount_min = 20, amount_max  = 20 },
   {type = "item", name = "haronite-brick", amount_min = 10, amount_max  = 15 },
 }
 data.raw["simple-entity"]["harene-copy-core-capsule"].icons = {
   { icon = data.raw["simple-entity"]["harene-copy-core-capsule"].icon, scale = 0.6, shift = { -4, -4 } },
-  { icon = "__space-age__/graphics/icons/jelly.png", scale = 0.4, shift = { 8, 8 } }
+  { icon = data.raw["item"]["harene-copy-core"].icon, scale = 0.4, shift = { 8, 8 } }
 }
-data.raw["simple-entity"]["harene-copy-core-capsule"].icon = nil
+data.raw["simple-entity"]["harene-copy-core-capsule"].pictures = {
+  { filename = "__planet-rabbasca__/graphics/icons/vault-core-capsule.png", size = 128 },
+}
+data.raw["simple-entity"]["harene-ears-core-capsule"].pictures = {
+  { filename = "__planet-rabbasca__/graphics/icons/vault-core-capsule.png", size = 128 },
+}
+
+data.raw["simple-entity"]["carotenoid"].minable.results = {{type = "item", name = "rabbasca-carotene-powder", amount_min = 40, amount_max = 55}}
+data.raw["simple-entity"]["carotenoid"].collision_mask = data.raw["simple-entity"]["harene-copy-core-capsule"].collision_mask
 
 local beacon_anims = { }
 for _, anim in pairs(fff339.animation_list) do

@@ -29,6 +29,51 @@ data:extend{
 }
 }
 
+data:extend {
+  util.merge{
+    data.raw["optimized-decorative"]["yellow-lettuce-lichen-cups-3x3"],
+    {
+      name = "rabbasca-yellow-lettuce-lichen-3x3",
+      autoplace = { probability_expression = "(rabbasca_fertile > 1.1) * rpi(0.6) * decorative_knockout" }
+    }
+  },
+  util.merge{
+    data.raw["optimized-decorative"]["yellow-lettuce-lichen-cups-6x6"],
+    {
+      name = "rabbasca-yellow-lettuce-lichen-6x6",
+      autoplace = { probability_expression = "(rabbasca_fertile > 1.2) * rpi(0.4) * decorative_knockout" }
+    }
+  },
+  util.merge{
+    data.raw["optimized-decorative"]["crater-large"],
+    {
+      name = "rabbasca-crater-large",
+      autoplace = { probability_expression = "crater_large * (1.3 - max(rabbasca_down, rabbasca_fertile))" } 
+    }
+  },
+  util.merge{
+    data.raw["optimized-decorative"]["vulcanus-dune-decal"],
+    {
+      name = "rabbasca-dune-decal",
+      autoplace = { probability_expression = "vulcanus_dune_decal * rpi(0.2) * decorative_knockout - max(rabbasca_fertile, rabbasca_rocks(4)) - rabbasca_down" }
+    }
+  },
+  util.merge{
+    data.raw["optimized-decorative"]["tiny-volcanic-rock"],
+    {
+      name = "rabbasca-tiny-rock",
+      autoplace = { probability_expression = "rabbasca_rocks(1.9)" }
+    }
+  },
+  util.merge{
+    data.raw["optimized-decorative"]["small-volcanic-rock"],
+    {
+      name = "rabbasca-small-rock",
+      autoplace = { probability_expression = "rabbasca_rocks(1.3)" }
+    }
+  },
+}
+
 local map_gen = {
     cliff_settings = { },
     autoplace_controls = 
@@ -54,11 +99,14 @@ local map_gen = {
       {
         settings =
         {
-          ["lunar-medium-rock"] = data.raw["optimized-decorative"]["lunar-medium-rock"] ~= nil and {} or nil,
-          ["lunar-small-rock"] = data.raw["optimized-decorative"]["lunar-small-rock"] ~= nil and {} or nil,
-          ["lunar-tiny-rock"] = data.raw["optimized-decorative"]["lunar-tiny-rock"] ~= nil and {} or nil,
-          --["medium-sand-rock"] = {},
-          --["small-sand-rock"] = {}
+          -- ["crater-small"] = {},
+          ["rabbasca-crater-large"] = {},
+          ["rabbasca-yellow-lettuce-lichen-3x3"] = {},
+          ["rabbasca-yellow-lettuce-lichen-6x6"] = {},
+          ["shroom-decal"] = {},
+          ["rabbasca-tiny-rock"] = {},
+          ["rabbasca-small-rock"] = {},
+          ["rabbasca-dune-decal"] = {},
         }
       },
         ["entity"] =
@@ -70,7 +118,7 @@ local map_gen = {
           ["harene-vent"] = {},
           ["carotenoid"] = {},
           ["rabbasca-turbofish"] = {},
-          ["moonstone-rock"] = {},
+          ["rabbasca-big-rock"] = {},
           -- ["moonstone-turret"] = {},
           ["rabbasca-vault"] = {},
         }
@@ -90,17 +138,11 @@ PlanetsLib:extend({
     gravity_pull = 10,
     order = gleba.order .. "a",
     
-    icons = {
-      {
-        icon = "__muluna-graphics__/graphics/moon-icon-mipped.png",
-        icon_size = 64, 
-      }
-    },
-    icon = "__muluna-graphics__/graphics/moon-icon-mipped.png",
+    icon = "__planet-rabbasca__/graphics/icons/vulcanus-bw.png",
     icon_size = 64,
     label_orientation = 0.75,
-    starmap_icon = "__muluna-graphics__/graphics/moon-icon.png",
-    starmap_icon_size = 1215,
+    starmap_icon = "__planet-rabbasca__/graphics/icons/vulcanus-bw.png",
+    starmap_icon_size = 64,
     subgroup = "satellites",
     magnitude = gleba.magnitude*3/5,
     pollutant_type = "vault-activity",
@@ -126,8 +168,8 @@ PlanetsLib:extend({
       },
       sprite = {
         type = "sprite",
-        filename = "__muluna-graphics__/graphics/orbits/orbit-muluna.png",
-        size = 412,
+        filename = "__planet-rabbasca__/graphics/icons/vulcanus-bw.png",
+        size = 64,
         scale = 0.25,
       }
     },

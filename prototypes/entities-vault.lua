@@ -4,27 +4,30 @@ local access_console = util.merge{
   table.deepcopy(data.raw["assembling-machine"]["assembling-machine-2"]),
   {
     name = "rabbasca-vault-access-terminal",
-    -- fixed_recipe = "rabbasca-vault-activate",
+    -- fixed_recipe = "rabbasca-vault-activate", -- must be set via script to be editable later
     max_health = 3200,
-    healing_per_tick = 0.2 / second,
+    healing_per_tick = 5 / second,
     crafting_speed = 1,
     energy_usage = "2MW",
     allow_copy_paste = true,
     module_slots = 2,
     return_ingredients_on_change = true,
+    trash_inventory_size = 1,
     collision_box = {{-0.4, -0.4}, {0.4, 0.4}},
     selection_box = {{-0.6, -1}, {0.6, 0.6}},
-    is_military_target = true
+    is_military_target = true,
+    no_ears_upgrade = true
   }
 }
+access_console.flags = { "placeable-neutral", "not-deconstructable", "not-rotatable", "player-creation" }
 access_console.allowed_effects = { "speed", "consumption", "pollution" }
-access_console.next_upgrade = nil -- "rabbasca-vault-extraction-terminal"
+access_console.next_upgrade = nil
+access_console.minable = nil
 access_console.fluid_boxes = { } 
--- access_console.allowed_effects = nil
 access_console.energy_source = {
   type = "electric",
   usage_priority = "primary-input",
-  emissions_per_minute = { ["vault-activity"] = 6 }, -- actual numbers are way higher
+  emissions_per_minute = { ["vault-activity"] = 6 },
   drain = "0kW"
 }
 access_console.resistances = {
@@ -52,10 +55,7 @@ access_console.created_effect = {
     }
   } 
 }
-access_console.collision_mask = { layers = { } }
 -- access_console.loot = {{ item = "rabbasca-console-scrap", count_min = 165, count_max = 173 }}
-access_console.minable = nil -- { mining_time = 5, results = {{ type = "item", name = "rabbasca-console-scrap", amount_min = 165, amount_max = 173 }} }
-access_console.flags = { "placeable-player", "not-deconstructable", "not-rotatable", "placeable-off-grid" }
 access_console.surface_conditions = nil
 access_console.crafting_categories = { "rabbasca-vault-hacking", "rabbasca-vault-extraction" }
 access_console.graphics_set =
@@ -103,31 +103,11 @@ vault.created_effect = {
     type = "instant",
     target_effects =
     {
-      -- {
-      --   type = "create-entity",
-      --   entity_name = "rabbasca-vault-access-terminal",
-      --   offsets = {{0, 2.5}},
-      -- },
       {
         type = "create-entity",
         entity_name = "rabbasca-vault-access-terminal",
         offsets = {{2, 2.5}},
       },
-      -- {
-      --   type = "create-entity",
-      --   entity_name = "rabbasca-vault-extraction-terminal",
-      --   offsets = {{-2, 2.5}},
-      -- },
-      -- {
-      --   type = "create-entity",
-      --   entity_name = "rabbasca-vault-power-node",
-      --   offsets = {{1.5, 1.5}},
-      -- },
-      -- {
-      --   type = "create-entity",
-      --   entity_name = "rabbasca-vault-timer",
-      --   offsets = {{0, 0}},
-      -- },
       {
         type = "script",
         effect_id = "make_invulnerable"

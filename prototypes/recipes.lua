@@ -166,22 +166,6 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "rabbasca-copy-unpacker",
-        enabled = false,
-        energy_required = 5,
-        ingredients = { 
-            {type = "item", name = "iron-plate", amount = 7 },
-            {type = "item", name = "iron-gear-wheel", amount = 2 },
-            {type = "item", name = "electronic-circuit", amount = 5 },
-        },
-        results = { 
-            { type = "item", name = "rabbasca-copy-unpacker", amount = 1 },
-        },
-        main_product = "rabbasca-copy-unpacker",
-        category = "crafting"
-    },
-    {
-        type = "recipe",
         name = "rabbasca-remote-receiver",
         enabled = false,
         energy_required = 5,
@@ -290,23 +274,40 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "bunnyhop-engine",
+        name = "ears-subcore-reactor-equipment",
         enabled = false,
-        energy_required = 15,
+        energy_required = 10,
         ingredients = { 
             {type = "item", name = "harene-ears-subcore", amount = 1 },
-            -- {type = "item", name = "harene-glob-core", amount = 1 },
-            {type = "item", name = "power-solution", amount = 20 },
-            {type = "item", name = "engine-unit", amount = 5 },
-            {type = "item", name = "rabbasca-turbofin", amount = 100 },
-            {type = "item", name = "vision-circuit", amount = 10 }
+            {type = "item", name = "electric-engine-unit", amount = 1 },
+            {type = "item", name = "advanced-circuit", amount = 5 },
         },
         results = { 
-            { type = "item", name = "bunnyhop-engine", amount = 1 },
+            { type = "item", name = "ears-subcore-reactor-equipment", amount = 1 },
         },
-        hide_from_player_crafting = true,
-        main_product = "bunnyhop-engine",
-        category = "complex-machinery",
+        main_product = "ears-subcore-reactor-equipment",
+        category = "crafting",
+    },
+    {
+        type = "recipe",
+        name = "bunnyhop-engine-equipment",
+        enabled = false,
+        energy_required = 40,
+        ingredients = { 
+            {type = "item", name = "ears-subcore-reactor-equipment", amount = 2 },
+            -- {type = "item", name = "harene-glob-core", amount = 1 },
+            {type = "item", name = "power-solution", amount = 500 },
+            {type = "item", name = "rabbasca-energetic-concrete", amount = 100 },
+            {type = "item", name = "electric-engine-unit", amount = 50 },
+            {type = "item", name = "rabbasca-turbofin", amount = 100 },
+            {type = "item", name = "vision-circuit", amount = 200 }
+        },
+        results = { 
+            { type = "item", name = "bunnyhop-engine-equipment", amount = 1 },
+        },
+        -- hide_from_player_crafting = true,
+        main_product = "bunnyhop-engine-equipment",
+        category = "crafting",
     },
     {
         type = "recipe",
@@ -371,34 +372,20 @@ data:extend {
         enabled = false,
         energy_required = 8,
         ingredients = { 
-            { type = "fluid", name = "rabbasca-copyslop", amount = 250 },
-            -- {type = "fluid", name = "energetic-residue", amount = 5 },
+            { type = "fluid", name = "rabbasca-copyslop", amount = 200 },
+            { type = "fluid", name = "energetic-residue", amount = 5 },
         },
         results = { {type = "item", name = "harene-copy-core", amount = 1, ignored_by_productivity = 1} },
         main_product = "harene-copy-core",
-        category = "crafting-with-fluid",
+        category = "chemistry-or-cryogenics",
         hide_from_player_crafting = true,
-        surface_conditions = {{property = "harenic-energy-signatures", min = 50}}
-    },
-    {
-        type = "recipe",
-        name = "rabbasca-copyslop",
-        enabled = false,
-        energy_required = 3,
-        ingredients = { 
-            { type = "item", name = "harene-copy-core-recharging", amount = 1 }
-        },
-        results = { {type = "fluid", name = "rabbasca-copyslop", amount = 245, ignored_by_productivity = 245 } },
-        hide_from_player_crafting = true,
-        main_product = "rabbasca-copyslop",
-        category = "crafting-with-fluid",
     },
     {
         type = "recipe",
         name = "lubricant-from-copyslop",
         icons = { 
-            { icon = data.raw["fluid"]["rabbasca-copyslop"].icon, scale = 0.7, shift = { 0, -6 } },
-            { icon = data.raw["fluid"]["lubricant"].icon, scale = 0.7, shift = { 0, 6 } },
+            { icon = data.raw["fluid"]["rabbasca-copyslop"].icon, scale = 0.4, shift = { -8, -8 } },
+            { icon = data.raw["fluid"]["lubricant"].icon },
         },
         enabled = false,
         energy_required = 5.0,
@@ -420,6 +407,18 @@ data:extend {
             { type = "item", name = "firearm-magazine", amount = 100 },
         },
         results = { { type = "item", name = "self-replicating-firearm-magazine", amount = 1 } },
+        category = "crafting"
+    },
+    {
+        type = "recipe",
+        name = "rabbasca-cargo-wagon",
+        enabled = false,
+        energy_required = 3,
+        ingredients = {
+            { type = "item", name = "cargo-wagon", amount = 1 },
+            { type = "item", name = "modular-armor", amount = 1 },
+        },
+        results = { { type = "item", name = "rabbasca-cargo-wagon", amount = 1 } },
         category = "crafting"
     },
     {
@@ -454,8 +453,8 @@ data:extend {
 }
 
 -- r.create_vault_recipe("harene-glob-core",  3, 35,  false)
-r.create_vault_recipe(data.raw["simple-entity"]["harene-ears-core-capsule"], 120,  false)
-r.create_vault_recipe(data.raw["simple-entity"]["harene-copy-core-capsule"], 60,   true)
+r.create_vault_recipe(data.raw["simple-entity"]["harene-ears-core-capsule"], 60,  false)
+r.create_vault_recipe(data.raw["simple-entity"]["harene-copy-core-capsule"], 30,   true)
 -- r.create_vault_recipe("harenic-stabilizer",    1, 2.5, false)
 -- create_vault_recipe("rabbascan-encrypted-vault-data", 10, 3, true)
 -- create_vault_recipe("harene-cubic-core", 1, 10, false)

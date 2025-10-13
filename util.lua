@@ -51,23 +51,13 @@ end
 
 function output.create_duplication_recipe(item, input, output)
     if not data.raw["item"][item] then return end
-    local icons = {}
-    for _, icon in pairs(table.deepcopy(data.raw["item"]["harene-copy-core"].icons)) do 
-        table.insert(icons, icon)
-    end
+    local icons = { { icon = data.raw["item"]["harene-copy-core"].icon } }
     if data.raw["item"][item].icon then
-        table.insert(icons, { icon = data.raw["item"][item].icon, scale = 0.5 })
+        table.insert(icons, { icon = data.raw["item"][item].icon, scale = 0.3 })
     elseif data.raw["item"][item].icons then
         for _, icon in pairs(table.deepcopy(data.raw["item"][item].icons)) do
-            icon.scale = (icon.scale or 1) * 0.5
+            icon.scale = (icon.scale or 1) * 0.3
             table.insert(icons, icon)
-        end
-    end
-    local icons_unpack = table.deepcopy(icons)
-    icons_unpack[1].shift = {-8, -8}
-    for i, entry in ipairs(icons_unpack) do
-        if i > 1 then
-            entry.shift = {8, 8}
         end
     end
     data:extend {
@@ -75,9 +65,9 @@ function output.create_duplication_recipe(item, input, output)
         type = "item",
         name = "rabbasca-"..item.."-duplicate",
         icons = icons,
-        spoil_ticks = 2 * minute,
-        spoil_result = "harene-copy-core",
-        stack_size = data.raw["item"][item].stack_size / output,
+        spoil_ticks = 30 * second,
+        spoil_result = item,
+        stack_size = data.raw["item"][item].stack_size,
         subgroup = "rabbasca-matter-printer",
     },
     {
@@ -90,101 +80,55 @@ function output.create_duplication_recipe(item, input, output)
             { type = "item", name = item, amount = input},
         },
         results = { 
-            { type = "item", name = "rabbasca-"..item.."-duplicate", amount = 1, ignored_by_productivity = 1 } 
+            { type = "item",  name = "rabbasca-"..item.."-duplicate", amount = output, ignored_by_productivity = 1 },
+            { type = "fluid", name = "rabbasca-copyslop", amount = 198, ignored_by_productivity = 198 }
         },
         main_product = "rabbasca-"..item.."-duplicate",
-        category = "crafting",
-        reset_freshness_on_craft = true,
+        category = "crafting-with-fluid",
+        reset_freshness_on_craft = false,
         result_is_always_fresh = true,
-        allow_quality = false,
-        auto_recycle = false,
-        hide_from_player_crafting = true
-    },
-    {
-        type = "recipe",
-        name = "rabbasca-"..item.."-deduplicate",
-        enabled = true,
-        icons = icons_unpack,
-        energy_required = 5,
-        ingredients = {
-            { type = "item", name = "rabbasca-"..item.."-duplicate", amount = 1 },
-        },
-        results = { 
-            { type = "item", name = item, amount = output },
-            { type = "item", name = "harene-copy-core-recharging", amount = 1, ignored_by_productivity = 1 },
-         },
-        -- main_product = item,
-        subgroup = "rabbasca-matter-printer-unpack",
-        category = "rabbasca-matter-printer-unpack",
-        reset_freshness_on_craft = true,
-        result_is_always_fresh = true,
+        allow_quality = true,
         auto_recycle = false,
         hide_from_player_crafting = true
     },
 }
 end
 
-function get_type(crafter)
-    for _, type in pairs({"assembling-machine", "lab", "rocket-silo", "furnace", "inserter"}) do
-        if data.raw[type][crafter] then return type end
-    end
-    return nil
-end
-
-function create_infused_thing_with_effect(crafter, effect, add_effect_amount)
-    log("infuseing "..crafter)
-    local type = get_type(crafter) -- TODO: how to raise error?
-    log("... is ".. (type or "nothing"))
-    if not type or crafter:find("^harene%-infused") then return end 
-    local original = data.raw[type][crafter]
-    local new_name = effect and ("harene-infused-"..original.name.."-"..effect) or ("harene-infused-"..original.name)
+function create_infused_thing_with_effect(original, needed_core)
+    if original.no_ears_upgrade then return nil end 
+    local item = data.raw["item"][original.name]
+    if not item then return nil end
+    local new_name = "harene-infused-"..original.name
     local new = table.deepcopy(original)
     local icons = {}
-    if data.raw["item"][crafter].icon then
-        table.insert(icons, { icon = data.raw["item"][crafter].icon, scale = 0.8 })
-    elseif data.raw["item"][crafter].icons then
-        for _, icon in pairs(table.deepcopy(data.raw["item"][crafter].icons)) do
-            icon.scale = (icon.scale or 1) * 0.8
+    if item.icon then
+        table.insert(icons, { icon = item.icon })
+    elseif item.icons then
+        for _, icon in pairs(table.deepcopy(item.icons)) do
             table.insert(icons, icon)
         end
     end
-    log("... made icon")
-    local needed_core = type == "inserter" and "harene-ears-subcore" or "harene-ears-core"
-    log("... core ".. needed_core)
-    table.insert(icons, { icon = data.raw["item"][needed_core].icon, scale = 0.5, shift = {0, 12} })
-    if effect then
-        local effect_icon = "efficiency-module-3"
-        if effect == "speed" then effect_icon = "speed-module-3"
-        elseif effect == "quality" then effect_icon = "quality-module-3"
-        elseif effect == "productivity" then effect_icon = "productivity-module-3"
-        end
-        if data.raw["module"][effect_icon] then
-            table.insert(icons, { icon = data.raw["module"][effect_icon].icon, scale = 0.3, shift = {12, -12} })
-        end
-    end
-    local new_item = table.deepcopy(data.raw["item"][crafter])
+    table.insert(icons, { icon = data.raw["item"]["harene-ears-core"].icon, scale = 0.3, shift = {0, 12} })
+    local new_item = table.deepcopy(item)
     new_item.name = new_name
     new_item.hidden_in_factoriopedia = true
-    new_item.hidden = true
+    -- new_item.hidden = true
     new_item.icons = icons
     new_item.place_result = new_name
     new_item.subgroup = new_item.subgroup .. "-with-ears-core" 
     new_item.factoriopedia_alternative = original.name
 
     new.name = new_name
+    new.localised_name = {"", {"entity-name." .. original.name}, " [with E.A.R.S.]"}
     new.factoriopedia_alternative = original.name
     new.hidden_in_factoriopedia = true
     new.hidden = true
     new.icons = icons
+    new.no_ears_upgrade = true
     new.next_upgrade = nil
-    if effect then 
-        new.effect_receiver = new.effect_receiver or { base_effect = { } }
-        local prev_effect = new.effect_receiver.base_effect[effect] or 0
-        new.effect_receiver.base_effect[effect] = prev_effect + add_effect_amount
-    end
     new.placeable_by = { item = new_name, count = 1 }
     new.minable.result = new_name
-    new.factoriopedia_alternative = crafter
+    new.factoriopedia_alternative = original.name
     new.tile_buildability_rules = { output.restrict_to_harene_pool(new.collision_box) }
     new.energy_source = util.merge{
         original.energy_source,
@@ -194,7 +138,7 @@ function create_infused_thing_with_effect(crafter, effect, add_effect_amount)
 
     if not data.raw["item-subgroup"][new_item.subgroup] then
         data:extend { util.merge {
-            table.deepcopy(data.raw["item-subgroup"][data.raw["item"][crafter].subgroup]),
+            table.deepcopy(data.raw["item-subgroup"][item.subgroup]),
             { 
                 name = new_item.subgroup,
                 group = "rabbasca-extensions" 
@@ -221,23 +165,22 @@ function create_infused_thing_with_effect(crafter, effect, add_effect_amount)
         maximum_productivity = 1
       }
     }
-    local unlocks = data.raw["technology"]["rabbasca-ears-technology"].effects
-    table.insert(unlocks,       
-    {
-        type = "unlock-recipe",
-        recipe = new_name
-    })
+    return new_name
 end
 
 -- should be called in data-updates or later to ensure crafter item exists
-function output.create_infused_crafter(crafter)
-    -- create_infused_crafter_with_effect(crafter, "speed", 0.5)
-    -- create_infused_crafter_with_effect(crafter, "quality", 5)
-    -- create_infused_crafter_with_effect(crafter, "productivity", 0.5)
-    create_infused_thing_with_effect(crafter, nil, 0)
-end
-function output.create_infused_mini(thing)
-    create_infused_thing_with_effect(thing, nil, 0)
+-- add no_ears_upgrade = true to prototypes to prevent them being added
+function output.create_ears_variant(thing, tech, is_small)
+    local new_thing = create_infused_thing_with_effect(thing, (is_small and "harene-ears-subcore") or "harene-ears-core")
+    if new_thing and data.raw["technology"][tech] then
+        local unlocks = data.raw["technology"][tech].effects
+        table.insert(unlocks,       
+        {
+            type = "unlock-recipe",
+            recipe = new_thing
+        })
+    end
+
 end
 
 function output.create_duplication_recipe_triggered(item)

@@ -109,8 +109,9 @@ util.merge {
     {
       name = "rabbasca-energetic-concrete",
       collision_mask = { layers = { harene = true } },
-      material_background = { tint  = {60,55,97}, },
-      minable = { result = "rabbasca-energetic-concrete" }
+      -- material_background = { tint  = {60,55,97}, },
+      minable = { result = "rabbasca-energetic-concrete" },
+      variants = { material_background = { picture = "__planet-rabbasca__/graphics/icons/concrete.png", } },
     }
 },
 util.merge { 

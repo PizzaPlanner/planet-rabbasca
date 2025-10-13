@@ -35,7 +35,7 @@ end
 function M.get_connections(from, max_range)
   local surfaces = { }
   for _, conn in pairs(prototypes.space_connection) do
-    if conn.length <= max_range and conn.from.name == from or conn.to.name == from then
+    if conn.length <= max_range and (conn.from.name == from or conn.to.name == from) then
       local target = (conn.from.name == from) and conn.to.name or conn.from.name
       if M.can_jump_to(target) then
         display = {"", "[img=space-location/" .. target .. "] ", game.planets[target].prototype.localised_name or target}

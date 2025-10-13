@@ -36,7 +36,13 @@ data:extend{
   {
     type = "noise-expression",
     name = "rabbasca_carrot_noise",
-    expression = "1.5 * (rabbasca_fertile > 1.3) + multioctave_noise{x = x, y = y, persistence = 1.3, input_scale = 3, seed0 = map_seed, seed1 = 'minersareoverrated', octaves = 7 } * 0.6"
+    expression = "rabbasca_fertile * aquilo_spot_noise{seed = 821,\z
+                                    count = 7,\z
+                                    skip_offset = 0,\z
+                                    region_size = 44,\z
+                                    density = 0.66,\z
+                                    radius = 3.2,\z
+                                    favorability = 5}"
   },
   {
     type = "noise-expression",
@@ -47,7 +53,7 @@ data:extend{
   {
     type = "noise-expression",
     name = "rabbasca_rocky",
-    expression = "0.99"
+    expression = "0.75"
   },
   {
     type = "noise-expression",
@@ -56,20 +62,21 @@ data:extend{
   },
   
   {
-    type = "noise-expression",
+    type = "noise-function",
     name = "rabbasca_rocks",
+    parameters = {"scale"},
     expression = "aquilo_spot_noise{seed = 442,\z
                                     count = 5,\z
                                     skip_offset = 1,\z
                                     region_size = 40 + 60 / control:rabbasca_rocks:frequency,\z
                                     density = 0.32,\z
-                                    radius = 1 + 0.7 * sqrt(control:rabbasca_rocks:size),\z
-                                    favorability = 1} * control:rabbasca_rocks:size"
+                                    radius = scale * (1 + 0.7 * sqrt(control:rabbasca_rocks:size)),\z
+                                    favorability = 1} * control:rabbasca_rocks:size - clamp(rabbasca_fertile, 0, 1)"
   },
   {
     type = "noise-expression",
     name = "rabbasca_fertile",
-    expression = "- 2 * rabbasca_down - 0.2 + \z
+    expression = "min(0, - 2 * rabbasca_down) - 0.2 + \z
             min(rabbasca_starting_mask, 0.8 * multioctave_noise{x = x, y = y, persistence = 0.8, input_scale = 1/3.5, seed0 = map_seed, seed1 = 'yummyrocks', octaves = 8 })\z
             * aquilo_spot_noise{seed = 71632,\z
                                     count = 4 + 3 * control:harene:frequency,\z
@@ -84,7 +91,7 @@ data:extend{
   {
     type = "noise-expression",
     name = "rabbasca_harene_pools",
-    expression = "rabbasca_harene_cracks * 0.4 + rabbasca_down * 2 + 0.1"
+    expression = "(rabbasca_down > 0) * (rabbasca_harene_cracks * 0.4 + rabbasca_down * 2)"
   },
   {
     type = "noise-expression",
