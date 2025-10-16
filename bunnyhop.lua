@@ -46,4 +46,126 @@ function M.get_connections(from, max_range)
   return surfaces
 end
 
+function M.clear_bunnyhop_ui(player)
+    player.gui.screen.bunnyhop_ui.destroy()
+    storage.rabbasca_bunnyhopping = math.max(0, (storage.rabbasca_bunnyhopping or 1) - 1)
+    if storage.rabbasca_bunnyhopping == 0 then
+        script.on_event(defines.events.on_player_changed_position, nil)
+    end
+end
+
+local function get_character_weight_label(character) 
+  local weight = 0
+  local max_weight = 600
+  for _, inventory in pairs({defines.inventory.character_main, defines.inventory.character_ammo, defines.inventory.character_trash}) do
+    weight = weight + (character.get_inventory(inventory).weight or 0)
+  end
+  weight = weight / 1000
+
+  return weight <= max_weight, string.format("Weight: %i/%ikg", weight, max_weight) .. ((weight > max_weight and " [too heavy]") or "")
+end
+
+local function on_charge_bunnyhop(event)
+    local player = game.get_player(event.player_index)
+    if not player then return end
+
+    local frame = player.gui.screen.bunnyhop_ui
+    if not (frame and frame.valid) then return end
+    local pb = frame.bunnyhop_charge
+    if not (pb and pb.valid) then return end
+    local wl = frame.bunnyhop_weight
+    if not (wl and wl.valid) then return end
+    
+    local character = player.controller_type == defines.controllers.character and player.character
+    if not character then 
+        M.clear_bunnyhop_ui(player)
+        return
+    end
+
+    is_weight_ok, wl.caption = get_character_weight_label(character)
+    
+    -- player.walking_state.walking = true
+    local delta = character.effective_speed or 1
+    local needed = 100
+    local change = (is_weight_ok and delta / needed) or -0.05
+    pb.value = math.min(1, math.max(pb.value - change, 0))
+    -- player.character.speed = (player.character.speed or 1) * 1.2
+
+    if pb.value > 0 then return end
+    
+    local list = frame.bunnyhop_surface_list
+    local icon = list.get_item(list.selected_index)[2]
+    local planet = string.match(icon, "%[img=space%-location/(.-)%]")
+    M.clear_bunnyhop_ui(player)
+
+    if not planet or not game.planets[planet] then return end
+
+    local surface = game.planets[planet].surface or game.planets[planet].create_surface()
+    if not surface then return end
+
+    local radius = surface.get_starting_area_radius()
+    player.force.chart(surface, {{-radius, -radius}, {radius, radius}})
+    local start_pos = surface.find_non_colliding_position("character", {0, 0}, surface.get_starting_area_radius(), 1)  or {0, 0}
+    -- local pod = surface.create_entity{name="cargo-pod", position=player.position, force=player.force}
+    -- -- player.set_controller{type=defines.controllers.character, character=pod.get_driver()}
+    -- pod.cargo_pod_destination = {
+    --     type = defines.cargo_destination.surface,
+    --     surface = surface,
+    --     position = start_pos
+    -- }
+
+
+    -- Teleport player
+    if not player.teleport(start_pos, surface) then return end
+end
+
+
+local function extend_bunnyhop_ui(player)
+    storage.rabbasca_bunnyhopping = (storage.rabbasca_bunnyhopping or 0) + 1
+    script.on_event(defines.events.on_player_changed_position, on_charge_bunnyhop)
+end
+
+function M.show_bunnyhop_ui(player, equipment, max_range)
+    local surface = player.surface
+    local reachable_surfaces = M.get_connections(surface.name, max_range)
+
+    if #reachable_surfaces == 0 then 
+      player.print("[item=bunnyhop-engine] No discovered planet within "..max_range.."km")
+      return 
+    end
+
+    if player.gui.screen.bunnyhop_ui then
+        M.clear_bunnyhop_ui()
+    end
+
+    local frame = player.gui.screen.add{
+        type = "frame",
+        name = "bunnyhop_ui",
+        caption = "Bunnyhop within "..max_range.."km",
+        direction = "vertical"
+    }
+    frame.auto_center = true
+    local pb = frame.add{
+        type = "progressbar",
+        name = "bunnyhop_charge",
+        value = 1
+    }
+    pb.style.horizontally_stretchable = true
+    local _, weight = get_character_weight_label(player.character)
+    local pb = frame.add{
+        type = "label",
+        name = "bunnyhop_weight",
+        caption = weight
+    }
+
+    local list = frame.add{ 
+      type = "list-box", 
+      name = "bunnyhop_surface_list",
+      selected_index = current_index,
+      items = reachable_surfaces 
+    }
+    list.selected_index = 1
+    extend_bunnyhop_ui(player)
+end
+
 return M

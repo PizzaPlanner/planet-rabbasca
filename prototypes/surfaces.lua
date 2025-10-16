@@ -91,7 +91,6 @@ local map_gen = {
           ["rabbasca-fertile"] = {},
           ["rabbasca-rough"] = {},
           ["rabbasca-rough-2"] = {},
-          ["rabbasca-ice"] = {},
           -- ["harene-infused-foundation"] = {}
         }
       },
@@ -160,8 +159,8 @@ PlanetsLib:extend({
     map_gen_settings = map_gen,
     parked_platforms_orientation = 0.27,
     orbit = {
-      orientation = 0.74,
-      distance = 1.7,
+      orientation = 0.14,
+      distance = 2.3,
       parent = {
         type = "planet",
         name = parent_planet,

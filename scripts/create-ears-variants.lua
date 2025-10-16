@@ -16,7 +16,7 @@ for _, thing in pairs(data.raw["furnace"]) do
 end
 for _, thing in pairs(data.raw["lab"]) do
   if thing.energy_source.type == "electric" then
-    rutil.create_ears_variant(thing, "rabbasca-ears-technology-labs-2", true)
+    rutil.create_ears_variant(thing, "rabbasca-ears-technology-labs-2")
   end
 end
 for _, thing in pairs(data.raw["beacon"]) do

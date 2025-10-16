@@ -133,8 +133,9 @@ data:extend {
     icon = "__base__/graphics/icons/steam-engine.png",
     name = "bunnyhop-engine-equipment",
     stack_size = 1,
-    subgroup = "rabbasca-processes",
-    order = "c[personal-transport]-a[bunnyhop-engine]",
+    group = "combat",
+    subgroup = "equipment",
+    order = "r[personal-transport]-b[bunnyhop-engine]",
     place_as_equipment_result = "bunnyhop-engine-equipment"
 },
 util.merge {
@@ -159,6 +160,8 @@ util.merge {
     flags = {"only-in-cursor", "not-stackable", "spawnable"},
     auto_recycle = false,
     stack_size = 1,
+    group = "others",
+    subgroup = "spawnables",
     capsule_action = {
       type = "use-on-self",
       uses_stack = true,
@@ -166,7 +169,7 @@ util.merge {
         type = "projectile",
         activation_type = "consume",
         ammo_category = "capsule",
-        cooldown = 3 * minute,
+        cooldown = 2 * minute,
         range = 0,
         ammo_type =
         {
@@ -189,7 +192,7 @@ util.merge {
         }
       }
     },
-    order = "c[personal-transport]-a[bunnyhop-engine]",
+    order = "b[personal-transport]-b[bunnyhop-engine]-r[remote]",
 },
 {
     type = "item",

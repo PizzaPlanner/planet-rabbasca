@@ -5,8 +5,8 @@ local access_console = util.merge{
   {
     name = "rabbasca-vault-access-terminal",
     -- fixed_recipe = "rabbasca-vault-activate", -- must be set via script to be editable later
-    max_health = 3200,
-    healing_per_tick = 5 / second,
+    max_health = 7200,
+    -- healing_per_tick = 0.1 / second, -- doesn't work
     crafting_speed = 1,
     energy_usage = "2MW",
     allow_copy_paste = true,

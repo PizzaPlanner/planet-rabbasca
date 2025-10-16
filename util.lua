@@ -69,6 +69,7 @@ function output.create_duplication_recipe(item, input, output)
         spoil_result = item,
         stack_size = data.raw["item"][item].stack_size,
         subgroup = "rabbasca-matter-printer",
+        order = "d[duplicate]"
     },
     {
         type = "recipe",
@@ -95,9 +96,9 @@ function output.create_duplication_recipe(item, input, output)
 end
 
 function create_infused_thing_with_effect(original, needed_core)
-    if original.no_ears_upgrade then return nil end 
+    if original.no_ears_upgrade or original.hidden then return nil end 
     local item = data.raw["item"][original.name]
-    if not item then return nil end
+    if (not item) or item.hidden then return nil end
     local new_name = "harene-infused-"..original.name
     local new = table.deepcopy(original)
     local icons = {}
@@ -112,7 +113,6 @@ function create_infused_thing_with_effect(original, needed_core)
     local new_item = table.deepcopy(item)
     new_item.name = new_name
     new_item.hidden_in_factoriopedia = true
-    -- new_item.hidden = true
     new_item.icons = icons
     new_item.place_result = new_name
     new_item.subgroup = new_item.subgroup .. "-with-ears-core" 
@@ -132,7 +132,6 @@ function create_infused_thing_with_effect(original, needed_core)
     new.tile_buildability_rules = { output.restrict_to_harene_pool(new.collision_box) }
     new.energy_source = util.merge{
         original.energy_source,
-        -- rutil.harene_burner()
         { type = "void" }
     }
 
@@ -216,9 +215,25 @@ function output.not_on_harenic_surface(proto)
   table.insert(proto.surface_conditions, {property = "harenic-energy-signatures", max = 50})
 end
 
-function output.make_complex_machinery(proto)
+local function is_assembled(recipe)
+    local assembled_categories = data.raw["assembling-machine"]["assembling-machine-3"].crafting_categories
+    for _, category in pairs(assembled_categories) do
+        if not recipe.category or (recipe.category == category) then return true end
+        if recipe.additional_categories then 
+            for _, add in pairs(recipe.additional_categories) do
+                if add == category then return true end
+            end
+        end
+    end
+    return false
+end
+
+function output.make_complex_machinery(proto, require_assembling_machine_craftable)
+  if not proto then return end
   local recipe = data.raw["recipe"][proto.name]
   if not recipe then return end
+  if require_assembling_machine_craftable and (not is_assembled(recipe)) then return end
+  log("Add complex-machinery to additional_categories of: "..recipe.name)
   recipe.additional_categories = recipe.additional_categories or { }
   table.insert(recipe.additional_categories, "complex-machinery")
 end

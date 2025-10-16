@@ -2,43 +2,6 @@ require("__planet-rabbasca__/scripts/remote-builder")
 local rui = require("__planet-rabbasca__.scripts.vault-ui")
 local bunnyhop = require("__planet-rabbasca__/bunnyhop")
 
-local function show_teleport_ui(player, max_range)
-    local surface = player.surface
-    local reachable_surfaces = bunnyhop.get_connections(surface.name, max_range)
-
-    if #reachable_surfaces == 0 then 
-      player.print("[item=bunnyhop-engine] No discovered planet within "..max_range.."km")
-      return 
-    end
-
-    if player.gui.screen.bunnyhop_ui then
-        rui.clear_bunnyhop_ui()
-    end
-
-    local frame = player.gui.screen.add{
-        type = "frame",
-        name = "bunnyhop_ui",
-        caption = "Bunnyhop within "..max_range.."km",
-        direction = "vertical"
-    }
-    frame.auto_center = true
-    local pb = frame.add{
-        type = "progressbar",
-        name = "bunnyhop_charge",
-        value = 1
-    }
-    pb.style.horizontally_stretchable = true
-
-    local list = frame.add{ 
-      type = "list-box", 
-      name = "bunnyhop_surface_list",
-      selected_index = current_index,
-      items = reachable_surfaces 
-    }
-    list.selected_index = 1
-    rui.extend_bunnyhop_ui(player)
-end
-
 local function handle_script_events(event)
   local effect_id = event.effect_id
   if effect_id == "rabbasca_init_terminal" then
@@ -120,7 +83,7 @@ local function handle_script_events(event)
       for _, eq in pairs(armor.grid.equipment) do
         if eq.name == "bunnyhop-engine-equipment" then
           player.create_local_flying_text { text = "Initiating bunnyhop...", create_at_cursor = true }
-          show_teleport_ui(player, 1000)
+          bunnyhop.show_bunnyhop_ui(player, eq, 1000)
           return
         end
       end
@@ -131,6 +94,15 @@ local function handle_script_events(event)
 end
 
 script.on_event(defines.events.on_script_trigger_effect, handle_script_events)
+
+script.on_event(defines.events.on_player_controller_changed, function(event)
+    local player = game.get_player(event.player_index)
+    if not player then return end
+
+    if player.gui.screen.bunnyhop_ui then
+       bunnyhop.clear_bunnyhop_ui(player)
+    end
+end)
 
 script.on_event(defines.events.on_surface_created, function(event)
   if not game.planets["rabbasca"] or not game.planets["rabbasca"].surface then return end

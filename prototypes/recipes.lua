@@ -23,12 +23,8 @@ data:extend {
     {
         type = "item-subgroup",
         name = "rabbasca-matter-printer",
-        group = "intermediate-products"
-    },
-    {
-        type = "item-subgroup",
-        name = "rabbasca-matter-printer-unpack",
-        group = "intermediate-products"
+        group = "intermediate-products",
+        order = "r[rabbasca]-a[duplication]"
     },
     {
         type = "item-group",
@@ -36,10 +32,6 @@ data:extend {
         icon = data.raw["item"]["harene-ears-core"].icon,
         icon_size = 64,
         order = "fr"
-    },
-    {
-        type = "recipe-category",
-        name = "rabbasca-matter-printer-unpack",
     },
     {
         type = "recipe-category",
@@ -325,6 +317,8 @@ data:extend {
         main_product = "rabbasca-turbofish",
         category = "organic",
         allow_productivity = true,
+        subgroup = "nauvis-agriculture",
+        order = "b[nauvis-agriculture]-b[turbofish-breeding]"
     },
     {
         type = "recipe",
@@ -379,6 +373,8 @@ data:extend {
         main_product = "harene-copy-core",
         category = "chemistry-or-cryogenics",
         hide_from_player_crafting = true,
+        subgroup = "rabbasca-matter-printer",
+        order = "a[copy-core]"
     },
     {
         type = "recipe",
@@ -396,6 +392,9 @@ data:extend {
         results = { { type = "fluid", name = "lubricant", amount = 100 } },
         main_product = "lubricant",
         category = "crafting-with-fluid",
+        subgroup = "rabbasca-matter-printer",
+        order = "r[alternate-uses]"
+
     },
     {
         type = "recipe",
@@ -407,7 +406,9 @@ data:extend {
             { type = "item", name = "firearm-magazine", amount = 100 },
         },
         results = { { type = "item", name = "self-replicating-firearm-magazine", amount = 1 } },
-        category = "crafting"
+        category = "crafting",
+        subgroup = "ammo",
+        order = "a[basic-clips-extended]-a[self-replicating-firearm-magazine]"
     },
     {
         type = "recipe",
@@ -560,6 +561,7 @@ data:extend {
         name = "rabbasca-vault-activate",
         enabled = true,
         hidden = true,
+        hidden_in_factoriopedia = true,
         energy_required = 3,
         ingredients = {{ type = "item", name = "vault-access-key", amount = 1 }},
         results = {{ type = "item", name = "rabbasca-vault-access-protocol", amount = 1 }},
@@ -575,8 +577,7 @@ data:extend {
     {
         type = "recipe",
         name = "rabbasca-vault-deactivate",
-        -- enabled = true,
-        -- hidden = true,
+        hidden_in_factoriopedia = true,
         energy_required = 3,
         ingredients = { },
         results = {{ type = "item", name = "rabbasca-vault-access-protocol", amount = 1 }},
