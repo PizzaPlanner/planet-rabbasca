@@ -16,6 +16,12 @@ data:extend {
     },
     {
         type = "item-subgroup",
+        name = "rabbasca-security",
+        group = "combat",
+        order = "x"
+    },
+    {
+        type = "item-subgroup",
         name = "rabbasca-vault-extraction",
         group = "rabbasca-extensions",
         order = "a"
@@ -207,34 +213,10 @@ data:extend {
             { type = "item", name = "solid-fuel", amount = 5 }
         },
         allow_productivity = true,
-        icon = "__base__/graphics/icons/solid-fuel-from-light-oil.png",
-        subgroup = "fluid-recipes",
-        enabled = false,
-        order = "b[fluid-chemistry]-d[solid-fuel-from-energetic-residue]",
-        crafting_machine_tint =
-        {
-            primary = {r = 0.710, g = 0.633, b = 0.482, a = 1.000},
-            secondary = {r = 0.745, g = 0.672, b = 0.527, a = 1.000},
-            tertiary = {r = 0.894, g = 0.773, b = 0.596, a = 1.000},
-            quaternary = {r = 0.812, g = 0.583, b = 0.202, a = 1.000},
-        }
-    },
-    {
-        type = "recipe",
-        name = "rocket-fuel-from-energetic-residue",
-        category = "chemistry",
-        energy_required = 30,
-        ingredients =
-        {
-            {type = "fluid", name = "energetic-residue", amount = 10 },
-            { type = "item", name = "solid-fuel", amount = 50 }
+        icons = {
+            { icon = "__base__/graphics/icons/solid-fuel.png", scale = 0.8 },
+            { icon = data.raw["fluid"]["energetic-residue"].icon, scale = 0.35, shift = { -8, -8 } }
         },
-        results =
-        {
-            { type = "item", name = "rocket-fuel", amount = 5 }
-        },
-        allow_productivity = true,
-        icon = "__base__/graphics/icons/solid-fuel-from-light-oil.png",
         subgroup = "fluid-recipes",
         enabled = false,
         order = "b[fluid-chemistry]-d[solid-fuel-from-energetic-residue]",
@@ -349,14 +331,14 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "harene-ears-subcore",
+        name = "harene-ears-core",
         enabled = false,
         energy_required = 4,
         ingredients = { 
-            {type = "item", name = "harene-ears-core", amount = 1 },
+            {type = "item", name = "harene-ears-subcore", amount = 20 },
         },
-        results = { {type = "item", name = "harene-ears-subcore", amount = 20 } },
-        main_product = "harene-ears-subcore",
+        results = { {type = "item", name = "harene-ears-core", amount = 1 } },
+        main_product = "harene-ears-core",
         category = "crafting",
 
     },
@@ -412,18 +394,6 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "rabbasca-cargo-wagon",
-        enabled = false,
-        energy_required = 3,
-        ingredients = {
-            { type = "item", name = "cargo-wagon", amount = 1 },
-            { type = "item", name = "modular-armor", amount = 1 },
-        },
-        results = { { type = "item", name = "rabbasca-cargo-wagon", amount = 1 } },
-        category = "crafting"
-    },
-    {
-        type = "recipe",
         name = "vault-access-key",
         enabled = false,
         energy_required = 3,
@@ -453,19 +423,24 @@ data:extend {
     }
 }
 
--- r.create_vault_recipe("harene-glob-core",  3, 35,  false)
-r.create_vault_recipe(data.raw["simple-entity"]["harene-ears-core-capsule"], 60,  false)
-r.create_vault_recipe(data.raw["simple-entity"]["harene-copy-core-capsule"], 30,   true)
-r.create_vault_recipe(data.raw["simple-entity"]["harene-utility-capsule"], 30,   true)
+r.create_vault_recipe(data.raw["item"]["vault-access-key-e"], {{type = "item", name = "harene-ears-subcore", amount = 1 }}, 300,  false)
+r.create_vault_recipe(data.raw["item"]["vault-access-key-c"], {{type = "item", name = "harene-copy-core", amount = 2 }}, 600,  false)
+r.create_vault_recipe(data.raw["item"]["vault-access-key-u"], {
+  {type = "item", name = "copper-ore", amount_min = 25, amount_max  = 28 },
+  {type = "item", name = "iron-ore", amount_min = 20, amount_max  = 24 },
+  {type = "item", name = "sulfur", amount_min = 18, amount_max  = 22 },
+  {type = "item", name = "uranium-ore", amount_min = 12, amount_max  = 19 },
+  {type = "item", name = "carbon", amount_min = 15, amount_max  = 23 },
+}, 300, false)
 -- r.create_vault_recipe("harenic-stabilizer",    1, 2.5, false)
 -- create_vault_recipe("rabbascan-encrypted-vault-data", 10, 3, true)
 -- create_vault_recipe("harene-cubic-core", 1, 10, false)
 
-r.create_duplication_recipe("iron-plate", 1, 100)
-r.create_duplication_recipe("steel-plate", 1, 20)
-r.create_duplication_recipe("rabbasca-carotene-powder", 1, 200)
-r.create_duplication_recipe("electronic-circuit", 1, 150)
-r.create_duplication_recipe("advanced-circuit",   1, 25)
+r.create_duplication_recipe("iron-plate", 1, 50)
+r.create_duplication_recipe("steel-plate", 1, 10)
+r.create_duplication_recipe("rabbasca-carotene-powder", 1, 100)
+r.create_duplication_recipe("electronic-circuit", 1, 50)
+r.create_duplication_recipe("advanced-circuit",   1, 15)
 -- create_duplication_recipe("vault-access-key",    1, 2)
 
 -- r.create_duplication_recipe_triggered("uranium-rounds-magazine")
@@ -556,17 +531,28 @@ data:extend {
     },
 }
 
+local rocket_part = table.deepcopy(data.raw["recipe"]["rocket-part"])
+rocket_part.name = "rocket-part-from-turbofuel"
+rocket_part.allow_productivity = false
+rocket_part.surface_conditions = { { property = "harenic-energy-signatures", min = 50 } }
+rocket_part.ingredients = {
+    { type = "item", name = "rabbasca-turbofuel", amount = 20 },
+    { type = "item", name = "infused-haronite-plate", amount = 5 },
+    { type = "item", name = "bunnyhop-engine-equipment", amount = 1 },
+    { type = "item", name = "radar", amount = 1 },
+}
+data:extend { rocket_part }
+
 data:extend {
     {
         type = "recipe",
-        name = "rabbasca-vault-activate",
+        name = "vault-access-key-protocol",
         enabled = true,
-        hidden = true,
         hidden_in_factoriopedia = true,
         energy_required = 3,
         ingredients = {{ type = "item", name = "vault-access-key", amount = 1 }},
-        results = {{ type = "item", name = "rabbasca-vault-access-protocol", amount = 1 }},
-        main_product = "rabbasca-vault-access-protocol",
+        results = {{ type = "item", name = "vault-access-key-protocol", amount = 1, ignored_by_stats = 1 }},
+        main_product = "vault-access-key-protocol",
         category = "rabbasca-vault-hacking",
         subgroup = "rabbasca-vault-access",
         auto_recycle = false,
@@ -575,38 +561,4 @@ data:extend {
         allow_inserter_overload = false,
         hide_from_player_crafting = true
     },
-    {
-        type = "recipe",
-        name = "rabbasca-vault-deactivate",
-        hidden_in_factoriopedia = true,
-        energy_required = 3,
-        ingredients = { },
-        results = {{ type = "item", name = "rabbasca-vault-access-protocol", amount = 1 }},
-        main_product = "rabbasca-vault-access-protocol",
-        category = "rabbasca-vault-hacking",
-        subgroup = "rabbasca-vault-access",
-        order = "z[vault]-z[shutdown]",
-        auto_recycle = false,
-        overload_multiplier = 1,
-        result_is_always_fresh = true,
-        allow_inserter_overload = false,
-        hide_from_player_crafting = true
-    },
-    {
-        type = "recipe",
-        name = "rabbasca-vault-regenerate-core",
-        icon = data.raw["virtual-signal"]["signal-hourglass"].icon,
-        enabled = true,
-        hidden = true,
-        energy_required = 3600,
-        ingredients = { },
-        results = { {type = "item", name = "rabbasca-vault-access-protocol", amount = 1} },
-        category = "rabbasca-vault-hacking",
-        subgroup = "rabbasca-vault-access",
-        auto_recycle = false,
-        overload_multiplier = 1,
-        result_is_always_fresh = true,
-        allow_inserter_overload = false,
-        hide_from_player_crafting = true
-    }
 }

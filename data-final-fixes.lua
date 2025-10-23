@@ -1,0 +1,1 @@
+data.raw["furnace"]["rabbasca-vault-access-terminal"].result_inventory_size = 10

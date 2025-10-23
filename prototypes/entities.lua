@@ -90,13 +90,6 @@ assembler.graphics_set = {
   }
 }
 
-local train_wagon = util.merge { data.raw["cargo-wagon"]["cargo-wagon"],
-{
-  name = "rabbasca-cargo-wagon",
-  equipment_grid = "train-equipment-grid",
-  mineable = { result = "rabbasca-cargo-wagon" }
-}}
-
 local harene_platform = util.merge{ data.raw["space-platform-hub"]["space-platform-hub"],
   {
     name = "harene-space-platform-hub",
@@ -112,7 +105,6 @@ local harene_platform = util.merge{ data.raw["space-platform-hub"]["space-platfo
 
 data:extend {
   assembler,
-  train_wagon,
   harene_platform,
   {
     type = "roboport",
@@ -246,7 +238,7 @@ data:extend {
     {
       name = "turbofish-speed-sticker",
       duration_in_ticks = 10 * second,
-      target_movement_modifier = 4
+      target_movement_modifier = 2.5
     }
   },
 }
@@ -261,50 +253,11 @@ data.raw["simple-entity"]["rabbasca-big-rock"].minable.results = {
   {type = "item", name = "calcite", amount_min = 4, amount_max = 7 }
 }
 data.raw["simple-entity"]["carotenoid"].minable.results = {{type = "item", name = "rabbasca-carotene-powder", amount_min = 40, amount_max = 55}}
+data.raw["simple-entity"]["carotenoid"].collision_mask = data.raw["simple-entity"]["rabbasca-big-rock"].collision_mask
 
 local beacon_anims = { }
 for _, anim in pairs(fff339.animation_list) do
   table.insert(beacon_anims, table.deepcopy(anim.animation))
 end
 data.raw["simple-entity-with-owner"]["rabbasca-remote-receiver"].animations = beacon_anims
-
-local ears_capsule = util.merge {
-    table.deepcopy(data.raw["simple-entity"]["fulgoran-ruin-small"]),
-    {
-      name = "harene-ears-core-capsule",
-      minable = { 
-        mining_time = 3,
-      }
-}}
-ears_capsule.pictures = {
-  { filename = "__planet-rabbasca__/graphics/icons/vault-core-capsule.png", size = 128 },
-}
-ears_capsule.icons = {
-  { icon = data.raw["simple-entity"]["fulgoran-ruin-small"].icon, scale = 0.6, shift = { -4, -4 } },
-  { icon = data.raw["item"]["harene-ears-core"].icon, scale = 0.4, shift = { 8, 8 } }
-}
-ears_capsule.minable.results = {
-  {type = "item", name = "harene-ears-core", amount_min = 1, amount_max  = 1 },
-  {type = "item", name = "haronite-brick", amount_min = 10, amount_max  = 15 },
-}
-
-local copy_capsule = util.merge { ears_capsule, { name = "harene-copy-core-capsule" } }
-copy_capsule.icons[2].icon = data.raw["item"]["harene-copy-core"].icon
-copy_capsule.minable.results = {
-  {type = "item", name = "rabbasca-copyslop-barrel", amount_min = 20, amount_max  = 20 },
-  {type = "item", name = "haronite-brick", amount_min = 10, amount_max  = 15 },
-}
-
-local util_capsule = util.merge { ears_capsule, { name = "harene-utility-capsule" } }
-copy_capsule.icons[2].icon = data.raw["item"]["copper-ore"].icon
-copy_capsule.minable.results = {
-  {type = "item", name = "copper-ore", amount_min = 35, amount_max  = 42 },
-  {type = "item", name = "iron-ore", amount_min = 45, amount_max  = 55 },
-  {type = "item", name = "sulfur", amount_min = 27, amount_max  = 34 },
-  {type = "item", name = "uranium-ore", amount_min = 53, amount_max  = 68 },
-  {type = "item", name = "carbon", amount_min = 15, amount_max  = 29 },
-  {type = "item", name = "haronite-brick", amount_min = 10, amount_max  = 15 },
-}
-
-data:extend { ears_capsule, copy_capsule, util_capsule }
 

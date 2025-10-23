@@ -139,14 +139,6 @@ data:extend {
     place_as_equipment_result = "bunnyhop-engine-equipment"
 },
 util.merge {
-  data.raw["item-with-entity-data"]["cargo-wagon"],
-  {
-    name = "rabbasca-cargo-wagon",
-    stack_size = 1,
-    place_result = "rabbasca-cargo-wagon"
-  }
-},
-util.merge {
   data.raw["item"]["fusion-reactor-equipment"],
   {
     name = "ears-subcore-reactor-equipment",
@@ -339,16 +331,62 @@ util.merge{
 {
     type = "item",
     name = "vault-access-key",
-    category = "rabbasca-security",
+    subgroup = "rabbasca-security",
+    order = "a[vault-access-key]",
     icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png",
     stack_size = 20,
 },
 {
     type = "item",
-    name = "rabbasca-vault-access-protocol",
+    name = "vault-access-key-r",
+    icon = data.raw["virtual-signal"]["signal-hourglass"].icon,
+    hidden = true,
+    hidden_in_factoriopedia = true,
+    spoil_ticks = 5,
+    subgroup = "rabbasca-security",
+    order = "a[vault-access-key]",
+    icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png",
+    stack_size = 20,
+},
+{
+    type = "item",
+    name = "vault-access-key-e",
+    subgroup = "rabbasca-security",
+    order = "a[vault-access-key-e]",
+    icons = {
+      { icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png" },
+      { icon = "__planet-rabbasca__/graphics/icons/harene-ears-core.png", scale = 0.3, shift = {4, 4} }
+    } ,
+    stack_size = 20,
+},
+{
+    type = "item",
+    name = "vault-access-key-c",
+    subgroup = "rabbasca-security",
+    order = "a[vault-access-key-c]",
+    icons = {
+      { icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png" },
+      { icon = "__planet-rabbasca__/graphics/icons/harene-copy-core.png", scale = 0.3, shift = {4, 4} }
+    } ,
+    stack_size = 20,
+},
+{
+    type = "item",
+    name = "vault-access-key-u",
+    subgroup = "rabbasca-security",
+    order = "a[vault-access-key-u]",
+    icons = {
+      { icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png" },
+      { icon = "__base__/graphics/icons/copper-ore.png", scale = 0.3, shift = {4, 4} }
+    } ,
+    stack_size = 20,
+},
+{
+    type = "item",
+    name = "vault-access-key-protocol",
     category = "rabbasca-security",
     icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png",
-    hidden = true,
+    flags = { "ignore-spoil-time-modifier" },
     hidden_in_factoriopedia = true,
     auto_recycle = false,
     stack_size = 1,
@@ -374,46 +412,6 @@ util.merge{
       }
     }
 },
-{
-    type = "item",
-    name = "rabbasca-vault-core-extraction-protocol",
-    category = "rabbasca-security",
-    icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png",
-    hidden = true,
-    hidden_in_factoriopedia = true,
-    auto_recycle = false,
-    stack_size = 1,
-    spoil_ticks = 1,
-    spoil_to_trigger_result =
-    {
-      items_per_trigger = 1,
-      trigger =
-      {
-        type = "direct",
-        action_delivery =
-        {
-          type = "instant",
-          source_effects =
-          {
-            {
-              type = "script",
-              effect_id = "rabbasca_on_hack_console"
-            }
-          }
-        }
-      }
-    }
-},
-{
-    type = "item",
-    name = "rabbasca-vault-access-indicator",
-    category = "rabbasca-security",
-    icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png",
-    hidden = true,
-    hidden_in_factoriopedia = true,
-    stack_size = 5,
-    spoil_ticks = 90 * second,
-}
 }
 
 local starter_pack = util.merge {

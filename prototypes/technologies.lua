@@ -56,7 +56,19 @@ data:extend {
     {
       {
         type = "unlock-recipe",
-        recipe = "harene-copy-core"
+        recipe = "vault-access-key-c"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "vault-access-key-c-protocol"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "vault-access-key-u"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "vault-access-key-u-protocol"
       },
     },
     research_trigger =
@@ -104,6 +116,10 @@ data:extend {
         type = "unlock-recipe",
         recipe = "vision-circuit",
       },
+      {
+        type = "unlock-recipe",
+        recipe = "solid-fuel-from-energetic-residue",
+      },
     },
     research_trigger =
     {
@@ -121,8 +137,12 @@ data:extend {
     {
       {
         type = "unlock-recipe",
-        recipe = "harene-ears-core-capsule"
-      }
+        recipe = "vault-access-key-e"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "vault-access-key-e-protocol"
+      },
     },
     research_trigger =
     {
@@ -140,14 +160,15 @@ data:extend {
     {
       {
         type = "unlock-recipe",
-        recipe = "harene-ears-subcore"
+        recipe = "harene-ears-core"
       }
       -- more in data-updates
     },
     research_trigger =
     {
-      type = "mine-entity",
-      entity = "harene-ears-core-capsule"
+      type = "craft-item",
+      item = "harene-ears-subcore",
+      count = 20,
     }
 },
 {
@@ -173,7 +194,7 @@ data:extend {
     type = "technology",
     name = "machining-assembler",
     icon = "__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-icon-big.png",
-    icon_size = 64,
+    icon_size = 1024,
     prerequisites = { "harenic-stabilizer", "leg-day-everyday", "item-duplication-2" },
     effects =
     {
@@ -229,7 +250,7 @@ data:extend {
   name = "bunnyhop-engine",
   icon = "__base__/graphics/technology/engine.png",
   icon_size = 256,
-  prerequisites = { "rabbasca-ears-technology-1", "chemical-science-pack", "modular-armor", "quality-module" },
+  prerequisites = { "rabbasca-vault-core-extraction", "chemical-science-pack", "modular-armor", "quality-module" },
   effects =
   {
     {
@@ -311,6 +332,10 @@ data:extend {
       {
         type = "unlock-recipe",
         recipe = "rabbasca-rabbasca-carotene-powder-duplicate",
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "harene-copy-core",
       },
     },
     research_trigger =
@@ -477,7 +502,7 @@ data:extend {
 },
 {
   type = "technology",
-  name = "rabbasca-ears-technology-labs-2",
+  name = "rabbasca-ears-technology-2",
   icon = data.raw["item"]["harene-ears-core"].icon,
   icon_size = 64,
   prerequisites = { "rabbasca-ears-technology-1", "effect-transmission", "electromagnetic-science-pack" },
@@ -500,26 +525,18 @@ data:extend {
 },
 {
   type = "technology",
-  name = "rabbasca-cargo-wagon",
-  icon = data.raw["technology"]["railway"].icon,
+  name = "rabbasca-ears-technology-3",
+  icon = data.raw["item"]["harene-ears-core"].icon,
   icon_size = 64,
-  prerequisites = { "bunnyhop-engine", "railway" },
+  prerequisites = { "rabbasca-ears-technology-2", "rabbasca-railway", "rabbasca-document-forging", "bunnyhop-engine", "harene-synthesis" },
   effects =
   {
-    {
-      type = "unlock-recipe",
-      recipe = "rabbasca-cargo-wagon"
-    }
   },
+  level = 3,
   unit = {
-    count = 150,
-    time = 30,
-    ingredients = {
-      {"automation-science-pack", 1},
-      {"logistic-science-pack", 1},
-      {"chemical-science-pack", 1},
-      {"space-science-pack", 1},
-    }
+    count = 800,
+    time = 60,
+    ingredients = table.deepcopy(data.raw["technology"]["promethium-science-pack"].unit.ingredients)
   }
 },
 }

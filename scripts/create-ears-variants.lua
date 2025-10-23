@@ -16,11 +16,20 @@ for _, thing in pairs(data.raw["furnace"]) do
 end
 for _, thing in pairs(data.raw["lab"]) do
   if thing.energy_source.type == "electric" then
-    rutil.create_ears_variant(thing, "rabbasca-ears-technology-labs-2")
+    local lab = rutil.create_ears_variant(thing, "rabbasca-ears-technology-2")
+    data.raw["lab"][lab].science_pack_drain_rate_percent = math.max(1, (data.raw["lab"][lab].science_pack_drain_rate_percent or 100) * 0.85)
   end
 end
 for _, thing in pairs(data.raw["beacon"]) do
   if thing.energy_source.type == "electric" then
-    rutil.create_ears_variant(thing, "rabbasca-ears-technology-labs-2", true)
+    rutil.create_ears_variant(thing, "rabbasca-ears-technology-2", true)
+  end
+end
+for _, thing in pairs(data.raw["rocket-silo"]) do
+  if thing.energy_source.type == "electric" then
+    local silo = rutil.create_ears_variant(thing, "rabbasca-ears-technology-3")
+    data.raw["rocket-silo"][silo].rocket_parts_required = 1
+    data.raw["rocket-silo"][silo].fixed_recipe = "rocket-part-from-turbofuel"
+    data.raw["rocket-silo"][silo].surface_conditions = {{property = "harenic-energy-signatures", min = 50}, {property = "pressure", min = 1}}
   end
 end

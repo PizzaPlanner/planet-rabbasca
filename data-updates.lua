@@ -15,6 +15,9 @@ end
 for _, thing in pairs(data.raw["fusion-generator"]) do 
   rutil.not_on_harenic_surface(thing)
 end
+for _, thing in pairs(data.raw["rocket-silo"]) do 
+  rutil.not_on_harenic_surface(thing)
+end
 
 require("scripts.machine-assembly")
 require("scripts.create-ears-variants")

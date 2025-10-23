@@ -1,24 +1,31 @@
 require("__base__.prototypes.entity.combinator-pictures")
 
 local access_console = util.merge{
-  table.deepcopy(data.raw["assembling-machine"]["assembling-machine-2"]),
+  table.deepcopy(data.raw["furnace"]["electric-furnace"]),
   {
     name = "rabbasca-vault-access-terminal",
-    -- fixed_recipe = "rabbasca-vault-activate", -- must be set via script to be editable later
     max_health = 7200,
     -- healing_per_tick = 0.1 / second, -- doesn't work
     crafting_speed = 1,
     energy_usage = "2MW",
     allow_copy_paste = true,
-    module_slots = 2,
+    module_slots = 1,
     return_ingredients_on_change = true,
-    trash_inventory_size = 1,
+    ignore_output_full = false,
+    alert_when_damaged = false, -- this usually takes damage immediately due to next to spawn, so regular damage is expected
     collision_box = {{-0.4, -0.4}, {0.4, 0.4}},
+    vector_to_place_result = {0, 1.4},
     selection_box = {{-0.6, -1}, {0.6, 0.6}},
     is_military_target = true,
-    no_ears_upgrade = true
+    no_ears_upgrade = true,
+    source_inventory_size = 1,
+    result_inventory_size = 0,
+    trash_inventory_size = 10,
+    cant_insert_at_source_message_key = "inventory-restriction.not-a-vault-key"
   }
 }
+access_console.circuit_connector = nil
+access_console.circuit_connector_flipped = nil
 access_console.flags = { "placeable-neutral", "not-deconstructable", "not-rotatable", "player-creation" }
 access_console.allowed_effects = { "speed", "consumption", "pollution" }
 access_console.next_upgrade = nil
@@ -27,7 +34,7 @@ access_console.fluid_boxes = { }
 access_console.energy_source = {
   type = "electric",
   usage_priority = "primary-input",
-  emissions_per_minute = { ["vault-activity"] = 6 },
+  emissions_per_minute = { ["vault-activity"] = 8 },
   drain = "0kW"
 }
 access_console.resistances = {

@@ -9,7 +9,8 @@ local defender_1 = util.merge{
     healing_per_tick = -0.1 / second,
     movement_speed = 0.2,
     distance_per_frame = 0.125,
-    distraction_cooldown = 20,
+    distraction_cooldown = 3 * second,
+    has_belt_immunity = true,
     min_pursue_time = 15 * second,
     max_pursue_distance = 50,
     absorptions_to_join_attack = { ["vault-activity"] = 50 },
@@ -20,9 +21,13 @@ local defender_1 = util.merge{
       size_in_group = 1,
       destroy_when_commands_fail = true,
       do_separation = true,
+      allow_try_return_to_spawner = true
     },
+    radar_range = 1,
+    render_layer = "air-object",
   }
 }
+defender_1.run_animation = table.deepcopy(data.raw["combat-robot"]["defender"].in_motion)
 defender_1.collision_mask = { layers = { } }
 defender_1.attack_parameters = {
   type = "projectile",

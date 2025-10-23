@@ -28,6 +28,7 @@ data:extend {
 {
   type = "generator-equipment",
   name = "ears-subcore-reactor-equipment",
+  weight = 100 * kg,
   sprite =
   {
     filename = "__space-age__/graphics/equipment/fusion-reactor-equipment.png",

@@ -22,30 +22,68 @@ function output.harene_burner()
     } 
 end
 
+function output.spill_to_inventory_or_ground(input, output, surface, spill_position)
+  for i = 1, #input do
+    local stack = input[i]
+    if stack and stack.valid_for_read then
+      local to_spill = stack.count
 
-function output.create_vault_recipe(reward, cost, has_no_prequisite)
+      -- First, try to insert into output inventory
+      if output then
+        local inserted = output.insert{name = stack.name, count = stack.count, quality = stack.quality}
+        to_spill = to_spill - inserted
+      end
+
+      -- Spill remainder
+      if to_spill > 0 then
+        surface.spill_item_stack{ position = spill_position, stack = {name = stack.name, count = to_spill, quality = stack.quality}, force = game.forces.player}
+      end
+
+      -- Clear the original slot
+      stack.clear()
+    end
+  end
+end
+
+
+function output.create_vault_recipe(input, rewards, cost, has_no_prequisite)
 data:extend{
   {
       type = "recipe",
-      name = reward.name,
-      icon = reward.icon,
-      icons = reward.icons,
-      preserve_products_in_machine_output = false,
+      name = input.name.."-protocol",
+      icon = input.icon,
+      icons = input.icons,
+      hide_from_signal_gui = false,
       enabled = has_no_prequisite,
       hide_from_player_crafting = true,
       allow_decomposition = false,
       always_show_products = true,
       energy_required = cost,
-    --   ingredients = { { type = "item", name = "vault-access-key", amount = 1 } },
-      results = { { type = "item", name = "rabbasca-vault-core-extraction-protocol", amount = 1, percent_spoiled = 0 } },
+      ingredients = { { type = "item", name = input.name, amount = 1 } },
+      results = rewards,
       reset_freshness_on_craft = true,
       result_is_always_fresh = true,
     --   main_product = reward,
       category = "rabbasca-vault-extraction",
       subgroup = "rabbasca-vault-extraction",
       auto_recycle = false, 
-      overload_multiplier = 1,
-  }
+  },
+ {
+    type = "recipe",
+    name = input.name,
+    enabled = false,
+    -- hidden = false,
+    -- hidden_in_factoriopedia = true,
+    energy_required = 2,
+    always_show_products = false,
+    ingredients = {{ type = "item", name = "vault-access-key", amount = 1 }},
+    results = {{ type = "item", name = input.name, amount = 1 }},
+    main_product = input.name,
+    category = "crafting",
+    auto_recycle = false,
+    overload_multiplier = 1,
+    result_is_always_fresh = true,
+  },
 }
 end
 
@@ -179,7 +217,7 @@ function output.create_ears_variant(thing, tech, is_small)
             recipe = new_thing
         })
     end
-
+    return new_thing
 end
 
 function output.create_duplication_recipe_triggered(item)
