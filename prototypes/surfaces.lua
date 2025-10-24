@@ -123,6 +123,7 @@ local map_gen = {
         settings =
         {
           ["rabbascan-scrap"] = {},
+          ["rabbasca-mixed-oxide-ore"] = {},
           ["rabbasca-energy-source"] = {},
           ["harene-vent"] = {},
           ["carotenoid"] = {},
@@ -159,7 +160,7 @@ PlanetsLib:extend({
     localised_description={"planetslib-templates.moon-description",{"space-location-description.rabbasca"},"[planet="..parent_planet.."]"},
     -- robot energy usage = gravity/pressure*100, gravity > 0.1 (allow chests), robots should be expensive and limited by energy field
     surface_properties = {
-        ["gravity"] = 2,
+        ["gravity"] = 1,
         ["solar-power"] = 0,
         ["pressure"] = 10,
         ["day-night-cycle"] = 12 * minute,

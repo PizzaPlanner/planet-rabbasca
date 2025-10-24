@@ -213,7 +213,7 @@ data:extend {
         probability_expression = "rabbasca_rocks(0.5)",
         tile_restriction = { "rabbasca-rough", "rabbasca-rough-2" },
       },
-      map_color = {0.09, 0.12, 0.17}
+      map_color = {0.09, 0.12, 0.17},
   }},
   util.merge {
     table.deepcopy(data.raw["capsule"]["raw-fish"]),
@@ -241,6 +241,16 @@ data:extend {
       target_movement_modifier = 2.5
     }
   },
+  util.merge {
+    table.deepcopy(data.raw["rocket-silo-rocket"]["rocket-silo-rocket"]),
+    {
+      name = "rabbasca-rocket-silo-rocket",
+      engine_starting_speed = 0.01,
+      flying_acceleration = 0.05,
+      flying_speed = 8.3333e-5,
+      inventory_size = 40
+    }
+  }
 }
 
 local fish_action = table.deepcopy(require("__space-age__.prototypes.item-effects").jellynut_speed)
@@ -250,6 +260,7 @@ data.raw["electric-energy-interface"]["rabbasca-energy-source"].collision_box = 
 data.raw["capsule"]["rabbasca-turbofish"].capsule_action = fish_action
 data.raw["simple-entity"]["rabbasca-big-rock"].minable.results = {
   {type = "item", name = "haronite", amount_min = 12, amount_max = 18}, 
+  {type = "item", name = "iron-ore", amount_min = 3, amount_max = 10 }, 
   {type = "item", name = "calcite", amount_min = 4, amount_max = 7 }
 }
 data.raw["simple-entity"]["carotenoid"].minable.results = {{type = "item", name = "rabbasca-carotene-powder", amount_min = 40, amount_max = 55}}

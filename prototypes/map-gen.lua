@@ -66,11 +66,11 @@ data:extend{
     name = "rabbasca_rocks",
     parameters = {"scale"},
     expression = "aquilo_spot_noise{seed = 442,\z
-                                    count = 5,\z
+                                    count = 3,\z
                                     skip_offset = 1,\z
-                                    region_size = 40 + 60 / control:rabbasca_rocks:frequency,\z
+                                    region_size = 70 + 90 / control:rabbasca_rocks:frequency,\z
                                     density = 0.32,\z
-                                    radius = scale * (1 + 0.7 * sqrt(control:rabbasca_rocks:size)),\z
+                                    radius = scale * (1.1 + 0.7 * sqrt(control:rabbasca_rocks:size)),\z
                                     favorability = 1} * control:rabbasca_rocks:size - clamp(rabbasca_fertile, 0, 1)"
   },
   {

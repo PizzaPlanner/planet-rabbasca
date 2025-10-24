@@ -1,5 +1,5 @@
 local recycling = require("__quality__.prototypes.recycling")
-local r = require("__planet-rabbasca__.util")
+require("__planet-rabbasca__.scripts.vault-recipes")
 
 data:extend {
     {
@@ -151,7 +151,7 @@ data:extend {
         ingredients = { 
             -- {type = "item", name = "infused-haronite-plate", amount = 10 },
             {type = "item", name = "steel-plate", amount = 200 },
-            {type = "item", name = "tungsten-plate", amount = 10 },
+            {type = "item", name = "vault-access-key-b", amount = 2 },
             {type = "item", name = "iron-gear-wheel", amount = 69 },
             {type = "item", name = "rabbasca-energetic-concrete", amount = 50 },
             {type = "item", name = "advanced-circuit", amount = 50 },
@@ -422,33 +422,6 @@ data:extend {
         category = "crafting",
     }
 }
-
-r.create_vault_recipe(data.raw["item"]["vault-access-key-e"], {{type = "item", name = "harene-ears-subcore", amount = 1 }}, 300,  false)
-r.create_vault_recipe(data.raw["item"]["vault-access-key-c"], {{type = "item", name = "harene-copy-core", amount = 2 }}, 600,  false)
-r.create_vault_recipe(data.raw["item"]["vault-access-key-u"], {
-  {type = "item", name = "copper-ore", amount_min = 25, amount_max  = 28 },
-  {type = "item", name = "iron-ore", amount_min = 20, amount_max  = 24 },
-  {type = "item", name = "sulfur", amount_min = 18, amount_max  = 22 },
-  {type = "item", name = "uranium-ore", amount_min = 12, amount_max  = 19 },
-  {type = "item", name = "carbon", amount_min = 15, amount_max  = 23 },
-}, 300, false)
--- r.create_vault_recipe("harenic-stabilizer",    1, 2.5, false)
--- create_vault_recipe("rabbascan-encrypted-vault-data", 10, 3, true)
--- create_vault_recipe("harene-cubic-core", 1, 10, false)
-
-r.create_duplication_recipe("iron-plate", 1, 50)
-r.create_duplication_recipe("steel-plate", 1, 10)
-r.create_duplication_recipe("rabbasca-carotene-powder", 1, 100)
-r.create_duplication_recipe("electronic-circuit", 1, 50)
-r.create_duplication_recipe("advanced-circuit",   1, 15)
--- create_duplication_recipe("vault-access-key",    1, 2)
-
--- r.create_duplication_recipe_triggered("uranium-rounds-magazine")
--- r.create_duplication_recipe("uranium-rounds-magazine", 1, 10)
--- r.create_duplication_recipe_triggered("plastic")
--- r.create_duplication_recipe("plastic", 1, 35)
--- r.create_duplication_recipe_triggered("explosives")
--- r.create_duplication_recipe("explosives", 1, 10)
 
 data:extend {
     {

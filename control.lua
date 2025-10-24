@@ -103,15 +103,18 @@ local function give_starter_items()
   if not remote.interfaces["freeplay"] then return end
   remote.call("freeplay", "set_ship_items", 
   {
-      ["copper-plate"] = 200,
-      ["battery"] = 20,
+      ["copper-plate"] = 250,
+      ["battery"] = 75,
   })
   remote.call("freeplay", "set_created_items", {
+      ["pistol"] = 1,
       ["transport-belt"] = 100,
       ["inserter"] = 50,
+      ["stone-furnace"] = 1,
+      ["burner-mining-drill"] = 2
   })
   remote.call("freeplay", "set_debris_items", {
-      ["copper-plate"] = 5,
+      ["iron-plate"] = 15,
   })
 end
 

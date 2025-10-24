@@ -45,7 +45,26 @@ function output.spill_to_inventory_or_ground(input, output, surface, spill_posit
   end
 end
 
-
+function output.create_access_key_recipe(input, ingredients)
+data:extend {
+  {
+    type = "recipe",
+    name = input.name,
+    enabled = false,
+    -- hidden = false,
+    -- hidden_in_factoriopedia = true,
+    energy_required = 2,
+    always_show_products = false,
+    ingredients = {{ type = "item", name = "vault-access-key", amount = 1 }, table.unpack(ingredients or {})},
+    results = {{ type = "item", name = input.name, amount = 1 }},
+    main_product = input.name,
+    category = "electronics",
+    auto_recycle = false,
+    overload_multiplier = 1,
+    result_is_always_fresh = true,
+  },
+}
+end
 function output.create_vault_recipe(input, rewards, cost, has_no_prequisite)
 data:extend{
   {
@@ -67,22 +86,6 @@ data:extend{
       category = "rabbasca-vault-extraction",
       subgroup = "rabbasca-vault-extraction",
       auto_recycle = false, 
-  },
- {
-    type = "recipe",
-    name = input.name,
-    enabled = false,
-    -- hidden = false,
-    -- hidden_in_factoriopedia = true,
-    energy_required = 2,
-    always_show_products = false,
-    ingredients = {{ type = "item", name = "vault-access-key", amount = 1 }},
-    results = {{ type = "item", name = input.name, amount = 1 }},
-    main_product = input.name,
-    category = "crafting",
-    auto_recycle = false,
-    overload_multiplier = 1,
-    result_is_always_fresh = true,
   },
 }
 end

@@ -56,11 +56,11 @@ data:extend {
     {
       {
         type = "unlock-recipe",
-        recipe = "vault-access-key-c"
+        recipe = "vault-access-key-b"
       },
       {
         type = "unlock-recipe",
-        recipe = "vault-access-key-c-protocol"
+        recipe = "vault-access-key-b-protocol"
       },
       {
         type = "unlock-recipe",
@@ -115,10 +115,6 @@ data:extend {
       {
         type = "unlock-recipe",
         recipe = "vision-circuit",
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "solid-fuel-from-energetic-residue",
       },
     },
     research_trigger =
@@ -183,6 +179,10 @@ data:extend {
         type = "unlock-recipe",
         recipe = "harenic-stabilizer"
       },
+      {
+        type = "unlock-recipe",
+        recipe = "solid-fuel-from-energetic-residue",
+      },
     },
     research_trigger =
     {
@@ -195,7 +195,7 @@ data:extend {
     name = "machining-assembler",
     icon = "__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-icon-big.png",
     icon_size = 1024,
-    prerequisites = { "harenic-stabilizer", "leg-day-everyday", "item-duplication-2" },
+    prerequisites = { "harenic-stabilizer", "leg-day-everyday", "rabbascan-vault-access" },
     effects =
     {
       {
@@ -260,7 +260,7 @@ data:extend {
     {
       type = "unlock-recipe",
       recipe = "ears-subcore-reactor-equipment"
-    }
+    },
   },
   research_trigger =
   {
@@ -312,62 +312,6 @@ data:extend {
       {"utility-science-pack", 1},
     }
   }
-},
-{
-    type = "technology",
-    name = "item-duplication-1",
-    icon = "__space-age__/graphics/technology/metallurgic-science-pack.png",
-    icon_size = 256,
-    prerequisites = { "rabbascan-vault-access" },
-    effects =
-    {
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-iron-plate-duplicate",
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-electronic-circuit-duplicate",
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-rabbasca-carotene-powder-duplicate",
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "harene-copy-core",
-      },
-    },
-    research_trigger =
-    {
-      type = "craft-item",
-      item = "harene-copy-core",
-      count = 1,
-    }
-},
-{
-    type = "technology",
-    name = "item-duplication-2",
-    icon = "__space-age__/graphics/technology/metallurgic-science-pack.png",
-    icon_size = 256,
-    prerequisites = { "item-duplication-1" },
-    effects =
-    {
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-steel-plate-duplicate",
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-advanced-circuit-duplicate",
-      },
-    },
-      research_trigger =
-    {
-      type = "craft-item",
-      item = "harene-copy-core",
-      count = 15,
-    }
 },
 {
     type = "technology",

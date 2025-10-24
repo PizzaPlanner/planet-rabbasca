@@ -74,7 +74,7 @@ data:extend {
 },
 {
     type = "item",
-    icon = "__base__/graphics/icons/sulfur.png",
+    icon = "__planet-rabbasca__/graphics/icons/harenic-stabilizer.png",
     name = "harenic-stabilizer",
     stack_size = 50,
     subgroup = "rabbasca-processes",
@@ -378,6 +378,17 @@ util.merge{
     icons = {
       { icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png" },
       { icon = "__base__/graphics/icons/copper-ore.png", scale = 0.3, shift = {4, 4} }
+    } ,
+    stack_size = 20,
+},
+{
+    type = "item",
+    name = "vault-access-key-b",
+    subgroup = "rabbasca-security",
+    order = "a[vault-access-key-b]",
+    icons = {
+      { icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png" },
+      { icon = "__base__/graphics/icons/blueprint.png", scale = 0.2, shift = {6, 6} }
     } ,
     stack_size = 20,
 },
