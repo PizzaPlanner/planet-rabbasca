@@ -3,7 +3,7 @@ local utils = require("__any-planet-start__.utils")
 -- earlier/easier
 -- utils.add_recipes("steam-power", { "inserter", "lab" })
 -- utils.set_prerequisites("automation-science-pack", {"steam-power"})
-utils.set_prerequisites("chemical-science-pack", {"harene-gas-processing", "engine"})
+utils.set_prerequisites("chemical-science-pack", {"rabbascan-vault-access", "engine"})
 -- utils.remove_tech("automation-2", false, true)
 -- utils.add_recipes("automation", { "assembling-machine-2" })
 utils.set_prerequisites("oil-gathering", {"steel-processing", "logistic-science-pack"})

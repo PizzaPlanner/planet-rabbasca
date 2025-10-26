@@ -29,7 +29,8 @@ util.merge { data.raw["cargo-wagon"]["cargo-wagon"],
   equipment_grid = "train-equipment-grid",
   mineable = { result = "rabbasca-cargo-wagon" },
   placeable_by = { item = "rabbasca-cargo-wagon", count = 1 },
-  quality_affects_inventory_size = true
+  quality_affects_inventory_size = true,
+  allow_robot_dispatch_in_automatic_mode = true,
 }},
 util.merge { data.raw["locomotive"]["locomotive"],
 {
