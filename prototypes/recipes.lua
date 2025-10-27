@@ -57,24 +57,6 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "power-solution",
-        energy_required = 5.0,
-        enabled = false,
-        ingredients = { 
-            {type = "fluid", name = "harene-gas",    amount = 5 },
-            {type = "fluid", name = "beta-carotene", amount = 40 },
-            {type = "item", name = "iron-plate",     amount = 1 },
-        },
-        results = { 
-            { type = "item", name = "power-solution", amount = 3 },
-        },
-        hide_from_player_crafting = true,
-        main_product = "power-solution",
-        category = "organic-or-chemistry",
-        allow_productivity = true,
-    },
-    {
-        type = "recipe",
         name = "carbon-from-carotenoid",
         energy_required = 7.0,
         enabled = false,
@@ -101,27 +83,6 @@ data:extend {
         main_product = "beta-carotene",
         hide_from_player_crafting = true,
         category = "organic-or-chemistry",
-        allow_productivity = true,
-    },
-    {
-        type = "recipe",
-        name = "haronite",
-        -- enabled = false,
-        energy_required = 15,
-        ingredients = { 
-            {type = "fluid", name = "harene-gas", amount = 100 },
-            {type = "item",  name = "stone", amount = 5 },
-            {type = "item",  name = "power-solution", amount = 8 },
-        },
-        results = { 
-            { type = "item", name = "haronite", amount = 5  },
-        },
-        main_product = "haronite",
-        category = "chemistry",
-        hide_from_player_crafting = true,
-        result_is_always_fresh = true,
-        reset_freshness_on_craft = true,
-        preserve_products_in_machine_output = true,
         allow_productivity = true,
     },
     {
@@ -283,11 +244,9 @@ data:extend {
         energy_required = 40,
         ingredients = { 
             {type = "item", name = "ears-subcore-reactor-equipment", amount = 2 },
-            -- {type = "item", name = "harene-glob-core", amount = 1 },
-            {type = "item", name = "power-solution", amount = 500 },
+            {type = "item", name = "rabbasca-turbofuel", amount = 500 },
             {type = "item", name = "rabbasca-energetic-concrete", amount = 100 },
             {type = "item", name = "electric-engine-unit", amount = 50 },
-            {type = "item", name = "rabbasca-turbofin", amount = 100 },
             {type = "item", name = "vision-circuit", amount = 200 }
         },
         results = { 
@@ -299,13 +258,36 @@ data:extend {
     },
     {
         type = "recipe",
+        name = "rabbasca-turbofuel",
+        enabled = false,
+        energy_required = 10,
+        ingredients = {
+            { type = "item", name = "rabbasca-turbofish", amount = 1 },
+            { type = "fluid", name = "harene-gas", amount = 15 },
+            { type = "item", name = "solid-fuel", amount = 10 },
+        },
+        results = { 
+            { type = "item", name = "rabbasca-turbofuel", amount = 1 },
+        },
+        enabled = false,
+        category = "chemistry",
+        crafting_machine_tint =
+        {
+            primary = {r = 0.710, g = 0.633, b = 0.482, a = 1.000},
+            secondary = {r = 0.745, g = 0.672, b = 0.527, a = 1.000},
+            tertiary = {r = 0.894, g = 0.773, b = 0.596, a = 1.000},
+            quaternary = {r = 0.812, g = 0.583, b = 0.202, a = 1.000},
+        }
+    },
+    {
+        type = "recipe",
         name = "rabbasca-turbofish-breeding",
         enabled = false,
         energy_required = 15,
         ingredients = { 
             {type = "item",  name = "rabbasca-turbofish", amount = 2 },
-            {type = "item",  name = "protein-powder", amount = 5  },
-            {type = "fluid", name = "beta-carotene", amount = 50 },
+            {type = "item",  name = "rabbasca-protein-shake", amount = 1  },
+            {type = "fluid", name = "harene-gas", amount = 10 },
         },
         results = { 
             { type = "item", name = "rabbasca-turbofish", amount = 3, ignored_by_productivity = 2 },
@@ -383,7 +365,7 @@ data:extend {
         energy_required = 7,
         ingredients = {
             { type = "item", name = "calcite", amount = 1 },
-            { type = "item", name = "rabbasca-turbofish", amount = 1 },
+            { type = "item", name = "protein-powder", amount = 8 },
             { type = "fluid", name = "beta-carotene", amount = 15 },
         },
         results = {

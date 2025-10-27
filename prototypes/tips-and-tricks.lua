@@ -51,7 +51,7 @@ data:extend {{
                 position = {center.x - 2, center.y}
             }
             vault.destructible = false
-            surface.find_entities_filtered{ name = "rabbasca-vault-access-terminal"}[1].force = game.forces.player
+            surface.find_entities_filtered{ name = "rabbasca-vault-hacked"}[1].force = game.forces.player
             surface.find_entities_filtered{ name = "locomotive"}[1].get_inventory(defines.inventory.fuel).insert({name = "rabbasca-turbofuel"})
             surface.find_entities_filtered{ name = "gun-turret"}[1].get_inventory(defines.inventory.turret_ammo).insert({name = "firearm-magazine", count = 1})
         ]],

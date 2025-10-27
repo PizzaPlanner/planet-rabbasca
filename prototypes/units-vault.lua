@@ -8,6 +8,10 @@ local vault_distractor = util.merge {
     max_health = 5,
     time_to_live = 8 * second,
     order = "r[rabbasca]-b",
+    attack_parameters = {
+      range = 3,
+      damage_modifier = 0.23
+    }
   }
 }
 
@@ -46,7 +50,7 @@ defender_1.attack_parameters = {
   type = "projectile",
   animation = table.deepcopy(data.raw["combat-robot"]["defender"].idle),
   activation_type = "throw",
-  cooldown = 20 * second,
+  cooldown = 15 * second,
   cooldown_deviation = 0.2,
   projectile_center = {0, 1},
   projectile_creation_distance = 0.6,

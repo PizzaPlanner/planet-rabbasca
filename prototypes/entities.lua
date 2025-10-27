@@ -162,7 +162,8 @@ data:extend {
     name = "rabbasca-energy-source",
     icon = "__planet-rabbasca__/graphics/icons/vulcanus-bw.png",
     energy_production = "50MW",
-    energy_source = { type = "electric", usage_priority = "primary-output", buffer_capacity = "10MJ" },
+
+    energy_source = { type = "electric", usage_priority = "primary-output", buffer_capacity = "8.333MJ", output_flow_limit = "50MW" },
     gui_mode = "none",
     flags = { "placeable-neutral", "placeable-off-grid", "not-on-map", "not-deconstructable", "not-selectable-in-game" },
     autoplace = {
@@ -171,18 +172,6 @@ data:extend {
     collision_mask = { layers = { } },
     map_generator_bounding_box = {{-20, -20}, {20,  20}}
   },
-  {
-    type = "electric-energy-interface",
-    name = "harene-platform-energy-source",
-    icon =  data.raw["item"]["harene-ears-core"].icon,
-    icons = data.raw["item"]["harene-ears-core"].icons,
-    energy_production = "10MW",
-    energy_source = { type = "electric", usage_priority = "primary-output", buffer_capacity = "0.5MJ" },
-    gui_mode = "none",
-    flags = { "placeable-neutral", "placeable-off-grid", "not-on-map", "not-deconstructable", "not-selectable-in-game" },
-    collision_mask = { layers = { } },
-    map_generator_bounding_box = {{-20, -20}, {20,  20}}
-  }
 }
 
 data:extend {

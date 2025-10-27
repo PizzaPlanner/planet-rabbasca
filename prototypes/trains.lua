@@ -15,14 +15,6 @@ util.merge {
     place_result = "rabbasca-locomotive"
   }
 },
-util.merge { data.raw["item"]["rocket-fuel"],
-{
-  name = "rabbasca-turbofuel",
-  fuel_value = "220MJ",
-  fuel_top_speed_multiplier = 2.142,
-  subgroup = "rabbasca-processes",
-  order = "f[rabbasca-turbofuel]"
-}},
 util.merge { data.raw["cargo-wagon"]["cargo-wagon"],
 {
   name = "rabbasca-cargo-wagon",
@@ -65,34 +57,11 @@ util.merge { data.raw["locomotive"]["locomotive"],
     category = "crafting"
 },
 {
-    type = "recipe",
-    name = "rabbasca-turbofuel",
-    enabled = false,
-    energy_required = 10,
-    ingredients = {
-        { type = "item", name = "rabbasca-turbofish", amount = 1 },
-        { type = "fluid", name = "harene-gas", amount = 10 },
-        { type = "item", name = "solid-fuel", amount = 2 },
-    },
-    results = { 
-        { type = "item", name = "rabbasca-turbofuel", amount = 1 },
-    },
-    enabled = false,
-    category = "chemistry",
-    crafting_machine_tint =
-    {
-        primary = {r = 0.710, g = 0.633, b = 0.482, a = 1.000},
-        secondary = {r = 0.745, g = 0.672, b = 0.527, a = 1.000},
-        tertiary = {r = 0.894, g = 0.773, b = 0.596, a = 1.000},
-        quaternary = {r = 0.812, g = 0.583, b = 0.202, a = 1.000},
-    }
-},
-{
   type = "technology",
   name = "rabbasca-railway",
   icon = data.raw["technology"]["railway"].icon,
   icon_size = 256,
-  prerequisites = { "bunnyhop-engine", "railway" },
+  prerequisites = { "healthy-science-pack", "railway" },
   effects =
   {
     {
@@ -103,10 +72,6 @@ util.merge { data.raw["locomotive"]["locomotive"],
       type = "unlock-recipe",
       recipe = "rabbasca-locomotive"
     },
-    {
-      type = "unlock-recipe",
-      recipe = "rabbasca-turbofuel"
-    },
   },
   unit = {
     count = 150,
@@ -116,6 +81,7 @@ util.merge { data.raw["locomotive"]["locomotive"],
       {"logistic-science-pack", 1},
       {"chemical-science-pack", 1},
       {"space-science-pack", 1},
+      {"healthy-science-pack", 1},
     }
   }
 },

@@ -81,14 +81,6 @@ data:extend {
 },
 {
     type = "item",
-    icon = "__space-age__/graphics/icons/bioflux.png",
-    name = "power-solution",
-    stack_size = 100,
-    subgroup = "rabbasca-processes",
-    order = "b[personal-transport]-c[power-solution]",
-},
-{
-    type = "item",
     icon = "__planet-rabbasca__/graphics/icons/harene-ears-core.png",
     name = "harene-ears-core",
     stack_size = 5,
@@ -192,8 +184,19 @@ util.merge {
       icon = "__planet-rabbasca__/graphics/icons/protein-shake.png",
       spoil_ticks = 0,
       spoil_result = nil,
+      fuel_category = "nutrients",
+      fuel_value = "25.4MJ",
     },
 },
+util.merge { data.raw["item"]["rocket-fuel"],
+{
+  name = "rabbasca-turbofuel",
+  icon = "__planet-rabbasca__/graphics/icons/turbofuel.png",
+  fuel_value = "220MJ",
+  fuel_top_speed_multiplier = 2.142,
+  subgroup = "rabbasca-processes",
+  order = "f[rabbasca-turbofuel]"
+}},
 {
     type = "item",
     icon = "__planet-rabbasca__/graphics/icons/carotenoid.png",
@@ -236,13 +239,14 @@ util.merge {
 },
 {
     type = "item",
-    icon = "__space-age__/graphics/icons/nutrients.png",
+    icons = {
+      { icon = "__space-age__/graphics/icons/fluid/fluorine.png", tint = { r=0.65, g=0.31, b=0.92 } },
+      { icon = "__space-age__/graphics/icons/nutrients.png", scale = 0.6 }
+    },
     name = "protein-powder",
     stack_size = 200,
     subgroup = "rabbasca-processes",
     order = "b[personal-transport]-c[startertron]",
-    fuel_category = "nutrients",
-    fuel_value = "8.7MJ",
 },
 {
   type = "fluid",

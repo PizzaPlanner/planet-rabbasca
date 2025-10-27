@@ -8,6 +8,7 @@ local scrap_resource = util.merge {
     normal = 100,
     map_color = { 0.82, 0.52, 0.215 },
     stages = { sheet = { filename = "__planet-rabbasca__/graphics/icons/carotenoid-ore.png" } },
+    resource_patch_search_radius = 32,
   }
 }
 scrap_resource.minable =
@@ -25,8 +26,8 @@ scrap_resource.autoplace = {
   probability_expression = "rabbasca_carrot_noise",
   richness_expression = "(480 + 89\z 
     * multioctave_noise{x = x, y = y, persistence = 0.44, seed0 = map_seed, input_scale = 1.3, seed1 = 'noglassesneeded', octaves = 6 })\z
-    * lerp(1, 50, distance / 10000)\z
-    * control:rabbasca_scrap:richness",
+    * lerp(1, 50, distance / 5000)\z
+    * control:rabbasca_carotenoids:richness",
 }
 
 local mixed_oxide = util.merge {
@@ -41,20 +42,20 @@ mixed_oxide.minable =
   mining_time = 0.75,
   results =
   {
-    { type = "item", name = "advanced-circuit", amount = 1, probability = 0.64 },
+    { type = "item", name = "advanced-circuit", amount = 1, probability = 0.9 },
     { type = "item", name = "firearm-magazine", amount = 1, probability = 0.07 },
-    { type = "item", name = "battery", amount = 1, probability = 0.11 },
+    { type = "item", name = "battery", amount = 1, probability = 0.03 },
     { type = "item", name = "vault-access-key", amount = 1, probability = 0.005 },
   }
 }
 mixed_oxide.collision_mask = { layers = { resource = true } }
 mixed_oxide.autoplace = {
   tile_restriction = { "rabbasca-rough", "rabbasca-rough-2" },
-  probability_expression = "rabbasca_camps * multioctave_noise{x = x, y = y, persistence = 0.71, seed0 = map_seed, input_scale = 1.16, seed1 = 'scrappening', octaves = 6 }",
+  probability_expression = "rabbasca_camps * multioctave_noise{x = x, y = y, persistence = 0.71, seed0 = map_seed, input_scale = 0.86, seed1 = 'scrappening', octaves = 6 }",
   richness_expression = "(64 + 17\z 
     * multioctave_noise{x = x, y = y, persistence = 0.44, seed0 = map_seed, input_scale = 1.5, seed1 = 'whoneedscircuits', octaves = 4 })\z
     * lerp(5, 100, distance / 2000)\z
-    * control:rabbasca_rocks:richness",
+    * control:rabbasca_carotenoids:richness",
 }
 
 local harene_resource = {

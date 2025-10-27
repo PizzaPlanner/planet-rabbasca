@@ -39,10 +39,6 @@ data:extend {
         type = "unlock-recipe",
         recipe = "protein-powder"
       },
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-protein-shake"
-      },
     },
     research_trigger =
     {
@@ -55,7 +51,7 @@ data:extend {
     name = "healthy-science-pack",
     icon = "__space-age__/graphics/technology/metallurgic-science-pack.png",
     icon_size = 256,
-    prerequisites = { "rabbasca-ears-technology-1" },
+    prerequisites = { "bunnyhop-engine", "rabbasca-turbofish-breeding" },
     effects =
     {
       {
@@ -65,8 +61,8 @@ data:extend {
     },
     research_trigger =
     {
-        type = "mine-entity",
-        entity = "harene-vent"
+        type = "craft-item",
+        item = "bunnyhop-engine"
     }
 },
 {
@@ -74,7 +70,7 @@ data:extend {
   name = "rabbasca-vault-hacking-efficiency",
   icon = "__Krastorio2Assets__/icons/cards/utility-tech-card.png",
   icon_size = 256,
-  prerequisites = { "planet-discovery-rabbasca" },
+  prerequisites = { "healthy-science-pack" },
   effects = {
     {
       type = "change-recipe-productivity",
@@ -95,7 +91,7 @@ data:extend {
   max_level = "infinite",
   unit = {
     time = 60,
-    count_formula = "100+200 * (1.5^L)",
+    count_formula = "250+300 * (1.5^L)",
     ingredients = {
       {"automation-science-pack", 1},
       {"logistic-science-pack", 1},
@@ -136,14 +132,6 @@ data:extend {
         type = "unlock-recipe",
         recipe = "vault-protocol-catalysts-key"
       },
-      {
-        type = "unlock-recipe",
-        recipe = "vault-protocol-haronite"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "vault-protocol-haronite-key"
-      },
     },
     research_trigger =
     {
@@ -153,7 +141,7 @@ data:extend {
 },
 {
     type = "technology",
-    name = "rabbasca-healthy-fluids",
+    name = "carotenoid-ore",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
     prerequisites = { "planet-discovery-rabbasca" },
@@ -167,15 +155,38 @@ data:extend {
         type = "unlock-recipe",
         recipe = "carbon-from-carotenoid",
       },
-      {
-        type = "unlock-recipe",
-        recipe = "vision-circuit",
-      },
     },
     research_trigger =
     {
       type = "mine-entity",
       entity = "carotenoid-ore",
+    }
+},
+{
+    type = "technology",
+    name = "rabbasca-healthy-fluids",
+    icon = "__space-age__/graphics/technology/gleba.png",
+    icon_size = 256,
+    prerequisites = { "carotenoid-ore" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "harenic-stabilizer",
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "vision-circuit",
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-protein-shake",
+      },
+    },
+    research_trigger =
+    {
+      type = "craft-fluid",
+      fluid = "beta-carotene",
     }
 },
 {
@@ -190,6 +201,10 @@ data:extend {
         type = "unlock-recipe",
         recipe = "vault-protocol-harene-ears-subcore"
       },
+      {
+        type = "unlock-recipe",
+        recipe = "vault-protocol-harene-ears-subcore-key"
+      },
     },
     research_trigger =
     {
@@ -202,7 +217,7 @@ data:extend {
     name = "rabbasca-ears-technology-1",
     icon = data.raw["item"]["harene-ears-core"].icon,
     icon_size = 64,
-    prerequisites = { "rabbasca-vault-core-extraction" },
+    prerequisites = { "healthy-science-pack" },
     effects =
     {
       {
@@ -211,16 +226,20 @@ data:extend {
       }
       -- more in data-updates
     },
-    research_trigger =
-    {
-      type = "craft-item",
-      item = "harene-ears-subcore",
-      count = 20,
-    }
+    unit = {
+        count = 100,
+        time = 30,
+        ingredients = {
+            {"automation-science-pack", 1},
+            {"logistic-science-pack", 1},
+            {"chemical-science-pack", 1},
+            {"healthy-science-pack", 1},
+        }
+    },
 },
 {
     type = "technology",
-    name = "harenic-stabilizer",
+    name = "energetic-residue",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
     prerequisites = { "planet-discovery-rabbasca" },
@@ -228,17 +247,17 @@ data:extend {
     {
       {
         type = "unlock-recipe",
-        recipe = "harenic-stabilizer"
+        recipe = "solid-fuel-from-energetic-residue",
       },
       {
         type = "unlock-recipe",
-        recipe = "solid-fuel-from-energetic-residue",
+        recipe = "lubricant-from-energetic-residue",
       },
     },
     research_trigger =
     {
-      type = "mine-entity",
-      entity = "rabbasca-big-rock"
+      type = "craft-fluid",
+      fluid = "energetic-residue"
     }
 },
 {
@@ -246,9 +265,17 @@ data:extend {
     name = "machining-assembler",
     icon = "__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-icon-big.png",
     icon_size = 1024,
-    prerequisites = { "harenic-stabilizer", "leg-day-everyday", "rabbascan-vault-access" },
+    prerequisites = { "rabbasca-healthy-fluids", "energetic-residue", "rabbascan-vault-access" },
     effects =
     {
+      {
+        type = "unlock-recipe",
+        recipe = "vault-protocol-haronite",
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "vault-protocol-haronite-key",
+      },
       {
         type = "unlock-recipe",
         recipe = "rabbasca-energetic-concrete"
@@ -257,15 +284,11 @@ data:extend {
         type = "unlock-recipe",
         recipe = "machining-assembler"
       },
-      {
-        type = "unlock-recipe",
-        recipe = "lubricant-from-energetic-residue"
-      },
     },
     research_trigger =
     {
       type = "craft-item",
-      item = "haronite-brick"
+      item = "vision-circuit"
     }
 },
 {
@@ -304,6 +327,10 @@ data:extend {
   prerequisites = { "rabbasca-vault-core-extraction", "chemical-science-pack", "modular-armor", "quality-module" },
   effects =
   {
+    {
+      type = "unlock-recipe",
+      recipe = "rabbasca-turbofuel",
+    },
     {
       type = "unlock-recipe",
       recipe = "bunnyhop-engine-equipment",
@@ -393,7 +420,7 @@ data:extend {
     name = "rabbasca-turbofish-breeding",
     icon = "__space-age__/graphics/technology/fish-breeding.png",
     icon_size = 256,
-    prerequisites = { "rabbasca-ears-technology-1", "fish-breeding" },
+    prerequisites = { "leg-day-everyday", "rabbasca-healthy-fluids", "biochamber" },
     effects =
     {
       {
@@ -401,14 +428,11 @@ data:extend {
         recipe = "rabbasca-turbofish-breeding"
       },
     },
-    unit = {
-        count = 500,
-        time = 60,
-        ingredients = {
-          { "chemical-science-pack", 1},
-          { "space-science-pack", 1},
-          { "agricultural-science-pack", 1},
-        }
+    research_trigger =
+    {
+      type = "craft-item",
+      item = "rabbasca-protein-shake",
+      count = 10,
     }
 },
 {
@@ -416,7 +440,7 @@ data:extend {
     name = "harene-synthesis",
     icon = "__space-age__/graphics/technology/steel-plate-productivity.png",
     icon_size = 256,
-    prerequisites = { "rabbasca-ears-technology-1", "metallurgic-science-pack", "cryogenic-science-pack" },
+    prerequisites = { "healthy-science-pack", "metallurgic-science-pack", "cryogenic-science-pack" },
     effects =
     {
       {
@@ -436,7 +460,8 @@ data:extend {
           {"logistic-science-pack", 1},
           {"chemical-science-pack", 1},
           { "metallurgic-science-pack", 1},
-          { "cryogenic-science-pack", 1}
+          { "cryogenic-science-pack", 1},
+          { "healthy-science-pack", 1},
         }
     }
 },
@@ -445,7 +470,7 @@ data:extend {
   name = "interplanetary-construction",
   icon = "__base__/graphics/technology/radar.png",
   icon_size = 256,
-  prerequisites = { "rabbasca-ears-technology-1", "construction-robotics", "utility-science-pack" },
+  prerequisites = { "rabbasca-ears-technology-1", "construction-robotics", "utility-science-pack", "space-science-pack" },
   effects =
   {
     {
@@ -466,6 +491,7 @@ data:extend {
       {"chemical-science-pack", 1},
       {"space-science-pack", 1},
       {"utility-science-pack", 1},
+      {"healthy-science-pack", 1},
     }
   }
 },
@@ -474,7 +500,7 @@ data:extend {
   name = "rabbasca-document-forging",
   icon = "__base__/graphics/technology/radar.png",
   icon_size = 256,
-  prerequisites = { "rabbasca-turbofish-breeding", "utility-science-pack", "production-science-pack" },
+  prerequisites = { "healthy-science-pack", "space-science-pack", "utility-science-pack", "production-science-pack" },
   effects =
   {
     {
@@ -492,6 +518,7 @@ data:extend {
       {"space-science-pack", 1},
       {"production-science-pack", 1},
       {"utility-science-pack", 1},
+      {"healthy-science-pack", 1},
     }
   }
 },

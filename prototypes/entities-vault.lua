@@ -1,4 +1,18 @@
-require("__base__.prototypes.entity.combinator-pictures")
+local delayed_recalc_trigger = {
+  type = "delayed-active-trigger",
+  name = "rabbasca-calculate-evolution",
+  delay = 5,
+  action = {
+    type = "direct",
+    action_delivery = {
+      type = "instant",
+      source_effects = {
+        type = "script",
+        effect_id = "rabbasca_on_hack_console"
+      }
+    }
+  }
+}
 
 local vault = util.merge{ 
   table.deepcopy(data.raw["unit-spawner"]["spitter-spawner"]), 
@@ -14,8 +28,8 @@ local vault = util.merge{
   max_friends_around_to_spawn = 8,
   max_defensive_friends_around_to_spawn = 1,
   spawning_radius = 12,
-  captured_spawner_entity = "rabbasca-vault-access-terminal",
-  -- map_generator_bounding_box = {{-14, -14}, {14, 14}},
+  captured_spawner_entity = "rabbasca-vault-hacked",
+  map_generator_bounding_box = {{-8, -8}, {8, 8}},
   -- map_color = {0.9, 0.3, 0.4},
   collision_box = {{-2.4, -1.9},{2.4, 2.2}}, -- shift by 2, 2.5
   selection_box = {{-2.5, -2.5},{2.5, 2.5}},
@@ -24,15 +38,12 @@ local vault = util.merge{
 vault.spawn_decoration = {}
 vault.damaged_trigger_effect = nil
 vault.absorptions_per_second = { } -- { ["vault-activity"] = { absolute = 500, proportional = 0.5 }}
-vault.autoplace = { probability_expression = "rabbasca_camps > 0.95", force = "enemy" }
+vault.autoplace = { probability_expression = "rabbasca_camps > 0.9", force = "enemy" }
 vault.created_effect = {
   type = "direct",
   action_delivery = {
-    type = "instant",
-    source_effects = {
-      type = "script",
-      effect_id = "rabbasca_on_hack_console"
-    }
+    type = "delayed",
+    delayed_trigger = "rabbasca-calculate-evolution"
   }
 }
 vault.resistances = {
@@ -54,7 +65,7 @@ vault.resistances = {
 --     {
 --       {
 --         type = "create-entity",
---         entity_name = "rabbasca-vault-access-terminal",
+--         entity_name = "rabbasca-vault-hacked",
 --         offsets = {{0, 0.1}},
 --       },
 --       {
@@ -115,9 +126,8 @@ vault.graphics_set =
 local access_console = util.merge{
   table.deepcopy(vault),
   {
-    name = "rabbasca-vault-access-terminal",
+    name = "rabbasca-vault-hacked",
     type = "furnace",
-    icon = "__Krastorio2Assets__/icons/entities/singularity-beacon.png",
     max_health = 7200,
     production_health_effect = {
       not_producing = -36,
@@ -173,6 +183,7 @@ local capture_bot = {
 }
 
 data:extend {
+  delayed_recalc_trigger,
   vault, 
   access_console,
   capture_bot 

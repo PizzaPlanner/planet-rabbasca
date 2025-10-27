@@ -31,7 +31,9 @@ r.create_vault_recipe("vault-protocol-iron-ore", {
   results = {
     {type = "item", name = "iron-ore", amount = 75 },
   }, 
-  energy_required = 25
+  energy_required = 25,
+  maximum_productivity = 9,
+  allow_productivity = true,
 })
 r.create_access_key_recipe("vault-protocol-copper-ore", {
   { type = "item", name = "electronic-circuit", amount = 1 },
@@ -45,7 +47,9 @@ r.create_vault_recipe("vault-protocol-copper-ore", {
   results = {
     {type = "item", name = "copper-ore", amount = 60 },
   }, 
-  energy_required = 25
+  energy_required = 25,
+  maximum_productivity = 9,
+  allow_productivity = true,
 })
 
 r.create_access_key_recipe("vault-protocol-catalysts", {
@@ -61,5 +65,7 @@ r.create_vault_recipe("vault-protocol-catalysts", {
     {type = "item", name = "calcite", amount = 10 },
     {type = "item", name = "sulfur", amount = 7 },
   }, 
-  energy_required = 20
+  energy_required = 20,
+  maximum_productivity = 9,
+  allow_productivity = true,
 })

@@ -19,7 +19,6 @@ local function handle_script_events(event)
   elseif effect_id == "rabbasca_on_hack_console" then
     local from = event.source_entity or event.target_entity
     local position = (from and from.position) or event.target_position or event.source_position
-    if not position then return end
     rutil.hack_vault(game.surfaces[event.surface_index], position)
   elseif effect_id == "rabbasca_teleport" then
     local engine = event.source_entity or event.target_entity
@@ -49,6 +48,11 @@ script.on_event(defines.events.on_player_controller_changed, function(event)
     if player.gui.screen.bunnyhop_ui then
        bunnyhop.clear_bunnyhop_ui(player)
     end
+end)
+
+script.on_nth_tick(1800, function(_)
+  if not game.planets["rabbasca"] or not game.planets["rabbasca"].surface then return end
+  rutil.hack_vault(game.planets["rabbasca"].surface)
 end)
 
 script.on_event(defines.events.on_surface_created, function(event)

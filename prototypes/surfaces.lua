@@ -8,6 +8,13 @@ local planet_catalogue_aquilo = require("__space-age__.prototypes.planet.process
 data:extend{
 {
   type = "autoplace-control",
+  name = "rabbasca_rocks",
+  order = "r[rabbasca]-c[rocks]",
+  category = "resource",
+  richness = false, 
+},
+{
+  type = "autoplace-control",
   name = "harene",
   order = "r[rabbasca]-a[harene]",
   category = "resource",
@@ -16,24 +23,18 @@ data:extend{
 },
 {
   type = "autoplace-control",
-  name = "rabbasca_rocks",
-  order = "r[rabbasca]-c[rocks]",
+  name = "rabbasca_carotenoids",
+  order = "r[rabbasca]-b[carotenoids]",
   category = "resource",
   richness = true, 
-},
-{
-  type = "autoplace-control",
-  name = "rabbasca_scrap",
-  order = "r[rabbasca]-b[scrap]",
-  category = "resource",
-  richness = true, 
+  can_be_disabled = false,
 },
 {
   type = "autoplace-control",
   name = "rabbasca_vaults",
   order = "r[rabbasca]-b[vaults]",
   category = "resource",
-  richness = false, 
+  richness = true, 
   can_be_disabled = false,
 }
 }
@@ -103,7 +104,7 @@ local map_gen = {
     {
         ["harene"] = {},
         ["rabbasca_rocks"] = {},
-        ["rabbasca_scrap"] = {},
+        ["rabbasca_carotenoids"] = {},
         ["rabbasca_vaults"] = {},
     },
     autoplace_settings = {

@@ -210,10 +210,11 @@ function output.rabbasca_init_vault_or_console(e)
 end
 
 function output.hack_vault(surface, position)
-  local new_evo_text = "Rabbasca alertness now at: [color=yellow]%.1f%%[/color]"
-  local active_vaults_count = #surface.find_entities_filtered { name = "rabbasca-vault-access-terminal", force = game.forces.player }
+  local active_vaults_count = #surface.find_entities_filtered { name = "rabbasca-vault-hacked", force = game.forces.player }
   local new_evo = math.min(1, active_vaults_count * 0.025)
   game.forces.enemy.set_evolution_factor(new_evo, surface)
+  if not position then return end
+  local new_evo_text = "Rabbasca alertness now at: [color=yellow]%.1f%%[/color]"
   for _, player in pairs(game.players) do
     player.create_local_flying_text { text = string.format(new_evo_text, game.forces.enemy.get_evolution_factor(surface) * 100), surface = surface, position = position }
   end
