@@ -89,22 +89,8 @@ assembler.graphics_set = {
   }
 }
 
-local harene_platform = util.merge{ data.raw["space-platform-hub"]["space-platform-hub"],
-  {
-    name = "harene-space-platform-hub",
-    inventory_size = 32,
-    surface_conditions = {
-      {
-        property = "harenic-energy-signatures",
-        min = 50,
-      }
-    }
-  }
-}
-
 data:extend {
   assembler,
-  harene_platform,
   {
     type = "roboport",
     name = "rabbasca-orbital-construction-roboport",
@@ -128,7 +114,7 @@ data:extend {
     inventory_type = "with_filters_and_bar",
     inventory_size = 30,
     surface_conditions = {
-      { property = "harenic-energy-signatures", min = 50 }
+      { property = "harenic-energy-signatures", min = 20 }
     },
     collision_box = {{-2.4, -2.4}, {2.4, 2.4}},
     selection_box = {{-2.5, -2.5}, {2.5, 2.5}}
@@ -163,7 +149,13 @@ data:extend {
     icon = "__planet-rabbasca__/graphics/icons/vulcanus-bw.png",
     energy_production = "50MW",
 
-    energy_source = { type = "electric", usage_priority = "primary-output", buffer_capacity = "8.333MJ", output_flow_limit = "50MW" },
+    energy_source = { 
+      type = "electric", 
+      usage_priority = "primary-output", 
+      buffer_capacity = "8.333MJ", 
+      output_flow_limit = "50MW",
+      render_no_power_icon = false
+    },
     gui_mode = "none",
     flags = { "placeable-neutral", "placeable-off-grid", "not-on-map", "not-deconstructable", "not-selectable-in-game" },
     autoplace = {

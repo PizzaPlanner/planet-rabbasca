@@ -42,7 +42,7 @@ data:extend {
     name = "haronite",
     stack_size = 50,
     subgroup = "rabbasca-processes",
-    order = "b[personal-transport]-c[startertron]",
+    order = "h[haronite]-a[haronite]",
     spoil_ticks = 3 * minute,
     spoil_result = "stone"
 },
@@ -52,7 +52,7 @@ data:extend {
     name = "infused-haronite-plate",
     stack_size = 50,
     subgroup = "rabbasca-processes",
-    order = "b[personal-transport]-c[startertron]",
+    order = "h[haronite]-d[infused-haronite-plate]",
 },
 {
     type = "item",
@@ -60,7 +60,7 @@ data:extend {
     name = "rabbasca-turbofin",
     stack_size = 200,
     subgroup = "rabbasca-processes",
-    order = "b[personal-transport]-c[startertron]",
+    order = "b[organic]-c[turbofin]",
 },
 {
     type = "item",
@@ -68,7 +68,7 @@ data:extend {
     name = "harenic-stabilizer",
     stack_size = 50,
     subgroup = "rabbasca-processes",
-    order = "b[personal-transport]-c[startertron]",
+    order = "b[processed]-h[harenic-stabilizer]",
 },
 {
     type = "item",
@@ -86,7 +86,7 @@ data:extend {
     stack_size = 5,
     weight = 50 * kg,
     subgroup = "rabbasca-processes",
-    order = "b[personal-transport]-d[harene-ears-core]",
+    order = "v[vault]-d[harene-ears-core]",
     auto_recycle = false,
 },
 {
@@ -99,16 +99,8 @@ data:extend {
     name = "harene-ears-subcore",
     stack_size = 50,
     subgroup = "rabbasca-processes",
-    order = "b[personal-transport]-d[harene-ears-subcore]",
+    order = "v[vault]-d[harene-ears-subcore]",
     auto_recycle = false,
-},
-{
-    type = "item",
-    icon = "__planet-rabbasca__/graphics/icons/harene-copy-core.png",
-    name = "harene-copy-core",
-    stack_size = 10,
-    subgroup = "rabbasca-processes",
-    order = "b[personal-transport]-d[harene-copy-core]",
 },
 {
     type = "item",
@@ -141,7 +133,7 @@ util.merge {
       uses_stack = true,
       attack_parameters = {
         type = "projectile",
-        activation_type = "consume",
+        activation_type = "activate",
         ammo_category = "capsule",
         cooldown = 2 * minute,
         range = 0,
@@ -175,9 +167,11 @@ util.merge {
       icon = "__planet-rabbasca__/graphics/icons/turbofish.png",
       spoil_ticks = 3 * minute,
       spoil_result = "protein-powder",
+      subgroup = "rabbasca-processes",
+      order = "b[organic]-a[turbofish]"
     },
-},
-util.merge {
+  },
+  util.merge {
     table.deepcopy(data.raw["capsule"]["raw-fish"]),
     {
       name = "rabbasca-protein-shake",
@@ -186,6 +180,8 @@ util.merge {
       spoil_result = nil,
       fuel_category = "nutrients",
       fuel_value = "25.4MJ",
+      subgroup = "rabbasca-processes",
+      order = "b[organic]-f[protein-shake]"
     },
 },
 util.merge { data.raw["item"]["rocket-fuel"],
@@ -195,15 +191,15 @@ util.merge { data.raw["item"]["rocket-fuel"],
   fuel_value = "220MJ",
   fuel_top_speed_multiplier = 2.142,
   subgroup = "rabbasca-processes",
-  order = "f[rabbasca-turbofuel]"
+  order = "b[processed]-a[rabbasca-turbofuel]"
 }},
 {
     type = "item",
     icon = "__planet-rabbasca__/graphics/icons/carotenoid.png",
-    name = "carotenoid",
+    name = "carotenoid-ore",
     stack_size = 5,
     subgroup = "rabbasca-processes",
-    order = "b[personal-transport]-c[startertron]",
+    order = "a[raw-resource]-a[carotenoid]",
     fuel_category = "carotene",
     fuel_value = "720kJ"
 },
@@ -213,7 +209,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
     name = "harene-infused-foundation",
     stack_size = 20,
     subgroup = "rabbasca-processes",
-    order = "b[personal-transport]-c[startertron]",
+    order = "z[tbd]",
     place_as_tile =
     {
       result = "harene-infused-foundation",
@@ -228,7 +224,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
     name = "harene-infused-space-platform",
     stack_size = 50,
     subgroup = "rabbasca-processes",
-    order = "b[personal-transport]-c[startertron]",
+    order = "z[tbd]",
     place_as_tile =
     {
       result = "harene-infused-space-platform",
@@ -241,12 +237,12 @@ util.merge { data.raw["item"]["rocket-fuel"],
     type = "item",
     icons = {
       { icon = "__space-age__/graphics/icons/fluid/fluorine.png", tint = { r=0.65, g=0.31, b=0.92 } },
-      { icon = "__space-age__/graphics/icons/nutrients.png", scale = 0.6 }
+      { icon = "__space-age__/graphics/icons/nutrients.png", scale = 0.3,  }
     },
     name = "protein-powder",
     stack_size = 200,
     subgroup = "rabbasca-processes",
-    order = "b[personal-transport]-c[startertron]",
+    order = "b[organic]-d[protein-powder]",
 },
 {
   type = "fluid",
@@ -260,18 +256,20 @@ util.merge { data.raw["item"]["rocket-fuel"],
     flow_color = {r=0.65, g=0.31, b=0.92},
     default_temperature = 1032.0,
     fuel_value = "100MJ",
-    auto_barrel = false
+    auto_barrel = false,
+    order = "r[rabbasca]-c[harene]"
 },
 {
     type = "fluid",
     name = "harene-gas",
-    icons = {{ icon = "__space-age__/graphics/icons/fluid/fluorine.png", tint = {r=0.65, g=0.31, b=0.92} }},
+    icon = "__space-age__/graphics/icons/fluid/fluorine.png",
     subgroup = "fluid",
     base_color = {r=0.65, g=0.31, b=0.92},
     flow_color = {r=0.65, g=0.31, b=0.92},
     default_temperature = 35.0,
     fuel_value = "1MJ",
-    auto_barrel = false
+    auto_barrel = true,
+    order = "r[rabbasca]-b[harene-gas]"
 },
 {
     type = "fluid",
@@ -282,6 +280,8 @@ util.merge { data.raw["item"]["rocket-fuel"],
     flow_color = { 0.8, 0.42, 0.02 },
     default_temperature = 14.0,
     auto_barrel = true,
+    order = "r[rabbasca]-a[beta-carotene]"
+    
 },
 {
     type = "fluid",
@@ -291,15 +291,16 @@ util.merge { data.raw["item"]["rocket-fuel"],
     base_color = {0, 0.14, 0.53},
     flow_color = {0, 0.14, 0.53},
     default_temperature = 72.0,
-    fuel_value = "340kJ",
-    auto_barrel = true
+    fuel_value = "850kJ",
+    auto_barrel = true,
+    order = "r[rabbasca]-b[energetic-residue]"
 },
 {
   type = "tool",
-  name = "healthy-science-pack",
-  icon = "__planet-rabbasca__/graphics/icons/healthy-science-pack.png",
-  subgroup = data.raw["tool"]["agricultural-science-pack"].subgroup,
-  order = data.raw["tool"]["agricultural-science-pack"].order .. "-a",
+  name = "athletic-science-pack",
+  icon = "__planet-rabbasca__/graphics/icons/athletic-science-pack.png",
+  subgroup = "science-pack",
+  order = "j-r[rabbasca]",
   durability = 1,
   stack_size = 200,
 },
@@ -308,8 +309,11 @@ util.merge { data.raw["item"]["rocket-fuel"],
     name = "haronite-brick",
     icons = { { icon = "__base__/graphics/icons/stone-brick.png", tint = {r=0.65, g=0.31, b=0.92} } },
     stack_size = 50,
+    weight = 100 * kg,
     spoil_ticks = 90 * second,
-    spoil_result = "stone-brick"
+    spoil_result = "stone-brick",
+    subgroup = "rabbasca-processes",
+    order = "h[haronite]-x[haronite-brick]",
 },
 util.merge{
   data.raw["item"]["concrete"],
@@ -321,7 +325,8 @@ util.merge{
     place_as_tile =
     {
       result = "rabbasca-energetic-concrete",
-    }
+    },
+    order = "b[concrete]-f[energetic-concrete]",
   }
 },
 {

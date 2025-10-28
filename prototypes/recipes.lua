@@ -61,13 +61,14 @@ data:extend {
         energy_required = 7.0,
         enabled = false,
         ingredients = { 
-            {type = "item", name = "carotenoid", amount = 1 },
+            {type = "item", name = "carotenoid-ore", amount = 1 },
         },
         results = { { type = "item", name = "carbon", amount = 10 } },
         main_product = "carbon",
         hide_from_player_crafting = true,
         category = "smelting",
         allow_productivity = true,
+        auto_recycle = false,
     },
     {
         type = "recipe",
@@ -76,7 +77,7 @@ data:extend {
         enabled = false,
         ingredients = { 
             {type = "fluid", name = "energetic-residue", amount = 5 },
-            {type = "item", name = "carotenoid", amount = 20 },
+            {type = "item", name = "carotenoid-ore", amount = 20 },
         },
         results = { { type = "fluid", name = "beta-carotene", amount = 60 },
                     { type = "item", name = "stone", amount = 10 } },
@@ -84,6 +85,7 @@ data:extend {
         hide_from_player_crafting = true,
         category = "organic-or-chemistry",
         allow_productivity = true,
+        auto_recycle = false,
     },
     {
         type = "recipe",
@@ -133,7 +135,7 @@ data:extend {
             {type = "fluid", name = "lubricant", amount = 200 },
         },
         results = { { type = "item", name = "machining-assembler", amount = 1 } },
-        surface_conditions = {{property = "harenic-energy-signatures", min = 50 }},
+        surface_conditions = {{property = "harenic-energy-signatures", min = 20 }},
         main_product = "machining-assembler",
         category = "crafting-with-fluid",
     },
@@ -152,7 +154,7 @@ data:extend {
         results = { 
             { type = "item", name = "rabbasca-remote-receiver", amount = 1 },
         },
-        surface_conditions = {{property = "harenic-energy-signatures", min = 50}},
+        surface_conditions = {{property = "harenic-energy-signatures", min = 20}},
         main_product = "rabbasca-remote-receiver",
         category = "crafting"
     },
@@ -169,7 +171,7 @@ data:extend {
         results = { 
             { type = "item", name = "rabbasca-remote-builder", amount = 1 },
         },
-        surface_conditions = {{property = "harenic-energy-signatures", min = 50}},
+        surface_conditions = {{property = "harenic-energy-signatures", min = 20}},
         main_product = "rabbasca-remote-builder",
         category = "crafting"
     },
@@ -177,15 +179,14 @@ data:extend {
         type = "recipe",
         name = "solid-fuel-from-energetic-residue",
         category = "chemistry",
-        energy_required = 1,
+        energy_required = 3,
         ingredients =
         {
             {type = "fluid", name = "energetic-residue", amount = 20 },
-            {type = "item", name = "ice", amount = 5 },
         },
         results =
         {
-            { type = "item", name = "solid-fuel", amount = 5 }
+            { type = "item", name = "solid-fuel", amount = 1 }
         },
         allow_productivity = true,
         icons = {
@@ -312,6 +313,7 @@ data:extend {
         main_product = "protein-powder",
         category = "crafting",
         allow_productivity = true,
+        auto_recycle = false
     },
     {
         type = "recipe",
@@ -324,6 +326,7 @@ data:extend {
         results = { {type = "item", name = "rabbasca-turbofin", amount = 2 } },
         main_product = "rabbasca-turbofin",
         category = "crafting",
+        auto_recycle = false
     },
     {
         type = "recipe",
@@ -375,7 +378,7 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "healthy-science-pack",
+        name = "athletic-science-pack",
         enabled = false,
         energy_required = 23,
         ingredients = {
@@ -385,7 +388,7 @@ data:extend {
             { type = "fluid", name = "harene-gas", amount = 23 },
         },
         results = {
-            { type = "item", name = "healthy-science-pack", amount = 5 }
+            { type = "item", name = "athletic-science-pack", amount = 5 }
         },
         category = "crafting-with-fluid",
     },
@@ -395,7 +398,6 @@ data:extend {
         enabled = false,
         energy_required = 12,
         ingredients = {
-            { type = "item", name = "harene-copy-core", amount = 1 },
             { type = "item", name = "firearm-magazine", amount = 100 },
         },
         results = { { type = "item", name = "self-replicating-firearm-magazine", amount = 1 } },
@@ -503,15 +505,14 @@ data:extend {
 
 local rocket_part = table.deepcopy(data.raw["recipe"]["rocket-part"])
 rocket_part.name = "rocket-part-from-turbofuel"
-rocket_part.allow_productivity = false
-rocket_part.surface_conditions = { { property = "harenic-energy-signatures", min = 50 } }
+rocket_part.surface_conditions = { { property = "harenic-energy-signatures", min = 20 } }
 rocket_part.ingredients = {
-    { type = "item", name = "rabbasca-turbofuel", amount = 20 },
-    { type = "item", name = "infused-haronite-plate", amount = 5 },
-    { type = "item", name = "bunnyhop-engine-equipment", amount = 1 },
-    { type = "item", name = "radar", amount = 1 },
+    { type = "item", name = "rabbasca-turbofuel", amount = 1 },
+    { type = "item", name = "infused-haronite-plate", amount = 1 },
+    { type = "item", name = "vision-circuit", amount = 1 },
 }
 data:extend { rocket_part }
+PlanetsLib.assign_rocket_part_recipe("rabbasca", "rocket-part-from-turbofuel")
 
 -- data:extend {
 --     {

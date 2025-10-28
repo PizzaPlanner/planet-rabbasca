@@ -1,23 +1,26 @@
 
--- Usually redundant, as planet-discovery-... tech is required anyways, normally gated behind rocket-silo
-function default_requirements() 
-  return { "rocket-silo" }
+function default_requirements(planet)
+  return { "planetslib-"..planet.. "-cargo-drops" }
 end
 
-bunnyhop_requirements = bunnyhop_requirements or {
-    ["gleba"]    = { }, -- APS: rocket-silo can only be researched once gleba is solved
-    ["rabbasca"] = { "bunnyhop-engine" },
+bunnyhop_requirements = bunnyhop_requirements or { 
+  ["gleba"] = { }, -- force no restriction on gleba, so we do not softlock on rabbasca
 }
 
 local M = {}
 
+-- default requirements: { "planetslib-<name>-cargo-drops" }
+-- use this to restrict to one or more other technologies
+-- note that planet-discovery-<name> is always required through is_space_location_unlocked
+-- APS compatibility: planet-discovery tech for starting planet is removed, so non-existing techs are ignored for the final check
+-- modifying gleba requirements is not allowed.
 function M.set_requirements(name, requirements)
-  table.insert()
+  if name == "gleba" then return end
   bunnyhop_requirements[name] = requirements
 end
 
 function M.dont_allow(name)
-  bunnyhop_requirements[name] = { "bunnyhop-never" }
+  M.set_requirements(name, { "bunnyhop-never" })
 end
 
 function M.can_jump_to(planet)
@@ -25,7 +28,8 @@ function M.can_jump_to(planet)
   local requirements = bunnyhop_requirements[planet] or default_requirements()
   local techs = game.forces.player.technologies
   for _, req in pairs(requirements) do 
-    if not techs[req] or not techs[req].researched then return false end
+    if req == "bunnyhop-never" then return false end
+    if techs[req] and not techs[req].researched then return false end
   end
   return true
 end
@@ -54,9 +58,29 @@ function M.clear_bunnyhop_ui(player)
     end
 end
 
-local function get_character_weight_label(character) 
+local function get_max_range_and_weight(force)
+  local bunnyhop_techs = { "bunnyhop-engine-1", "bunnyhop-engine-2", "bunnyhop-engine-3", "bunnyhop-engine-4" }
+  local all_techs = force.technologies 
+  local range = 0
   local weight = 0
-  local max_weight = 600
+  for _, tech in pairs(bunnyhop_techs) do
+    if all_techs[tech] then 
+      local levels = all_techs[tech].level - all_techs[tech].prototype.level
+      if all_techs[tech].researched then levels = levels + 1 end
+      -- game.print(tech..": "..levels) 
+      for _, effect in pairs(all_techs[tech].prototype.effects) do
+        if effect.effect_description and effect.effect_description[1] == "modifier-description.bunnyhop-engine-range" then range = range + effect.effect_description[2] * levels
+        elseif effect.effect_description and effect.effect_description[1] == "modifier-description.bunnyhop-engine-weight" then weight = weight + effect.effect_description[2] * levels
+        elseif effect.effect_description then game.print(effect.effect_description[1])
+        end
+      end
+    end
+  end 
+  return range, weight
+end
+
+local function get_character_weight_label(character, max_weight) 
+  local weight = 0
   for _, inventory in pairs({defines.inventory.character_main, defines.inventory.character_ammo, defines.inventory.character_trash}) do
     weight = weight + (character.get_inventory(inventory).weight or 0)
   end
@@ -82,7 +106,8 @@ local function on_charge_bunnyhop(event)
         return
     end
 
-    is_weight_ok, wl.caption = get_character_weight_label(character)
+    local max_weight = tonumber(wl.caption:match("/(%d+)"))
+    is_weight_ok, wl.caption = get_character_weight_label(character, max_weight)
     
     -- player.walking_state.walking = true
     local delta = character.effective_speed or 1
@@ -125,7 +150,8 @@ local function extend_bunnyhop_ui(player)
     script.on_event(defines.events.on_player_changed_position, on_charge_bunnyhop)
 end
 
-function M.show_bunnyhop_ui(player, equipment, max_range)
+function M.show_bunnyhop_ui(player, equipment)
+    local max_range, max_weight = get_max_range_and_weight(player.force)
     local surface = player.surface
     local reachable_surfaces = M.get_connections(surface.name, max_range)
 
@@ -151,7 +177,7 @@ function M.show_bunnyhop_ui(player, equipment, max_range)
         value = 1
     }
     pb.style.horizontally_stretchable = true
-    local _, weight = get_character_weight_label(player.character)
+    local _, weight = get_character_weight_label(player.character, max_weight)
     local pb = frame.add{
         type = "label",
         name = "bunnyhop_weight",

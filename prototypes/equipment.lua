@@ -65,7 +65,7 @@ data:extend {
     action = "spawn-item",
     item_to_spawn = "bunnyhop-engine",
     toggleable = false,
-    technology_to_unlock = "bunnyhop-engine",
+    technology_to_unlock = "bunnyhop-engine-1",
     unavailable_until_unlocked = true,
     icon = "__planet-rabbasca__/graphics/icons/copyslop.png",
     small_icon = "__planet-rabbasca__/graphics/icons/copyslop.png",

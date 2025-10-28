@@ -30,14 +30,14 @@ local vault = util.merge{
   spawning_radius = 12,
   captured_spawner_entity = "rabbasca-vault-hacked",
   map_generator_bounding_box = {{-8, -8}, {8, 8}},
-  -- map_color = {0.9, 0.3, 0.4},
-  collision_box = {{-2.4, -1.9},{2.4, 2.2}}, -- shift by 2, 2.5
+  collision_box = {{-2.4, -1.9},{2.4, 2.2}},
   selection_box = {{-2.5, -2.5},{2.5, 2.5}},
-  selection_priority = 30
+  selection_priority = 30,
+  order = "r[rabbasca]-a"
 }}
 vault.spawn_decoration = {}
 vault.damaged_trigger_effect = nil
-vault.absorptions_per_second = { } -- { ["vault-activity"] = { absolute = 500, proportional = 0.5 }}
+vault.absorptions_per_second = { }
 vault.autoplace = { probability_expression = "rabbasca_camps > 0.9", force = "enemy" }
 vault.created_effect = {
   type = "direct",

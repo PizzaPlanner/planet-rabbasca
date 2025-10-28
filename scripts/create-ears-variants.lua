@@ -29,8 +29,5 @@ for _, thing in pairs(data.raw["rocket-silo"]) do
   if thing.rocket_entity == "rocket-silo-rocket" then
     local silo = rutil.create_ears_variant(thing, "rabbasca-ears-technology-3")
     data.raw["rocket-silo"][silo].rocket_entity = "rabbasca-rocket-silo-rocket"
-    data.raw["rocket-silo"][silo].rocket_parts_required = 1
-    data.raw["rocket-silo"][silo].fixed_recipe = "rocket-part-from-turbofuel"
-    data.raw["rocket-silo"][silo].surface_conditions = {{property = "harenic-energy-signatures", min = 50}, {property = "pressure", min = 1}}
   end
 end

@@ -78,8 +78,6 @@ data:extend{
                                     density = 1,\z
                                     radius = 20 + 4 * control:rabbasca_carotenoids:size,\z
                                     favorability = 1}"
-                -- * multioctave_noise{x = x/4.2, y = y/4.8, persistence = 0.2, seed0 = map_seed, seed1 = 'bewarethehare', octaves = 9 })"
-    -- expression = "0.4 + rabbasca_up * rabbasca_crater + rabbasca_up_variance * (0.8 - rabbasca_elevation)"
   },
   {
     type = "noise-expression",

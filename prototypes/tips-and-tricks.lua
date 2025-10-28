@@ -43,19 +43,77 @@ data:extend {{
                 }
                 
             local chest = surface.find_entities_filtered{ name = "steel-chest"}[1]
-            chest.get_inventory(defines.inventory.chest).insert({name = "vault-access-key-u", count = 2})
             local center = chest.bounding_box.left_top
             game.simulation.camera_position = center
-            local vault = surface.create_entity {
-                name = "rabbasca-vault",
-                position = {center.x - 2, center.y}
-            }
-            vault.destructible = false
-            surface.find_entities_filtered{ name = "rabbasca-vault-hacked"}[1].force = game.forces.player
-            surface.find_entities_filtered{ name = "locomotive"}[1].get_inventory(defines.inventory.fuel).insert({name = "rabbasca-turbofuel"})
-            surface.find_entities_filtered{ name = "gun-turret"}[1].get_inventory(defines.inventory.turret_ammo).insert({name = "firearm-magazine", count = 1})
         ]],
         checkboard = false,
+        mute_wind_sounds = true,
+    },
+},
+{
+    type = "tips-and-tricks-item",
+    name = "rabbasca-vaults",
+    category = "space-age",
+    tag = "[entity=rabbasca-vault]",
+    indent = 1,
+    order = "r[rabbasca]-b",
+    trigger = {
+        type = "research",
+        technology = "planet-discovery-rabbasca",
+    },
+    simulation = {
+        planet = "rabbasca",
+        generate_map = true,
+        hide_health_bars = false,
+        init = [[
+            local surface = game.surfaces[1]
+
+            surface.daytime = 0.0
+            game.simulation.camera_alt_info = true
+            game.simulation.camera_zoom = 0.9
+
+            surface.freeze_daytime = true
+            surface.create_global_electric_network()
+            surface.create_entity { name = "rabbasca-energy-source", position = {0, 0}}
+            game.forces.player.technologies["rabbascan-vault-access"].researched = true
+        ]],
+        checkboard = false,
+        mute_wind_sounds = true,
+    },
+},
+{
+    type = "tips-and-tricks-item",
+    name = "rabbasca-bunnyhop",
+    category = "space-age",
+    tag = "[item=bunnyhop-engine]",
+    indent = 1,
+    order = "r[rabbasca]-c",
+    trigger = {
+        type = "research",
+        technology = "bunnyhop-engine-1",
+    },
+    simulation = {
+        planet = "rabbasca",
+        generate_map = true,
+        init = [[
+            local surface = game.surfaces[1]
+
+            surface.daytime = 0.0
+            game.simulation.camera_alt_info = true
+            game.simulation.camera_zoom = 0.9
+
+            surface.freeze_daytime = true
+            surface.create_global_electric_network()
+            surface.create_entity { name = "rabbasca-energy-source", position = {0, 0}}
+            game.forces.player.technologies["bunnyhop-engine-1"].researched = true
+
+            for x = -5, 5, 1 do
+            for y = -5, 5 do
+                surface.set_chunk_generated_status({x, y}, defines.chunk_generated_status.entities)
+            end
+            end
+        ]],
+        checkboard = true,
         mute_wind_sounds = true,
     },
 }}

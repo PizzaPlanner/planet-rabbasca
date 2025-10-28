@@ -1,6 +1,6 @@
 local color = {r=0.73, g=0.42, b=1}
 
-local scrap_resource = util.merge {
+local carrot_ore = util.merge {
   table.deepcopy(data.raw["resource"]["copper-ore"]),
   {
     name = "carotenoid-ore",
@@ -11,17 +11,18 @@ local scrap_resource = util.merge {
     resource_patch_search_radius = 32,
   }
 }
-scrap_resource.minable =
+carrot_ore.icon = data.raw["item"]["carotenoid-ore"].icon
+carrot_ore.minable =
 {
   mining_time = 2,
   mining_particle = "copper-ore-particle",
   results =
   {
-    { type = "item", name = "carotenoid",  amount = 1 },
+    { type = "item", name = "carotenoid-ore",  amount = 1 },
   }
 }
-scrap_resource.collision_mask = { layers = { resource = true } }
-scrap_resource.autoplace = {
+carrot_ore.collision_mask = { layers = { resource = true } }
+carrot_ore.autoplace = {
   tile_restriction = { "rabbasca-fertile" },
   probability_expression = "rabbasca_carrot_noise",
   richness_expression = "(480 + 89\z 
@@ -30,14 +31,14 @@ scrap_resource.autoplace = {
     * control:rabbasca_carotenoids:richness",
 }
 
-local mixed_oxide = util.merge {
+local battle_scrap = util.merge {
   table.deepcopy(data.raw["resource"]["scrap"]),
   {
     name = "rabbascan-scrap",
     map_color = { 0.83, 0.217, 0.13 }
   },
 }
-mixed_oxide.minable =
+battle_scrap.minable =
 {
   mining_time = 0.75,
   results =
@@ -48,14 +49,14 @@ mixed_oxide.minable =
     { type = "item", name = "vault-access-key", amount = 1, probability = 0.005 },
   }
 }
-mixed_oxide.collision_mask = { layers = { resource = true } }
-mixed_oxide.autoplace = {
+battle_scrap.collision_mask = { layers = { resource = true } }
+battle_scrap.autoplace = {
   tile_restriction = { "rabbasca-rough", "rabbasca-rough-2" },
   probability_expression = "rabbasca_camps * multioctave_noise{x = x, y = y, persistence = 0.71, seed0 = map_seed, input_scale = 0.86, seed1 = 'scrappening', octaves = 6 }",
   richness_expression = "(64 + 17\z 
     * multioctave_noise{x = x, y = y, persistence = 0.44, seed0 = map_seed, input_scale = 1.5, seed1 = 'whoneedscircuits', octaves = 4 })\z
     * lerp(5, 100, distance / 2000)\z
-    * control:rabbasca_carotenoids:richness",
+    * control:rabbasca_vaults:richness",
 }
 
 local harene_resource = {
@@ -183,7 +184,7 @@ local harene_resource = {
   map_color = color,
   map_grid = false
 }
-data:extend{ harene_resource, scrap_resource, mixed_oxide }
+data:extend{ harene_resource, carrot_ore, battle_scrap }
 
 data:extend{ {
     type = "resource-category",

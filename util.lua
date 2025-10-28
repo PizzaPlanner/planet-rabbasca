@@ -174,7 +174,7 @@ end
 
 function output.not_on_harenic_surface(proto)
   proto.surface_conditions = proto.surface_conditions or { }
-  table.insert(proto.surface_conditions, {property = "harenic-energy-signatures", max = 50})
+  table.insert(proto.surface_conditions, {property = "harenic-energy-signatures", max = 20})
 end
 
 local function is_assembled(recipe)

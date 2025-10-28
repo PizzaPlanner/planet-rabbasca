@@ -1,10 +1,26 @@
+local function bunnyhop_range(value)
+return {
+  type = "nothing",
+  icon = "__base__/graphics/technology/engine.png",
+  icon_size = 256,
+  effect_description = { "modifier-description.bunnyhop-engine-range", tostring(value) }
+}
+end
 
+local function bunnyhop_weight(value)
+return {
+  type = "nothing",
+  icon = "__base__/graphics/technology/engine.png",
+  icon_size = 256,
+  effect_description = { "modifier-description.bunnyhop-engine-weight", tostring(value) }
+}
+end
 
 data:extend { 
 {
     type = "technology",
     name = "planet-discovery-rabbasca",
-    icon = "__planet-rabbasca__/graphics/icons/vulcanus-bw.png",
+    icons = PlanetsLib.technology_icon_moon("__planet-rabbasca__/graphics/icons/vulcanus-bw.png", 64),
     icon_size = 64,
     prerequisites = { "planet-discovery-gleba", "gun-turret" },
     effects = {{
@@ -48,15 +64,15 @@ data:extend {
 },
 {
     type = "technology",
-    name = "healthy-science-pack",
+    name = "athletic-science-pack",
     icon = "__space-age__/graphics/technology/metallurgic-science-pack.png",
     icon_size = 256,
-    prerequisites = { "bunnyhop-engine", "rabbasca-turbofish-breeding" },
+    prerequisites = { "bunnyhop-engine-1", "rabbasca-turbofish-breeding" },
     effects =
     {
       {
         type = "unlock-recipe",
-        recipe = "healthy-science-pack"
+        recipe = "athletic-science-pack"
       }
     },
     research_trigger =
@@ -70,7 +86,7 @@ data:extend {
   name = "rabbasca-vault-hacking-efficiency",
   icon = "__Krastorio2Assets__/icons/cards/utility-tech-card.png",
   icon_size = 256,
-  prerequisites = { "healthy-science-pack" },
+  prerequisites = { "athletic-science-pack" },
   effects = {
     {
       type = "change-recipe-productivity",
@@ -96,7 +112,7 @@ data:extend {
       {"automation-science-pack", 1},
       {"logistic-science-pack", 1},
       {"chemical-science-pack", 1},
-      {"healthy-science-pack", 1},
+      {"athletic-science-pack", 1},
     }
   }
 },
@@ -141,7 +157,7 @@ data:extend {
 },
 {
     type = "technology",
-    name = "carotenoid-ore",
+    name = "carotene",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
     prerequisites = { "planet-discovery-rabbasca" },
@@ -167,7 +183,7 @@ data:extend {
     name = "rabbasca-healthy-fluids",
     icon = "__space-age__/graphics/technology/gleba.png",
     icon_size = 256,
-    prerequisites = { "carotenoid-ore" },
+    prerequisites = { "carotene" },
     effects =
     {
       {
@@ -217,7 +233,7 @@ data:extend {
     name = "rabbasca-ears-technology-1",
     icon = data.raw["item"]["harene-ears-core"].icon,
     icon_size = 64,
-    prerequisites = { "healthy-science-pack" },
+    prerequisites = { "athletic-science-pack" },
     effects =
     {
       {
@@ -233,7 +249,7 @@ data:extend {
             {"automation-science-pack", 1},
             {"logistic-science-pack", 1},
             {"chemical-science-pack", 1},
-            {"healthy-science-pack", 1},
+            {"athletic-science-pack", 1},
         }
     },
 },
@@ -321,7 +337,7 @@ data:extend {
 },
 {
   type = "technology",
-  name = "bunnyhop-engine",
+  name = "bunnyhop-engine-1",
   icon = "__base__/graphics/technology/engine.png",
   icon_size = 256,
   prerequisites = { "rabbasca-vault-core-extraction", "chemical-science-pack", "modular-armor", "quality-module" },
@@ -339,6 +355,8 @@ data:extend {
       type = "unlock-recipe",
       recipe = "ears-subcore-reactor-equipment"
     },
+    bunnyhop_range(1000),
+    bunnyhop_weight(250)
   },
   research_trigger =
   {
@@ -349,38 +367,62 @@ data:extend {
 },
 {
   type = "technology",
-  name = "bunnyhop-engine-range-1",
+  name = "bunnyhop-engine-2",
   icon = "__base__/graphics/technology/engine.png",
   icon_size = 256,
-  prerequisites = { "bunnyhop-engine" },
+  prerequisites = { "athletic-science-pack", "space-science-pack" },
   effects = {
-
+    bunnyhop_range(2000),
+    bunnyhop_weight(125)
   },
+  level = 2,
   unit = {
-    count = 400,
-    time = 60,
+    count = 200,
+    time = 30,
     ingredients = {
-      {"automation-science-pack", 1},
-      {"logistic-science-pack", 1},
-      {"chemical-science-pack", 1},
-      {"space-science-pack", 1}
+      {"space-science-pack", 1},
+      {"athletic-science-pack", 1},
     }
   }
 },
 {
   type = "technology",
-  name = "bunnyhop-engine-range-2",
+  name = "bunnyhop-engine-3",
   icon = "__base__/graphics/technology/engine.png",
   icon_size = 256,
-  prerequisites = { "bunnyhop-engine-range-1", "utility-science-pack", "production-science-pack" },
-  level = 2,
+  level = 3,
+  prerequisites = { "bunnyhop-engine-2" },
+  effects = {
+    bunnyhop_range(2000),
+    bunnyhop_weight(125)
+  },
+  unit = {
+    count = 500,
+    time = 30,
+    ingredients = {
+      {"automation-science-pack", 1},
+      {"logistic-science-pack", 1},
+      {"chemical-science-pack", 1},
+      {"space-science-pack", 1},
+      {"athletic-science-pack", 1},
+    }
+  }
+},
+{
+  type = "technology",
+  name = "bunnyhop-engine-4",
+  icon = "__base__/graphics/technology/engine.png",
+  icon_size = 256,
+  prerequisites = { "bunnyhop-engine-3", "utility-science-pack", "production-science-pack" },
+  level = 4,
   max_level = "infinite",
   effects = {
-
+    bunnyhop_range(5000),
+    bunnyhop_weight(250)
   },
   unit = {
     time = 60,
-    count_formula = "1000+300*L",
+    count_formula = "1000+300*2^(L-3)",
     ingredients = {
       {"automation-science-pack", 1},
       {"logistic-science-pack", 1},
@@ -388,6 +430,7 @@ data:extend {
       {"space-science-pack", 1},
       {"production-science-pack", 1},
       {"utility-science-pack", 1},
+      {"athletic-science-pack", 1},
     }
   }
 },
@@ -440,7 +483,7 @@ data:extend {
     name = "harene-synthesis",
     icon = "__space-age__/graphics/technology/steel-plate-productivity.png",
     icon_size = 256,
-    prerequisites = { "healthy-science-pack", "metallurgic-science-pack", "cryogenic-science-pack" },
+    prerequisites = { "bunnyhop-engine-3", "metallurgic-science-pack", "cryogenic-science-pack" },
     effects =
     {
       {
@@ -450,6 +493,10 @@ data:extend {
       {
         type = "unlock-recipe",
         recipe = "infused-haronite-plate"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "rocket-part-from-turbofuel"
       },
     },
     unit = {
@@ -461,7 +508,7 @@ data:extend {
           {"chemical-science-pack", 1},
           { "metallurgic-science-pack", 1},
           { "cryogenic-science-pack", 1},
-          { "healthy-science-pack", 1},
+          { "athletic-science-pack", 1},
         }
     }
 },
@@ -491,7 +538,7 @@ data:extend {
       {"chemical-science-pack", 1},
       {"space-science-pack", 1},
       {"utility-science-pack", 1},
-      {"healthy-science-pack", 1},
+      {"athletic-science-pack", 1},
     }
   }
 },
@@ -500,7 +547,7 @@ data:extend {
   name = "rabbasca-document-forging",
   icon = "__base__/graphics/technology/radar.png",
   icon_size = 256,
-  prerequisites = { "healthy-science-pack", "space-science-pack", "utility-science-pack", "production-science-pack" },
+  prerequisites = { "athletic-science-pack", "space-science-pack", "utility-science-pack", "production-science-pack" },
   effects =
   {
     {
@@ -518,7 +565,7 @@ data:extend {
       {"space-science-pack", 1},
       {"production-science-pack", 1},
       {"utility-science-pack", 1},
-      {"healthy-science-pack", 1},
+      {"athletic-science-pack", 1},
     }
   }
 },
@@ -532,8 +579,9 @@ data:extend {
   {
   },
   level = 2,
+  localised_description = { "technology-description.harene-ears-technology-labs" },
   unit = {
-    count = 400,
+    count = 600,
     time = 60,
     ingredients = {
       {"automation-science-pack", 1},
@@ -542,6 +590,7 @@ data:extend {
       {"space-science-pack", 1},
       {"production-science-pack", 1},
       {"electromagnetic-science-pack", 1},
+      {"athletic-science-pack", 1},
     }
   }
 },
@@ -550,15 +599,16 @@ data:extend {
   name = "rabbasca-ears-technology-3",
   icon = data.raw["item"]["harene-ears-core"].icon,
   icon_size = 64,
-  prerequisites = { "rabbasca-ears-technology-2", "rabbasca-railway", "rabbasca-document-forging", "bunnyhop-engine", "harene-synthesis" },
+  prerequisites = { "rabbasca-ears-technology-2", "harene-synthesis" },
   effects =
   {
   },
   level = 3,
+  localised_description = { "technology-description.harene-ears-technology-silos" },
   unit = {
-    count = 800,
+    count = 1200,
     time = 60,
-    ingredients = table.deepcopy(data.raw["technology"]["promethium-science-pack"].unit.ingredients)
+    ingredients = util.merge { table.deepcopy(data.raw["technology"]["promethium-science-pack"].unit.ingredients), {{"athletic-science-pack", 1}} }
   }
 },
 }

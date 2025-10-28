@@ -167,12 +167,11 @@ PlanetsLib:extend({
     
     icon = "__planet-rabbasca__/graphics/icons/vulcanus-bw.png",
     icon_size = 64,
-    label_orientation = 0.75,
+    label_orientation = 0.14,
     starmap_icon = "__planet-rabbasca__/graphics/icons/vulcanus-bw.png",
     starmap_icon_size = 64,
     subgroup = "satellites",
     magnitude = gleba.magnitude*3/5,
-    pollutant_type = "vault-activity",
     persistent_ambient_sounds=data.raw["space-platform-hub"]["space-platform-hub"].persistent_ambient_sounds,
     localised_description={"planetslib-templates.moon-description",{"space-location-description.rabbasca"},"[planet="..parent_planet.."]"},
     -- robot energy usage = gravity/pressure*100, gravity > 0.1 (allow chests), robots should be expensive and limited by energy field
@@ -182,7 +181,7 @@ PlanetsLib:extend({
         ["pressure"] = 10,
         ["day-night-cycle"] = 12 * minute,
         ["magnetic-field"] = 0.01,
-        ["harenic-energy-signatures"] = 100,
+        ["harenic-energy-signatures"] = 50,
         ["oxygen"] = 1,
         ["carbon-dioxide"] = 5,
     },
@@ -195,8 +194,8 @@ PlanetsLib:extend({
     map_gen_settings = map_gen,
     parked_platforms_orientation = 0.27,
     orbit = {
-      orientation = 0.14,
-      distance = 2.3,
+      orientation = 0.9,
+      distance = 2.1,
       parent = {
         type = "planet",
         name = parent_planet,
@@ -238,20 +237,4 @@ data:extend{
   name = "harenic-energy-signatures",
   default_value = 0
 },
-  {
-  type = "airborne-pollutant",
-  name = "vault-activity",
-  chart_color = {r = 133, g = 13, b = 240, a = 149},
-  icon =
-  {
-    filename = "__core__/graphics/icons/mip/side-map-menu-buttons.png",
-    priority = "high",
-    size = 64,
-    mipmap_count = 2,
-    y = 3 * 64,
-    flags = {"gui-icon"}
-  },
-  affects_evolution = true,
-  affects_water_tint = false,
-}
 }
