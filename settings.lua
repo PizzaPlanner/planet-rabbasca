@@ -25,6 +25,15 @@ data:extend{
     allow_blank = false
   },
   {
+    type = "double-setting",
+    name = "rabbasca-evolution-per-vault",
+    setting_type = "runtime-global",
+    default_value = 2.5,
+    minimum_value = 0,
+    maximum_value = 100,
+    allow_blank = false
+  },
+  {
     type = "string-setting",
     name = "rabbasca-orbits",
     setting_type = "startup",

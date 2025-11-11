@@ -11,7 +11,6 @@
         "PlanetsLib", 
         "Krastorio2Assets", 
         "(?) any-planet-start",
-        "(?) planet-muluna",
-        "(?) se-space-trains >= 1.0.6"
+        "(?) planet-muluna"
     ]
 }

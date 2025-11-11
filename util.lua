@@ -76,7 +76,7 @@ function create_infused_thing_with_effect(original, needed_core)
     new_item.factoriopedia_alternative = original.name
 
     new.name = new_name
-    new.localised_name = {"", {"entity-name." .. original.name}, " [with E.A.R.S.]"}
+    new.localised_name = {"", {"entity-name." .. original.name}, {"rabbasca-extra.with-ears"}}
     new.factoriopedia_alternative = original.name
     new.hidden_in_factoriopedia = true
     new.hidden = true
@@ -180,7 +180,7 @@ end
 
 function output.hack_vault(surface, position)
   local active_vaults_count = #surface.find_entities_filtered { name = "rabbasca-vault-console", force = game.forces.player }
-  local new_evo = math.min(1, active_vaults_count * 0.025)
+  local new_evo = math.min(1, active_vaults_count * settings.global["rabbasca-evolution-per-vault"].value / 100)
   game.forces.rabbascans.set_evolution_factor(new_evo, surface)
   game.forces.enemy.set_evolution_factor(new_evo, surface) -- make sure factoriopedia evolution ui shows correct value
   if not position then return end

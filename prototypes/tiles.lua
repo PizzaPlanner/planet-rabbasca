@@ -44,25 +44,4 @@ util.merge {
       check_collision_with_entities = true
     }
 },
-util.merge { 
-    table.deepcopy(data.raw["tile"]["foundation"]),
-    {
-      name = "harene-infused-foundation",
-      collision_mask = { layers = { harene = true } },
-      effect_color = {60,55,97},
-      minable = { result = "harene-infused-foundation" },
-      check_collision_with_entities = true
-    }
-},
-util.merge { 
-    table.deepcopy(data.raw["tile"]["space-platform-foundation"]),
-    {
-      name = "harene-infused-space-platform",
-      collision_mask = { layers = { harene = true } },
-      effect_color = {60,55,97},
-      minable = { result = "harene-infused-space-platform" },
-      check_collision_with_entities = true
-    }
-},
-harene_tile
 }

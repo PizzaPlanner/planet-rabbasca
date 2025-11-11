@@ -24,6 +24,5 @@ end
 
 -- non-generalizable things 
 rutil.make_complex_machinery(data.raw["item"]["space-platform-foundation"])
-rutil.make_complex_machinery(data.raw["mining-drill"]["big-mining-drill"])
 -- Muluna compatibility
 rutil.make_complex_machinery(data.raw["item"]["low-density-space-platform-foundation"])

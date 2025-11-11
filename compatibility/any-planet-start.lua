@@ -6,4 +6,3 @@ utils.set_trigger("oil-processing", {
     type = "mine-entity",
     entity = "harene-vent"
 })
-utils.remove_packs("planet-discovery-gleba", {"space-science-pack"})
