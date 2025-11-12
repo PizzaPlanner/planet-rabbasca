@@ -27,12 +27,6 @@ data:extend {
         order = "a"
     },
     {
-        type = "item-subgroup",
-        name = "rabbasca-matter-printer",
-        group = "intermediate-products",
-        order = "r[rabbasca]-a[duplication]"
-    },
-    {
         type = "item-group",
         name = "rabbasca-extensions",
         icon = data.raw["item"]["harene-ears-core"].icon,
@@ -329,7 +323,7 @@ data:extend {
         results = { { type = "fluid", name = "lubricant", amount = 10 } },
         main_product = "lubricant",
         category = "chemistry",
-        subgroup = "rabbasca-matter-printer",
+        subgroup = "rabbasca-processes",
         order = "r[alternate-uses]"
 
     },
@@ -452,8 +446,8 @@ data:extend {
     enabled = true,
     energy_required = 5,
     ingredients = { },
-    results = { {type = "item", name = "spoilage", amount = 1 } },
-    main_product = "spoilage",    
+    results = { {type = "item", name = "rabbasca-remote-call", amount = 1 } },
+    main_product = "rabbasca-remote-call",    
     category = "rabbasca-remote",
 },
 }

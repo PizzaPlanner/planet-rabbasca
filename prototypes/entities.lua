@@ -98,6 +98,7 @@ data:extend {
   {
     type = "container",
     name = "rabbasca-remote-builder",
+    icon = "__planet-rabbasca__/graphics/research-center/research-center-icon.png",
     flags = { "not-rotatable", "placeable-player", "player-creation" },
     minable = { result = "rabbasca-remote-builder", mining_time = 4 },
     placeable_by = { item = "rabbasca-remote-builder", count = 1 },
@@ -114,6 +115,7 @@ data:extend {
   {
     type = "assembling-machine",
     name = "rabbasca-remote-receiver",
+    icon = "__planet-rabbasca__/graphics/conduit/conduit-icon.png",
     fixed_recipe = "rabbasca-remote-call",
     flags = { "not-rotatable", "placeable-player", "player-creation" },
     crafting_categories = { "rabbasca-remote" },

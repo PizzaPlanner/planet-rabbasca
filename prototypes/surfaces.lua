@@ -151,29 +151,29 @@ local map_gen = {
         }
       }
     }
-
-
 }
 
+local spawn_definitions = table.deepcopy(gleba.asteroid_spawn_definitions)
 PlanetsLib:extend({
 {
     type = "planet",
     name = "rabbasca",
-    draw_orbit = false,
+    icon = "__planet-rabbasca__/graphics/icons/vulcanus-bw.png",
+    icon_size = 64,
+    starmap_icon = "__planet-rabbasca__/graphics/icons/vulcanus-bw.png",
+    starmap_icon_size = 64,
+    draw_orbit = true,
     solar_power_in_space = gleba.solar_power_in_space,
     auto_save_on_first_trip = true,
     gravity_pull = 10,
-    order = gleba.order .. "a",
-    
-    icon = "__planet-rabbasca__/graphics/icons/vulcanus-bw.png",
-    icon_size = 64,
-    label_orientation = 0.14,
-    starmap_icon = "__planet-rabbasca__/graphics/icons/vulcanus-bw.png",
-    starmap_icon_size = 64,
     subgroup = "satellites",
+    order = gleba.order .. "a",
+    label_orientation = 0.14,
     magnitude = gleba.magnitude*3/5,
     persistent_ambient_sounds=data.raw["space-platform-hub"]["space-platform-hub"].persistent_ambient_sounds,
     localised_description={"planetslib-templates.moon-description",{"space-location-description.rabbasca"},"[planet="..gleba.name.."]"},
+    asteroid_spawn_definitions = spawn_definitions,
+    asteroid_spawn_influence = 0.7,
     -- robot energy usage = gravity/pressure*100, gravity > 0.1 (allow chests), robots should be expensive and limited by energy field
     surface_properties = {
         ["gravity"] = 0.8,
@@ -230,7 +230,6 @@ data:extend{
   to = "rabbasca",
   subgroup = data.raw["space-connection"]["gleba-fulgora"].subgroup,
   length = 1000,
-  --asteroid_spawn_definitions = asteroid_spawn_definitions_connection
 },
 {
   type = "surface-property",
