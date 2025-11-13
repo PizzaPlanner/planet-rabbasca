@@ -31,7 +31,6 @@ local assembler = util.merge { data.raw["assembling-machine"]["assembling-machin
     minable = { result = "machining-assembler" },
     placeable_by = { item = "machining-assembler", count = 1 },
     crafting_speed = 1,
-    perceived_performance = 0.5,
     collision_box = {{-2.2, -2.2}, {2.2, 2.2}},
     selection_box = {{-2.5, -2.5}, {2.5, 2.5}},
     energy_usage = "9MW",
@@ -43,7 +42,7 @@ assembler.crafting_categories = { "complex-machinery", "install-ears-core" }
 assembler.fluid_boxes = { 
 {
   volume = 1000,
-  pipe_covers = pipecoverspictures(),
+  pipe_covers = assembler.fluid_boxes.pipe_covers,
   production_type = "input",
   pipe_connections = 
   {
@@ -68,29 +67,33 @@ assembler.effect_receiver = { base_effect = {
 -- }
 local sprite_data = {   
   line_length = 10,
-  lines_per_file = 10,
   width = 320,
   height = 320,
+  frame_count = 100,
   scale = 0.5,
-  fame_count = 100
 }
+
 assembler.graphics_set = {
-  frozen_patch = util.sprite_load("__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-frozen", sprite_data),
-  animation = util.sprite_load("__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-animation", sprite_data),
+  frozen_patch = util.merge {{ filename = "__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-frozen.png" }, sprite_data },
   working_visualisations = {
     {
       fadeout = true, 
-      layers = {
-        -- TODO: only partially working
-        animation = util.sprite_load("__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-emission", util.merge { sprite_data, { draw_as_glow = true, blend_mode = "additive" }}),
-        animation = util.sprite_load("__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-color", sprite_data),
-      }
+      animation = util.merge { sprite_data, 
+      { filename = "__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-emission1.png", draw_as_glow = true, blend_mode = "additive" }},
+    },
+    {
+      fadeout = true, 
+      animation = util.merge { sprite_data, 
+      { filename = "__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-emission2.png", draw_as_glow = true, blend_mode = "additive" }},
+    },
+    {
+      fadeout = true, 
+      animation = util.merge { sprite_data, 
+      { filename = "__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-emission3.png", draw_as_glow = true, blend_mode = "additive" }},
     },
   },
-  idle_animation = util.merge{
-    util.sprite_load("__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-animation", sprite_data),
-    frame_count = 1
-  }
+  idle_animation = { layers = { util.merge {{ filename = "__planet-rabbasca__/graphics/gravity-assembler/gravity-assembler-animation.png" }, sprite_data } } },
+  always_draw_idle_animation = true
 }
 
 data:extend {
@@ -175,7 +178,7 @@ data:extend {
         }
       },
       always_draw_idle_animation = true
-      },
+    },
   },
   {
     type = "electric-energy-interface",
