@@ -100,7 +100,7 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "infused-haronite-plate",
+        name = "haronite-plate",
         enabled = false,
         energy_required = 8,
         ingredients = { 
@@ -109,11 +109,11 @@ data:extend {
             {type = "fluid", name = "harene", amount = 5 },
         },
         results = { 
-            { type = "item", name = "infused-haronite-plate", amount = 10  },
+            { type = "item", name = "haronite-plate", amount = 10  },
             { type = "item", name = "tungsten-carbide", amount = 2 },
             { type = "fluid", name = "molten-iron", amount = 20 },
         },
-        main_product = "infused-haronite-plate",
+        main_product = "haronite-plate",
         category = "metallurgy",
     },
     {
@@ -122,7 +122,7 @@ data:extend {
         enabled = false,
         energy_required = 20.0,
         ingredients = { 
-            -- {type = "item", name = "infused-haronite-plate", amount = 10 },
+            -- {type = "item", name = "haronite-plate", amount = 10 },
             {type = "item", name = "steel-plate", amount = 200 },
             {type = "item", name = "iron-gear-wheel", amount = 69 },
             {type = "item", name = "rabbasca-energetic-concrete", amount = 50 },
@@ -429,7 +429,7 @@ rocket_part.name = "rocket-part-from-turbofuel"
 rocket_part.surface_conditions = { { property = "harenic-energy-signatures", min = 20 } }
 rocket_part.ingredients = {
     { type = "item", name = "rabbasca-turbofuel", amount = 1 },
-    { type = "item", name = "infused-haronite-plate", amount = 1 },
+    { type = "item", name = "haronite-plate", amount = 1 },
     { type = "item", name = "processing-unit", amount = 1 },
 }
 data:extend { rocket_part }
@@ -444,6 +444,9 @@ data:extend {
     type = "recipe",
     name = "rabbasca-remote-call",
     enabled = true,
+    hidden = true,
+    hidden_in_factoriopedia = true,
+    hide_from_player_crafting = true,
     energy_required = 5,
     ingredients = { },
     results = { {type = "item", name = "rabbasca-remote-call", amount = 1 } },

@@ -74,4 +74,16 @@ local function give_starter_items()
   })
 end
 
-script.on_init(give_starter_items)
+-- Workaround for robots expanding into biter nests on rabbasca for no reason at all
+local function create_rabbasca_force()
+  local force = game.create_force("rabbascans")
+  force.ai_controllable = false
+  force.share_chart = true
+  force.set_cease_fire(game.forces.player, false)
+  game.forces.player.set_cease_fire(force, false)
+end
+
+script.on_init(function()
+  create_rabbasca_force()
+  give_starter_items()
+end)

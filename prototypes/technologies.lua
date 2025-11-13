@@ -21,7 +21,7 @@ data:extend {
 {
     type = "technology",
     name = "planet-discovery-rabbasca",
-    icons = PlanetsLib.technology_icon_moon("__planet-rabbasca__/graphics/icons/vulcanus-bw.png", 64),
+    icons = PlanetsLib.technology_icon_moon("__planet-rabbasca__/graphics/icons/rabbasca-big.png", 256),
     icon_size = 64,
     prerequisites = { "planet-discovery-gleba", "gun-turret", "modular-armor" },
     effects = {{
@@ -62,7 +62,7 @@ data:extend {
 {
     type = "technology",
     name = "athletic-science-pack",
-    icon = "__space-age__/graphics/technology/metallurgic-science-pack.png",
+    icon = "__planet-rabbasca__/graphics/icons/athletic-science-pack-big.png",
     icon_size = 256,
     prerequisites = { "bunnyhop-engine-1", "rabbasca-turbofish-breeding" },
     effects =
@@ -147,8 +147,8 @@ data:extend {
 {
     type = "technology",
     name = "carotene",
-    icon = "__space-age__/graphics/technology/gleba.png",
-    icon_size = 256,
+    icon = "__planet-rabbasca__/graphics/icons/beta-carotene.png",
+    icon_size = 64,
     prerequisites = { "planet-discovery-rabbasca" },
     effects =
     {
@@ -170,8 +170,8 @@ data:extend {
 {
     type = "technology",
     name = "rabbasca-healthy-fluids",
-    icon = "__space-age__/graphics/technology/gleba.png",
-    icon_size = 256,
+    icon = "__planet-rabbasca__/graphics/icons/protein-shake.png",
+    icon_size = 64,
     prerequisites = { "carotene" },
     effects =
     {
@@ -193,8 +193,8 @@ data:extend {
 {
     type = "technology",
     name = "rabbasca-ears-subcore-technology",
-    icon = "__space-age__/graphics/technology/gleba.png",
-    icon_size = 256,
+    icon = data.raw["item"]["harene-ears-core"].icon,
+    icon_size = 64,
     prerequisites = { "machining-assembler" },
     effects =
     {
@@ -237,8 +237,8 @@ data:extend {
 {
     type = "technology",
     name = "energetic-residue",
-    icon = "__space-age__/graphics/technology/gleba.png",
-    icon_size = 256,
+    icon = "__planet-rabbasca__/graphics/icons/energetic-residue.png",
+    icon_size = 64,
     prerequisites = { "planet-discovery-rabbasca" },
     effects =
     {
@@ -362,7 +362,7 @@ data:extend {
     name = "rabbasca-turbofish-breeding",
     icon = "__space-age__/graphics/technology/fish-breeding.png",
     icon_size = 256,
-    prerequisites = { "leg-day-everyday", "rabbasca-healthy-fluids", "biochamber" },
+    prerequisites = { "leg-day-everyday", "rabbasca-healthy-fluids" },
     effects =
     {
       {
@@ -380,7 +380,10 @@ data:extend {
 {
     type = "technology",
     name = "harene-synthesis",
-    icon = "__space-age__/graphics/technology/steel-plate-productivity.png",
+    icons = {
+      { icon = "__planet-rabbasca__/graphics/icons/harene.png", scale = 0.8 },
+      { icon = data.raw["item"]["haronite-plate"].icon, shift = {12, 12}, scale = 0.5 },
+    },
     icon_size = 256,
     prerequisites = { "bunnyhop-engine-3", "metallurgic-science-pack", "cryogenic-science-pack" },
     effects =
@@ -391,7 +394,7 @@ data:extend {
       },
       {
         type = "unlock-recipe",
-        recipe = "infused-haronite-plate"
+        recipe = "haronite-plate"
       },
       {
         type = "unlock-recipe",
@@ -438,7 +441,7 @@ data:extend {
   name = "rabbasca-document-forging",
   icon = "__Krastorio2Assets__/technologies/advanced-tech-card.png",
   icon_size = 256,
-  prerequisites = { "athletic-science-pack", "space-science-pack", "utility-science-pack", "production-science-pack" },
+  prerequisites = { "athletic-science-pack", "space-science-pack", "utility-science-pack", "production-science-pack", "military-science-pack" },
   effects =
   {
     {

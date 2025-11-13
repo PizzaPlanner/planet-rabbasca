@@ -38,7 +38,7 @@ data:extend {
 },
 {
     type = "item",
-    icon = "__Krastorio2Assets__/icons/items/imersite-2.png",
+    icon = "__planet-rabbasca__/graphics/icons/haronite.png",
     name = "haronite",
     stack_size = 50,
     subgroup = "rabbasca-processes",
@@ -49,10 +49,10 @@ data:extend {
 {
     type = "item",
     icon = "__Krastorio2Assets__/icons/items/imersium-plate.png",
-    name = "infused-haronite-plate",
+    name = "haronite-plate",
     stack_size = 50,
     subgroup = "rabbasca-processes",
-    order = "h[haronite]-d[infused-haronite-plate]",
+    order = "h[haronite]-d[haronite-plate]",
 },
 {
     type = "item",
@@ -202,7 +202,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
 {
     type = "item",
     icons = {
-      { icon = "__space-age__/graphics/icons/fluid/fluorine.png", tint = { r=0.65, g=0.31, b=0.92 } },
+      { icon = "__planet-rabbasca__/graphics/icons/harene-gas.png" },
       { icon = "__space-age__/graphics/icons/nutrients.png", scale = 0.3,  }
     },
     name = "protein-powder",
@@ -222,10 +222,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
 {
   type = "fluid",
     name = "harene",
-    icons = {
-      { icon = "__space-age__/graphics/icons/fluid/fluorine.png", tint = { r=0.65, g=0.31, b=0.92 } },
-      { icon = "__space-age__/graphics/icons/fluid/electrolyte.png", tint = { 0.9, 0.8, 1 } },
-    },
+    icon = "__planet-rabbasca__/graphics/icons/harene.png",
     subgroup = "fluid",
     base_color = {r=0.65, g=0.31, b=0.92},
     flow_color = {r=0.65, g=0.31, b=0.92},
@@ -237,7 +234,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
 {
     type = "fluid",
     name = "harene-gas",
-    icon = "__space-age__/graphics/icons/fluid/fluorine.png",
+    icon = "__planet-rabbasca__/graphics/icons/harene-gas.png",
     subgroup = "fluid",
     base_color = {r=0.65, g=0.31, b=0.92},
     flow_color = {r=0.65, g=0.31, b=0.92},
