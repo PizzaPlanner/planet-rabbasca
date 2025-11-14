@@ -1,10 +1,12 @@
+local gleba = settings.startup["rabbasca-orbits"].value
 
 function default_requirements(planet)
+  -- If there is a cargo drop restriction, also forbid to bunnyhop cargo in
   return { "planetslib-"..planet.. "-cargo-drops" }
 end
 
 bunnyhop_requirements = bunnyhop_requirements or { 
-  ["gleba"] = { }, -- force no restriction on gleba, so we do not softlock on rabbasca
+  [gleba] = { }, -- force no restriction on gleba, so we do not softlock on rabbasca
 }
 
 local M = {}
@@ -12,10 +14,9 @@ local M = {}
 -- default requirements: { "planetslib-<name>-cargo-drops" }
 -- use this to restrict to one or more other technologies
 -- note that planet-discovery-<name> is always required through is_space_location_unlocked
--- APS compatibility: planet-discovery tech for starting planet is removed, so non-existing techs are ignored for the final check
--- modifying gleba requirements is not allowed.
+-- modifying parent requirements is not allowed to prevent softlocks.
 function M.set_requirements(name, requirements)
-  if name == "gleba" then return end
+  if name == gleba then return end
   bunnyhop_requirements[name] = requirements
 end
 
@@ -92,7 +93,7 @@ local function get_character_weight_label(character, max_weight)
     weight = weight + (cursor.prototype.weight or 0) * cursor.count
   end
   weight = weight / 1000
-
+  -- TODO: localize
   return weight <= max_weight, string.format("Weight: %i/%ikg", weight, max_weight) .. ((weight > max_weight and " [too heavy]") or "")
 end
 
@@ -134,10 +135,14 @@ local function on_charge_bunnyhop(event)
 
     local surface = game.planets[planet].surface or game.planets[planet].create_surface()
     if not surface then return end
+    storage.last_bunnyhops = storage.last_bunnyhops or { }
+    storage.last_bunnyhops[player] = storage.last_bunnyhops[player] or {}
+    storage.last_bunnyhops[player][character.surface_index] = character.position
 
+    local offset = storage.last_bunnyhops[player][surface.index] or {0, 0}
     local radius = surface.get_starting_area_radius()
-    player.force.chart(surface, {{-radius, -radius}, {radius, radius}})
-    local start_pos = surface.find_non_colliding_position("character", {0, 0}, surface.get_starting_area_radius(), 1)  or {0, 0}
+    player.force.chart(surface, {{-radius + offset.x, -radius + offset.y}, {radius + offset.x, radius + offset.y}})
+    local start_pos = surface.find_non_colliding_position("character", offset, radius, 1) or {0, 0}
     -- local pod = surface.create_entity{name="cargo-pod", position=player.position, force=player.force}
     -- -- player.set_controller{type=defines.controllers.character, character=pod.get_driver()}
     -- pod.cargo_pod_destination = {
@@ -164,6 +169,8 @@ function M.show_bunnyhop_ui(player, equipment)
     local reachable_surfaces = M.get_connections(surface.name, max_range)
 
     if #reachable_surfaces == 0 then 
+      -- TODO: Make localized
+      -- TODO: print different message if not allowed by setting
       player.print("[item=bunnyhop-engine] No discovered planet within "..max_range.."km")
       return 
     end

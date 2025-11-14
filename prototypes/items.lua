@@ -41,6 +41,7 @@ data:extend {
     icon = "__planet-rabbasca__/graphics/recolor/icons/haronite.png",
     name = "haronite",
     stack_size = 50,
+    weight = 20*kg,
     subgroup = "rabbasca-processes",
     order = "h[haronite]-a[haronite]",
     spoil_ticks = 5 * minute,

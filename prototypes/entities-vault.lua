@@ -19,7 +19,7 @@ local spawner = util.merge{
 {
   name = "rabbasca-vault-spawner",
   type = "unit-spawner",
-  icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png",
+  icon = "__Krastorio2Assets__/icons/entities/singularity-beacon.png",
   max_health = 7200,
   healing_per_tick = 3.6 / second,
   spawning_cooldown = {5 * second, 0.7 * second},
@@ -35,7 +35,7 @@ local spawner = util.merge{
   order = "r[rabbasca]-a"
 }}
 spawner.corpse = nil
-spawner.autoplace = nil -- override so this wont spawn on nauvis
+spawner.autoplace = nil -- IMPORTANT: prevents spawning on nauvis
 spawner.spawn_decoration = {}
 spawner.damaged_trigger_effect = nil
 spawner.absorptions_per_second = { }
