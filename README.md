@@ -1,7 +1,7 @@
 ## Rabbasca, the forgotten Moon
 Welcome to Rabbasca, a long forgotten place of powerful but well protected technology. It presents unique challenges and alternative ways to solve problems. 
 
-![](./.web/starter-base.png)
+![](https://github.com/PizzaPlanner/planet-rabbasca/tree/master/.web/starter-base.png)
 
 ### Power
 Rabbasca emits an energy field from deep below, that provides a limited amount of energy, but renders all your power generation useless.
@@ -10,45 +10,46 @@ The field provides enough energy for a decent base, but for an expanding factory
 ### Resources
 Most basic resources are easily accessible. There is no form of oil present, but sulfur and advanced circuits can be obtained through other means.
 
-![](./.web/resources.png)
+![](https://github.com/PizzaPlanner/planet-rabbasca/tree/master/.web/resources.png)
 
 ### Alertness 
 To access most resources, you need to hack the local vaults guarded by defense robots. These robots don't care about pollution or whatever else you might be doing at a safe distance. They are a protective measure and never attack or expand. 
 They also won't evolve over time, but the vaults share an alert level. Defensive responses get stronger the more vaults are hacked at once. Since hacks expire over time, you always have control over the current alert level. Keeping it low gives easy access to resources, but raising it to extreme levels might force them to reveal more of their mysterious technology.
 
-![](./.web/ouch.png)
-
 ## Rewards
 Rabbasca offers a few tools that are very powerful, especially in the midgame. However, before the lategame, it is very hard to export these tools at scale, which aims to balance out the impact these tools have. 
 
-![](./.web/rewards.png)
+![](https://github.com/PizzaPlanner/planet-rabbasca/tree/master/.web/rewards.png)
 
 ### Tasty consumables, for you and your factory
-Rabbasca is mostly barren, but the few available consumables are extremely nutritious. Brew powerful protein shakes that can be eaten by you and by your Biochambers, making them more relevant in places where nutrients are not easily available. Turbofuel is a great Rocket fuel alternative that provides high top speeds for vehicles.
+Rabbasca is mostly barren, but the few available consumables are extremely nutritious. Brew powerful protein shakes that can be eaten by you and by your Biochambers, making them more relevant in places where nutrients are not easily available.
 
 ### Machineception
 The Machining Assembler assembles machines. And with a huge efficiency bonus it is pretty good at it, too. It can not produce any parts or intermediate products, but has you covered for all the things that make a good factory.
 
+![](https://github.com/PizzaPlanner/planet-rabbasca/tree/master/.web/assembler.png)
+
 ### Energy flows everywhere, you just need to listen
 The E.A.R.S. Core is a strange device that can be installed in most machines to remove electricity demands and draw power from their surroundings instead. Special flooring is required to operate these machines.
 
-![](./.web/ears-tech.png)
-![](./.web/bunnyhop-tech.png)
+![](https://github.com/PizzaPlanner/planet-rabbasca/tree/master/.web/ears-tech.png)
+![](https://github.com/PizzaPlanner/planet-rabbasca/tree/master/.web/bunnyhop-tech.png)
 
 ### Jump across the Stars
 The Bunnyhop Engine allows you to travel between Moons and their planets, or even between far apart planets with enough research. Launching a rocket on Rabbasca requires post-aquilo technology, so until then you have to rely on your (tool-enhanced) feet to leave and to move limited amounts of Rabbasca-exclusive products to other planets. Since this technology can be pretty game-altering, there are a few settings to tweak your bunnyhops.   
 
-![](./.web/bunnyhop.png)
-![](./.web/bunnyhop-settings.png)
+![](https://github.com/PizzaPlanner/planet-rabbasca/tree/master/.web/bunnyhop.png)
+![](https://github.com/PizzaPlanner/planet-rabbasca/tree/master/.web/bunnyhop-settings.png)
 
 ### Warp your machines into place
 If you provoke the local defense protocols hard enough, they might start warping in help from somewhere else. This requires serious effort, but if you could steal this technology you could use it to construct your bases by warping them in from other planets without needing to ship them first...
+
+![](https://github.com/PizzaPlanner/planet-rabbasca/tree/master/.web/warp-tech.png)
 
 ## Compatibility
 
 - Rabbasca can safely be added to an existing playthrough, it does not modify existing techs, recipes, buildings, etc.
 - It also works great as a starting planet with [Any Planet Start](https://mods.factorio.com/mod/any-planet-start).
-- Large bot networks are infeasible on Rabbasca. If you need huge bot armies anyways, combine this mod with something like [Vesta](https://mods.factorio.com/mod/skewer_planet_vesta) or [Fusion Robots](https://mods.factorio.com/mod/FusionPoweredRobots).
 
 ## Credits
 This mod relies on the amazing work of other creators. Thanks for making Rabbasca possible.
