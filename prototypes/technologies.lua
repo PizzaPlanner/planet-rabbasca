@@ -83,7 +83,7 @@ data:extend {
   name = "rabbasca-vault-hacking-efficiency",
   icon = "__Krastorio2Assets__/technologies/optimization-tech-card.png",
   icon_size = 256,
-  prerequisites = { "athletic-science-pack" },
+  prerequisites = { "athletic-science-pack", "production-science-pack" },
   effects = {
     {
       type = "change-recipe-productivity",
@@ -114,6 +114,7 @@ data:extend {
       {"automation-science-pack", 1},
       {"logistic-science-pack", 1},
       {"chemical-science-pack", 1},
+      {"production-science-pack", 1},
       {"athletic-science-pack", 1},
     }
   }
@@ -414,6 +415,9 @@ data:extend {
           {"automation-science-pack", 1},
           {"logistic-science-pack", 1},
           {"chemical-science-pack", 1},
+          { "space-science-pack", 1},
+          { "production-science-pack", 1},
+          { "utility-science-pack", 1},
           { "metallurgic-science-pack", 1},
           { "cryogenic-science-pack", 1},
           { "athletic-science-pack", 1},

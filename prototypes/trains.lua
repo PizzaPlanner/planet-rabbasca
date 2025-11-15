@@ -63,7 +63,7 @@ util.merge { data.raw["locomotive"]["locomotive"],
   name = "rabbasca-railway",
   icon = data.raw["technology"]["railway"].icon,
   icon_size = 256,
-  prerequisites = { "athletic-science-pack", "railway" },
+  prerequisites = { "athletic-science-pack", "railway", "utility-science-pack", "production-science-pack" },
   effects =
   {
     {
@@ -82,7 +82,8 @@ util.merge { data.raw["locomotive"]["locomotive"],
       {"automation-science-pack", 1},
       {"logistic-science-pack", 1},
       {"chemical-science-pack", 1},
-      {"space-science-pack", 1},
+      {"utility-science-pack", 1},
+      {"production-science-pack", 1},
       {"athletic-science-pack", 1},
     }
   }
