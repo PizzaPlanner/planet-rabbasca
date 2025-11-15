@@ -136,43 +136,6 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "rabbasca-remote-receiver",
-        enabled = false,
-        energy_required = 5,
-        ingredients = { 
-            {type = "item", name = "harene-ears-subcore", amount = 1 },
-            {type = "item", name = "processing-unit",  amount = 20 },
-            {type = "item", name = "iron-gear-wheel",   amount = 30 },
-            {type = "item", name = "tungsten-plate",   amount = 2 },
-            {type = "item", name = "rabbasca-warp-core",   amount = 1 },
-        },
-        results = { 
-            { type = "item", name = "rabbasca-remote-receiver", amount = 1 },
-        },
-        surface_conditions = {{property = "harenic-energy-signatures", min = 20}},
-        main_product = "rabbasca-remote-receiver",
-        category = "complex-machinery"
-    },
-        {
-        type = "recipe",
-        name = "rabbasca-remote-builder",
-        enabled = false,
-        energy_required = 5,
-        ingredients = {
-            {type = "item", name = "harene-ears-core",           amount = 1 }, 
-            {type = "item", name = "bunnyhop-engine-equipment",  amount = 1 },
-            {type = "item", name = "rabbasca-warp-core",         amount = 10 },
-            {type = "item", name = "superconductor",             amount = 30 },
-        },
-        results = { 
-            { type = "item", name = "rabbasca-remote-builder", amount = 1 },
-        },
-        surface_conditions = {{property = "harenic-energy-signatures", min = 20}},
-        main_product = "rabbasca-remote-builder",
-        category = "complex-machinery"
-    },
-    {
-        type = "recipe",
         name = "solid-fuel-from-energetic-residue",
         category = "chemistry",
         energy_required = 3,

@@ -166,6 +166,7 @@ local vault_crafter = {
   collision_box = {{-2.4, -1.9},{2.4, 2.2}},
   selection_box = {{-2.5, -2.5},{2.5, 2.5}},
   selection_priority = 30,
+  subgroup = "enemies",
   order = "r[rabbasca]-a",
   crafting_speed = 1,
   energy_usage = "1MW",
@@ -236,7 +237,7 @@ local pylon = util.merge{
   max_count_of_owned_units = 16,
   max_friends_around_to_spawn = 64,
   spawning_radius = 8,
-  captured_spawner_entity = "rabbasca-vault-warp-spawner-hacked",
+  captured_spawner_entity = "rabbasca-remote-receiver",
   collision_box = {{-0.9, -0.9},{0.9, 0.9}},
   selection_box = {{-1, -1},{1, 1}},
   order = "r[rabbasca]-b"
@@ -306,19 +307,6 @@ pylon.graphics_set =
     },
 }}
 
-local pylon_hacked = util.merge {
-  table.deepcopy(pylon),
-  {
-    name = "rabbasca-vault-warp-spawner-hacked",
-    healing_per_tick = -10 / second,
-    minable = { mining_time = 3.5, result = "rabbasca-warp-core", count = 5, transfer_entity_health_to_products = false },
-    max_count_of_owned_units = 2
-  }
-}
-pylon_hacked.flags = { "placeable-player", "not-rotatable", "player-creation" }
-pylon_hacked.graphics_set.animations.layers[3].tint = { 0, 0, 0 }
--- pylon_hacked.result_units = { }
-
 local capture_bot = {
   type = "capture-robot",
   icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png",
@@ -343,7 +331,7 @@ local capture_bot_2 = {
 
 data:extend {
   delayed_recalc_trigger,
-  spawner, pylon, pylon_hacked,
+  spawner, pylon,
   access_console,
   capture_bot, capture_bot_2,
   vault_crafter

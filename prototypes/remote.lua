@@ -1,6 +1,7 @@
 local RECEIVER_RADIUS = 21 -- Also in scripts/remote-builder.lua. Should be unified sometime.
 local rutil = require("__planet-rabbasca__.util")
-local hatch = { cargo_unit_entity_to_spawn = "rabbasca-warp-pod", busy_timeout_ticks = 20, hatch_opening_ticks = 120, offset = {1.2, -2.7}, }
+-- local recycling = require("__quality__.prototypes.recycling")
+local hatch = { cargo_unit_entity_to_spawn = "rabbasca-warp-pod", receiving_cargo_units = {}, busy_timeout_ticks = 20, hatch_opening_ticks = 120, offset = {1.2, -2.7}, }
 
 local pad = util.merge {
     data.raw["cargo-landing-pad"]["cargo-landing-pad"],
@@ -50,6 +51,7 @@ data:extend {
     crafting_categories = { "rabbasca-remote" },
     minable = { result = "rabbasca-remote-receiver", mining_time = 1 },
     placeable_by = { item = "rabbasca-remote-receiver", count = 1 },
+    max_health = 240,
     surface_conditions = {
       { property = "gravity", min = 0.01 }
     },
@@ -94,7 +96,7 @@ data:extend {
         },
         apply_recipe_tint = "primary"
       }},
-      default_recipe_tint = { primary = {0.5, 0.75, 1} },
+      default_recipe_tint = { primary = {0.5, 1, 0} },
       idle_animation = {
         layers = {
           {
@@ -124,18 +126,18 @@ data:extend {
   {
     type = "cargo-pod",
     name = "rabbasca-warp-pod",
-    icon = data.raw["virtual-signal"]["signal-map-marker"].icon,
+    icon = "__planet-rabbasca__/graphics/recolor/icons/item-warp-slot.png",
     flags = { "placeable-off-grid", "not-in-kill-statistics", "placeable-neutral" },
     collision_mask = { layers = { } },
     collision_box = {{0, 0}, {0, 0}},
-    hidden = true,
+    -- hidden = true,
     inventory_size = 1,
     spawned_container = "rabbasca-warp-container",
   },
   {
     name = "rabbasca-warp-container",
     type = "temporary-container",
-    icon = data.raw["virtual-signal"]["signal-map-marker"].icon,
+    icon = "__planet-rabbasca__/graphics/recolor/icons/item-warp-slot.png",
     hidden = true,
     flags = { "placeable-off-grid", "not-in-kill-statistics", "placeable-neutral" },
     collision_mask = { layers = { } },
@@ -150,10 +152,28 @@ data:extend {
   },
   {
     type = "item",
+    name = "rabbasca-remote-builder",
+    icon = "__planet-rabbasca__/graphics/by-hurricane/research-center-icon.png",
+    stack_size = 5,
+    place_result = "rabbasca-remote-builder",
+    subgroup = "space-interactors",
+    order = "c[cargo-landing-pad]-r[rabbasca-remote-builder]",
+  },
+  {
+      type = "item",
+      name = "rabbasca-remote-receiver",
+      icon = "__planet-rabbasca__/graphics/by-hurricane/conduit-icon.png",
+      stack_size = 5,
+      place_result = "rabbasca-remote-receiver",
+      subgroup = "space-interactors",
+      order = "c[cargo-landing-pad]-r[rabbasca-remote-receiver]",
+  },
+  {
+    type = "item",
     name = "rabbasca-remote-call",
     category = "rabbasca-security",
     order = "b[vault-access-key]",
-    icon = data.raw["virtual-signal"]["signal-map-marker"].icon,
+    icon = "__planet-rabbasca__/graphics/recolor/icons/item-warp-slot.png",
     flags = { "ignore-spoil-time-modifier" },
     hidden = true,
     hidden_in_factoriopedia = true,
@@ -186,6 +206,24 @@ data:extend {
 },
 {
     type = "recipe",
+    name = "rabbasca-remote-builder",
+    enabled = false,
+    energy_required = 20,
+    ingredients = {
+        {type = "item", name = "cargo-landing-pad",          amount = 1 }, 
+        {type = "item", name = "bunnyhop-engine-equipment",  amount = 1 },
+        {type = "item", name = "rabbasca-warp-core",         amount = 10 },
+        {type = "item", name = "superconductor",             amount = 30 },
+    },
+    results = { 
+        { type = "item", name = "rabbasca-remote-builder", amount = 1 },
+    },
+    surface_conditions = {{ property = "harenic-energy-signatures", min = 20 }},
+    main_product = "rabbasca-remote-builder",
+    category = "complex-machinery"
+},
+{
+    type = "recipe",
     name = "rabbasca-remote-call",
     enabled = true,
     hidden = true,
@@ -197,7 +235,7 @@ data:extend {
     results = { {type = "item", name = "rabbasca-remote-call", amount = 1 } },
     main_product = "rabbasca-remote-call",    
     category = "rabbasca-remote",
-    crafting_machine_tint = {0.8, 0.9, 1}
+    crafting_machine_tint = {primary = {0.8, 0.9, 1}}
 },
 {
     type = "recipe",
@@ -208,11 +246,39 @@ data:extend {
     hidden_in_factoriopedia = true,
     hide_from_player_crafting = true,
     result_is_always_fresh = true,
-    energy_required = 8,
+    energy_required = 7,
     ingredients = { },
     results = { {type = "item", name = "rabbasca-remote-call", amount = 1 } },
     main_product = "rabbasca-remote-call",    
     category = "rabbasca-remote",
-    crafting_machine_tint = {0.4, 0.65, 0.5}
+    crafting_machine_tint = {primary = {0.4, 0.65, 0.5}}
 },
+}
+
+data:extend {
+  {
+    type = "recipe",
+    name = "rabbasca-remote-receiver-recycling",
+    enabled = false,
+    icons = generate_recycling_recipe_icons_from_item(data.raw.item["rabbasca-remote-receiver"]),
+    ingredients = { { type = "item", name = "rabbasca-remote-builder", amount = 1 }, },
+    results = { { type = "item", name = "rabbasca-warp-core", amount = 1 }, },
+    category = "recycling",
+    hidden = true,
+    hide_from_player_crafting = true,
+    energy_required = 30,
+    unlock_results = true,
+    localised_name = {"recipe-name.recycling", {"entity-name.rabbasca-remote-receiver"}},
+  },
+  {
+    type = "recipe",
+    name = "rabbasca-remote-receiver",
+    enabled = false,
+    category = "parameters", -- can not be crafted, just for unlocking
+    hidden_in_factoriopedia = true,
+    hidden = true,
+    hide_from_player_crafting = true,
+    results = { { type = "item", name = "rabbasca-remote-receiver", amount = 1 }, },
+    main_product = "rabbasca-remote-receiver"
+  }
 }

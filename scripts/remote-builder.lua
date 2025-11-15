@@ -3,7 +3,7 @@ local WARPING_TAG = "rabbasca-warping"
 -- TODO: Use items_to_place_this?
 
 local function awake(receiver)
-    if receiver.valid and receiver.get_recipe() == nil then
+    if receiver.valid and receiver.get_recipe() == nil and receiver.surface.planet then
         receiver.set_recipe("rabbasca-remote-warmup")
         receiver.recipe_locked = true
     end
@@ -49,7 +49,7 @@ local function try_build_ghost(entity)
                 break
             end
         end
-        if not pod then return false end
+        if not pod then return true end -- all hatches busy, try again later
         local chest = builder.get_inventory(defines.inventory.chest)
         if pod.get_inventory(defines.inventory.cargo_unit).insert({name = item_with_quality.name, quality = item_with_quality.quality, count = chest.remove(item_with_quality)}) == 0 then
             chest.insert(item_with_quality)
@@ -65,8 +65,10 @@ local function try_build_ghost(entity)
         entity.tags = tags
         rendering.draw_sprite{
             sprite = "item.rabbasca-remote-call",
-            target = entity,          -- attach to ghost
+            target = {entity = entity, offset = { 0, -0.5 } },          -- attach to ghost
             surface = entity.surface,
+            x_scale = 0.75,
+            y_scale = 0.75,
         }
         return true
     end
@@ -84,7 +86,8 @@ function M.attempt_build_ghost(pylon)
             {position.x - radius, position.y - radius},
             {position.x + radius, position.y + radius}
         },
-        name = "entity-ghost"
+        -- TODO: Support "item-request-proxy" for module slots?
+        name = { "entity-ghost", "tile-ghost" }
     }
     -- on successful build, next attempt is faster
     -- when no ghosts left, go to sleep
@@ -93,14 +96,17 @@ function M.attempt_build_ghost(pylon)
             if try_build_ghost(ghost) then return end
         end
         pylon.set_recipe("rabbasca-remote-warmup")
+        pylon.recipe_locked = true
     else
-        if #ghosts == 0 or not storage.rabbasca_remote_builder  then 
+        if #ghosts == 0 or not storage.rabbasca_remote_builder or not surface.planet then 
             pylon.set_recipe(nil) 
+            receiver.recipe_locked = true
             return 
         end
         for _, ghost in pairs(ghosts) do
             if try_build_ghost(ghost) then 
                 pylon.set_recipe("rabbasca-remote-call")
+                pylon.recipe_locked = true
                 return 
             end
         end
@@ -109,13 +115,13 @@ end
 
 function M.finalize_build_ghost(pod)
     local item = pod.get_inventory(defines.inventory.cargo_unit)[1]
-    local ghost = pod.surface.find_entity({ name = "entity-ghost", quality = item.quality }, pod.position)
+    local is_tile = item.prototype.place_as_tile_result ~= nil
+    local ghost = pod.surface.find_entity({ name = is_tile and "tile-ghost" or "entity-ghost", quality = item.quality }, pod.position)
     if ghost and ghost.tags and ghost.tags[WARPING_TAG] then
         if not item.valid then -- spoiled etc
             ghost.tags = { } -- TODO: just remove WARPING_TAG
             return
         end
-        game.print(ghost.quality.name.."/"..item.quality.name)
         if ghost.ghost_name == item.name then
             local _, revived, _ = ghost.revive{ raise_revive = true } 
             if revived then return end

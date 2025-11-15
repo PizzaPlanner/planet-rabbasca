@@ -436,6 +436,10 @@ data:extend {
       type = "unlock-recipe",
       recipe = "rabbasca-remote-receiver",
     },
+    {
+      type = "unlock-recipe",
+      recipe = "rabbasca-remote-receiver-recycling",
+    },
   },
   research_trigger = {
     type = "capture-spawner",
