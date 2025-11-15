@@ -10,26 +10,6 @@ function output.restrict_to_harene_pool(bbox)
     }
 end
 
-function output.spill_to_inventory_or_ground(input, output, surface, spill_position)
-  for i = 1, #input do
-    local stack = input[i]
-    if stack and stack.valid_for_read then
-      local to_spill = stack.count
-
-      if output then
-        local inserted = output.insert{name = stack.name, count = stack.count, quality = stack.quality}
-        to_spill = to_spill - inserted
-      end
-
-      if to_spill > 0 then
-        surface.spill_item_stack{ position = spill_position, stack = {name = stack.name, count = to_spill, quality = stack.quality}, force = game.forces.player}
-      end
-
-      stack.clear()
-    end
-  end
-end
-
 function output.create_vault_recipe(input, values)
 data:extend{
   util.merge {
@@ -178,7 +158,7 @@ function output.rabbasca_set_vault_active(e, active)
   end
 end
 
-function output.hack_vault(surface, position)
+function output.update_alertness(surface, position)
   local active_vaults_count = #surface.find_entities_filtered { name = "rabbasca-vault-console", force = game.forces.player }
   local new_evo = math.min(1, active_vaults_count * settings.global["rabbasca-evolution-per-vault"].value / 100)
   game.forces.rabbascans.set_evolution_factor(new_evo, surface)

@@ -430,15 +430,15 @@ data:extend {
   {
     {
       type = "unlock-recipe",
-      recipe = "rabbasca-remote-builder",
+      recipe = "rabbasca-warp-cargo-pad",
     },
     {
       type = "unlock-recipe",
-      recipe = "rabbasca-remote-receiver",
+      recipe = "rabbasca-warp-pylon",
     },
     {
       type = "unlock-recipe",
-      recipe = "rabbasca-remote-receiver-recycling",
+      recipe = "rabbasca-warp-pylon-recycling",
     },
   },
   research_trigger = {

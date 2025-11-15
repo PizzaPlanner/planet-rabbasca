@@ -1,15 +1,27 @@
 local RECEIVER_RADIUS = 21 -- Also in scripts/remote-builder.lua. Should be unified sometime.
 local rutil = require("__planet-rabbasca__.util")
 -- local recycling = require("__quality__.prototypes.recycling")
-local hatch = { cargo_unit_entity_to_spawn = "rabbasca-warp-pod", receiving_cargo_units = {}, busy_timeout_ticks = 60, hatch_opening_ticks = 240, offset = {1.2, -2.7}, }
+local hatch = { 
+  cargo_unit_entity_to_spawn = "rabbasca-warp-sequence", 
+  receiving_cargo_units = {},
+  travel_height = 2,
+  slice_height = 2, 
+  busy_timeout_ticks = 60, 
+  hatch_opening_ticks = 240, 
+  offset = {1.2, -2.7}, 
+}
+local warp_icons = {
+      { icon = "__planet-rabbasca__/graphics/recolor/icons/item-warp-slot.png" },
+      { icon = "__planet-rabbasca__/graphics/icons/warp.png", scale = 0.25, shift = {0, -3} }
+}
 
 local pad = util.merge {
     data.raw["cargo-landing-pad"]["cargo-landing-pad"],
     {
-        name = "rabbasca-remote-builder",
+        name = "rabbasca-warp-cargo-pad",
         icon = "__planet-rabbasca__/graphics/by-hurricane/research-center-icon.png",
-        minable = { result = "rabbasca-remote-builder", mining_time = 4 },
-        placeable_by = { item = "rabbasca-remote-builder", count = 1 },
+        minable = { result = "rabbasca-warp-cargo-pad", mining_time = 4 },
+        placeable_by = { item = "rabbasca-warp-cargo-pad", count = 1 },
         inventory_size = 20,
         trash_inventory_size = 20,
     }
@@ -19,9 +31,9 @@ pad.cargo_station_parameters = {
     prefer_packed_cargo_units = false,
     is_input_station = true,
     is_output_station = true,
-    hatch_definitions = { hatch, hatch, hatch, hatch, hatch, hatch, hatch, hatch, hatch, hatch },
+    hatch_definitions = { hatch, hatch, hatch, hatch, hatch, hatch, hatch, hatch, hatch },
     giga_hatch_definitions = {{
-        covered_hatches = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 },
+        covered_hatches = { 0, 1, 2, 3, 4, 5, 6, 7, 8 },
         hatch_graphics_front = {
             layers = {{
                 filename = "__planet-rabbasca__/graphics/by-hurricane/research-center-animation.png",
@@ -30,7 +42,6 @@ pad.cargo_station_parameters = {
                 width = 5900 / 10,
                 height = 5120 / 8,
                 scale = 0.17,
-                flags = {"no-scale"},
                 shift = {1.2, -2.7},
             }}
         }
@@ -44,13 +55,13 @@ data:extend {
   pad,
   {
     type = "assembling-machine",
-    name = "rabbasca-remote-receiver",
+    name = "rabbasca-warp-pylon",
     icon = "__planet-rabbasca__/graphics/by-hurricane/conduit-icon.png",
-    -- fixed_recipe = "rabbasca-remote-call",
+    -- fixed_recipe = "rabbasca-warp-sequence",
     flags = { "not-rotatable", "placeable-player", "player-creation" },
     crafting_categories = { "rabbasca-remote" },
-    minable = { result = "rabbasca-remote-receiver", mining_time = 1 },
-    placeable_by = { item = "rabbasca-remote-receiver", count = 1 },
+    minable = { result = "rabbasca-warp-pylon", mining_time = 1 },
+    placeable_by = { item = "rabbasca-warp-pylon", count = 1 },
     max_health = 240,
     surface_conditions = {
       { property = "gravity", min = 0.01 }
@@ -125,8 +136,8 @@ data:extend {
   },
   {
     type = "cargo-pod",
-    name = "rabbasca-warp-pod",
-    icon = "__planet-rabbasca__/graphics/recolor/icons/item-warp-slot.png",
+    name = "rabbasca-warp-sequence",
+    icons = warp_icons,
     flags = { "placeable-off-grid", "not-in-kill-statistics", "placeable-neutral" },
     collision_mask = { layers = { } },
     collision_box = {{0, 0}, {0, 0}},
@@ -152,31 +163,28 @@ data:extend {
   },
   {
     type = "item",
-    name = "rabbasca-remote-builder",
+    name = "rabbasca-warp-cargo-pad",
     icon = "__planet-rabbasca__/graphics/by-hurricane/research-center-icon.png",
     stack_size = 5,
-    place_result = "rabbasca-remote-builder",
+    place_result = "rabbasca-warp-cargo-pad",
     subgroup = "space-interactors",
-    order = "c[cargo-landing-pad]-r[rabbasca-remote-builder]",
+    order = "c[cargo-landing-pad]-r[rabbasca-warp-cargo-pad]",
   },
   {
       type = "item",
-      name = "rabbasca-remote-receiver",
+      name = "rabbasca-warp-pylon",
       icon = "__planet-rabbasca__/graphics/by-hurricane/conduit-icon.png",
       stack_size = 5,
-      place_result = "rabbasca-remote-receiver",
+      place_result = "rabbasca-warp-pylon",
       subgroup = "space-interactors",
-      order = "c[cargo-landing-pad]-r[rabbasca-remote-receiver]",
+      order = "c[cargo-landing-pad]-r[rabbasca-warp-pylon]",
   },
   {
     type = "item",
-    name = "rabbasca-remote-call",
+    name = "rabbasca-warp-sequence",
     category = "rabbasca-security",
     order = "b[vault-access-key]",
-    icons = {
-      { icon = "__planet-rabbasca__/graphics/recolor/icons/item-warp-slot.png" },
-      { icon = "__planet-rabbasca__/graphics/icons/warp.png", scale = 0.25, shift = {0, -3} }
-    },
+    icons = warp_icons,
     flags = { "ignore-spoil-time-modifier" },
     hidden = true,
     hidden_in_factoriopedia = true,
@@ -209,7 +217,7 @@ data:extend {
 },
 {
     type = "recipe",
-    name = "rabbasca-remote-builder",
+    name = "rabbasca-warp-cargo-pad",
     enabled = false,
     energy_required = 20,
     ingredients = {
@@ -219,15 +227,15 @@ data:extend {
         {type = "item", name = "superconductor",             amount = 30 },
     },
     results = { 
-        { type = "item", name = "rabbasca-remote-builder", amount = 1 },
+        { type = "item", name = "rabbasca-warp-cargo-pad", amount = 1 },
     },
     surface_conditions = {{ property = "harenic-energy-signatures", min = 20 }},
-    main_product = "rabbasca-remote-builder",
+    main_product = "rabbasca-warp-cargo-pad",
     category = "complex-machinery"
 },
 {
     type = "recipe",
-    name = "rabbasca-remote-call",
+    name = "rabbasca-warp-sequence",
     icon = "__planet-rabbasca__/graphics/icons/warp.png",
     enabled = true,
     hidden = true,
@@ -236,8 +244,8 @@ data:extend {
     result_is_always_fresh = true,
     energy_required = 1,
     ingredients = { },
-    results = { {type = "item", name = "rabbasca-remote-call", amount = 1 } },
-    main_product = "rabbasca-remote-call",    
+    results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1 } },
+    main_product = "rabbasca-warp-sequence",    
     category = "rabbasca-remote",
     crafting_machine_tint = {primary = {2, 2, 2}}
 },
@@ -252,8 +260,8 @@ data:extend {
     result_is_always_fresh = true,
     energy_required = 7,
     ingredients = { },
-    results = { {type = "item", name = "rabbasca-remote-call", amount = 1 } },
-    main_product = "rabbasca-remote-call",    
+    results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1 } },
+    main_product = "rabbasca-warp-sequence",    
     category = "rabbasca-remote",
     crafting_machine_tint = {primary = {0.3, 0.35, 0.4}}
 },
@@ -262,27 +270,27 @@ data:extend {
 data:extend {
   {
     type = "recipe",
-    name = "rabbasca-remote-receiver-recycling",
+    name = "rabbasca-warp-pylon-recycling",
     enabled = false,
-    icons = generate_recycling_recipe_icons_from_item(data.raw.item["rabbasca-remote-receiver"]),
-    ingredients = { { type = "item", name = "rabbasca-remote-receiver", amount = 1 }, },
+    icons = generate_recycling_recipe_icons_from_item(data.raw.item["rabbasca-warp-pylon"]),
+    ingredients = { { type = "item", name = "rabbasca-warp-pylon", amount = 1 }, },
     results = { { type = "item", name = "rabbasca-warp-core", amount = 1 }, },
     category = "recycling",
     hidden = true,
     hide_from_player_crafting = true,
     energy_required = 30,
     unlock_results = true,
-    localised_name = {"recipe-name.recycling", {"entity-name.rabbasca-remote-receiver"}},
+    localised_name = {"recipe-name.recycling", {"entity-name.rabbasca-warp-pylon"}},
   },
   {
     type = "recipe",
-    name = "rabbasca-remote-receiver",
+    name = "rabbasca-warp-pylon",
     enabled = false,
     category = "parameters", -- can not be crafted, just for unlocking
     hidden_in_factoriopedia = true,
     hidden = true,
     hide_from_player_crafting = true,
-    results = { { type = "item", name = "rabbasca-remote-receiver", amount = 1 }, },
-    main_product = "rabbasca-remote-receiver"
+    results = { { type = "item", name = "rabbasca-warp-pylon", amount = 1 }, },
+    main_product = "rabbasca-warp-pylon"
   }
 }

@@ -15,7 +15,7 @@ local function handle_script_events(event)
   elseif effect_id == "rabbasca_on_recalc_evolution" then
     local from = event.source_entity or event.target_entity
     local position = (from and from.position) or event.target_position or event.source_position
-    rutil.hack_vault(game.surfaces[event.surface_index], position)
+    rutil.update_alertness(game.surfaces[event.surface_index], position)
     if from and from.name == "rabbasca-vault-spawner" then
       from.force = game.forces.rabbascans
       local vault = from.surface.find_entity("rabbasca-vault-crafter", position)
@@ -28,8 +28,8 @@ local function handle_script_events(event)
   elseif effect_id == "rabbasca_init_receiver" then
     local from = event.source_entity or event.target_entity
     if from then 
-      from.operable = false
       from.set_recipe("rabbasca-remote-warmup")
+      from.recipe_locked = true
     end
   elseif effect_id == "rabbasca_teleport" then
     local engine = event.source_entity or event.target_entity
@@ -72,12 +72,12 @@ local function give_starter_items()
   if not remote.interfaces["freeplay"] then return end
   remote.call("freeplay", "set_ship_items", 
   {
-      ["copper-plate"] = 250,
-      ["battery"] = 75,
+      ["copper-plate"] = 200,
+      ["iron-plate"] = 100,
   })
   remote.call("freeplay", "set_created_items", {
       ["pistol"] = 1,
-      ["firearm-magazine"] = 5,
+      ["firearm-magazine"] = 20,
       ["transport-belt"] = 100,
       ["inserter"] = 50,
       ["stone-furnace"] = 1,
@@ -88,7 +88,7 @@ local function give_starter_items()
   })
 end
 
--- Workaround for robots expanding into biter nests on rabbasca for no reason at all
+-- Workaround for robots expanding into biter nests. Also compatibility for castra research
 local function create_rabbasca_force()
   local force = game.create_force("rabbascans")
   force.ai_controllable = false

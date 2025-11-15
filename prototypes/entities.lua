@@ -1,29 +1,6 @@
 require ("__base__.prototypes.entity.assemblerpipes")
 local rutil = require("__planet-rabbasca__.util")
 
-function harene_energy_source (volume)
-return { 
-      type = "fluid", 
-      burns_fluid = true,
-      scale_fluid_usage = true,
-      -- fluid_usage_per_tick = ??
-      fluid_box = {
-          volume = volume,
-          filter = "harene",
-          production_type = "input",
-          pipe_connections = 
-          {
-              {
-                flow_direction = "input-output",
-                position = {0, 1},
-                direction = defines.direction.south,
-                connection_category = {"harene"}
-              }
-          },
-        } 
-    }
-end
-
 local assembler = util.merge { data.raw["assembling-machine"]["assembling-machine-3"],
 {
     name = "machining-assembler",
@@ -93,6 +70,7 @@ assembler.graphics_set = {
       { filename = "__planet-rabbasca__/graphics/by-hurricane/gravity-assembler-emission3.png", draw_as_glow = true, blend_mode = "additive" }},
     },
   },
+  -- TODO: Shadow is missing
   idle_animation = { layers = { util.merge {{ filename = "__planet-rabbasca__/graphics/by-hurricane/gravity-assembler-animation.png" }, sprite_data } } },
   always_draw_idle_animation = true
 }

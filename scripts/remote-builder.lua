@@ -18,7 +18,7 @@ local function awake_receivers(entity)
             {entity.position.x - radius, entity.position.y - radius},
             {entity.position.x + radius, entity.position.y + radius}
         },
-        name = "rabbasca-remote-receiver",
+        name = "rabbasca-warp-pylon",
     }
     for _, receiver in pairs(receivers) do
         awake(receiver)
@@ -51,7 +51,7 @@ local function try_build_ghost(entity)
     local proto = entity.ghost_prototype
     if not (proto.items_to_place_this and #proto.items_to_place_this > 0) then return end
     if not (storage.rabbasca_remote_builder and storage.rabbasca_remote_builder.valid) then
-        local builders = game.surfaces.rabbasca and game.surfaces.rabbasca.find_entities_filtered{name = "rabbasca-remote-builder"}
+        local builders = game.surfaces.rabbasca and game.surfaces.rabbasca.find_entities_filtered{name = "rabbasca-warp-cargo-pad"}
         if #builders > 0 then
             storage.rabbasca_remote_builder = builders[1]
         else
@@ -92,7 +92,7 @@ local function try_build_ghost(entity)
             label = { "entity-status.rabbasca-warp" }
         }
         rendering.draw_sprite{
-            sprite = "item.rabbasca-remote-call",
+            sprite = "item.rabbasca-warp-sequence",
             target = {entity = entity, offset = { 0, -0.5 } },          -- attach to ghost
             surface = entity.surface,
             x_scale = 0.75,
@@ -110,7 +110,7 @@ end
 local M = {}
 
 function M.attempt_build_ghost(pylon)
-    local is_calling = pylon.get_recipe() and pylon.get_recipe().name == "rabbasca-remote-call"
+    local is_calling = pylon.get_recipe() and pylon.get_recipe().name == "rabbasca-warp-sequence"
     local position = pylon.position
     local radius = RECEIVER_RADIUS
     local ghosts = pylon.surface.find_entities_filtered{
@@ -142,7 +142,7 @@ function M.attempt_build_ghost(pylon)
             local result, status = try_build_ghost(ghost)
             pylon.custom_status = status
             if result then
-                pylon.set_recipe("rabbasca-remote-call")
+                pylon.set_recipe("rabbasca-warp-sequence")
                 pylon.recipe_locked = true
                 return 
             end
@@ -183,10 +183,10 @@ local build_events = {
 
 script.on_event(build_events, function(event)
   if not event.entity.valid then return end
-  if event.entity.name == "rabbasca-remote-builder" then
+  if event.entity.name == "rabbasca-warp-cargo-pad" then
     storage.rabbasca_remote_builder = event.entity -- Only one allowed for simplicity
     for _, surface in pairs(game.surfaces) do
-        for _, receiver in pairs(surface.find_entities_filtered{name = "rabbasca-remote-receiver"}) do
+        for _, receiver in pairs(surface.find_entities_filtered{name = "rabbasca-warp-pylon"}) do
             awake(receiver)
         end
     end

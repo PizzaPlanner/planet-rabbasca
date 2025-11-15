@@ -143,14 +143,6 @@ local function on_charge_bunnyhop(event)
     local radius = surface.get_starting_area_radius()
     player.force.chart(surface, {{-radius + offset[1], -radius + offset[2]}, {radius + offset[1], radius + offset[2]}})
     local start_pos = surface.find_non_colliding_position("character", offset, radius, 1) or {0, 0}
-    -- local pod = surface.create_entity{name="cargo-pod", position=player.position, force=player.force}
-    -- -- player.set_controller{type=defines.controllers.character, character=pod.get_driver()}
-    -- pod.cargo_pod_destination = {
-    --     type = defines.cargo_destination.surface,
-    --     surface = surface,
-    --     position = start_pos
-    -- }
-
 
     -- Teleport player
     if not player.teleport(start_pos, surface) then return end
