@@ -97,90 +97,8 @@ assembler.graphics_set = {
   always_draw_idle_animation = true
 }
 
-data:extend {
+data:extend{ 
   assembler,
-  {
-    type = "container",
-    name = "rabbasca-remote-builder",
-    icon = "__planet-rabbasca__/graphics/by-hurricane/research-center-icon.png",
-    flags = { "not-rotatable", "placeable-player", "player-creation" },
-    minable = { result = "rabbasca-remote-builder", mining_time = 4 },
-    placeable_by = { item = "rabbasca-remote-builder", count = 1 },
-    inventory_type = "with_filters_and_bar",
-    inventory_size = 30,
-    surface_conditions = {
-      { property = "harenic-energy-signatures", min = 20 }
-    },
-    collision_box = {{-2.4, -2.4}, {2.4, 2.4}},
-    selection_box = {{-2.5, -2.5}, {2.5, 2.5}},
-    graphics_set = {
-    }
-  },
-  {
-    type = "assembling-machine",
-    name = "rabbasca-remote-receiver",
-    icon = "__planet-rabbasca__/graphics/by-hurricane/conduit-icon.png",
-    fixed_recipe = "rabbasca-remote-call",
-    flags = { "not-rotatable", "placeable-player", "player-creation" },
-    crafting_categories = { "rabbasca-remote" },
-    minable = { result = "rabbasca-remote-receiver", mining_time = 1 },
-    placeable_by = { item = "rabbasca-remote-receiver", count = 1 },
-    surface_conditions = {
-      { property = "gravity", min = 0.01 }
-    },
-    energy_usage = "1MW",
-    crafting_speed = 1,
-    energy_source = { type = "void" },
-    collision_box = {{-0.8, -0.8}, {0.8, 0.8}},
-    selection_box = {{-1, -1}, {1, 1}},
-    tile_buildability_rules = { rutil.restrict_to_harene_pool({{-0.8, -0.8}, {0.8, 0.8}}) },
-    radius_visualisation_specification = {
-      sprite = data.raw["utility-sprites"]["default"].construction_radius_visualization,
-      distance = 75,
-    },
-    graphics_set = {
-      working_visualisations = {{
-        animation = {
-              filename = "__planet-rabbasca__/graphics/by-hurricane/conduit-emission.png",
-              frame_count = 60,
-              line_length = 10,
-              width = 200,
-              height = 290,
-              draw_as_glow = true,
-              blend_mode = "additive-soft",
-              scale = 1.0/3,
-              shift = {0, -0.5},
-              apply_runtime_tint = true
-        },
-        apply_recipe_tint = "primary"
-      }},
-      default_recipe_tint = { primary = {0.5, 0.75, 1} },
-      idle_animation = {
-        layers = {
-          {
-            filename = "__planet-rabbasca__/graphics/by-hurricane/conduit-animation.png",
-            frame_count = 60,
-            line_length = 10,
-            width = 200,
-            height = 290,
-            scale = 1.0/3,
-            flags = {"no-scale"},
-            shift = {0, -0.5},
-          },
-          {
-              filename = "__planet-rabbasca__/graphics/by-hurricane/conduit-hr-shadow.png",
-              repeat_count = 60,
-              width = 600,
-              height = 400,
-              scale = 1.0/3,
-              draw_as_shadow = true,
-              shift = {0, -0.5},
-          },
-        }
-      },
-      always_draw_idle_animation = true
-    },
-  },
   {
     type = "electric-energy-interface",
     name = "rabbasca-energy-source",
@@ -242,7 +160,7 @@ data:extend {
     {
       name = "protein-shake-speed-sticker",
       duration_in_ticks = 60 * second,
-      target_movement_modifier = 1.4,
+      target_movement_modifier = 1.9,
       damage_interval = 20,
       damage_per_tick = { amount = -5 },
     }

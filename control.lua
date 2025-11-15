@@ -1,10 +1,18 @@
-require("__planet-rabbasca__/scripts/remote-builder")
+local remote_builder = require("__planet-rabbasca__/scripts/remote-builder")
 local rutil = require("__planet-rabbasca__.util")
 local bunnyhop = require("__planet-rabbasca__/bunnyhop")
 
 local function handle_script_events(event)
   local effect_id = event.effect_id
-  if effect_id == "rabbasca_on_recalc_evolution" then
+  if effect_id == "rabbasca_on_warp_attempt" then
+    local from = event.source_entity or event.target_entity
+    if not from then return end
+    remote_builder.attempt_build_ghost(from)
+  elseif effect_id == "rabbasca_on_warp_complete" then
+    local from = event.source_entity or event.target_entity
+    if not from then return end
+    remote_builder.finalize_build_ghost(from)
+  elseif effect_id == "rabbasca_on_recalc_evolution" then
     local from = event.source_entity or event.target_entity
     local position = (from and from.position) or event.target_position or event.source_position
     rutil.hack_vault(game.surfaces[event.surface_index], position)
@@ -16,6 +24,12 @@ local function handle_script_events(event)
     if from and from.name == "rabbasca-vault-console" then
       local vault = from.surface.find_entity("rabbasca-vault-crafter", position)
       rutil.rabbasca_set_vault_active(vault, true)
+    end
+  elseif effect_id == "rabbasca_init_receiver" then
+    local from = event.source_entity or event.target_entity
+    if from then 
+      from.operable = false
+      from.set_recipe("rabbasca-remote-warmup")
     end
   elseif effect_id == "rabbasca_teleport" then
     local engine = event.source_entity or event.target_entity

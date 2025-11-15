@@ -434,23 +434,3 @@ rocket_part.ingredients = {
 }
 data:extend { rocket_part }
 PlanetsLib.assign_rocket_part_recipe("rabbasca", "rocket-part-from-turbofuel")
-
-data:extend {
-{
-    type = "recipe-category",
-    name = "rabbasca-remote",
-},
-{
-    type = "recipe",
-    name = "rabbasca-remote-call",
-    enabled = true,
-    hidden = true,
-    hidden_in_factoriopedia = true,
-    hide_from_player_crafting = true,
-    energy_required = 5,
-    ingredients = { },
-    results = { {type = "item", name = "rabbasca-remote-call", amount = 1 } },
-    main_product = "rabbasca-remote-call",    
-    category = "rabbasca-remote",
-},
-}

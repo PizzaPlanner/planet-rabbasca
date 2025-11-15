@@ -339,38 +339,6 @@ util.merge{
     shoot_protected = true,
     reload_time = 2 * second
 },
-{
-    type = "item",
-    name = "rabbasca-remote-call",
-    category = "rabbasca-security",
-    order = "b[vault-access-key]",
-    icon = data.raw["virtual-signal"]["signal-map-marker"].icon,
-    flags = { "ignore-spoil-time-modifier" },
-    hidden = true,
-    hidden_in_factoriopedia = true,
-    auto_recycle = false,
-    stack_size = 1,
-    spoil_ticks = 1,
-    spoil_to_trigger_result =
-    {
-      items_per_trigger = 1,
-      trigger =
-      {
-        type = "direct",
-        action_delivery =
-        {
-          type = "instant",
-          source_effects =
-          {
-            {
-              type = "script",
-              effect_id = "rabbasca_on_hack_vault"
-            }
-          }
-        }
-      }
-    }
-},
 }
 
 local fish_action = table.deepcopy(require("__space-age__.prototypes.item-effects").jellynut_speed)
