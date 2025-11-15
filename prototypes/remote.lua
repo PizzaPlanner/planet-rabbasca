@@ -276,17 +276,18 @@ data:extend {
     ingredients = { { type = "item", name = "rabbasca-warp-pylon", amount = 1 }, },
     results = { { type = "item", name = "rabbasca-warp-core", amount = 1 }, },
     category = "recycling",
-    hidden = true,
     hide_from_player_crafting = true,
     energy_required = 30,
     unlock_results = true,
+    subgroup = "rabbasca-security",
+    order = "x[rabbasca-warp-core]-recycling",
     localised_name = {"recipe-name.recycling", {"entity-name.rabbasca-warp-pylon"}},
   },
   {
     type = "recipe",
     name = "rabbasca-warp-pylon",
     enabled = false,
-    category = "parameters", -- can not be crafted, just for unlocking
+    category = "parameters", -- can not be crafted, just for unlocking the icon in menus?
     hidden_in_factoriopedia = true,
     hidden = true,
     hide_from_player_crafting = true,

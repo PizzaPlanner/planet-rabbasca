@@ -40,9 +40,6 @@ assembler.fluid_boxes = {
 assembler.effect_receiver = { base_effect = {
   ["productivity"] = 1, 
 } }
--- assembler.surface_conditions = {
---   { property = "pressure", max = 0.1 }
--- }
 local sprite_data = {   
   line_length = 10,
   width = 320,

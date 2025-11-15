@@ -451,7 +451,7 @@ data:extend {
   name = "rabbasca-document-forging",
   icon = "__Krastorio2Assets__/technologies/advanced-tech-card.png",
   icon_size = 256,
-  prerequisites = { "athletic-science-pack", "space-science-pack", "utility-science-pack", "production-science-pack", "military-science-pack" },
+  prerequisites = { "athletic-science-pack", "space-science-pack", "production-science-pack", "military-science-pack" },
   effects =
   {
     {

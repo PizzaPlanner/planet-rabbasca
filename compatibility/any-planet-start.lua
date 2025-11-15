@@ -14,10 +14,10 @@ utils.add_prerequisites("advanced-oil-processing", { "oil-processing" })
 data:extend {
 {
   type = "technology",
-  name = "rabbasca-vault-early-hacking-efficiency",
+  name = "rabbasca-vault-early-hacking-efficiency-1",
   icon = "__Krastorio2Assets__/technologies/optimization-tech-card.png",
   icon_size = 256,
-  prerequisites = { "chemical-science-pack" },
+  prerequisites = { "logistic-science-pack", "rabbascan-vault-access" },
   effects = {
     {
       type = "change-recipe-productivity",
@@ -35,9 +35,43 @@ data:extend {
       change = 0.25
     }
   },
+  level = 1,
   unit = {
     time = 30,
     count_formula = "200",
+    ingredients = {
+      {"automation-science-pack", 1},
+      {"logistic-science-pack", 1},
+    }
+  }
+},
+{
+  type = "technology",
+  name = "rabbasca-vault-early-hacking-efficiency-2",
+  icon = "__Krastorio2Assets__/technologies/optimization-tech-card.png",
+  icon_size = 256,
+  prerequisites = { "chemical-science-pack", "rabbasca-vault-early-hacking-efficiency-1" },
+  effects = {
+    {
+      type = "change-recipe-productivity",
+      recipe = "vault-protocol-iron-ore",
+      change = 0.25
+    },
+    {
+      type = "change-recipe-productivity",
+      recipe = "vault-protocol-copper-ore",
+      change = 0.25
+    },
+    {
+      type = "change-recipe-productivity",
+      recipe = "vault-protocol-catalysts",
+      change = 0.25
+    }
+  },
+  level = 2,
+  unit = {
+    time = 30,
+    count_formula = "400",
     ingredients = {
       {"automation-science-pack", 1},
       {"logistic-science-pack", 1},
@@ -47,4 +81,4 @@ data:extend {
 },
 }
 
-utils.add_prerequisites("rabbasca-vault-hacking-efficiency", { "rabbasca-vault-early-hacking-efficiency" })
+utils.add_prerequisites("rabbasca-vault-hacking-efficiency", { "rabbasca-vault-early-hacking-efficiency-2" })

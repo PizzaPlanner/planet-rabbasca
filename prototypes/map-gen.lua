@@ -30,7 +30,7 @@ data:extend{
   {
     type = "noise-expression",
     name = "rabbasca_camp_size",
-    expression = "6 + 6 * sqrt(control:rabbasca_vaults:size)"
+    expression = "7 + 6 * sqrt(control:rabbasca_vaults:size)"
   },
   {
     type = "noise-expression",
@@ -86,10 +86,10 @@ data:extend{
   },
   {
     type = "noise-expression",
-    name = "rabbasca_camps",
+    name = "rabbasca_vaults",
     expression = "clamp(max(rabbasca_starting_camp, \z
                       min(rabbasca_starting_mask, aquilo_spot_noise{seed = 9312,\z
-                                    count = 1 + 3 * control:rabbasca_vaults:frequency,\z
+                                    count = 3 + 3 * control:rabbasca_vaults:frequency,\z
                                     skip_offset = 0,\z
                                     region_size = 300 + 500 / control:rabbasca_vaults:size,\z
                                     density = 1,\z
@@ -126,7 +126,7 @@ data:extend{
     name = "rabbasca_down",
     expression = "clamp(max(rabbasca_starting_pool, \z
                       min(rabbasca_starting_mask, aquilo_spot_noise{seed = 9312,\z
-                                    count = 1 + 3 * control:harene:frequency,\z
+                                    count = 1 + 2 * control:harene:frequency,\z
                                     skip_offset = 1,\z
                                     region_size = 300 + 500 / control:harene:frequency,\z
                                     density = 1,\z

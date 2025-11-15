@@ -81,9 +81,9 @@ spawner.result_units = {
     {evolution_factor = 1, spawn_weight = 0.6},
   }},
 { unit = "vault-defender-spawny", spawn_points = {
-    {evolution_factor = 0.7, spawn_weight = 0}, 
-    {evolution_factor = 0.75, spawn_weight = 0.01},
-    {evolution_factor = 1, spawn_weight = 0.05},
+    {evolution_factor = 0.5, spawn_weight = 0}, 
+    {evolution_factor = 0.55, spawn_weight = 0.01},
+    {evolution_factor = 1, spawn_weight = 0.07},
   }},
 }
 spawner.graphics_set =
@@ -173,7 +173,7 @@ local vault_crafter = {
   allow_copy_paste = true,
   module_slots = 2,
   disabled_when_recipe_not_researched = true,
-  autoplace = { probability_expression = "rabbasca_camps > 0.9", force = "neutral" },
+  autoplace = { probability_expression = "rabbasca_vaults > 0.9", force = "neutral" },
   flags = { "placeable-player", "not-rotatable"},
   allowed_effects = { "speed", "consumption", "pollution" },
   energy_source = {
