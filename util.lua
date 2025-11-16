@@ -35,7 +35,8 @@ end
 function create_infused_thing_with_effect(original, needed_core)
     if original.no_ears_upgrade or original.hidden then return nil end 
     local item = data.raw["item"][original.name]
-    if (not item) or item.hidden then return nil end
+    -- TODO: should no subgroup be supported? 
+    if (not item) or item.hidden or not item.subgroup then return nil end
     local new_name = "harene-infused-"..original.name
     local new = table.deepcopy(original)
     local icons = {}
