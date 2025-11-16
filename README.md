@@ -1,3 +1,7 @@
+[![](https://img.shields.io/factorio-mod-portal/v/planet-rabbasca)](https://mods.factorio.com/mod/planet-rabbasca)
+[![](https://img.shields.io/badge/github-repo-blue?logo=github)](https://github.com/PizzaPlanner/planet-rabbasca)
+
+
 ## Rabbasca, the forgotten Moon
 Welcome to Rabbasca, a long forgotten place of powerful but well protected technology. It presents unique challenges and alternative ways to solve problems. 
 
