@@ -170,6 +170,7 @@ function output.update_alertness(surface, position)
   local new_evo = math.min(1, active_vaults_count * settings.global["rabbasca-evolution-per-vault"].value / 100)
   game.forces.rabbascans.set_evolution_factor(new_evo, surface)
   game.forces.enemy.set_evolution_factor(new_evo, surface) -- make sure factoriopedia evolution ui shows correct value
+  storage.hacked_vaults = active_vaults_count
   if not position then return end
   local new_evo_text = "Rabbasca alertness now at: [color=yellow]%.1f%%[/color]"
   for _, player in pairs(game.players) do

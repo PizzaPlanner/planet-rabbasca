@@ -28,9 +28,16 @@ data:extend{
     type = "double-setting",
     name = "rabbasca-evolution-per-vault",
     setting_type = "runtime-global",
-    default_value = 2.5,
+    default_value = 4,
     minimum_value = 0,
     maximum_value = 100,
+    allow_blank = false
+  },
+  {
+    type = "bool-setting",
+    name = "rabbasca-show-alertness-ui",
+    setting_type = "runtime-per-user",
+    default_value = true,
     allow_blank = false
   },
   {

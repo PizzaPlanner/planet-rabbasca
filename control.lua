@@ -1,6 +1,7 @@
 local remote_builder = require("__planet-rabbasca__/scripts/remote-builder")
 local rutil = require("__planet-rabbasca__.util")
 local bunnyhop = require("__planet-rabbasca__/bunnyhop")
+local alert_ui = require("__planet-rabbasca__.scripts.alertness-ui")
 
 local function handle_script_events(event)
   local effect_id = event.effect_id
@@ -16,6 +17,9 @@ local function handle_script_events(event)
     local from = event.source_entity or event.target_entity
     local position = (from and from.position) or event.target_position or event.source_position
     rutil.update_alertness(game.surfaces[event.surface_index], position)
+    for _, player in pairs(game.players) do 
+      alert_ui.update_bar(player) 
+    end
     if from and from.name == "rabbasca-vault-spawner" then
       local vault = from.surface.find_entity("rabbasca-vault-crafter", position)
       rutil.rabbasca_set_vault_active(vault, false)
@@ -62,6 +66,12 @@ script.on_event(defines.events.on_player_controller_changed, function(event)
     if player.gui.screen.bunnyhop_ui then
        bunnyhop.clear_bunnyhop_ui(player)
     end
+    alert_ui.update_bar(player)
+end)
+
+script.on_event(defines.events.on_player_changed_surface, function(event)
+    local player = game.players[event.player_index]
+    alert_ui.update_bar(player)
 end)
 
 script.on_event(defines.events.on_surface_created, function(event)
