@@ -27,7 +27,9 @@ end
 for _, thing in pairs(data.raw["lab"]) do
   if thing.energy_source.type == "electric" then
     local lab = rutil.create_ears_variant(thing, "rabbasca-ears-technology-2")
-    data.raw["lab"][lab].science_pack_drain_rate_percent = math.max(1, (data.raw["lab"][lab].science_pack_drain_rate_percent or 100) * 0.85)
+    if lab then
+      data.raw["lab"][lab].science_pack_drain_rate_percent = math.max(1, (data.raw["lab"][lab].science_pack_drain_rate_percent or 100) * 0.85)
+    end
   end
 end
 for _, thing in pairs(data.raw["beacon"]) do
