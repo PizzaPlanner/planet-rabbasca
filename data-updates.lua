@@ -1,9 +1,6 @@
 data.raw["item"]["beta-carotene-barrel"].fuel_category = "carotene"
 data.raw["item"]["beta-carotene-barrel"].fuel_value = "27.35MJ"
 
-data.raw["item"]["harene-gas-barrel"].spoil_ticks = 4 * minute
-data.raw["item"]["harene-gas-barrel"].spoil_result = "barrel"
-
 for _, lab in pairs(data.raw["lab"]) do
   for _, input in pairs(lab.inputs) do
     if input == "automation-science-pack" then

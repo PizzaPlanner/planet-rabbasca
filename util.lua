@@ -52,7 +52,7 @@ function create_infused_thing_with_effect(original, needed_core)
     new_item.hidden_in_factoriopedia = true
     new_item.icons = icons
     new_item.place_result = new_name
-    new_item.subgroup = new_item.subgroup .. "-with-ears-core" 
+    new_item.subgroup = (new_item.subgroup or "unknown") .. "-with-ears-core" 
     new_item.factoriopedia_alternative = original.name
 
     new.name = new_name
