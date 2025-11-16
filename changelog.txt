@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.5.4
+Date: 2025-11-16
+  Bugfixes:
+    - Fixed planet discovery always requires planet discovery gleba, even when parent planet is not gleba
+    - Fixed potential crash from custom rocket silos
+  Changes:
+    - Slightly reduced robot energy usage
+---------------------------------------------------------------------------------------------------
 Version: 0.5.3
 Date: 2025-11-16
   Bugfixes:

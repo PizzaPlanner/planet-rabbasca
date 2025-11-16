@@ -77,7 +77,7 @@ local function try_build_ghost(entity)
         if not pod then return true end -- all hatches busy, try again later
         local chest = builder.get_inventory(defines.inventory.chest)
         local removed = chest.remove({name = name, count = count, quality = quality})
-        local inserted = pod.get_inventory(defines.inventory.cargo_unit).insert({name = item_with_quality.name, quality = item_with_quality.quality, count = removed })
+        local inserted = pod.get_inventory(defines.inventory.cargo_unit).insert({name = name, quality = quality, count = removed })
         if inserted ~= removed then
             chest.insert({name = name, count = removed - inserted, quality = quality})
         end
@@ -93,7 +93,7 @@ local function try_build_ghost(entity)
         }
         rendering.draw_sprite{
             sprite = "item.rabbasca-warp-sequence",
-            target = {entity = entity, offset = { 0, -0.5 } },          -- attach to ghost
+            target = { entity = entity, offset = { 0, -0.5 } },
             surface = entity.surface,
             x_scale = 0.75,
             y_scale = 0.75,

@@ -23,7 +23,7 @@ data:extend {
     name = "planet-discovery-rabbasca",
     icons = PlanetsLib.technology_icon_moon("__rabbasca-assets__/graphics/recolor/technologies/rabbasca-big.png", 256),
     icon_size = 64,
-    prerequisites = { "planet-discovery-gleba", "gun-turret", "power-armor" },
+    prerequisites = { "gun-turret", "power-armor" }, -- and planet discovery from parent in data-updates
     effects = {{
         type = "unlock-space-location",
         space_location = "rabbasca",

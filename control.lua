@@ -68,7 +68,7 @@ script.on_event(defines.events.on_surface_created, function(event)
 end)
 
 local function give_starter_items()
-  if (not settings.startup["aps-planet"]) or settings.startup["aps-planet"].value ~= "rabbasca" then return end
+  if not rutil.rabbasca.is_aps_planet then return end
   if not remote.interfaces["freeplay"] then return end
   remote.call("freeplay", "set_ship_items", 
   {

@@ -38,6 +38,8 @@ end
 for _, thing in pairs(data.raw["rocket-silo"]) do
   if thing.rocket_entity == "rocket-silo-rocket" then
     local silo = rutil.create_ears_variant(thing, "rabbasca-ears-technology-3")
-    data.raw["rocket-silo"][silo].rocket_entity = "rabbasca-rocket-silo-rocket"
+    if silo then
+      data.raw["rocket-silo"][silo].rocket_entity = "rabbasca-rocket-silo-rocket"
+    end
   end
 end

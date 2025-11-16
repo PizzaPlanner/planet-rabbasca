@@ -1,4 +1,9 @@
-local output = {}
+local output = {
+  rabbasca = {
+    is_aps_planet = settings.startup["aps-planet"] and settings.startup["aps-planet"].value == "rabbasca",
+    parent = settings.startup["rabbasca-orbits"].value
+  }
+}
 
 function output.restrict_to_harene_pool(bbox)
     return 
