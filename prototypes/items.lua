@@ -297,6 +297,11 @@ util.merge{
     ammo_type = {
       action = {
         action_delivery = {
+          source_effects = {
+            entity_name = "explosion-gunshot",
+            only_when_visible = true,
+            type = "create-explosion",
+          },
           target_effects = {
             entity_name = "rabbasca-capture-robot",
             show_in_tooltip = true,
@@ -323,6 +328,11 @@ util.merge{
     ammo_type = {
       action = {
         action_delivery = {
+          source_effects = {
+            entity_name = "explosion-gunshot",
+            only_when_visible = true,
+            type = "create-explosion",
+          },
           target_effects = {
             entity_name = "rabbasca-capture-robot-2",
             show_in_tooltip = true,

@@ -17,7 +17,6 @@ local function handle_script_events(event)
     local position = (from and from.position) or event.target_position or event.source_position
     rutil.update_alertness(game.surfaces[event.surface_index], position)
     if from and from.name == "rabbasca-vault-spawner" then
-      from.force = game.forces.rabbascans
       local vault = from.surface.find_entity("rabbasca-vault-crafter", position)
       rutil.rabbasca_set_vault_active(vault, false)
     end
@@ -25,6 +24,10 @@ local function handle_script_events(event)
       local vault = from.surface.find_entity("rabbasca-vault-crafter", position)
       rutil.rabbasca_set_vault_active(vault, true)
     end
+  elseif effect_id == "rabbasca_init_spawner" then
+    local from = event.source_entity or event.target_entity
+    if not from then return end
+    from.force = game.forces.rabbascans
   elseif effect_id == "rabbasca_init_receiver" then
     local from = event.source_entity or event.target_entity
     if from then 

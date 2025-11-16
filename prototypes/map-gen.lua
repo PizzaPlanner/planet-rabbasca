@@ -98,16 +98,6 @@ data:extend{
   },
   {
     type = "noise-expression",
-    name = "rabbasca_harene_pools_deep",
-    expression = "(rabbasca_down > 0.8) * (3 + rabbasca_harene_cracks * 0.5)"
-  },
-  {
-    type = "noise-expression",
-    name = "rabbasca_harene_pools_center",
-    expression = "5 * (rabbasca_down > 0.93)"
-  },
-  {
-    type = "noise-expression",
     name = "rabbasca_harene_cracks",
     expression = "multioctave_noise{x = x, y = y, persistence = 0.21, seed0 = map_seed, input_scale = 24 / rabbasca_pool_size, seed1 = 'purple', octaves = 4 }"
   },
@@ -115,11 +105,6 @@ data:extend{
     type = "noise-expression",
     name = "rabbasca_harene_richness",
     expression = "(50000 + 2000 * basis_noise{x = x, y = y, seed0 = map_seed, seed1 = 'feedme'}) * control:harene:richness"
-  },
-  {
-    type = "noise-expression",
-    name = "rabbasca_crater",
-    expression = "rabbasca_down > 0.3"
   },
   {
     type = "noise-expression",
@@ -133,11 +118,6 @@ data:extend{
                                     radius = rabbasca_pool_size,\z
                                     favorability = 3})), 0, 1)",
   },
-   {
-    type = "noise-expression",
-    name = "rabbasca_up_variance",
-    expression = "basis_noise{x = x, y = y, seed0 = map_seed, seed1 = 817231}",
-  },
   {
     type = "noise-expression",
     name = "rabbasca_elevation",
@@ -146,15 +126,7 @@ data:extend{
     local_expressions = {
       down_mountain = "min(rabbasca_down, 0.83 - rabbasca_down) * 2.3",
       a = "multioctave_noise{x = x, y = y, persistence = 0.3, seed0 = map_seed, seed1 = 0, input_scale = 3, octaves = 5 }",
-      b  = "multioctave_noise{x = x, y = y, persistence = 1.4, seed0 = map_seed, input_scale = 1/2, seed1 = 3, octaves = 7 }",
-      voronoi_large = "voronoi_facet_noise{   x = x + aquilo_wobble_x * 2,\z
-                                        y = y + aquilo_wobble_y * 2,\z
-                                        seed0 = map_seed,\z
-                                        seed1 = 'aquilo-cracks',\z
-                                        grid_size = 24,\z
-                                        distance_type = 'euclidean',\z
-                                        jitter = 1}",
-                          
+      b  = "multioctave_noise{x = x, y = y, persistence = 1.4, seed0 = map_seed, input_scale = 1/2, seed1 = 3, octaves = 7 }",                          
     }
   },
 }

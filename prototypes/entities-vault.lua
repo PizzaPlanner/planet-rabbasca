@@ -40,23 +40,32 @@ spawner.autoplace = nil -- IMPORTANT: prevents spawning on nauvis
 spawner.spawn_decoration = {}
 spawner.damaged_trigger_effect = nil
 spawner.absorptions_per_second = { }
-spawner.flags = { "placeable-player", "not-deconstructable", "not-repairable", "not-rotatable", "player-creation", "placeable-off-grid" }
+spawner.flags = { "placeable-enemy", "not-deconstructable", "not-repairable", "not-rotatable", "player-creation", "placeable-off-grid" }
 spawner.created_effect = {
   type = "direct",
   action_delivery = {
-    type = "delayed",
-    delayed_trigger = "rabbasca-calculate-evolution"
+    {
+      type = "delayed",
+      delayed_trigger = "rabbasca-calculate-evolution"
+    },
+    {
+      type = "instant",
+      source_effects = {
+        type = "script",
+        effect_id = "rabbasca_init_spawner"
+      }
+    }
   }
 }
 spawner.resistances = {
   { type = "physical", percent = 95 },
-  { type = "explosion", percent = 90 },
+  { type = "explosion", percent = 95 },
   { type = "fire", percent = 90 },
   { type = "poison", percent = 100 },
   { type = "acid", percent = 100 },
-  { type = "laser", percent = 99 },
+  { type = "laser", percent = 70 },
   { type = "electric", percent = 87 },
-  { type = "impact", percent = 98 },
+  { type = "impact", percent = 90 },
 }
 spawner.result_units = {
 { unit = "vault-defender-1", spawn_points = {
@@ -129,6 +138,13 @@ local access_console = util.merge{
     cant_insert_at_source_message_key = "inventory-restriction.not-a-vault-key",
   }
 }
+access_console.created_effect = {
+  type = "direct",
+  action_delivery = {
+    type = "delayed",
+    delayed_trigger = "rabbasca-calculate-evolution"
+  }
+}
 access_console.flags = { "placeable-player", "not-deconstructable", "not-repairable",  "not-rotatable", "player-creation", "placeable-off-grid" }
 access_console.circuit_connector = nil
 access_console.circuit_connector_flipped = nil
@@ -190,6 +206,16 @@ local vault_crafter = {
   circuit_connector = data.raw["assembling-machine"]["foundry"].circuit_connector,
   icon_draw_specification = data.raw["assembling-machine"]["foundry"].icon_draw_specification,
   icons_positioning = data.raw["assembling-machine"]["foundry"].icons_positioning,
+  resistances = {
+    { type = "physical", percent = 80 },
+    { type = "explosion", percent = 85 },
+    { type = "fire", percent = 90 },
+    { type = "poison", percent = 100 },
+    { type = "acid", percent = 100 },
+    { type = "laser", percent = 70 },
+    { type = "electric", percent = 87 },
+    { type = "impact", percent = 90 },
+  },
   graphics_set = {
     animation = {
         filename = "__Krastorio2Assets__/buildings/stabilizer-charging-station/stabilizer-charging-station.png",

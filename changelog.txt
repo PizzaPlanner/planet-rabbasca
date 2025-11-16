@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.5.7
+Date: 2025-11-16
+  Bugfixes:
+    - Fixed enemies sometimes spawning with the wrong force
+  Balancing:
+    - Vaults now have damage resistances
+    - Small tweaks to vault spawner resistances
+---------------------------------------------------------------------------------------------------
 Version: 0.5.6
 Date: 2025-11-16
   Changes:
