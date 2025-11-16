@@ -75,24 +75,24 @@ spawner.result_units = {
     {evolution_factor = 0.3, spawn_weight = 0},
   }},
 { unit = "vault-defender-2", spawn_points = {
-    {evolution_factor = 0.05, spawn_weight = 0}, 
-    {evolution_factor = 0.1, spawn_weight = 0.5},
-    {evolution_factor = 0.25, spawn_weight = 0.2},
+    {evolution_factor = 0.1, spawn_weight = 0}, 
+    {evolution_factor = 0.15, spawn_weight = 0.5},
+    {evolution_factor = 0.35, spawn_weight = 0.2},
     {evolution_factor = 0.5, spawn_weight = 0.1},
   }},
 { unit = "vault-defender-heavy", spawn_points = {
-    {evolution_factor = 0.1, spawn_weight = 0}, 
-    {evolution_factor = 0.25, spawn_weight = 0.6},
+    {evolution_factor = 0.25, spawn_weight = 0}, 
+    {evolution_factor = 0.3, spawn_weight = 0.6},
     {evolution_factor = 1, spawn_weight = 0.4},
   }},
 { unit = "vault-defender-charged", spawn_points = {
-    {evolution_factor = 0.15, spawn_weight = 0}, 
-    {evolution_factor = 0.4, spawn_weight = 0.4},
+    {evolution_factor = 0.4, spawn_weight = 0}, 
+    {evolution_factor = 0.45, spawn_weight = 0.4},
     {evolution_factor = 1, spawn_weight = 0.6},
   }},
 { unit = "vault-defender-spawny", spawn_points = {
-    {evolution_factor = 0.5, spawn_weight = 0}, 
-    {evolution_factor = 0.55, spawn_weight = 0.01},
+    {evolution_factor = 0.6, spawn_weight = 0}, 
+    {evolution_factor = 0.65, spawn_weight = 0.01},
     {evolution_factor = 1, spawn_weight = 0.07},
   }},
 }

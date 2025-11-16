@@ -83,7 +83,7 @@ data:extend {
   name = "rabbasca-vault-hacking-efficiency",
   icon = "__Krastorio2Assets__/technologies/optimization-tech-card.png",
   icon_size = 256,
-  prerequisites = { "athletic-science-pack", "production-science-pack" },
+  prerequisites = { "athletic-science-pack", "rabbasca-document-forging-1" },
   effects = {
     {
       type = "change-recipe-productivity",
@@ -114,6 +114,7 @@ data:extend {
       {"automation-science-pack", 1},
       {"logistic-science-pack", 1},
       {"chemical-science-pack", 1},
+      {"military-science-pack", 1},
       {"production-science-pack", 1},
       {"athletic-science-pack", 1},
     }
@@ -429,7 +430,7 @@ data:extend {
   name = "interplanetary-construction",
   icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon-big.png",
   icon_size = 640,
-  prerequisites = { "rabbasca-ears-technology-1", "rabbasca-document-forging" },
+  prerequisites = { "rabbasca-ears-technology-1", "rabbasca-document-forging-2" },
   effects =
   {
     {
@@ -452,16 +453,39 @@ data:extend {
 },
 {
   type = "technology",
-  name = "rabbasca-document-forging",
+  name = "rabbasca-document-forging-1",
   icon = "__Krastorio2Assets__/technologies/advanced-tech-card.png",
   icon_size = 256,
-  prerequisites = { "athletic-science-pack", "space-science-pack", "production-science-pack", "military-science-pack" },
+  prerequisites = { "athletic-science-pack", "production-science-pack" },
+  level = 1,
   effects =
   {
     {
       type = "unlock-recipe",
       recipe = "vault-access-key",
     },
+  },
+  unit = {
+    count = 200,
+    time = 30,
+    ingredients = {
+      {"automation-science-pack", 1},
+      {"logistic-science-pack", 1},
+      {"chemical-science-pack", 1},
+      {"production-science-pack", 1},
+      {"athletic-science-pack", 1},
+    }
+  }
+},
+{
+  type = "technology",
+  name = "rabbasca-document-forging-2",
+  icon = "__Krastorio2Assets__/technologies/advanced-tech-card.png",
+  icon_size = 256,
+  prerequisites = { "rabbasca-document-forging-1", "space-science-pack", "military-science-pack" },
+  level = 2,
+  effects =
+  {
     {
       type = "unlock-recipe",
       recipe = "vault-security-key",

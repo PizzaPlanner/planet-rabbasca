@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.6.0
+Date: 2025-11-16
+  Changes:
+    - Split document forging into two techs, so that Access Key recipe does not require military tech
+    - Added small UI indicator for current alertness level. Can be toggled in mod settings
+  Bugfixes:
+    - Fixed Beta Carotene titanium barrel (Pelagos) not having an energy value
+  Balancing:
+    - Adjusted enemy spawning curves to spread
+    - Changed default alertness per vault to 4%
+---------------------------------------------------------------------------------------------------
 Version: 0.5.7
 Date: 2025-11-16
   Bugfixes:
