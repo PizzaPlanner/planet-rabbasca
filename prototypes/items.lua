@@ -9,6 +9,7 @@ data:extend {
 {
     type = "item",
     icon = "__rabbasca-assets__/graphics/by-hurricane/gravity-assembler-icon.png",
+    icon_size = 64,
     name = "machining-assembler",
     place_result = "machining-assembler",
     stack_size = 5,
@@ -19,6 +20,7 @@ data:extend {
 {
     type = "item",
     icon = "__rabbasca-assets__/graphics/recolor/icons/haronite.png",
+    icon_size = 64,
     name = "haronite",
     stack_size = 50,
     weight = 20*kg,
@@ -30,6 +32,7 @@ data:extend {
 {
     type = "item",
     icon = "__Krastorio2Assets__/icons/items/imersium-plate.png",
+    icon_size = 64,
     name = "haronite-plate",
     stack_size = 50,
     subgroup = "rabbasca-processes",
@@ -38,6 +41,7 @@ data:extend {
 {
     type = "item",
     icon = "__rabbasca-assets__/graphics/recolor/icons/harenic-stabilizer.png",
+    icon_size = 64,
     name = "harenic-stabilizer",
     stack_size = 50,
     subgroup = "rabbasca-processes",
@@ -46,6 +50,7 @@ data:extend {
 {
     type = "item",
     icon = "__rabbasca-assets__/graphics/recolor/icons/harene-ears-core.png",
+    icon_size = 64,
     name = "harene-ears-core",
     stack_size = 5,
     weight = 50 * kg,
@@ -70,6 +75,7 @@ data:extend {
 {
     type = "item",
     icon = "__base__/graphics/icons/steam-engine.png",
+    icon_size = 64,
     name = "bunnyhop-engine-equipment",
     stack_size = 1,
     group = "combat",
@@ -97,6 +103,7 @@ util.merge {
 {
     type = "capsule",
     icon = "__base__/graphics/icons/steam-engine.png",
+    icon_size = 64,
     name = "bunnyhop-engine",
     flags = {"only-in-cursor", "not-stackable", "spawnable"},
     auto_recycle = false,
@@ -140,6 +147,7 @@ util.merge {
     {
       name = "rabbasca-turbofish",
       icon = "__rabbasca-assets__/graphics/recolor/icons/turbofish.png",
+      icon_size = 64,
       spoil_ticks = 3 * minute,
       spoil_result = "protein-powder",
       subgroup = "rabbasca-processes",
@@ -151,6 +159,7 @@ util.merge {
     {
       name = "rabbasca-protein-shake",
       icon = "__rabbasca-assets__/graphics/recolor/icons/protein-shake.png",
+      icon_size = 64,
       spoil_ticks = 0,
       spoil_result = nil,
       weight = 20 * kg,
@@ -164,6 +173,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
 {
   name = "rabbasca-turbofuel",
   icon = "__rabbasca-assets__/graphics/recolor/icons/turbofuel.png",
+  icon_size = 64,
   fuel_value = "220MJ",
   fuel_top_speed_multiplier = 2.142,
   subgroup = "rabbasca-processes",
@@ -172,6 +182,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
 {
     type = "item",
     icon = "__rabbasca-assets__/graphics/recolor/icons/carotenoid.png",
+    icon_size = 64,
     name = "carotenoid-ore",
     stack_size = 5,
     weight = 100 * kg,
@@ -183,8 +194,8 @@ util.merge { data.raw["item"]["rocket-fuel"],
 {
     type = "item",
     icons = {
-      { icon = "__rabbasca-assets__/graphics/recolor/icons/harene-gas.png" },
-      { icon = "__space-age__/graphics/icons/nutrients.png", scale = 0.3,  }
+      { icon = "__rabbasca-assets__/graphics/recolor/icons/harene-gas.png", icon_size = 64 },
+      { icon = "__space-age__/graphics/icons/nutrients.png", scale = 0.3, icon_size = 64  }
     },
     name = "protein-powder",
     stack_size = 200,
@@ -194,6 +205,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
 {
     type = "item",
     icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon.png",
+    icon_size = 64,
     name = "rabbasca-warp-core",
     stack_size = 5,
     weight = 100*kg,
@@ -204,6 +216,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
   type = "fluid",
     name = "harene",
     icon = "__rabbasca-assets__/graphics/recolor/icons/harene.png",
+    icon_size = 64,
     subgroup = "fluid",
     base_color = {r=0.65, g=0.31, b=0.92},
     flow_color = {r=0.65, g=0.31, b=0.92},
@@ -216,6 +229,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
     type = "fluid",
     name = "harene-gas",
     icon = "__rabbasca-assets__/graphics/recolor/icons/harene-gas.png",
+    icon_size = 64,
     subgroup = "fluid",
     base_color = {r=0.65, g=0.31, b=0.92},
     flow_color = {r=0.65, g=0.31, b=0.92},
@@ -228,6 +242,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
     type = "fluid",
     name = "beta-carotene",
     icon = "__rabbasca-assets__/graphics/recolor/icons/beta-carotene.png",
+    icon_size = 64,
     subgroup = "fluid",
     base_color = { 0.8, 0.42, 0.02 },
     flow_color = { 0.8, 0.42, 0.02 },
@@ -240,6 +255,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
     type = "fluid",
     name = "energetic-residue",
     icon = "__rabbasca-assets__/graphics/recolor/icons/energetic-residue.png",
+    icon_size = 64,
     subgroup = "fluid",
     base_color = {0, 0.14, 0.53},
     flow_color = {0, 0.14, 0.53},
@@ -251,6 +267,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
 util.merge { data.raw["tool"]["automation-science-pack"], {
   name = "athletic-science-pack",
   icon = "__rabbasca-assets__/graphics/recolor/icons/athletic-science-pack.png",
+  icon_size = 64,
   order = "j-r[rabbasca]",
   weight = 0.1 * kg,
   stack_size = 500
@@ -260,7 +277,7 @@ util.merge{
   {
     type = "item",
     name = "rabbasca-energetic-concrete",
-    icons = { { icon = "__base__/graphics/icons/concrete.png", tint = {r=0.65, g=0.31, b=0.92} } },
+    icons = { { icon = "__base__/graphics/icons/concrete.png", tint = {r=0.65, g=0.31, b=0.92}, icon_size = 64 } },
     stack_size = 50,
     place_as_tile =
     {
@@ -275,6 +292,7 @@ util.merge{
     subgroup = "rabbasca-security",
     order = "a[vault-access-key]",
     icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png",
+    icon_size = 64,
     stack_size = 20,        
     ammo_type = {
       action = {
@@ -297,6 +315,7 @@ util.merge{
 {
     type = "ammo",
     icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png",
+    icon_size = 64,
     name = "vault-security-key",
     subgroup = "rabbasca-security",
     order = "a[vault-security-key]",
