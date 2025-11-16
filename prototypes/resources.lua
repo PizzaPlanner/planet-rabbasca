@@ -61,7 +61,7 @@ battle_scrap.autoplace = {
 local harene_resource = {
   type = "resource",
   name = "harene-vent",
-  icons = {{ icon = "__space-age__/graphics/icons/fluorine-vent.png", tint = color }},
+  icons = {{ icon = "__space-age__/graphics/icons/fluorine-vent.png", icon_size = 64, tint = color }},
   flags = {"placeable-neutral"},
   category = "basic-fluid",
   order="a-b-f",

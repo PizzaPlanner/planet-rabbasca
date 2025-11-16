@@ -388,8 +388,8 @@ data:extend {
     type = "technology",
     name = "harene-synthesis",
     icons = {
-      { icon = "__rabbasca-assets__/graphics/recolor/icons/harene.png", scale = 0.8 },
-      { icon = data.raw["item"]["haronite-plate"].icon, shift = {12, 12}, scale = 0.5 },
+      { icon = "__rabbasca-assets__/graphics/recolor/icons/harene.png", icon_size = 64, scale = 0.8 },
+      { icon = data.raw["item"]["haronite-plate"].icon, icon_size = 64, shift = {12, 12}, scale = 0.5 },
     },
     icon_size = 256,
     prerequisites = { "bunnyhop-engine-3", "metallurgic-science-pack", "cryogenic-science-pack" },

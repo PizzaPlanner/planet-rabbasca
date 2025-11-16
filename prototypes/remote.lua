@@ -11,8 +11,8 @@ local hatch = {
   offset = {1.2, -2.7}, 
 }
 local warp_icons = {
-      { icon = "__rabbasca-assets__/graphics/recolor/icons/item-warp-slot.png" },
-      { icon = "__rabbasca-assets__/graphics/icons/warp.png", scale = 0.25, shift = {0, -3} }
+      { icon = "__rabbasca-assets__/graphics/recolor/icons/item-warp-slot.png", icon_size = 64 },
+      { icon = "__rabbasca-assets__/graphics/icons/warp.png", icon_size = 64, scale = 0.25, shift = {0, -3} }
 }
 
 local pad = util.merge {

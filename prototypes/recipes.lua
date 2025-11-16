@@ -150,8 +150,8 @@ data:extend {
         },
         allow_productivity = true,
         icons = {
-            { icon = "__base__/graphics/icons/solid-fuel.png", scale = 0.8 },
-            { icon = data.raw["fluid"]["energetic-residue"].icon, scale = 0.35, shift = { -8, -8 } }
+            { icon = "__base__/graphics/icons/solid-fuel.png", icon_size = 64, scale = 0.8 },
+            { icon = data.raw["fluid"]["energetic-residue"].icon, icon_size = 64, scale = 0.35, shift = { -8, -8 } }
         },
         subgroup = "fluid-recipes",
         enabled = false,

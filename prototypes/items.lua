@@ -56,9 +56,9 @@ data:extend {
 {
     type = "item",
     icons = {
-      { icon = "__rabbasca-assets__/graphics/recolor/icons/harene-ears-core.png", scale = 0.5, shift = { -8, 0 } },
-      { icon = "__rabbasca-assets__/graphics/recolor/icons/harene-ears-core.png", scale = 0.5 },
-      { icon = "__rabbasca-assets__/graphics/recolor/icons/harene-ears-core.png", scale = 0.5, shift = { 8, 0 } },
+      { icon = "__rabbasca-assets__/graphics/recolor/icons/harene-ears-core.png", icon_size = 64, scale = 0.5, shift = { -8, 0 } },
+      { icon = "__rabbasca-assets__/graphics/recolor/icons/harene-ears-core.png", icon_size = 64, scale = 0.5 },
+      { icon = "__rabbasca-assets__/graphics/recolor/icons/harene-ears-core.png", icon_size = 64, scale = 0.5, shift = { 8, 0 } },
     },
     name = "harene-ears-subcore",
     stack_size = 50,

@@ -52,7 +52,8 @@ function create_infused_thing_with_effect(original, needed_core)
             table.insert(icons, icon)
         end
     end
-    table.insert(icons, { icon = data.raw["item"]["harene-ears-core"].icon, scale = 0.3, shift = {0, 12} })
+    local ears_item = data.raw["item"]["harene-ears-core"]
+    table.insert(icons, { icon = ears_item.icon, icon_size = ears_item.icon_size, scale = 0.3, shift = {0, 12} })
     local new_item = table.deepcopy(item)
     new_item.name = new_name
     new_item.hidden_in_factoriopedia = true
