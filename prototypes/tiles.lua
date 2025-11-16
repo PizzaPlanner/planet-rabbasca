@@ -39,7 +39,7 @@ util.merge {
       collision_mask = { layers = { harene = true } },
       -- material_background = { tint  = {60,55,97}, },
       minable = { result = "rabbasca-energetic-concrete" },
-      variants = { material_background = { picture = "__planet-rabbasca__/graphics/recolor/icons/concrete.png", } },
+      variants = { material_background = { picture = "__rabbasca-assets__/graphics/recolor/icons/concrete.png", } },
       frozen_variant = "rabbasca-energetic-concrete",
       check_collision_with_entities = true
     }

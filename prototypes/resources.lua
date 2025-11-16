@@ -7,7 +7,7 @@ local carrot_ore = util.merge {
     minimum = 50,
     normal = 100,
     map_color = { 0.82, 0.52, 0.215 },
-    stages = { sheet = { filename = "__planet-rabbasca__/graphics/recolor/icons/carotenoid-ore.png" } },
+    stages = { sheet = { filename = "__rabbasca-assets__/graphics/recolor/icons/carotenoid-ore.png" } },
     resource_patch_search_radius = 32,
   }
 }

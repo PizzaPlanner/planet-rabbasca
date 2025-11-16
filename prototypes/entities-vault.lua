@@ -229,7 +229,7 @@ local pylon = util.merge{
   table.deepcopy(spawner), 
 {
   name = "rabbasca-vault-warp-spawner",
-  icon = "__planet-rabbasca__/graphics/by-hurricane/conduit-icon.png",
+  icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon.png",
   max_health = 1336, -- will be much higher due to evolution
   healing_per_tick = -27 / second,
   spawning_cooldown = {4 * second, 2.5 * second},
@@ -274,7 +274,7 @@ pylon.graphics_set =
     layers =
     {
       {
-          filename = "__planet-rabbasca__/graphics/by-hurricane/conduit-animation.png",
+          filename = "__rabbasca-assets__/graphics/by-hurricane/conduit-animation.png",
           frame_count = 60,
           line_length = 10,
           width = 200,
@@ -284,7 +284,7 @@ pylon.graphics_set =
           shift = {0, -0.5},
       },
       {
-          filename = "__planet-rabbasca__/graphics/by-hurricane/conduit-hr-shadow.png",
+          filename = "__rabbasca-assets__/graphics/by-hurricane/conduit-hr-shadow.png",
           repeat_count = 60,
           width = 600,
           height = 400,
@@ -293,7 +293,7 @@ pylon.graphics_set =
           shift = {0, -0.5},
       },
       {
-          filename = "__planet-rabbasca__/graphics/by-hurricane/conduit-emission.png",
+          filename = "__rabbasca-assets__/graphics/by-hurricane/conduit-emission.png",
           frame_count = 60,
           line_length = 10,
           width = 200,

@@ -11,15 +11,15 @@ local hatch = {
   offset = {1.2, -2.7}, 
 }
 local warp_icons = {
-      { icon = "__planet-rabbasca__/graphics/recolor/icons/item-warp-slot.png" },
-      { icon = "__planet-rabbasca__/graphics/icons/warp.png", scale = 0.25, shift = {0, -3} }
+      { icon = "__rabbasca-assets__/graphics/recolor/icons/item-warp-slot.png" },
+      { icon = "__rabbasca-assets__/graphics/icons/warp.png", scale = 0.25, shift = {0, -3} }
 }
 
 local pad = util.merge {
     data.raw["cargo-landing-pad"]["cargo-landing-pad"],
     {
         name = "rabbasca-warp-cargo-pad",
-        icon = "__planet-rabbasca__/graphics/by-hurricane/research-center-icon.png",
+        icon = "__rabbasca-assets__/graphics/by-hurricane/research-center-icon.png",
         minable = { result = "rabbasca-warp-cargo-pad", mining_time = 4 },
         placeable_by = { item = "rabbasca-warp-cargo-pad", count = 1 },
         inventory_size = 20,
@@ -36,7 +36,7 @@ pad.cargo_station_parameters = {
         covered_hatches = { 0, 1, 2, 3, 4, 5, 6, 7, 8 },
         hatch_graphics_front = {
             layers = {{
-                filename = "__planet-rabbasca__/graphics/by-hurricane/research-center-animation.png",
+                filename = "__rabbasca-assets__/graphics/by-hurricane/research-center-animation.png",
                 frame_count = 8 * 10,
                 line_length = 10,
                 width = 5900 / 10,
@@ -56,7 +56,7 @@ data:extend {
   {
     type = "assembling-machine",
     name = "rabbasca-warp-pylon",
-    icon = "__planet-rabbasca__/graphics/by-hurricane/conduit-icon.png",
+    icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon.png",
     -- fixed_recipe = "rabbasca-warp-sequence",
     flags = { "not-rotatable", "placeable-player", "player-creation" },
     crafting_categories = { "rabbasca-remote" },
@@ -94,7 +94,7 @@ data:extend {
     graphics_set = {
       working_visualisations = {{
         animation = {
-              filename = "__planet-rabbasca__/graphics/by-hurricane/conduit-emission.png",
+              filename = "__rabbasca-assets__/graphics/by-hurricane/conduit-emission.png",
               frame_count = 60,
               line_length = 10,
               width = 200,
@@ -111,7 +111,7 @@ data:extend {
       idle_animation = {
         layers = {
           {
-            filename = "__planet-rabbasca__/graphics/by-hurricane/conduit-animation.png",
+            filename = "__rabbasca-assets__/graphics/by-hurricane/conduit-animation.png",
             frame_count = 60,
             line_length = 10,
             width = 200,
@@ -121,7 +121,7 @@ data:extend {
             shift = {0, -0.5},
           },
           {
-              filename = "__planet-rabbasca__/graphics/by-hurricane/conduit-hr-shadow.png",
+              filename = "__rabbasca-assets__/graphics/by-hurricane/conduit-hr-shadow.png",
               repeat_count = 60,
               width = 600,
               height = 400,
@@ -148,7 +148,7 @@ data:extend {
   {
     name = "rabbasca-warp-container",
     type = "temporary-container",
-    icon = "__planet-rabbasca__/graphics/recolor/icons/item-warp-slot.png",
+    icon = "__rabbasca-assets__/graphics/recolor/icons/item-warp-slot.png",
     hidden = true,
     flags = { "placeable-off-grid", "not-in-kill-statistics", "placeable-neutral" },
     collision_mask = { layers = { } },
@@ -164,7 +164,7 @@ data:extend {
   {
     type = "item",
     name = "rabbasca-warp-cargo-pad",
-    icon = "__planet-rabbasca__/graphics/by-hurricane/research-center-icon.png",
+    icon = "__rabbasca-assets__/graphics/by-hurricane/research-center-icon.png",
     stack_size = 5,
     place_result = "rabbasca-warp-cargo-pad",
     subgroup = "space-interactors",
@@ -173,7 +173,7 @@ data:extend {
   {
       type = "item",
       name = "rabbasca-warp-pylon",
-      icon = "__planet-rabbasca__/graphics/by-hurricane/conduit-icon.png",
+      icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon.png",
       stack_size = 5,
       place_result = "rabbasca-warp-pylon",
       subgroup = "space-interactors",
@@ -236,7 +236,7 @@ data:extend {
 {
     type = "recipe",
     name = "rabbasca-warp-sequence",
-    icon = "__planet-rabbasca__/graphics/icons/warp.png",
+    icon = "__rabbasca-assets__/graphics/icons/warp.png",
     enabled = true,
     hidden = true,
     hidden_in_factoriopedia = true,

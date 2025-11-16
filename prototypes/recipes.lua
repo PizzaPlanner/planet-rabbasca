@@ -96,6 +96,7 @@ data:extend {
             { type = "fluid", name = "harene", amount = 15 },
         },
         main_product = "harene",
+        hide_from_player_crafting = true,
         category = "cryogenics",
     },
     {

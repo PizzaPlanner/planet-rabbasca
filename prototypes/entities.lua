@@ -49,26 +49,26 @@ local sprite_data = {
 }
 
 assembler.graphics_set = {
-  frozen_patch = util.merge {{ filename = "__planet-rabbasca__/graphics/by-hurricane/gravity-assembler-frozen.png" }, sprite_data },
+  frozen_patch = util.merge {{ filename = "__rabbasca-assets__/graphics/by-hurricane/gravity-assembler-frozen.png" }, sprite_data },
   working_visualisations = {
     {
       fadeout = true, 
       animation = util.merge { sprite_data, 
-      { filename = "__planet-rabbasca__/graphics/by-hurricane/gravity-assembler-emission1.png", draw_as_glow = true, blend_mode = "additive" }},
+      { filename = "__rabbasca-assets__/graphics/by-hurricane/gravity-assembler-emission1.png", draw_as_glow = true, blend_mode = "additive" }},
     },
     {
       fadeout = true, 
       animation = util.merge { sprite_data, 
-      { filename = "__planet-rabbasca__/graphics/by-hurricane/gravity-assembler-emission2.png", draw_as_glow = true, blend_mode = "additive" }},
+      { filename = "__rabbasca-assets__/graphics/by-hurricane/gravity-assembler-emission2.png", draw_as_glow = true, blend_mode = "additive" }},
     },
     {
       fadeout = true, 
       animation = util.merge { sprite_data, 
-      { filename = "__planet-rabbasca__/graphics/by-hurricane/gravity-assembler-emission3.png", draw_as_glow = true, blend_mode = "additive" }},
+      { filename = "__rabbasca-assets__/graphics/by-hurricane/gravity-assembler-emission3.png", draw_as_glow = true, blend_mode = "additive" }},
     },
   },
   -- TODO: Shadow is missing
-  idle_animation = { layers = { util.merge {{ filename = "__planet-rabbasca__/graphics/by-hurricane/gravity-assembler-animation.png" }, sprite_data } } },
+  idle_animation = { layers = { util.merge {{ filename = "__rabbasca-assets__/graphics/by-hurricane/gravity-assembler-animation.png" }, sprite_data } } },
   always_draw_idle_animation = true
 }
 
@@ -77,7 +77,7 @@ data:extend{
   {
     type = "electric-energy-interface",
     name = "rabbasca-energy-source",
-    icon = "__planet-rabbasca__/graphics/recolor/icons/vulcanus-bw.png",
+    icon = "__rabbasca-assets__/graphics/recolor/icons/vulcanus-bw.png",
     energy_production = "50MW",
 
     energy_source = { 
@@ -115,7 +115,7 @@ data:extend {
     table.deepcopy(data.raw["fish"]["fish"]),
     {
       name = "rabbasca-turbofish",
-      icon = "__planet-rabbasca__/graphics/recolor/icons/turbofish.png",
+      icon = "__rabbasca-assets__/graphics/recolor/icons/turbofish.png",
       minable = { result = "rabbasca-turbofish" },
       autoplace = { probability_expression = "rabbasca_harene_pools - 0.5" },
       -- collision_mask = { layers = { ground_tile = true } }
