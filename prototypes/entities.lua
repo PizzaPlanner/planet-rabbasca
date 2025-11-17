@@ -14,6 +14,7 @@ local assembler = util.merge { data.raw["assembling-machine"]["assembling-machin
     module_slots = 6,
 }}
 
+assembler.next_upgrade = nil
 assembler.deconstruction_alternative = nil
 assembler.crafting_categories = { "complex-machinery", "install-ears-core" }
 assembler.fluid_boxes = { 
