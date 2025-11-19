@@ -1,5 +1,5 @@
 -- Some globals black magic or something happening here, required for water borders
-table.insert(water_tile_type_names, "rabbasca-harene")
+table.insert(water_tile_type_names, "rabbasca-harenic-sludge")
 
 data:extend{
 {
@@ -7,7 +7,7 @@ data:extend{
   name = "harene",
 },
 util.merge{table.deepcopy(data.raw["tile"]["ammoniacal-ocean"]), {
-  name = "rabbasca-harene",
+  name = "rabbasca-harenic-sludge",
   default_cover_tile = "foundation",
   autoplace = { probability_expression = "rabbasca_harene_pools" },
   -- destroys_dropped_items = true,

@@ -157,7 +157,7 @@ end
 
 function output.rabbasca_set_vault_active(e, active)
   if (not e) or e.name ~= "rabbasca-vault-crafter" then return end
-  e.active = active
+  e.active = true -- disabling prevents hp regeneration
   if active then
     e.force = game.forces.player
   else

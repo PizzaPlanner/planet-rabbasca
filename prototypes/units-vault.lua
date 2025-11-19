@@ -7,7 +7,7 @@ local defender_1 = util.merge{
     name = "vault-defender-1",
     icon = "__base__/graphics/icons/defender.png",
     order = "r[rabbasca]-b1",
-    max_health = 16,
+    max_health = 15,
     healing_per_tick = -0.1 / second,
     movement_speed = 0.13,
     distance_per_frame = 0.125,
@@ -50,7 +50,7 @@ defender_1.attack_parameters = {
   projectile_center = {0, 1},
   projectile_creation_distance = 0.6,
   range = 4,
-  warmup = 1 * second,
+  warmup = 1.5 * second,
   ammo_category = "capsule",
   ammo_type =
   {

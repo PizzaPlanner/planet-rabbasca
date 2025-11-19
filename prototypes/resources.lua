@@ -43,18 +43,20 @@ battle_scrap.minable =
   mining_time = 0.75,
   results =
   {
-    { type = "item", name = "advanced-circuit", amount = 1, probability = 0.92 },
-    { type = "item", name = "firearm-magazine", amount = 1, probability = 0.03 },
-    { type = "item", name = "vault-access-key", amount = 1, probability = 0.003 },
+    { type = "item", name = "firearm-magazine", amount = 1, probability = 0.15 },
+    { type = "item", name = "grenade", amount = 1, probability = 0.07 },
+    { type = "item", name = "flamethrower-ammo", amount = 1, probability = 0.12 },
+    { type = "item", name = "rocket", amount = 1, probability = 0.09 },
+    { type = "item", name = "vault-access-key", amount = 1, probability = 0.05 },
   }
 }
 battle_scrap.collision_mask = { layers = { resource = true } }
 battle_scrap.autoplace = {
   tile_restriction = { "rabbasca-rough", "rabbasca-rough-2" },
-  probability_expression = "rabbasca_vaults * (0.35 + multioctave_noise{x = x, y = y, persistence = 0.71, seed0 = map_seed, input_scale = 0.86, seed1 = 'scrappening', octaves = 6 })",
-  richness_expression = "(64 + 17\z 
+  probability_expression = "rabbasca_vaults * (rabbasca_vaults < 0.7) * (0.53 + 0.8 * multioctave_noise{x = x, y = y, persistence = 0.8, seed0 = map_seed, input_scale = 0.86, seed1 = 'scrappening', octaves = 4 })",
+  richness_expression = "(12 + 8\z 
     * multioctave_noise{x = x, y = y, persistence = 0.44, seed0 = map_seed, input_scale = 1.5, seed1 = 'whoneedscircuits', octaves = 4 })\z
-    * lerp(10, 200, distance / 2000)\z
+    * lerp(2, 20, distance / 2000)\z
     * control:rabbasca_vaults:richness",
 }
 

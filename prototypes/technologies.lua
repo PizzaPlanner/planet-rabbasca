@@ -97,7 +97,7 @@ data:extend {
     },
     {
       type = "change-recipe-productivity",
-      recipe = "vault-protocol-catalysts",
+      recipe = "vault-protocol-sulfur",
       change = 0.25
     },
     {
@@ -138,7 +138,7 @@ data:extend {
       },
       {
         type = "unlock-recipe",
-        recipe = "vault-protocol-catalysts"
+        recipe = "vault-protocol-sulfur"
       },
       {
         type = "unlock-recipe",
@@ -179,16 +179,43 @@ data:extend {
     name = "rabbasca-healthy-fluids",
     icon = "__rabbasca-assets__/graphics/recolor/icons/protein-shake.png",
     icon_size = 64,
-    prerequisites = { "carotene" },
+    prerequisites = { "carotene", "leg-day-everyday" },
     effects =
     {
       {
         type = "unlock-recipe",
-        recipe = "harenic-stabilizer",
+        recipe = "plastic-bottle",
       },
       {
         type = "unlock-recipe",
         recipe = "rabbasca-protein-shake",
+      },
+    },
+    research_trigger =
+    {
+      type = "craft-item",
+      item = "protein-powder",
+    }
+},
+{
+    type = "technology",
+    name = "rabbasca-haronite-processing",
+    icon = "__rabbasca-assets__/graphics/recolor/icons/haronite.png",
+    icon_size = 64,
+    prerequisites = { "carotene", "energetic-residue" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "vault-protocol-haronite",
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "haronite-decomposition",
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "harenic-stabilizer",
       },
     },
     research_trigger =
@@ -257,6 +284,10 @@ data:extend {
         type = "unlock-recipe",
         recipe = "lubricant-from-energetic-residue",
       },
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-residue-skimming",
+      },
     },
     research_trigger =
     {
@@ -269,13 +300,9 @@ data:extend {
     name = "machining-assembler",
     icon = "__rabbasca-assets__/graphics/by-hurricane/gravity-assembler-icon-big.png",
     icon_size = 640,
-    prerequisites = { "rabbasca-healthy-fluids", "energetic-residue", "rabbascan-vault-access" },
+    prerequisites = { "rabbasca-haronite-processing", "energetic-residue", "rabbascan-vault-access" },
     effects =
     {
-      {
-        type = "unlock-recipe",
-        recipe = "vault-protocol-haronite",
-      },
       {
         type = "unlock-recipe",
         recipe = "rabbasca-energetic-concrete"
@@ -456,7 +483,7 @@ data:extend {
   name = "rabbasca-document-forging-1",
   icon = "__Krastorio2Assets__/technologies/advanced-tech-card.png",
   icon_size = 256,
-  prerequisites = { "athletic-science-pack", "production-science-pack" },
+  prerequisites = { "rabbascan-vault-access" },
   level = 1,
   effects =
   {
@@ -465,16 +492,10 @@ data:extend {
       recipe = "vault-access-key",
     },
   },
-  unit = {
-    count = 200,
-    time = 30,
-    ingredients = {
-      {"automation-science-pack", 1},
-      {"logistic-science-pack", 1},
-      {"chemical-science-pack", 1},
-      {"production-science-pack", 1},
-      {"athletic-science-pack", 1},
-    }
+  research_trigger = {
+    type = "craft-item",
+    item = "vault-access-key",
+    count = 200
   }
 },
 {
@@ -482,7 +503,7 @@ data:extend {
   name = "rabbasca-document-forging-2",
   icon = "__Krastorio2Assets__/technologies/advanced-tech-card.png",
   icon_size = 256,
-  prerequisites = { "rabbasca-document-forging-1", "space-science-pack", "military-science-pack" },
+  prerequisites = { "rabbasca-document-forging-1", "space-science-pack", "production-science-pack", "military-science-pack", "athletic-science-pack" },
   level = 2,
   effects =
   {

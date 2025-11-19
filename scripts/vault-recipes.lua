@@ -6,7 +6,7 @@ r.create_vault_recipe("vault-protocol-haronite", {
     {icon = data.raw["item"]["haronite"].icon, icon_size = 64, shift = {8, 8}, scale = 0.4},
   },
   results = {{type = "item", name = "haronite", amount = 5 }}, 
-  energy_required = 90,
+  energy_required = 45,
   main_product = "haronite",
   maximum_productivity = 9,
   allow_productivity = true,
@@ -59,15 +59,13 @@ r.create_vault_recipe("vault-protocol-water", {
   maximum_productivity = 9,
   allow_productivity = true,
 })
-r.create_vault_recipe("vault-protocol-catalysts", {
+r.create_vault_recipe("vault-protocol-sulfur", {
   icons = {
     {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
-    {icon = data.raw["item"]["sulfur"].icon, icon_size = 64, shift = {-8, 8}, scale = 0.4},
-    {icon = data.raw["item"]["calcite"].icon, icon_size = 64, shift = {8, 8}, scale = 0.4},
+    {icon = data.raw["item"]["sulfur"].icon, icon_size = 64, shift = {8, 8}, scale = 0.4},
   },
   results = {
-    {type = "item", name = "calcite", amount = 10 },
-    {type = "item", name = "sulfur", amount = 7 },
+    {type = "item", name = "sulfur", amount = 8 },
   }, 
   energy_required = 20,
   maximum_productivity = 9,

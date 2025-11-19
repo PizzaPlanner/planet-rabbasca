@@ -157,7 +157,6 @@ data.raw["electric-energy-interface"]["rabbasca-energy-source"].collision_box = 
 data.raw["simple-entity"]["rabbasca-big-rock"].minable.results = {
   {type = "item", name = "stone", amount_min = 12, amount_max = 18}, 
   {type = "item", name = "iron-ore", amount_min = 9, amount_max = 15 }, 
-  {type = "item", name = "copper-ore", amount_min = 7, amount_max = 12 }, 
   {type = "item", name = "carbon", amount_min = 2, amount_max = 5 }
 }
 

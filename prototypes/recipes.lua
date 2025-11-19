@@ -74,8 +74,7 @@ data:extend {
             {type = "fluid", name = "water", amount = 10 },
             {type = "item", name = "carotenoid-ore", amount = 20 },
         },
-        results = { { type = "fluid", name = "beta-carotene", amount = 60 },
-                    { type = "item", name = "stone", amount = 10 } },
+        results = { { type = "fluid", name = "beta-carotene", amount = 60 } },
         main_product = "beta-carotene",
         hide_from_player_crafting = true,
         category = "organic-or-chemistry",
@@ -275,8 +274,8 @@ data:extend {
         type = "recipe",
         name = "lubricant-from-energetic-residue",
         icons = { 
-            { icon = data.raw["fluid"]["energetic-residue"].icon, scale = 0.3, shift = { -8, -8 } },
-            { icon = data.raw["fluid"]["lubricant"].icon },
+            { icon = data.raw["fluid"]["lubricant"].icon, icon_size = 64, },
+            { icon = data.raw["fluid"]["energetic-residue"].icon, scale = 0.3, icon_size = 64,shift = { -8, -8 } },
         },
         enabled = false,
         energy_required = 3.5,
@@ -288,7 +287,7 @@ data:extend {
         main_product = "lubricant",
         category = "chemistry",
         subgroup = "rabbasca-processes",
-        order = "r[alternate-uses]"
+        order = "r[alternate-uses]-[lubricant]"
 
     },
     {
@@ -297,6 +296,7 @@ data:extend {
         enabled = false,
         energy_required = 7,
         ingredients = {
+            { type = "item", name = "plastic-bottle", amount = 2 },
             { type = "item", name = "calcite", amount = 1 },
             { type = "item", name = "protein-powder", amount = 8 },
             { type = "fluid", name = "beta-carotene", amount = 15 },
@@ -305,6 +305,45 @@ data:extend {
             { type = "item", name = "rabbasca-protein-shake", amount = 2 }
         },
         category = "organic-or-chemistry",
+    },
+    {
+        type = "recipe",
+        name = "plastic-bottle",
+        enabled = false,
+        energy_required = 2,
+        ingredients = {
+            { type = "item", name = "plastic-bar", amount = 2 },
+        },
+        results = {
+            { type = "item", name = "plastic-bottle", amount = 3 }
+        },
+        category = "crafting",
+    },
+    {
+        type = "recipe",
+        name = "rabbasca-residue-skimming",
+        icons = {
+            { icon = data.raw["fluid"]["energetic-residue"].icon, scale = 0.7, shift = {0, -8}, icon_size = 64 },
+            { icon = data.raw["item"]["plastic-bottle"].icon, icon_size = 64, scale = 0.5, shift = {-12, 12} },
+            { icon = data.raw["item"]["spoilage"].icon, icon_size = 64, scale = 0.5, shift = {12, 12} },
+            { icon = data.raw["item"]["advanced-circuit"].icon, icon_size = 64, scale = 0.5, shift = {0, 12} },
+        },
+        enabled = false,
+        energy_required = 1.5,
+        ingredients = {
+            { type = "fluid", name = "energetic-residue", amount = 100 },
+        },
+        results = {
+            { type = "fluid", name = "energetic-residue", amount = 90 },
+            { type = "item", name = "spoilage", amount = 1, probability = 0.06 },
+            { type = "item", name = "advanced-circuit", amount = 1, probability = 0.05 },
+            { type = "item", name = "electronic-circuit", amount = 1, probability = 0.04 },
+            { type = "item", name = "plastic-bottle", amount = 1, probability = 0.03 },
+        },
+        allow_quality = false,
+        subgroup = "rabbasca-processes",
+        category = "crafting-with-fluid",
+        order = "r[alternate-uses]-[skimming]"
     },
     {
         type = "recipe",
@@ -330,7 +369,6 @@ data:extend {
         energy_required = 3,
         ingredients = { 
             {type = "item", name = "advanced-circuit", amount = 5 },
-            {type = "item", name = "processing-unit", amount = 1 },
             {type = "item", name = "rabbasca-turbofish", amount = 1 },
             {type = "fluid", name = "beta-carotene", amount = 20 },
         },
@@ -374,6 +412,7 @@ data:extend {
     {
         type = "recipe",
         name = "rabbasca-energetic-concrete",
+        enabled = false,
         main_product = "rabbasca-energetic-concrete",
         category = "crafting-with-fluid",
         hide_from_player_crafting = true,
@@ -386,6 +425,31 @@ data:extend {
             { type = "fluid", name = "energetic-residue", amount = 20 },
         },
     },
+    {
+        type = "recipe",
+        name = "haronite-decomposition",
+        enabled = false,
+        icons = {
+            { icon = "__rabbasca-assets__/graphics/recolor/icons/haronite.png", icon_size = 64, scale = 0.4, shift = {0, -12} },
+            { icon = "__base__/graphics/icons/stone.png", icon_size = 64, scale = 0.3, shift = {-12, 12} },
+            { icon = "__space-age__/graphics/icons/calcite.png", icon_size = 64, scale = 0.3, shift = {12, 12} },
+            { icon = "__rabbasca-assets__/graphics/recolor/icons/harene-gas.png", icon_size = 64, scale = 0.3, shift = {0, 12} },
+        },
+        category = "chemistry",
+        hide_from_player_crafting = true,
+        energy_required = 3,
+        results = {
+            {type = "item", name = "stone", amount = 5 },
+            {type = "item", name = "calcite", amount = 3 },
+            {type = "fluid", name = "harene-gas", amount = 10 },
+        },
+        ingredients = {
+            { type = "item", name = "haronite", amount = 1 },
+            { type = "fluid", name = "sulfuric-acid", amount = 15 },
+        },
+        subgroup = "rabbasca-processes",
+        order = "r[alternate-uses]-a[haronite]"
+    }
 }
 
 local rocket_part = table.deepcopy(data.raw["recipe"]["rocket-part"])

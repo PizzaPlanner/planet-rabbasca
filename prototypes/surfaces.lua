@@ -112,7 +112,7 @@ local map_gen = {
       {
         settings =
         {
-          ["rabbasca-harene"] = {},
+          ["rabbasca-harenic-sludge"] = {},
           ["rabbasca-fertile"] = {},
           ["rabbasca-rough"] = {},
           ["rabbasca-rough-2"] = {},

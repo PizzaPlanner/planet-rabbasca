@@ -2,6 +2,7 @@ local utils = require("__any-planet-start__.utils")
 
 utils.ignore_multiplier("gun-turret")
 utils.ignore_multiplier("military")
+utils.ignore_multiplier("electric-mining-drill")
 utils.set_trigger("oil-processing", {
     type = "mine-entity",
     entity = "harene-vent"
@@ -10,6 +11,7 @@ utils.set_prerequisites("chemical-science-pack", { "engine", "rabbascan-vault-ac
 utils.add_prerequisites("rabbasca-healthy-fluids", { "oil-processing" })
 utils.add_prerequisites("energetic-residue", { "oil-processing" })
 utils.add_prerequisites("advanced-oil-processing", { "oil-processing" })
+utils.add_prerequisites("machining-assembler", { "concrete" })
 
 data:extend {
 {
@@ -31,7 +33,7 @@ data:extend {
     },
     {
       type = "change-recipe-productivity",
-      recipe = "vault-protocol-catalysts",
+      recipe = "vault-protocol-sulfur",
       change = 0.25
     }
   },
@@ -64,7 +66,7 @@ data:extend {
     },
     {
       type = "change-recipe-productivity",
-      recipe = "vault-protocol-catalysts",
+      recipe = "vault-protocol-sulfur",
       change = 0.25
     }
   },

@@ -149,7 +149,7 @@ util.merge {
       icon = "__rabbasca-assets__/graphics/recolor/icons/turbofish.png",
       icon_size = 64,
       spoil_ticks = 3 * minute,
-      spoil_result = "protein-powder",
+      spoil_result = "spoilage",
       subgroup = "rabbasca-processes",
       order = "b[organic]-a[turbofish]"
     },
@@ -164,7 +164,8 @@ util.merge {
       spoil_result = nil,
       weight = 20 * kg,
       fuel_category = "nutrients",
-      fuel_value = "25.4MJ",
+      fuel_value = "17.63MJ",
+      burnt_result = "plastic-bottle",
       subgroup = "rabbasca-processes",
       order = "b[organic]-f[protein-shake]"
     },
@@ -201,6 +202,14 @@ util.merge { data.raw["item"]["rocket-fuel"],
     stack_size = 200,
     subgroup = "rabbasca-processes",
     order = "b[organic]-d[protein-powder]",
+},
+{
+    type = "item",
+    name = "plastic-bottle",
+    icon = "__rabbasca-assets__/graphics/recolor/icons/plastic-bottle.png",
+    stack_size = 200,
+    subgroup = "rabbasca-processes",
+    order = "b[processed]-a[bottle]",
 },
 {
     type = "item",
