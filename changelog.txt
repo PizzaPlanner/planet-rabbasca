@@ -16,9 +16,13 @@ Date: 2025-11-19
     - Reduced yummy value of protein shake
     - Rabbascan rock no longer contains copper ore
     - Nerfed low-alert defender bots
-    - 
     - [APS only] Adjusted starting inventory. now contains a power pole to allow immediate electricity graph access
     - [APS only] Electric mining drill is now an essential technology
+---------------------------------------------------------------------------------------------------
+Version: 0.6.4
+Date: 2025-11-20
+  Bugfixes:
+    - Fixed robots not getting damaged by bullets using collision checks
 ---------------------------------------------------------------------------------------------------
 Version: 0.6.3
 Date: 2025-11-18
