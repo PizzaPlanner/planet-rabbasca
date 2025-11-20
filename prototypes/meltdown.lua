@@ -1,6 +1,18 @@
 local sounds = require("__base__.prototypes.entity.sounds")
 return {
 {
+    type = "play-sound",
+    sound = sounds.nuclear_explosion(1.3),
+    play_on_target_position = false,
+    max_distance = 2000,
+},
+{
+    type = "play-sound",
+    sound = sounds.nuclear_explosion_aftershock(0.7),
+    play_on_target_position = false,
+    max_distance = 2000,
+},
+{
     type = "create-entity",
     check_buildability = true,
     entity_name = "rabbasca-meltdown-effect"
@@ -19,18 +31,6 @@ return {
     full_strength_max_distance = 400,
     max_distance = 1600
 },
--- {
---     type = "play-sound",
---     sound = sounds.nuclear_explosion(0.9),
---     play_on_target_position = false,
---     max_distance = 1000,
--- },
--- {
---     type = "play-sound",
---     sound = sounds.nuclear_explosion_aftershock(0.7),
---     play_on_target_position = false,
---     max_distance = 1000,
--- },
 {
     type = "nested-result",
     action =
