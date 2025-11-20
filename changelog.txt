@@ -1,21 +1,24 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.7.0
 Date: 2025-11-19
-  Balancing:
+  Changes:
     - Reworked intruder remains to contain a variety of ammo, but no longer advanced circuits
-    - Added residue skimming recipe that provides an infinite source of advanced circuits, plastic and some other trash
+    - Added residue skimming recipe that provides an infinite source of advanced circuits, and a bunch of trash
     - Document forging 1 is now a trigger technology and unlocks after mining 200 vault access keys
-    - Adjusted vault access key recipe to make it craftable early
-    - Added recipe to turn Haronite into calcite and stone to make it more useful
+    - Added recipe to turn Haronite into calcite and stone
     - Calcite is no longer extracted from vaults
-    - Beta carotene recipe no longer produces stone as byproduct
-    - Turbofish now spoils into spoilage instead of protein powder
-    - Reduced yummy value of protein shake
     - Protein shake now requires a plastic bottle to craft, and that bottle will remain as trash when used as fuel source
+    - Turbofish now spoils into spoilage instead of protein powder
+  Balancing:
+    - Adjusted vault access key recipe to make it craftable early
+    - Beta carotene recipe no longer produces stone as byproduct
+    - Beta carotene now requires Harene gas instead of Energetic residue
+    - Reduced yummy value of protein shake
     - Rabbascan rock no longer contains copper ore
-    - Nerfed first defender bots
+    - Nerfed low-alert defender bots
+    - 
     - [APS only] Adjusted starting inventory. now contains a power pole to allow immediate electricity graph access
-    - [APS only] Electric mining drill an essential technology
+    - [APS only] Electric mining drill is now an essential technology
 ---------------------------------------------------------------------------------------------------
 Version: 0.6.3
 Date: 2025-11-18

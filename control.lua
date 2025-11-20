@@ -110,7 +110,7 @@ local function give_starter_items()
   remote.call("freeplay", "set_created_items", {
       ["pistol"] = 1,
       ["firearm-magazine"] = 40,
-      ["transport-belt"] = 100,
+      ["transport-belt"] = 200,
       ["small-electric-pole"] = 1,
       ["burner-mining-drill"] = 2
   })

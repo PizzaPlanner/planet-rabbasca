@@ -54,7 +54,7 @@ battle_scrap.collision_mask = { layers = { resource = true } }
 battle_scrap.autoplace = {
   tile_restriction = { "rabbasca-rough", "rabbasca-rough-2" },
   probability_expression = "rabbasca_vaults * (rabbasca_vaults < 0.7) * (0.53 + 0.8 * multioctave_noise{x = x, y = y, persistence = 0.8, seed0 = map_seed, input_scale = 0.86, seed1 = 'scrappening', octaves = 4 })",
-  richness_expression = "(12 + 8\z 
+  richness_expression = "(17 + 9\z 
     * multioctave_noise{x = x, y = y, persistence = 0.44, seed0 = map_seed, input_scale = 1.5, seed1 = 'whoneedscircuits', octaves = 4 })\z
     * lerp(2, 20, distance / 2000)\z
     * control:rabbasca_vaults:richness",

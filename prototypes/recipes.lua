@@ -70,7 +70,7 @@ data:extend {
         energy_required = 5.0,
         enabled = false,
         ingredients = { 
-            {type = "fluid", name = "energetic-residue", amount = 5 },
+            {type = "fluid", name = "harene-gas", amount = 5 },
             {type = "fluid", name = "water", amount = 10 },
             {type = "item", name = "carotenoid-ore", amount = 20 },
         },
@@ -368,11 +368,11 @@ data:extend {
         enabled = false,
         energy_required = 3,
         ingredients = { 
-            {type = "item", name = "advanced-circuit", amount = 5 },
+            {type = "item", name = "advanced-circuit", amount = 8 },
             {type = "item", name = "rabbasca-turbofish", amount = 1 },
             {type = "fluid", name = "beta-carotene", amount = 20 },
         },
-        results = { {type = "item", name = "vault-access-key", amount = 1} },
+        results = { {type = "item", name = "vault-access-key", amount = 2} },
         main_product = "vault-access-key",
         category = "crafting-with-fluid",
         allow_productivity = true,

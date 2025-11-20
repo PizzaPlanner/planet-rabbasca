@@ -35,7 +35,7 @@ data:extend {
       type = "change-recipe-productivity",
       recipe = "vault-protocol-sulfur",
       change = 0.25
-    }
+    },
   },
   level = 1,
   unit = {

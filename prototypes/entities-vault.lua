@@ -178,8 +178,8 @@ local vault_crafter = {
   icon_size = 64,
   max_health = 72000,
   production_health_effect = {
-      not_producing = 3.6,
-      producing = 3.6
+      not_producing = 100,
+      producing = 100
   },
   map_generator_bounding_box = {{-16, -16}, {16, 16}},
   collision_box = {{-2.4, -1.9},{2.4, 2.2}},
@@ -192,7 +192,7 @@ local vault_crafter = {
   allow_copy_paste = true,
   module_slots = 2,
   disabled_when_recipe_not_researched = true,
-  autoplace = { probability_expression = "rabbasca_vaults > 0.9", force = "neutral" },
+  autoplace = { probability_expression = "rabbasca_vaults > 0.85", force = "neutral" },
   flags = { "placeable-player", "not-rotatable"},
   allowed_effects = { "speed", "consumption", "pollution" },
   energy_source = {
@@ -208,14 +208,14 @@ local vault_crafter = {
   icon_draw_specification = data.raw["assembling-machine"]["foundry"].icon_draw_specification,
   icons_positioning = data.raw["assembling-machine"]["foundry"].icons_positioning,
   resistances = {
-    { type = "physical", percent = 80 },
-    { type = "explosion", percent = 85 },
-    { type = "fire", percent = 90 },
+    { type = "physical", percent = 95, decrease = 8000 },
+    { type = "explosion", percent = 80, decrease = 400 },
+    { type = "fire", percent = 100 },
     { type = "poison", percent = 100 },
     { type = "acid", percent = 100 },
-    { type = "laser", percent = 70 },
-    { type = "electric", percent = 87 },
-    { type = "impact", percent = 90 },
+    { type = "laser", percent = 100 },
+    { type = "electric", percent = 99 },
+    { type = "impact", percent = 99 },
   },
   graphics_set = {
     animation = {

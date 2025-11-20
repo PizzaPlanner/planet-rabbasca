@@ -76,29 +76,11 @@ r.create_vault_recipe("vault-protocol-sulfur", {
 data:extend {
     {
         type = "recipe",
-        name = "rabbasca-extend-hack-advanced-circuit",
-        localised_name = {"recipe-name.rabbasca-extend-hack"},
-        localised_description = {"recipe-description.rabbasca-extend-hack"},
-        subgroup = "rabbasca-security",
-        order = "a[vault-access-key]a",
-        icons = { 
-          { icon = data.raw["item"]["advanced-circuit"].icon, icon_size = 64 },
-          { icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png", icon_size = 64, scale = 0.3, shift = { 8, 8 } },
-        },
-        enabled = true,
-        category = "rabbasca-vault-hacking",
-        hide_from_player_crafting = true,
-        energy_required = 0.1,
-        ingredients = {{ type = "item", name = "advanced-circuit", amount = 1 }},
-        auto_recycle = false
-    },
-    {
-        type = "recipe",
         name = "rabbasca-extend-hack-vault-access-key",
         localised_name = {"recipe-name.rabbasca-extend-hack"},
         localised_description = {"recipe-description.rabbasca-extend-hack"},
         subgroup = "rabbasca-security",
-        order = "a[vault-access-key]b",
+        order = "h[hack-extension]-a",
         icons = { 
           { icon = data.raw["ammo"]["vault-access-key"].icon, icon_size = 64 },
           { icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png", icon_size = 64, scale = 0.3, shift = { 8, 8 } },
@@ -116,7 +98,7 @@ data:extend {
         localised_name = {"recipe-name.rabbasca-extend-hack"},
         localised_description = {"recipe-description.rabbasca-extend-hack"},
         subgroup = "rabbasca-security",
-        order = "a[vault-access-key]c",
+        order = "h[hack-extension]-b",
         icons = { 
           { icon = data.raw["ammo"]["vault-security-key"].icon, icon_size = 64 },
           { icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png", icon_size = 64, scale = 0.3, shift = { 8, 8 } },
