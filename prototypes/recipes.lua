@@ -439,14 +439,15 @@ data:extend {
         hide_from_player_crafting = true,
         energy_required = 3,
         results = {
-            {type = "item", name = "stone", amount = 5 },
-            {type = "item", name = "calcite", amount = 3 },
-            {type = "fluid", name = "harene-gas", amount = 10 },
+            {type = "item", name = "stone", amount = 10 },
+            {type = "item", name = "calcite", amount = 6 },
+            {type = "fluid", name = "harene-gas", amount = 25 },
         },
         ingredients = {
             { type = "item", name = "haronite", amount = 1 },
             { type = "fluid", name = "sulfuric-acid", amount = 15 },
         },
+        allow_productivity = true,
         subgroup = "rabbasca-processes",
         order = "r[alternate-uses]-a[haronite]"
     }

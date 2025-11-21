@@ -135,7 +135,7 @@ data:extend {
     table.deepcopy(data.raw["sticker"]["bioflux-speed-regen-sticker"]),
     {
       name = "protein-shake-speed-sticker",
-      duration_in_ticks = 60 * second,
+      duration_in_ticks = 90 * second,
       target_movement_modifier = 1.9,
       damage_interval = 20,
       damage_per_tick = { amount = -5 },

@@ -7,11 +7,12 @@ utils.set_trigger("oil-processing", {
     type = "mine-entity",
     entity = "harene-vent"
 })
-utils.set_prerequisites("chemical-science-pack", { "engine", "rabbascan-vault-access" })
+utils.set_prerequisites("chemical-science-pack", { "engine", "rabbascan-vault-access", "energetic-residue" })
 utils.add_prerequisites("rabbasca-healthy-fluids", { "oil-processing" })
 utils.add_prerequisites("energetic-residue", { "oil-processing" })
 utils.add_prerequisites("advanced-oil-processing", { "oil-processing" })
 utils.add_prerequisites("machining-assembler", { "concrete" })
+utils.add_prerequisites("rabbasca-haronite-processing", { "sulfur-processing" })
 
 data:extend {
 {
