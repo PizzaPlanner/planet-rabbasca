@@ -10,7 +10,7 @@
         "space-age", 
         "PlanetsLib", 
         "Krastorio2Assets", 
-        "rabbasca-assets = 1.1.0",
+        "rabbasca-assets >= 1.1.0",
         "? any-planet-start",
         "(?) planet-muluna",
         "(?) pelagos"
