@@ -19,9 +19,9 @@ local lava = util.merge{ table.deepcopy(data.raw["tile"]["lava"]), {
     particle_tints = { primary = { 44, 30, 180 }, secondary = { 44, 30, 180 },},
 }}
 lava.autoplace = nil
-lava.variants.main[1].picture = "__rabbasca-assets__/graphics/recolor/icons/lava.png"
-lava.variants.main[2].picture = "__rabbasca-assets__/graphics/recolor/icons/lava.png"
-lava.variants.main[3].picture = "__rabbasca-assets__/graphics/recolor/icons/lava.png"
+lava.variants.main[1].picture = "__rabbasca-assets__/graphics/recolor/textures/lava-transitions.png"
+lava.variants.main[2].picture = "__rabbasca-assets__/graphics/recolor/textures/lava-transitions.png"
+lava.variants.main[3].picture = "__rabbasca-assets__/graphics/recolor/textures/lava-transitions.png"
 
 data:extend{
 {
@@ -67,6 +67,17 @@ util.merge {
       check_collision_with_entities = true
     }
 },
+util.merge { 
+    table.deepcopy(data.raw["tile"]["foundation"]),
+    {
+      name = "haronite-plate",
+      collision_mask = { layers = { harene = true } },
+      minable = { result = "haronite-plate" },
+      -- variants = { material_background = { picture = "__rabbasca-assets__/graphics/recolor/textures/haronite-plate.png", } },
+      frozen_variant = "haronite-plate",
+      check_collision_with_entities = true
+    }
+}
 }
 
 local lava_transition = { spritesheet = "__rabbasca-assets__/graphics/recolor/textures/lava-stone-lightmap.png" }

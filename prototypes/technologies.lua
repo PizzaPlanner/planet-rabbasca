@@ -393,7 +393,7 @@ data:extend {
       { icon = data.raw["item"]["haronite-plate"].icon, icon_size = 64, shift = {12, 12}, scale = 0.5 },
     },
     icon_size = 256,
-    prerequisites = { "bunnyhop-engine-3", "metallurgic-science-pack", "cryogenic-science-pack" },
+    prerequisites = { "bunnyhop-engine-3", "metallurgic-science-pack", "rabbasca-unhealthy-fluids" },
     effects =
     {
       {
@@ -546,6 +546,29 @@ data:extend {
     time = 60,
     ingredients = util.merge { table.deepcopy(data.raw["technology"]["promethium-science-pack"].unit.ingredients), {{"athletic-science-pack", 1}} }
   }
+},
+{
+    type = "technology",
+    name = "rabbasca-unhealthy-fluids",
+    icon = "__rabbasca-assets__/graphics/recolor/icons/harenic-lava.png",
+    icon_size = 64,
+    prerequisites = { "cryogenic-science-pack", "planet-discovery-rabbasca" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "harene-cryo-container-filled",
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "harene-cryo-container-empty",
+      },
+    },
+    research_trigger =
+    {
+      type = "craft-fluid",
+      fluid = "harenic-lava",
+    }
 },
 }
 

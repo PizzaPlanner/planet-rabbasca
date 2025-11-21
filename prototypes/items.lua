@@ -37,6 +37,19 @@ data:extend {
     stack_size = 50,
     subgroup = "rabbasca-processes",
     order = "h[haronite]-d[haronite-plate]",
+    place_as_tile = { result = "haronite-plate", condition = { layers = { } }, condition_size = 1 },
+    destroyed_by_dropping_trigger = {
+      type = "direct",
+      action_delivery = {
+        type = "instant",
+        target_effects = {
+          {
+            type = "script",
+            effect_id = "rabbasca_haronite_plate_drop"
+          }
+        }
+      }
+    }
 },
 {
     type = "item",
@@ -220,7 +233,9 @@ util.merge { data.raw["item"]["rocket-fuel"],
     subgroup = "fluid",
     base_color = {r=0.65, g=0.31, b=0.92},
     flow_color = {r=0.65, g=0.31, b=0.92},
-    default_temperature = 1032.0,
+    default_temperature = -85.0,
+    max_temperature = -20,
+    heat_capacity = "8MJ"
     fuel_value = "100MJ",
     auto_barrel = false,
     order = "r[rabbasca]-c[harene]"
@@ -267,16 +282,39 @@ util.merge { data.raw["item"]["rocket-fuel"],
 {
     type = "fluid",
     name = "harenic-lava",
-    icon = "__rabbasca-assets__/graphics/recolor/icons/energetic-residue.png",
+    icon = "__rabbasca-assets__/graphics/recolor/icons/harenic-lava.png",
     icon_size = 64,
     subgroup = "fluid",
     base_color = {0.8, 0.53, 0.24},
     flow_color = {0.8, 0.53, 0.24},
-    default_temperature = 1500,
-    fuel_value = "850kJ",
-    auto_barrel = true,
-    order = "r[rabbasca]-b[energetic-residue]"
+    default_temperature = 1800,
+    auto_barrel = false,
+    order = "r[rabbasca]-c[harenic-lava]"
 },
+{
+    type = "item",
+    name = "harene-cryo-container-empty",
+    icon = "__rabbasca-assets__/graphics/recolor/icons/plastic-bottle.png",
+    icon_size = 64,
+    stack_size = 10,
+    subgroup = "rabbasca-processes",
+    order = "r[lategame]-a[harene-cryo-container-empty]"
+},
+{
+    type = "item",
+    name = "harene-cryo-container-filled",
+    icons = {
+      { icon = "__rabbasca-assets__/graphics/recolor/icons/plastic-bottle.png", icon_size = 64 },
+      { icon = "__rabbasca-assets__/graphics/recolor/icons/harenic-lava.png", icon_size = 64, scale = 0.5 },
+    },
+    icon_size = 64,
+    stack_size = 10,
+    subgroup = "rabbasca-processes",
+    order = "r[lategame]-a[harene-cryo-container-filled]",
+    spoil_ticks = 30 * second,
+    spoil_result = "harene-cryo-container-empty",
+},
+
 util.merge { data.raw["tool"]["automation-science-pack"], {
   name = "athletic-science-pack",
   icon = "__rabbasca-assets__/graphics/recolor/icons/athletic-science-pack.png",

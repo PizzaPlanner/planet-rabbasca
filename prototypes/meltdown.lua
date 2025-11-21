@@ -103,5 +103,5 @@ return {
             starting_speed_deviation = 0.075
         }
     }
-}
+},
 }
