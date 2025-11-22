@@ -79,13 +79,18 @@ end
 
 script.on_event(defines.events.on_script_trigger_effect, handle_script_events)
 
-script.on_event(defines.events.on_player_controller_changed, function(event)
+script.on_load(function()
+  bunnyhop.register_bunnyhop_handler()
+end)
+
+script.on_event({
+  defines.events.on_player_controller_changed, 
+  defines.events.on_player_joined_game
+}, function(event)
     local player = game.get_player(event.player_index)
     if not player then return end
 
-    if player.gui.screen.bunnyhop_ui then
-       bunnyhop.clear_bunnyhop_ui(player)
-    end
+    bunnyhop.clear_bunnyhop_ui(player)
     alert_ui.update_bar(player)
 end)
 

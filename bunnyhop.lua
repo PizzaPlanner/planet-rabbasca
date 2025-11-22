@@ -51,12 +51,21 @@ function M.get_connections(from, max_range)
   return surfaces
 end
 
-function M.clear_bunnyhop_ui(player)
-    player.gui.screen.bunnyhop_ui.destroy()
-    storage.rabbasca_bunnyhopping = math.max(0, (storage.rabbasca_bunnyhopping or 1) - 1)
-    if storage.rabbasca_bunnyhopping == 0 then
-        script.on_event(defines.events.on_player_changed_position, nil)
+
+local function recalc_bunnyhoppers()
+  storage.rabbasca_bunnyhopping = 0
+  for _, player in pairs(game.connected_players) do
+    if player.gui.screen.bunnyhop_ui then
+      storage.rabbasca_bunnyhopping = storage.rabbasca_bunnyhopping + 1
     end
+  end
+end
+
+function M.clear_bunnyhop_ui(player)
+    if not player.gui.screen.bunnyhop_ui then return end
+    player.gui.screen.bunnyhop_ui.destroy()
+    recalc_bunnyhoppers()
+    M.register_bunnyhop_handler()
 end
 
 local function get_max_range_and_weight(force)
@@ -92,15 +101,18 @@ local function get_character_weight_label(character, max_weight)
   if cursor.valid_for_read then
     weight = weight + (cursor.prototype.weight or 0) * cursor.count
   end
-  weight = weight / 1000
-  -- TODO: localize
-  return weight <= max_weight, string.format("Weight: %i/%ikg", weight, max_weight) .. ((weight > max_weight and " [too heavy]") or "")
+  weight = math.floor(weight / 1000)
+  if weight <= max_weight then
+    return true, {"rabbasca-extra.bunnyhop-weight", weight, max_weight}
+  else
+    return false, {"rabbasca-extra.bunnyhop-weight-too-heavy", weight, max_weight}
+  end
+  
 end
 
 local function on_charge_bunnyhop(event)
     local player = game.get_player(event.player_index)
     if not player then return end
-
     local frame = player.gui.screen.bunnyhop_ui
     if not (frame and frame.valid) then return end
     local pb = frame.bunnyhop_charge
@@ -114,7 +126,12 @@ local function on_charge_bunnyhop(event)
         return
     end
 
-    local max_weight = tonumber(wl.caption:match("/(%d+)"))
+    local max_weight = (wl.caption and #wl.caption == 3 and tonumber(wl.caption[3]) or -1)
+    if max_weight < 0 then
+      player.print({"rabbasca-extra.bunnyhop-error"})
+      M.clear_bunnyhop_ui(player)
+      return
+    end
     is_weight_ok, wl.caption = get_character_weight_label(character, max_weight)
     
     -- player.walking_state.walking = true
@@ -135,23 +152,32 @@ local function on_charge_bunnyhop(event)
 
     local surface = game.planets[planet].surface or game.planets[planet].create_surface()
     if not surface then return end
+    local cid = character.unit_number
     storage.last_bunnyhops = storage.last_bunnyhops or { }
-    storage.last_bunnyhops[player] = storage.last_bunnyhops[player] or {}
-    storage.last_bunnyhops[player][character.surface_index] = character.position
+    storage.last_bunnyhops[cid] = storage.last_bunnyhops[cid] or {}
+    storage.last_bunnyhops[cid][character.surface_index] = character.position
 
-    local offset = storage.last_bunnyhops[player][surface.index] or {0, 0}
+    game.print(storage.last_bunnyhops[cid][character.surface_index])
+
+    local offset = storage.last_bunnyhops[cid][surface.index]
+    if not (offset and offset.x and offset.y) then offset = {x = 0, y = 0} end
     local radius = surface.get_starting_area_radius()
-    player.force.chart(surface, {{-radius + offset[1], -radius + offset[2]}, {radius + offset[1], radius + offset[2]}})
-    local start_pos = surface.find_non_colliding_position("character", offset, radius, 1) or {0, 0}
-
+    player.force.chart(surface, {{-radius + offset.x, -radius + offset.y}, {radius + offset.x, radius + offset.y}})
+    local start_pos = surface.find_non_colliding_position("character", offset, radius, 1) or {x = 0, y = 0}
+    
     -- Teleport player
-    if not player.teleport(start_pos, surface) then return end
+    if not player.teleport(start_pos, surface) then 
+      player.print({"rabbasca-extra.bunnyhop-error"})
+    end
 end
 
-
-local function extend_bunnyhop_ui(player)
-    storage.rabbasca_bunnyhopping = (storage.rabbasca_bunnyhopping or 0) + 1
-    script.on_event(defines.events.on_player_changed_position, on_charge_bunnyhop)
+-- called in on_load: must adhere to https://lua-api.factorio.com/latest/classes/LuaBootstrap.html#on_load
+function M.register_bunnyhop_handler()
+    if (storage.rabbasca_bunnyhopping or 0) == 0 then
+      script.on_event(defines.events.on_player_changed_position, nil)
+    else
+      script.on_event(defines.events.on_player_changed_position, on_charge_bunnyhop)
+    end
 end
 
 function M.show_bunnyhop_ui(player, equipment)
@@ -160,10 +186,12 @@ function M.show_bunnyhop_ui(player, equipment)
     local surface = player.surface
     local reachable_surfaces = M.get_connections(surface.name, max_range)
 
-    if #reachable_surfaces == 0 then 
-      -- TODO: Make localized
-      -- TODO: print different message if not allowed by setting
-      player.print("[item=bunnyhop-engine] No discovered planet within "..max_range.."km")
+    if #reachable_surfaces == 0 then
+      if settings.startup["rabbasca-bunnyhop-rabbasca-only"].value then
+        player.print({"rabbasca-extra.bunnyhop-not-from-here"})
+      else
+        player.print({"rabbasca-extra.bunnyhop-no-target", max_range})
+      end
       return 
     end
 
@@ -198,7 +226,8 @@ function M.show_bunnyhop_ui(player, equipment)
       items = reachable_surfaces 
     }
     list.selected_index = 1
-    extend_bunnyhop_ui(player)
+    recalc_bunnyhoppers()
+    M.register_bunnyhop_handler()
 end
 
 return M
