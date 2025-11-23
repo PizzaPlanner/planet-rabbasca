@@ -269,7 +269,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
     base_color = {0, 0.14, 0.53},
     flow_color = {0, 0.14, 0.53},
     default_temperature = 72.0,
-    fuel_value = "850kJ",
+    fuel_value = "350kJ",
     auto_barrel = true,
     order = "r[rabbasca]-b[energetic-residue]"
 },

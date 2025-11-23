@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.7.2
+Date: 2025-11-23
+  Changes:
+    - [with Crushing Industry] Added energetic concrete mix required by energetic concrete instead of concrete and energetic residue
+  Balancing:
+    - Reduced fuel value of energetic residue
+---------------------------------------------------------------------------------------------------
 Version: 0.7.1
 Date: 2025-11-22
   Bugfixes:
