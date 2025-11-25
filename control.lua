@@ -61,7 +61,7 @@ local function handle_script_events(event)
     if not spawner then return end
     surface.set_tiles(tiles)
     for _, player in pairs(game.connected_players) do
-        player.add_alert(spawner, defines.alert_type.unclaimed_cargo)
+        player.add_custom_alert(spawner, { type = "entity", name = "rabbasca-vault-warp-spawner" }, { "rabbasca-extra.alert-enemy-spawner" }, true)
     end
   elseif effect_id == "rabbasca_teleport" then
     local engine = event.source_entity or event.target_entity
