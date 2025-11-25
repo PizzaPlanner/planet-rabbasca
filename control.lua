@@ -52,12 +52,17 @@ local function handle_script_events(event)
       { position = {pos.x+ 1, pos.y+ 1}, name = "rabbasca-energetic-concrete" },
     }
     
-    if surface.create_entity {
+    local spawner = surface.create_entity {
       name = "rabbasca-vault-warp-spawner",
       position = pos,
       force = game.forces.rabbascans or game.forces.enemy,
       snap_to_grid = true,
-    } then surface.set_tiles(tiles) end
+    }
+    if not spawner then return end
+    surface.set_tiles(tiles)
+    for _, player in pairs(game.connected_players) do
+        player.add_alert(spawner, defines.alert_type.unclaimed_cargo)
+    end
   elseif effect_id == "rabbasca_teleport" then
     local engine = event.source_entity or event.target_entity
     local player = engine.player or engine.owner_location.player

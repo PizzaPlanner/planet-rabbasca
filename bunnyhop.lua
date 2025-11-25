@@ -62,7 +62,7 @@ local function recalc_bunnyhoppers()
 end
 
 function M.clear_bunnyhop_ui(player)
-    if not player.gui.screen.bunnyhop_ui then return end
+    if not (player and player.gui.screen.bunnyhop_ui) then return end
     player.gui.screen.bunnyhop_ui.destroy()
     recalc_bunnyhoppers()
     M.register_bunnyhop_handler()
@@ -195,9 +195,7 @@ function M.show_bunnyhop_ui(player, equipment)
       return 
     end
 
-    if player.gui.screen.bunnyhop_ui then
-        M.clear_bunnyhop_ui()
-    end
+    M.clear_bunnyhop_ui(player)
 
     local frame = player.gui.screen.add{
         type = "frame",

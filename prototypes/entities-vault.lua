@@ -58,14 +58,14 @@ spawner.created_effect = {
   }
 }
 spawner.resistances = {
-  { type = "physical", percent = 95 },
-  { type = "explosion", percent = 95 },
+  { type = "physical", percent = 90, decrease = 80,  },
+  { type = "explosion", percent = 85, decrease = 200, },
   { type = "fire", percent = 90 },
   { type = "poison", percent = 100 },
   { type = "acid", percent = 100 },
-  { type = "laser", percent = 70 },
-  { type = "electric", percent = 87 },
-  { type = "impact", percent = 90 },
+  { type = "laser", percent = 95, decrease = 15 },
+  { type = "electric", percent = 87, decrease = 40, },
+  { type = "impact", percent = 80 },
 }
 spawner.result_units = {
 { unit = "vault-defender-1", spawn_points = {
@@ -194,7 +194,7 @@ local vault_crafter = {
   disabled_when_recipe_not_researched = true,
   autoplace = { probability_expression = "rabbasca_vaults > 0.85", force = "neutral" },
   flags = { "placeable-player", "not-rotatable"},
-  allowed_effects = { "speed", "consumption", "pollution" },
+  allowed_effects = { "speed", "consumption", "pollution", "quality" },
   energy_source = {
     type = "burner",
     burner_usage = "food",
@@ -260,8 +260,8 @@ local pylon = util.merge{
   name = "rabbasca-vault-warp-spawner",
   icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon.png",
   icon_size = 64,
-  max_health = 1336, -- will be much higher due to evolution
-  healing_per_tick = -27 / second,
+  max_health = 2336, -- will be much higher due to evolution
+  healing_per_tick = -35 / second,
   spawning_cooldown = {4 * second, 2.5 * second},
   time_to_capture = 60 * second,
   max_count_of_owned_units = 16,
@@ -276,7 +276,7 @@ pylon.flags = { "placeable-enemy" }
 pylon.created_effect = nil
 pylon.resistances = {
   { type = "physical", percent = 99 },
-  { type = "explosion", percent = 20, decrease = 25 },
+  { type = "explosion", percent = 10, decrease = 80 },
   { type = "fire", percent = 100 },
   { type = "poison", percent = 100 },
   { type = "acid", percent = 100 },

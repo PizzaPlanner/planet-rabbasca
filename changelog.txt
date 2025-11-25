@@ -1,4 +1,16 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.7.4
+Date: 2025-11-25
+  Balancing:
+    - Quality modules can now be used in vaults
+    - Increased vault access console resistances
+    - Increased protection pylon max health. It will now stay around a bit longer
+---------------------------------------------------------------------------------------------------
+Version: 0.7.3
+Date: 2025-11-24
+  Bugfixes:
+    - Fixed crash when using bunnyhop engine
+---------------------------------------------------------------------------------------------------
 Version: 0.7.2
 Date: 2025-11-23
   Changes:
