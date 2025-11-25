@@ -144,8 +144,6 @@ local function on_charge_bunnyhop(event)
     storage.last_bunnyhops[cid] = storage.last_bunnyhops[cid] or {}
     storage.last_bunnyhops[cid][character.surface_index] = character.position
 
-    game.print(storage.last_bunnyhops[cid][character.surface_index])
-
     local offset = storage.last_bunnyhops[cid][surface.index]
     if not (offset and offset.x and offset.y) then offset = {x = 0, y = 0} end
     local radius = surface.get_starting_area_radius()
