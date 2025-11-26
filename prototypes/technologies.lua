@@ -24,11 +24,13 @@ data:extend {
     icons = PlanetsLib.technology_icon_moon("__rabbasca-assets__/graphics/recolor/technologies/rabbasca-big.png", 256),
     icon_size = 64,
     prerequisites = { "gun-turret", "power-armor" }, -- and planet discovery from parent in data-updates
-    effects = {{
+    effects = {
+      {
         type = "unlock-space-location",
         space_location = "rabbasca",
         use_icon_overlay_constant = true
-    }},
+      },
+    },
     unit = {
         count = 400,
         time = 60,
@@ -441,6 +443,10 @@ data:extend {
       },
       {
         type = "unlock-recipe",
+        recipe = "haronite-rocket-frame"
+      },
+      {
+        type = "unlock-recipe",
         recipe = "rocket-part-from-turbofuel"
       },
     },
@@ -483,7 +489,11 @@ data:extend {
     {
       type = "unlock-recipe",
       recipe = "rabbasca-warp-sequence-building",
-    }
+    },
+    {
+      type = "unlock-recipe",
+      recipe = "rabbasca-warp-sequence-tile",
+    },
   },
   level = 1,
   research_trigger = {
@@ -620,12 +630,8 @@ data:extend {
       },
       {
         type = "unlock-recipe",
-        recipe = "rabbasca-warp-sequence-tile",
+        recipe = "rabbasca-warp-sequence-module",
       },
-      -- {
-      --   type = "unlock-recipe",
-      --   recipe = "rabbasca-warp-sequence-module",
-      -- },
     },
     level = 2,
     unit = {

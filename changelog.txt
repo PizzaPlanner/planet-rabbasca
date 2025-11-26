@@ -8,21 +8,20 @@ Date: 2025-??-??
     - Haronite plate is now also a placeable foundation, providing energy to E.A.R.S. cores
     - Added upgrades to Protein shake, Turbofuel and Beta carotene made from purified harene, requiring promethium science to unlock
     - Added new late-game technology to extract warp pylons from vaults
-    - Warp pylons now also require this technology to warp in tiles
     - Total available power on Rabbasca can now be changed via setting
     - Vault protection pylons will now create alerts when spawned
-    - Railway expansion is now deprecated and the default for its setting changed. Other mods solve vehicle grids much better. It will be removed in a future update.
+    - Deprecated Railway expansion technology and changed the default for its setting. Other mods solve vehicle grids much better. It will be removed in a future update.
     - Reorganized API for other mods to interact with
   Balancing:
     - Reduced default total available power on Rabbasca to 30MW
-    - E.A.R.S. core technology 1 cost increased to 500. to compensate, Assembling machines with E.A.R.S. are available earlier
+    - E.A.R.S. core technology 1 cost increased to 500. to compensate, Assembling machine 1 and 2 with E.A.R.S. are available earlier
     - Quality modules can now be used in vaults
     - Increased vault access console resistances
     - Increased protection pylon max health. It will now stay around a bit longer
     - Warp pylon construction range now scales with quality at +60% per level (range indicator does not adjust though)
-    - Haronite plate now has a rocket capacity of 200
     - Rocket part from Turbofuel now requires a new item instead of haronite plate to keep the costs reasonable
     - Slightly reduced rocket launching speed of rocket silo with E.A.R.S. 
+    - Carotenoid now stacks to 20
 ---------------------------------------------------------------------------------------------------
 Version: 0.7.4
 Date: 2025-11-25

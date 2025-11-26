@@ -54,6 +54,10 @@ data:extend {
     {
         type = "recipe",
         name = "carbon-from-carotenoid",
+        icons = {
+            { icon = data.raw["item"]["carbon"].icon, icon_size = 64, scale = 0.8, shift = {6, 4} },
+            { icon = data.raw["item"]["carotenoid-ore"].icon, icon_size = 64, scale = 0.5, shift = {-6, -4} },
+        },
         energy_required = 7.0,
         enabled = false,
         ingredients = { 
@@ -406,6 +410,7 @@ data:extend {
             { type = "item", name = "plastic-bottle", amount = 1, probability = 0.03 },
         },
         allow_quality = false,
+        hide_from_player_crafting = true,
         subgroup = "rabbasca-processes",
         category = "crafting-with-fluid",
         order = "r[alternate-uses]-[skimming]"

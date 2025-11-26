@@ -54,8 +54,10 @@ data:extend {
 },
 {
     type = "item",
-    icon = "__Krastorio2Assets__/icons/items/imersium-plate.png",
-    icon_size = 64,
+    icons = {
+        { icon = data.raw["item"]["low-density-structure"].icon, icon_size = 64, scale = 0.8, shift = {6, 4} },
+        { icon = "__Krastorio2Assets__/icons/items/imersium-plate.png", icon_size = 64, scale = 0.5, shift = {-6, -4} },
+    },
     name = "haronite-rocket-frame",
     stack_size = 50,
     weight = 20*kg,
@@ -110,7 +112,6 @@ data:extend {
       {
         name = {"tooltip.bunnyhop-engine-weight-multiplier"},
         value = {"tooltip-value.bunnyhop-engine-weight-multiplier", "100"},
-        -- show_in_tooltip = false,
         quality_header = "quality-tooltip.increases",
         quality_values = { },
       }
@@ -209,7 +210,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
     icon = "__rabbasca-assets__/graphics/recolor/icons/carotenoid.png",
     icon_size = 64,
     name = "carotenoid-ore",
-    stack_size = 5,
+    stack_size = 20,
     weight = 100 * kg,
     subgroup = "rabbasca-processes",
     order = "a[raw-resource]-a[carotenoid]",

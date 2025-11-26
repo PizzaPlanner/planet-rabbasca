@@ -77,6 +77,14 @@ data:extend {
       sprite = data.raw["utility-sprites"]["default"].construction_radius_visualization,
       distance = RECEIVER_RADIUS,
     },
+    custom_tooltip_fields = {
+      {
+        name = {"tooltip.rabbasca-warp-pylon-range"},
+        value = {"tooltip-value.rabbasca-warp-pylon-range", "21"},
+        quality_header = "quality-tooltip.increases",
+        quality_values = { },
+      }
+    },
     created_effect = {
       type = "direct",
       action_delivery =
@@ -182,15 +190,6 @@ data:extend {
       place_result = "rabbasca-warp-pylon",
       subgroup = "space-interactors",
       order = "c[cargo-landing-pad]-r[rabbasca-warp-pylon]",
-      custom_tooltip_fields = {
-        {
-          name = {"tooltip.rabbasca-warp-pylon-range"},
-          value = {"tooltip-value.rabbasca-warp-pylon-range", "21"},
-          -- show_in_tooltip = false,
-          quality_header = "quality-tooltip.increases",
-          quality_values = { },
-        }
-      }
   },
   {
     type = "item",
@@ -249,10 +248,13 @@ data:extend {
 {
     type = "recipe",
     name = "rabbasca-warp-sequence-building",
-    icon = "__rabbasca-assets__/graphics/icons/warp.png",
+    icons = {
+      { icon = "__rabbasca-assets__/graphics/icons/warp.png", icon_size = 64 },
+      { icon = data.raw["entity-ghost"]["entity-ghost"].icon, icon_size = 64, scale = 0.25, shift = { 8, 8 } },
+    },
     enabled = false,
     -- hidden = true,
-    hidden_in_factoriopedia = true,
+    -- hidden_in_factoriopedia = true,
     hide_from_player_crafting = true,
     result_is_always_fresh = true,
     energy_required = 1,
@@ -265,10 +267,13 @@ data:extend {
 {
     type = "recipe",
     name = "rabbasca-warp-sequence-tile",
-    icon = "__rabbasca-assets__/graphics/icons/warp.png",
+    icons = {
+      { icon = "__rabbasca-assets__/graphics/icons/warp.png", icon_size = 64 },
+      { icon = data.raw["tile-ghost"]["tile-ghost"].icon, icon_size = 64, scale = 0.25, shift = { 8, 8 } },
+    },
     enabled = false,
     -- hidden = true,
-    hidden_in_factoriopedia = true,
+    -- hidden_in_factoriopedia = true,
     hide_from_player_crafting = true,
     result_is_always_fresh = true,
     energy_required = 1,
@@ -281,10 +286,13 @@ data:extend {
 {
     type = "recipe",
     name = "rabbasca-warp-sequence-module",
-    icon = "__rabbasca-assets__/graphics/icons/warp.png",
+    icons = {
+      { icon = "__rabbasca-assets__/graphics/icons/warp.png", icon_size = 64 },
+      { icon = data.raw["item-request-proxy"]["item-request-proxy"].icon, icon_size = 64, scale = 0.25, shift = { 8, 8 } },
+    },
     enabled = false,
     -- hidden = true,
-    hidden_in_factoriopedia = true,
+    -- hidden_in_factoriopedia = true,
     hide_from_player_crafting = true,
     result_is_always_fresh = true,
     energy_required = 1,
