@@ -57,5 +57,6 @@ If you provoke the local defense protocols hard enough, they might start warping
 
 ## Credits
 This mod relies on the amazing work of other creators. Thanks for making Rabbasca possible.
+- Assets for Cryo-container by [Malcolm Riley](https://github.com/malcolmriley/unused-renders)
 - Assets for Machining Assembler, Vault Pylons and Interplanetary cargo landing pad by [Hurricane](https://mods.factorio.com/user/Hurricane046) 
 - Assets for Vault, Vault console, and Vault access cards from [Krastorio 2](https://mods.factorio.com/mod/Krastorio2Assets)

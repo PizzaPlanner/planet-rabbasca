@@ -38,7 +38,7 @@ data:extend {
     weight = 50 * kg,
     subgroup = "rabbasca-processes",
     order = "h[haronite]-d[haronite-plate]",
-    place_as_tile = { result = "haronite-plate", condition = { layers = { } }, condition_size = 1 },
+    place_as_tile = { result = "haronite-plate", condition = { layers = { out_of_map = true } }, condition_size = 1 },
     destroyed_by_dropping_trigger = {
       type = "direct",
       action_delivery = {
@@ -314,7 +314,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
 {
     type = "item",
     name = "harene-cryo-container-empty",
-    icon = "__rabbasca-assets__/graphics/recolor/icons/plastic-bottle.png",
+    icon = "__rabbasca-assets__/graphics/by-malcolmriley/part-fuel-rod.png",
     icon_size = 64,
     stack_size = 10,
     weight = 25 * kg,
@@ -324,10 +324,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
 {
     type = "item",
     name = "harene-cryo-container-filled",
-    icons = {
-      { icon = "__rabbasca-assets__/graphics/recolor/icons/plastic-bottle.png", icon_size = 64 },
-      { icon = "__rabbasca-assets__/graphics/recolor/icons/harenic-lava.png", icon_size = 64, scale = 0.5 },
-    },
+    icon = "__rabbasca-assets__/graphics/by-malcolmriley/part-fuel-rod-2.png",
     icon_size = 64,
     stack_size = 10,
     weight = 50 * kg,

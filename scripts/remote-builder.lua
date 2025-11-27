@@ -1,7 +1,5 @@
-local RECEIVER_RADIUS = 21
-
 local function get_radius(quality_level)
-    return RECEIVER_RADIUS * (1 + (quality_level - 1) * 0.6)
+    return Rabbasca.warp_radius * (1 + (quality_level - 1) * 0.6)
 end
 
 local function awake(receiver)
@@ -45,6 +43,28 @@ local status_ok = {
     label = { "entity-status.rabbasca-warp-ok" }
 }
 
+local function try_deconstruct(entity)
+    if not entity.valid then return false, status_invalid_target end
+    if not entity.is_registered_for_deconstruction() then return false, status_invalid_target end
+    local proto = entity.prototype
+    if not (proto.items_to_place_this and #proto.items_to_place_this > 0) then return false, status_invalid_target end
+    if not (storage.rabbasca_remote_builder and storage.rabbasca_remote_builder.valid) then
+        local builders = (game.surfaces.rabbasca and game.surfaces.rabbasca.find_entities_filtered{name = "rabbasca-warp-cargo-pad"}) or { }
+        if #builders > 0 then
+            storage.rabbasca_remote_builder = builders[1]
+        else
+            return false, status_no_builder
+        end
+    end
+    local builder = storage.rabbasca_remote_builder
+
+    local to_place = proto.items_to_place_this[1]
+    local name, count, quality = to_place.name, to_place.count, entity.quality.name
+    local item_with_quality = { name = name, quality = quality }
+    game.print("TODO: Deconstruct "..entity.name)
+    return false
+end
+
 local function try_build_ghost(entity)
     if not entity.valid then return false, status_invalid_target end
     if not entity.is_registered_for_construction() then return false, status_invalid_target end
@@ -52,7 +72,7 @@ local function try_build_ghost(entity)
         return false, status_invalid_target
     end
     local proto = entity.ghost_prototype
-    if not (proto.items_to_place_this and #proto.items_to_place_this > 0) then return end
+    if not (proto.items_to_place_this and #proto.items_to_place_this > 0) then return false, status_invalid_target end
     if not (storage.rabbasca_remote_builder and storage.rabbasca_remote_builder.valid) then
         local builders = (game.surfaces.rabbasca and game.surfaces.rabbasca.find_entities_filtered{name = "rabbasca-warp-cargo-pad"}) or { }
         if #builders > 0 then
@@ -112,9 +132,9 @@ end
 
 local M = {}
 
-function M.attempt_warmup(pylon, radius)
+function M.attempt_warmup(pylon, radius, i)
     local position = pylon.position
-    if pylon.force.recipes["rabbasca-warp-sequence-tile"].enabled then
+    if i ~= 1 and pylon.force.recipes["rabbasca-warp-sequence-tile"].enabled then
         local ghosts = pylon.surface.count_entities_filtered {
             area = {
                 {position.x - radius, position.y - radius},
@@ -128,7 +148,7 @@ function M.attempt_warmup(pylon, radius)
             return true
         end
     end
-    if pylon.force.recipes["rabbasca-warp-sequence-building"].enabled then
+    if i ~= 2 and pylon.force.recipes["rabbasca-warp-sequence-building"].enabled then
         local ghosts = pylon.surface.count_entities_filtered {
             area = {
                 {position.x - radius, position.y - radius},
@@ -142,28 +162,60 @@ function M.attempt_warmup(pylon, radius)
             return true
         end
     end
-    -- if pylon.force.recipe["rabbasca-warp-sequence-module"].enabled then
-    --     local ghosts = pylon.surface.count_entities_filtered {
-    --         area = {
-    --             {position.x - radius, position.y - radius},
-    --             {position.x + radius, position.y + radius}
-    --         },
-    --         name = { }
-    --     }
-    --     if ghosts > 0 then
-    --         pylon.set_recipe("rabbasca-warp-sequence-module")
-    --         pylon.recipe_locked = true
-    --         return true
-    --     end
-    -- end
+    if i ~= 3 and pylon.force.recipe["rabbasca-warp-sequence-module"].enabled then
+        local ghosts = pylon.surface.count_entities_filtered {
+            area = {
+                {position.x - radius, position.y - radius},
+                {position.x + radius, position.y + radius}
+            },
+            name = { "item-request-proxy" }
+        }
+        if ghosts > 0 then
+            pylon.set_recipe("rabbasca-warp-sequence-module")
+            pylon.recipe_locked = true
+            return true
+        end
+    end
+    if i ~= 4 and pylon.force.recipe["rabbasca-warp-sequence-reverse"].enabled then
+        local ghosts = pylon.surface.count_entities_filtered {
+            area = {
+                {position.x - radius, position.y - radius},
+                {position.x + radius, position.y + radius}
+            },
+            to_be_deconstructed = true,
+        }
+        if ghosts > 0 then
+            pylon.set_recipe("rabbasca-warp-sequence-reverse")
+            pylon.recipe_locked = true
+            return true
+        end
+    end
+    pylon.set_recipe("rabbasca-remote-warmup")
+    pylon.recipe_locked = true
     return false
+end
+
+function M.attempt_deconstruct(pylon, radius)
+    local position = pylon.position
+    local ghosts = pylon.surface.find_entities_filtered{
+        area = {
+            {position.x - radius, position.y - radius},
+            {position.x + radius, position.y + radius}
+        },
+        to_be_deconstructed = true,
+    }
+    for _, ghost in pairs(ghosts) do
+        local result, status = try_deconstruct(ghost)
+        pylon.custom_status = status
+        if result then return end
+    end
+    M.attempt_warmup(pylon, radius, 4)
 end
 
 function M.attempt_module(pylon, radius)
     local position = pylon.position
     -- TODO: Not yet implemented
-    pylon.set_recipe("rabbasca-remote-warmup")
-    pylon.recipe_locked = true
+    M.attempt_warmup(pylon, radius, 3)
 end
 
 function M.attempt_building(pylon, radius)
@@ -180,7 +232,7 @@ function M.attempt_building(pylon, radius)
         pylon.custom_status = status
         if result then return end
     end
-    M.attempt_module(pylon, radius)
+    M.attempt_warmup(pylon, radius, 2)
 end
 
 function M.attempt_tile(pylon, radius)
@@ -197,7 +249,7 @@ function M.attempt_tile(pylon, radius)
         pylon.custom_status = status
         if result then return end
     end
-    M.attempt_building(pylon, radius)
+    M.attempt_warmup(pylon, radius, 1)
 end
 
 function M.attempt_build_ghost(pylon)
@@ -213,6 +265,8 @@ function M.attempt_build_ghost(pylon)
         M.attempt_tile(pylon, radius)
     elseif recipe == "rabbasca-warp-sequence-module" then
         M.attempt_module(pylon, radius)
+    elseif recipe == "rabbasca-warp-sequence-reverse" then
+        M.attempt_deconstruct(pylon, radius)
     end
 end
 
@@ -259,6 +313,10 @@ script.on_event(build_events, function(event)
   elseif event.entity.name == "entity-ghost" and event.entity.ghost_prototype then
     awake_receivers(event.entity)
   end
+end)
+
+script.on_event(defines.events.on_marked_for_deconstruction, function(event)
+
 end)
 
 local removal_events = {

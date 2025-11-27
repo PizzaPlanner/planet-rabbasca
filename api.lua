@@ -2,6 +2,7 @@ if Rabbasca then return end
 
 Rabbasca = { 
     bunnyhop = { }
+    warp_radius = 20
 }
 
 -- shorthands for settings

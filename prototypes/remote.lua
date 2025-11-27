@@ -1,7 +1,5 @@
 require("__quality__.prototypes.recycling")
 
-local RECEIVER_RADIUS = 21 -- Also in scripts/remote-builder.lua. Should be unified sometime.
-
 local hatch = { 
   cargo_unit_entity_to_spawn = "rabbasca-warp-sequence", 
   receiving_cargo_units = {},
@@ -75,7 +73,7 @@ data:extend {
     tile_buildability_rules = { Rabbasca.ears_flooring_rule({{-0.8, -0.8}, {0.8, 0.8}}) },
     radius_visualisation_specification = {
       sprite = data.raw["utility-sprites"]["default"].construction_radius_visualization,
-      distance = RECEIVER_RADIUS,
+      distance = Rabbasca.warp_radius,
     },
     custom_tooltip_fields = {
       {
@@ -301,6 +299,25 @@ data:extend {
     main_product = "rabbasca-warp-sequence",    
     category = "rabbasca-remote",
     crafting_machine_tint = {primary = {2, 2, 2}}
+},
+{
+    type = "recipe",
+    name = "rabbasca-warp-sequence-reverse",
+    icons = {
+      { icon = "__rabbasca-assets__/graphics/icons/warp.png", icon_size = 64 },
+      { icon = data.raw["deconstruction-item"]["deconstruction-planner"].icon, icon_size = 64, scale = 0.25, shift = { 8, 8 } },
+    },
+    enabled = false,
+    -- hidden = true,
+    -- hidden_in_factoriopedia = true,
+    hide_from_player_crafting = true,
+    result_is_always_fresh = true,
+    energy_required = 1,
+    ingredients = { },
+    results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1 } },
+    main_product = "rabbasca-warp-sequence",    
+    category = "rabbasca-remote",
+    crafting_machine_tint = {primary = {2, 0, 0}}
 },
 {
     type = "recipe",

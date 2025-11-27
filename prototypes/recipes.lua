@@ -309,7 +309,8 @@ data:extend {
         allow_productivity = true,
         result_is_always_fresh = true,
         subgroup = "nauvis-agriculture",
-        order = "b[nauvis-agriculture]-b[turbofish-breeding]"
+        order = "b[nauvis-agriculture]-b[turbofish-breeding]",
+        auto_recycle = false,
     },
     {
         type = "recipe",

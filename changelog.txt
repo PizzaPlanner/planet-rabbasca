@@ -18,10 +18,12 @@ Date: 2025-??-??
     - Quality modules can now be used in vaults
     - Increased vault access console resistances
     - Increased protection pylon max health. It will now stay around a bit longer
-    - Warp pylon construction range now scales with quality at +60% per level (range indicator does not adjust though)
+    - Warp pylon construction range now scales with quality (range indicator does not adjust though)
     - Rocket part from Turbofuel now requires a new item instead of haronite plate to keep the costs reasonable
     - Slightly reduced rocket launching speed of rocket silo with E.A.R.S. 
     - Carotenoid now stacks to 20
+  Bugfixes:
+    - Fixed Turbofish recycling yielding Protein Shakes
 ---------------------------------------------------------------------------------------------------
 Version: 0.7.4
 Date: 2025-11-25
