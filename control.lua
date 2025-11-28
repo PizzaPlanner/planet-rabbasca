@@ -63,12 +63,6 @@ local function handle_script_events(event)
     for _, player in pairs(game.connected_players) do
         player.add_custom_alert(spawner, { type = "entity", name = "rabbasca-vault-warp-spawner" }, { "rabbasca-extra.alert-enemy-spawner" }, true)
     end
-  elseif effect_id == "rabbasca_haronite_plate_drop" then
-    local position = event.target_position or event.source_position
-    if not position then return end
-    local surface = game.surfaces[event.surface_index]
-    position = { x = math.floor(position.x), y = math.floor(position.y) }
-    surface.set_tiles({ { name = "haronite-plate", position = position } })
   elseif effect_id == "rabbasca_teleport" then
     local engine = event.source_entity or event.target_entity
     local player = engine.player or engine.owner_location.player

@@ -260,7 +260,7 @@ data:extend {
     results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1 } },
     main_product = "rabbasca-warp-sequence",    
     category = "rabbasca-remote",
-    crafting_machine_tint = {primary = {2, 2, 2}}
+    crafting_machine_tint = {primary = {1, 1, 1}}
 },
 {
     type = "recipe",
@@ -279,7 +279,7 @@ data:extend {
     results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1 } },
     main_product = "rabbasca-warp-sequence",    
     category = "rabbasca-remote",
-    crafting_machine_tint = {primary = {2, 2, 2}}
+    crafting_machine_tint = {primary = {1, 0.6, 1}}
 },
 {
     type = "recipe",
@@ -298,7 +298,7 @@ data:extend {
     results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1 } },
     main_product = "rabbasca-warp-sequence",    
     category = "rabbasca-remote",
-    crafting_machine_tint = {primary = {2, 2, 2}}
+    crafting_machine_tint = {primary = {1, 1, 0.7}}
 },
 {
     type = "recipe",
@@ -317,7 +317,7 @@ data:extend {
     results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1 } },
     main_product = "rabbasca-warp-sequence",    
     category = "rabbasca-remote",
-    crafting_machine_tint = {primary = {2, 0, 0}}
+    crafting_machine_tint = {primary = {1, 0.3, 0.3}}
 },
 {
     type = "recipe",

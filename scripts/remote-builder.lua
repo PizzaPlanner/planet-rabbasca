@@ -44,8 +44,13 @@ local status_ok = {
 }
 
 local function try_deconstruct(entity)
+    if not entity.to_be_deconstructed() then return false, status_invalid_target end
+    local is_tile = false
+    if entity.name == "deconstructible-tile-proxy" then
+        entity = entity.surface.get_tile(entity.position.x, entity.position.y)
+        is_tile = true
+    end
     if not entity.valid then return false, status_invalid_target end
-    if not entity.is_registered_for_deconstruction() then return false, status_invalid_target end
     local proto = entity.prototype
     if not (proto.items_to_place_this and #proto.items_to_place_this > 0) then return false, status_invalid_target end
     if not (storage.rabbasca_remote_builder and storage.rabbasca_remote_builder.valid) then
@@ -59,9 +64,25 @@ local function try_deconstruct(entity)
     local builder = storage.rabbasca_remote_builder
 
     local to_place = proto.items_to_place_this[1]
-    local name, count, quality = to_place.name, to_place.count, entity.quality.name
+    local name, count, quality = to_place.name, to_place.count, (is_tile and "normal") or entity.quality
     local item_with_quality = { name = name, quality = quality }
-    game.print("TODO: Deconstruct "..entity.name)
+    
+    local inserted = builder.get_inventory(defines.inventory.chest).insert({name = name, count = count, quality = quality})
+    if inserted == count then
+        if is_tile then
+            local hidden = entity.hidden_tile
+            local hidden_2 = entity.double_hidden_tile
+            local surface = entity.surface
+            local pos = entity.position
+            surface.set_tiles({{position = pos, name = hidden or "out-of-map"}})
+            surface.set_hidden_tile(pos, hidden_2)
+            surface.set_double_hidden_tile(pos, nil)
+        else
+            entity.destroy{}
+        end
+        return true
+    end
+    builder.get_inventory(defines.inventory.chest).remove({name = name, quality = quality, count = inserted})
     return false
 end
 
@@ -162,7 +183,7 @@ function M.attempt_warmup(pylon, radius, i)
             return true
         end
     end
-    if i ~= 3 and pylon.force.recipe["rabbasca-warp-sequence-module"].enabled then
+    if i ~= 3 and pylon.force.recipes["rabbasca-warp-sequence-module"].enabled then
         local ghosts = pylon.surface.count_entities_filtered {
             area = {
                 {position.x - radius, position.y - radius},
@@ -176,7 +197,7 @@ function M.attempt_warmup(pylon, radius, i)
             return true
         end
     end
-    if i ~= 4 and pylon.force.recipe["rabbasca-warp-sequence-reverse"].enabled then
+    if i ~= 4 and pylon.force.recipes["rabbasca-warp-sequence-reverse"].enabled then
         local ghosts = pylon.surface.count_entities_filtered {
             area = {
                 {position.x - radius, position.y - radius},

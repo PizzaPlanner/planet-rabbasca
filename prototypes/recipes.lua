@@ -116,7 +116,7 @@ data:extend {
         energy_required = 10,
         ingredients = { 
             {type = "item",  name = "tungsten-plate", amount = 15 },
-            {type = "item",  name = "haronite-plate", amount = 2 },
+            {type = "item",  name = "holmium-plate", amount = 20 },
             {type = "item",  name = "low-density-structure", amount = 4 },
             {type = "item",  name = "carbon-fiber", amount = 5 },
         },

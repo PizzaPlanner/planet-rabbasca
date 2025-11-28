@@ -1,7 +1,7 @@
 if Rabbasca then return end
 
 Rabbasca = { 
-    bunnyhop = { }
+    bunnyhop = { },
     warp_radius = 20
 }
 

@@ -476,13 +476,6 @@ data:extend {
             apply_projection = false,
             tile_collision_mask = { layers={out_of_map=true} }
           },
-          {
-            type = "set-tile",
-            tile_name = "haronite-plate",
-            radius = 1,
-            apply_projection = false,
-            tile_collision_mask = { layers={out_of_map=true} }
-          },
         }
       }
       }
