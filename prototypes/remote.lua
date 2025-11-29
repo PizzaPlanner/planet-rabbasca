@@ -67,6 +67,7 @@ data:extend {
     },
     energy_usage = "1MW",
     crafting_speed = 1,
+    crafting_speed_quality_multiplier = { }, -- filled in final-fixes
     energy_source = { type = "void" },
     collision_box = {{-0.8, -0.8}, {0.8, 0.8}},
     selection_box = {{-1, -1}, {1, 1}},
