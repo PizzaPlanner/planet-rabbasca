@@ -52,6 +52,18 @@ pad.surface_conditions = { Rabbasca.above_harenic_threshold() }
 
 data:extend {
   pad,
+  util.merge {
+    data.raw["entity-ghost"]["entity-ghost"],
+    {
+      name = "entity-ghost-warpin"
+    }
+  },
+  util.merge {
+    data.raw["tile-ghost"]["tile-ghost"],
+    {
+      name = "tile-ghost-warpin"
+    }
+  },
   {
     type = "assembling-machine",
     name = "rabbasca-warp-pylon",

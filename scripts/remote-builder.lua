@@ -1,5 +1,29 @@
 local function awake(receiver)
-    if receiver.valid and receiver.get_recipe() == nil and receiver.surface.planet then
+    if not (receiver.valid and receiver.surface.planet) then return end
+
+    local radius = Rabbasca.get_warp_radius(receiver.quality)
+    for _, ghost in pairs(receiver.surface.find_entities_filtered{
+        name = { "entity-ghost", "tile-ghost" },
+        position = receiver.position,
+        radius = radius
+    }) do 
+        local e = receiver.surface.create_entity{
+            name = ghost.name.."-warpin",
+            position = ghost.position,
+            quality = ghost.quality,
+            fast_replace = true,
+            player = #receiver.force.players > 0 and receiver.force.players[1],
+            cause = receiver,
+            inner_name = ghost.ghost_name,
+            tags = ghost.tags
+        }
+        if e then 
+            game.print(e.gps_tag)
+            ghost.destroy{}
+        end
+    end
+
+    if receiver.get_recipe() == nil then
         receiver.set_recipe("rabbasca-remote-warmup")
         receiver.recipe_locked = true
     end
