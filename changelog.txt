@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.8.5
+Date: 2025-12-09
+  Changes:
+    - Warp pylon maximum range is now 120 due to performance reasons
+    - Added a setting to make harene crafting chain easier
+---------------------------------------------------------------------------------------------------
 Version: 0.8.4
 Date: 2025-12-06
   Balancing:
