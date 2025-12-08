@@ -351,13 +351,12 @@ end
 local function remote_wake_handler(event)
     script.on_nth_tick(1, nil)
     if not (storage.remote_wake_surface and storage.remote_wake_surface.valid) then return end
-    local radius = Rabbasca.get_warp_radius(hightest_quality) -- TODO: Does not account for custom qualities
+    local radius = Rabbasca.get_warp_radius(hightest_quality)
     local area = storage.remote_wake_area
     area = {
         {area.left_top.x - radius, area.left_top.y - radius},
         {area.right_bottom.x + radius, area.right_bottom.y + radius}
     }
-    -- game.print(string.format("[gps=%i,%i,%s]::[gps=%i,%i,%s]", area[1][1], area[1][2], storage.remote_wake_surface.name, area[2][1], area[2][2], storage.remote_wake_surface.name))
     local receivers = storage.remote_wake_surface.find_entities_filtered{
         area = area,
         name = "rabbasca-warp-pylon",
@@ -391,18 +390,18 @@ end
 
 script.on_event(build_events, function(event)
   if not event.entity.valid then return end
-  if event.entity.name == "rabbasca-warp-cargo-pad" then
+  if event.entity.name == "entity-ghost" 
+  or event.entity.name == "tile-ghost" then
+    update_wake_area(event.entity, event.tick)
+elseif event.entity.name == "item-request-proxy" and event.entity.proxy_target then
+    update_wake_area(event.entity.proxy_target, event.tick)
+    elseif event.entity.name == "rabbasca-warp-cargo-pad" then
     storage.rabbasca_remote_builder = event.entity -- Only one allowed for simplicity
     for _, surface in pairs(game.surfaces) do
         for _, receiver in pairs(surface.find_entities_filtered{name = "rabbasca-warp-pylon"}) do
             awake(receiver)
         end
     end
-  elseif event.entity.name == "entity-ghost" 
-      or event.entity.name == "tile-ghost" then
-    update_wake_area(event.entity, event.tick)
-  elseif event.entity.name == "item-request-proxy" and event.entity.proxy_target then
-    update_wake_area(event.entity.proxy_target, event.tick)
   end
 end)
 

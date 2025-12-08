@@ -8,7 +8,7 @@ Rabbasca = {
 function Rabbasca.is_aps_planet() return settings.startup["aps-planet"] and settings.startup["aps-planet"].value == "rabbasca" end
 function Rabbasca.parent() return settings.startup["rabbasca-orbits"].value end
 function Rabbasca.surface_megawatts() return settings.startup["rabbasca-surface-megawatts"].value end
-function Rabbasca.get_warp_radius(quality) return (quality and (1 + quality.level * 0.5) or 1) * 20 end
+function Rabbasca.get_warp_radius(quality) return math.min(120, (quality and (1 + quality.level * 0.5) or 1) * 20) end
 
 if not data then return end
 
