@@ -2,7 +2,7 @@ data:extend {
   {
     type = "item-subgroup",
     name = "unknown-with-ears-core" ,
-    group = "rabbasca-extensions",
+    group = data.raw["item-group"]["rabbasca-extensions"] and "rabbasca-extensions" or "production",
     order = "zz[unknown]"
   }
 }

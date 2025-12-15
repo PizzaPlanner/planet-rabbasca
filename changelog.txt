@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.8.5
+Date: 2025-12-08
+  Changes:
+    - Warp pylon maximum range is now 120 due to performance reasons (reached at quality level 10)
+    - Added a setting to make harene crafting chain easier
+    - Added a setting to place E.A.R.S. variants next to their source items in UIs
+---------------------------------------------------------------------------------------------------
 Version: 0.8.4
 Date: 2025-12-06
   Balancing:

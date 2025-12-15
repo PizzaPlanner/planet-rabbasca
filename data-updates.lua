@@ -24,6 +24,12 @@ local flamethrower_fluids = data.raw["fluid-turret"]["flamethrower-turret"].atta
 table.insert(flamethrower_fluids, {type = "energetic-residue", damage_modifier = 0.15})
 table.insert(flamethrower_fluids, {type = "harenic-lava", damage_modifier = 2})
 
+if settings.startup["rabbasca-harene-easy-mode"].value then
+  data.raw["recipe"]["harene"].surface_conditions = nil
+  data.raw["recipe"]["harene-cryo-container-empty"].surface_conditions = nil
+  data.raw["recipe"]["harene-cryo-container-filled"].surface_conditions = nil
+end
+
 require("scripts.not-on-my-lawn")
 require("scripts.machine-assembly")
 require("scripts.create-ears-variants")

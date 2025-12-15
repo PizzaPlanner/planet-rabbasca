@@ -134,7 +134,7 @@ function create_infused_thing_with_effect(original, needed_core)
             table.deepcopy(data.raw["item-subgroup"][item.subgroup]),
             { 
                 name = new_item.subgroup,
-                group = "rabbasca-extensions" 
+                group = data.raw["item-group"]["rabbasca-extensions"] and "rabbasca-extensions" or nil 
             }
         } }
     end

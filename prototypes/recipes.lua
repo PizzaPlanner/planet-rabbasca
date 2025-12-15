@@ -1,17 +1,26 @@
 require("__planet-rabbasca__.scripts.vault-recipes")
 
+if settings.startup["rabbasca-no-extra-category"].value == false then
+data:extend {
+    {
+        type = "item-group",
+        name = "rabbasca-extensions",
+        icons = {{
+            icon = data.raw["item"]["harene-ears-core"].icon,
+            icon_size = 64,
+            scale = 0.7
+        }},
+        order = "fr"
+    },
+}
+end
+
 data:extend {
     {
         type = "item-subgroup",
         name = "rabbasca-processes",
         group = "intermediate-products",
         order = data.raw["item-subgroup"]["fulgora-processes"].name .."-b"
-    },
-    {
-        type = "item-subgroup",
-        name = "rabbasca-vault-access",
-        group = "rabbasca-extensions",
-        order = "z"
     },
     {
         type = "item-subgroup",
@@ -22,18 +31,8 @@ data:extend {
     {
         type = "item-subgroup",
         name = "rabbasca-vault-extraction",
-        group = "rabbasca-extensions",
+        group = data.raw["item-group"]["rabbasca-extensions"] and "rabbasca-extensions" or "combat",
         order = "a"
-    },
-    {
-        type = "item-group",
-        name = "rabbasca-extensions",
-        icons = {{
-            icon = data.raw["item"]["harene-ears-core"].icon,
-            icon_size = 64,
-            scale = 0.7
-        }},
-        order = "fr"
     },
     {
         type = "recipe-category",
