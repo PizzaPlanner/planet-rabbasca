@@ -1,6 +1,7 @@
 -- Some globals black magic or something happening here, required for water borders
 table.insert(water_tile_type_names, "rabbasca-harenic-sludge")
 table.insert(water_tile_type_names, "harenic-lava")
+table.insert(out_of_map_tile_type_names, "rabbasca-underground-out-of-map")
 
 local lava_effect = util.merge { data.raw["tile-effect"]["lava"],
 {
