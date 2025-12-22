@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.8.6
+Date: 2025-12-22
+  Changes:
+    - Harenic lava and harenic sludge can now be covered by foundations
+    - Newly generated access consoles will no longer be auto-targeted by your weapons
+---------------------------------------------------------------------------------------------------
 Version: 0.8.5
 Date: 2025-12-08
   Changes:

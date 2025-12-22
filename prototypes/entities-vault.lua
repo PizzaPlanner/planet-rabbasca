@@ -252,6 +252,7 @@ local vault_crafter = {
           type = "create-entity",
           entity_name = "rabbasca-vault-spawner",
           offsets = {{2, 2.2}},
+          protected = true,
         },
       }
     } 
