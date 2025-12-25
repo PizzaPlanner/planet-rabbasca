@@ -9,6 +9,7 @@ function Rabbasca.is_aps_planet() return settings.startup["aps-planet"] and sett
 function Rabbasca.parent() return settings.startup["rabbasca-orbits"].value end
 function Rabbasca.surface_megawatts() return settings.startup["rabbasca-surface-megawatts"].value end
 function Rabbasca.get_warp_radius(quality) return math.min(120, (quality and (1 + quality.level * 0.5) or 1) * 20) end
+function Rabbasca.high_energy_device_threshold() return "5MW" end
 
 if not data then return end
 
@@ -85,7 +86,7 @@ data:extend{
 }
 end
 
-function create_infused_thing_with_effect(original, needed_core)
+function create_infused_thing_with_effect(original, extra_cost)
     if original.no_ears_upgrade or original.hidden then return nil end 
     local item = data.raw["item"][original.name]
     -- TODO: should no subgroup be supported? 
@@ -146,10 +147,9 @@ function create_infused_thing_with_effect(original, needed_core)
         name = new_name,
         enabled = false,
         energy_required = 30,
-        ingredients = {
-            { type = "item", name = needed_core, amount = 1 },
-            { type = "fluid", name = "harene-gas", amount = needed_core == "harene-ears-core" and 50 or 3 },
-            { type = "item", name = original.name, amount = 1},
+        ingredients = util.merge {
+            extra_cost,
+            { { type = "item", name = original.name, amount = 1 } },
         },
         results = { { type = "item", name = new_name, amount = 1 } },
         main_product = new_name,
@@ -163,8 +163,8 @@ end
 
 -- set prototype.no_ears_upgrade = true to skip ears variant creation
 -- should be called in data-updates or later to ensure crafter item exists
-function Rabbasca.create_ears_variant(thing, tech, is_small)
-    local new_thing = create_infused_thing_with_effect(thing, (is_small and "harene-ears-subcore") or "harene-ears-core")
+function Rabbasca.create_ears_variant(thing, tech, extra_cost)
+    local new_thing = create_infused_thing_with_effect(thing, extra_cost)
     if new_thing and data.raw["technology"][tech] then
         local unlocks = data.raw["technology"][tech].effects
         table.insert(unlocks,       

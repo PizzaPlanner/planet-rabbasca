@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.8.7
+Date: 2025-12-25
+  Changes:
+    - Fixed some instances where E.A.R.S. variants for labs accepted different inputs than the original
+  Balancing:
+    - E.A.R.S. variants for machines with more than 5MW of energy usage now require E.A.R.S. Core 3 technology to unlock
+    - Variants unlocked by E.A.R.S. Core 3 technology now require harene to craft and take two cores instead of one
+---------------------------------------------------------------------------------------------------
 Version: 0.8.6
 Date: 2025-12-22
   Changes:

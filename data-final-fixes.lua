@@ -17,5 +17,7 @@ for _, damage in pairs(data.raw["damage-type"]) do
   table.insert(vault_core.resistances, { type = damage.name, percent = 100 })
 end
 
+require("scripts.create-ears-variants")
+
 require("__planet-rabbasca__.compatibility.muluna-final-fixes")
 require("__planet-rabbasca__.compatibility.pelagos-final-fixes")
