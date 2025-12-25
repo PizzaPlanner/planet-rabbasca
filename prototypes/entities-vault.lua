@@ -252,6 +252,7 @@ local vault_crafter = {
           type = "create-entity",
           entity_name = "rabbasca-vault-spawner",
           offsets = {{2, 2.2}},
+          protected = true,
         },
       }
     } 
@@ -368,6 +369,10 @@ local vault_core = util.merge{
   selection_box = {{-0.5, -1},{1, 1}},
   order = "r[rabbasca]-x",
 }}
+vault_core.collision_mask = { 
+  layers = { }, 
+  colliding_with_tiles_only = true,
+}
 vault_core.flags = { "placeable-neutral", "placeable-off-grid" }
 vault_core.minable = nil
 vault_core.captured_spawner_entity = nil

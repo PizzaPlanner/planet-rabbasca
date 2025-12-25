@@ -24,6 +24,9 @@ lava.variants.main[1].picture = "__rabbasca-assets__/graphics/recolor/textures/l
 lava.variants.main[2].picture = "__rabbasca-assets__/graphics/recolor/textures/lava-transitions.png"
 lava.variants.main[3].picture = "__rabbasca-assets__/graphics/recolor/textures/lava-transitions.png"
 
+table.insert(data.raw["item"]["foundation"].place_as_tile.tile_condition, "harenic-lava")
+table.insert(data.raw["item"]["foundation"].place_as_tile.tile_condition, "rabbasca-harenic-sludge")
+
 data:extend{
 {
   type = "collision-layer",
