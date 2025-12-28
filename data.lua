@@ -23,3 +23,4 @@ if mods["any-planet-start"] then
         technology = "planet-discovery-rabbasca"
     }
 end
+require("compatibility.canal-excavator")

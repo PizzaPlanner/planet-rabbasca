@@ -14,6 +14,7 @@
         "tile-upgrade-planner-muluna >= 1.0.1",
         "? any-planet-start",
         "(?) planet-muluna",
-        "(?) pelagos"
+        "(?) pelagos",
+        "(?) canal-excavator >= 1.12"
     ]
 }
