@@ -120,11 +120,14 @@ local function on_charge_bunnyhop(event)
       return
     end
     is_weight_ok, wl.caption = get_character_weight_label(character, max_weight)
-    
+    local is_crafting_ok = character.crafting_queue_size == 0
+    if not is_crafting_ok then
+      wl.caption = {"rabbasca-extra.bunnyhop-crafting", wl.caption[2], wl.caption[3]}
+    end
     -- player.walking_state.walking = true
     local delta = character.effective_speed or 1
     local needed = 100
-    local change = (is_weight_ok and delta / needed) or -0.05
+    local change = (is_weight_ok and is_crafting_ok and delta / needed) or -0.05
     pb.value = math.min(1, math.max(pb.value - change, 0))
     -- player.character.speed = (player.character.speed or 1) * 1.2
 
