@@ -320,7 +320,7 @@ data:extend {
             {type = "item", name = "rabbasca-turbofish", amount = 1 },
         },
         results = { 
-            { type = "item", name = "protein-powder", amount = 5 },
+            { type = "item", name = "protein-powder", amount = 4 },
         },
         main_product = "protein-powder",
         category = "crafting",
@@ -590,6 +590,10 @@ data:extend {
     {
         type = "recipe",
         name = "rabbbasca-petroleum-gas-from-atmosphere",
+        icons = {
+            { icon = data.raw["fluid"]["petroleum-gas"].icon, icon_size = 64, },
+            { icon = data.raw["planet"]["rabbasca-underground"].icon, icon_size = 64, scale = 0.3, shift = { 8, 8 } },
+        },
         enabled = false,
         energy_required = 2,
         ingredients = { },
@@ -603,12 +607,16 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "rabbbasca-steam-from-atmosphere",
+        name = "rabbbasca-perfluorosulfonic-acid-from-atmosphere",
+        icons = util.merge {
+            data.raw["fluid"]["rabbasca-perfluorosulfonic-acid"].icons,
+            { {}, {}, { icon = data.raw["planet"]["rabbasca-underground"].icon, icon_size = 64, scale = 0.3, shift = { 8, 8 } }},
+        },
         enabled = false,
         energy_required = 2,
         ingredients = { },
         results = { 
-            { type = "fluid", name = "steam", amount = 15 },
+            { type = "fluid", name = "rabbasca-perfluorosulfonic-acid", amount = 100 },
         },
         enabled = false,
         allow_productivity = false,
@@ -617,12 +625,21 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "rabbbasca-sulfuric-acid-from-atmosphere",
+        name = "rabbbasca-decompose-perfluorosulfonic-acid",
         enabled = false,
+        icons = {
+            { icon = data.raw["fluid"]["fluorine"].icon, scale = 0.5, shift = {-3, -8}, icon_size = 64 },
+            { icon = data.raw["fluid"]["sulfuric-acid"].icon, scale = 0.5, shift = {-3, -8}, icon_size = 64 },
+            { icon = data.raw["fluid"]["fluorine"].icon, scale = 0.5, shift = {3, 8}, icon_size = 64 },
+            { icon = data.raw["fluid"]["sulfuric-acid"].icon, scale = 0.5, shift = {8, 3}, icon_size = 64 },
+        },
         energy_required = 2,
-        ingredients = { },
-        results = { 
-            { type = "fluid", name = "sulfuric-acid", amount = 90 },
+        ingredients = {
+            { type = "fluid", name = "rabbasca-perfluorosulfonic-acid", amount = 100 },
+        },
+        results = {
+            { type = "fluid", name = "fluorine", amount = 80 }, 
+            { type = "fluid", name = "sulfuric-acid", amount = 20 },
         },
         enabled = false,
         allow_productivity = false,

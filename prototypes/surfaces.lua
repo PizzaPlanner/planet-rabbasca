@@ -246,10 +246,8 @@ data:extend {
   {
     type = "planet",
     name = "rabbasca-underground",
-    icons = {
-      { icon = "__rabbasca-assets__/graphics/recolor/icons/vulcanus-bw.png", icon_size = 64 },
-      { icon = data.raw["simple-entity"]["rabbasca-underground-rock"].icon, icon_size = 64, shift = {8, 8}, scale = 0.3 },
-    },
+    icon = "__rabbasca-assets__/graphics/by-openai/rabbasca-underground.png", 
+    icon_size = 128,
     hidden = true,
     draw_orbit = false,
     distance = 10,
@@ -305,8 +303,8 @@ data:extend {
       draw_sprite_clouds = false,
       clouds = nil,
       day_night_cycle_color_lookup = {
-          {0.0, "__planet-rabbasca__/lut-underground.png"},
-          {0.5, "__planet-rabbasca__/lut-black.png"} -- TODO: Put into assets
+          {0.0, "__rabbasca-assets__/graphics/recolor/textures/lut-underground.png"},
+          {0.5, "__rabbasca-assets__/graphics/recolor/textures/lut-black.png"}
       },
       fog = util.merge {
         data.raw["planet"]["vulcanus"].surface_render_parameters.fog,
