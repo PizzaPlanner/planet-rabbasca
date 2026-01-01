@@ -322,7 +322,9 @@ util.merge { data.raw["item"]["rocket-fuel"],
   type = "item",
   name = "lithium-amide",
   icon = data.raw["item"]["lithium"].icon,
-}
+  stack_size = 50,
+  weight = 25 * kg,
+},
 {
     type = "item",
     name = "harene-cryo-container-empty",
