@@ -24,4 +24,5 @@ if mods["any-planet-start"] then
     }
 end
 
+require("compatibility.canal-excavator")
 -- require("compatibility.msppr")
