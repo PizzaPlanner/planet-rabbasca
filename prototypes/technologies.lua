@@ -617,10 +617,8 @@ data:extend {
 {
     type = "technology",
     name = "interplanetary-construction-2",
-    icons = {
-      { icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon-big.png", icon_size = 640, scale = 0.8 },
-      { icon = data.raw["assembling-machine"]["rabbasca-vault-crafter"].icon, icon_size = 64, shift = {12, 12}, scale = 0.5 },
-    },
+    icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon-big.png",
+    icon_size = 640,
     prerequisites = { "interplanetary-construction-1", "harene-synthesis" },
     effects =
     {
@@ -628,14 +626,14 @@ data:extend {
         type = "unlock-recipe",
         recipe = "vault-protocol-warp-pylon",
       },
-      -- {
-      --   type = "unlock-recipe",
-      --   recipe = "rabbasca-warp-sequence-module",
-      -- },
-      -- {
-      --   type = "unlock-recipe",
-      --   recipe = "rabbasca-warp-sequence-reverse",
-      -- },
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-warp-sequence-module",
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-warp-sequence-reverse",
+      },
     },
     level = 2,
     unit = {
@@ -693,6 +691,37 @@ data:extend {
         {"athletic-science-pack", 1},
         {"cryogenic-science-pack", 1},
         {"promethium-science-pack", 1},
+      }
+  }
+},
+{
+    type = "technology",
+    name = "rabbasca-security-modulation",
+    icons = {
+      { icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
+      { icon = data.raw["unit"]["vault-defender-heavy"].icon, icon_size = 64, shift = {-24,  32}, scale = 1.5 },
+      { icon = data.raw["virtual-signal"]["down-arrow"].icon, icon_size = 64, shift = { 24,  24}, scale = 1.3, tint = {0, 1, 0} },
+      { icon = data.raw["virtual-signal"]["up-arrow"].icon,   icon_size = 64, shift = { 24, -24}, scale = 1.3, tint = {1, 0, 0} },
+    },
+    prerequisites = { "interplanetary-construction-2" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-security-modulation-up",
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-security-modulation-down",
+      },
+    },
+    unit = {
+      time = 60,
+      count = 2500,
+      ingredients = {
+        {"military-science-pack", 1},
+        {"utility-science-pack", 1},
+        {"athletic-science-pack", 1},
       }
   }
 },

@@ -1,6 +1,6 @@
 {
     "name": "planet-rabbasca",
-    "version": "0.8.7",
+    "version": "0.9.0",
     "title": "○ Rabbasca",
     "description": "This Moon of Gleba emits strange energy signatures which interfere with conventional energy sources. Use the limited power it provides to explore ancient vaults of a long gone civilization. Discover new ways to construct your machines and conquer space with your very own tool-assisted legs.\n\nRabbasca can safely be added to an existing playthrough and is compatible with Any Planet Start.",
     "factorio_version": "2.0",
@@ -10,7 +10,7 @@
         "space-age", 
         "PlanetsLib", 
         "Krastorio2Assets", 
-        "rabbasca-assets = 1.2.0",
+        "rabbasca-assets = 1.3.0",
         "tile-upgrade-planner-muluna >= 1.0.1",
         "? any-planet-start",
         "(?) planet-muluna",

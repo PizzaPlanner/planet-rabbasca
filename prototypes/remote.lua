@@ -336,6 +336,17 @@ data:extend {
     category = "rabbasca-remote",
     crafting_machine_tint = {primary = {0.3, 0.35, 0.4}}
 },
+{
+    type = "animation",
+    name = "rabbasca-warp-smoke",
+    lines_per_file = 4,
+    line_length = 8,
+    frame_count = 32,
+    width = 64,
+    height = 64,
+    draw_as_glow = true,
+    filename = "__rabbasca-assets__/graphics/textures/warp-smoke.png"
+}
 }
 
 data:extend {
@@ -345,7 +356,10 @@ data:extend {
     enabled = false,
     icons = generate_recycling_recipe_icons_from_item(data.raw.item["rabbasca-warp-pylon"]),
     ingredients = { { type = "item", name = "rabbasca-warp-pylon", amount = 1 }, },
-    results = { { type = "item", name = "rabbasca-warp-core", amount = 1 }, },
+    results = { 
+      { type = "item", name = "rabbasca-warp-core", amount = 3 }, 
+      { type = "item", name = "haronite-plate",     amount = 1 }, 
+    },
     category = "recycling",
     hide_from_player_crafting = true,
     energy_required = 30,

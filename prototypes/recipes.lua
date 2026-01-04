@@ -392,10 +392,10 @@ data:extend {
         type = "recipe",
         name = "rabbasca-residue-skimming",
         icons = {
-            { icon = data.raw["fluid"]["energetic-residue"].icon, scale = 0.7, shift = {0, -8}, icon_size = 64 },
-            { icon = data.raw["item"]["plastic-bottle"].icon, icon_size = 64, scale = 0.5, shift = {-12, 12} },
-            { icon = data.raw["item"]["spoilage"].icon, icon_size = 64, scale = 0.5, shift = {12, 12} },
-            { icon = data.raw["item"]["advanced-circuit"].icon, icon_size = 64, scale = 0.5, shift = {0, 12} },
+            { icon = data.raw["fluid"]["energetic-residue"].icon, scale = 0.5, shift = {-3, -8}, icon_size = 64 },
+            { icon = data.raw["item"]["plastic-bottle"].icon, icon_size = 64, scale = 0.4, shift = {-12, 12} },
+            { icon = data.raw["item"]["spoilage"].icon, icon_size = 64, scale = 0.4, shift = {12, -3} },
+            { icon = data.raw["item"]["advanced-circuit"].icon, icon_size = 64, scale = 0.4, shift = {8, 9} },
         },
         enabled = false,
         energy_required = 1.5,
@@ -427,7 +427,7 @@ data:extend {
             { type = "fluid", name = "harene-gas", amount = 16 },
         },
         results = {
-            { type = "item", name = "athletic-science-pack", amount = 5 }
+            { type = "item", name = "athletic-science-pack", amount = 3 }
         },
         category = "crafting-with-fluid",
         allow_productivity = true
@@ -500,10 +500,10 @@ data:extend {
         name = "haronite-decomposition",
         enabled = false,
         icons = {
+            { icon = "__rabbasca-assets__/graphics/recolor/icons/harene-gas.png", icon_size = 64, scale = 0.7, shift = {0, 4} },
             { icon = "__rabbasca-assets__/graphics/recolor/icons/haronite.png", icon_size = 64, scale = 0.4, shift = {0, -12} },
-            { icon = "__base__/graphics/icons/stone.png", icon_size = 64, scale = 0.3, shift = {-12, 12} },
-            { icon = "__space-age__/graphics/icons/calcite.png", icon_size = 64, scale = 0.3, shift = {12, 12} },
-            { icon = "__rabbasca-assets__/graphics/recolor/icons/harene-gas.png", icon_size = 64, scale = 0.3, shift = {0, 12} },
+            { icon = "__base__/graphics/icons/stone.png", icon_size = 64, scale = 0.5, shift = {-12, 12} },
+            { icon = "__space-age__/graphics/icons/calcite.png", icon_size = 64, scale = 0.5, shift = {12, 12} },
         },
         category = "chemistry",
         hide_from_player_crafting = true,
@@ -576,7 +576,7 @@ data:extend {
 
 local rocket_part = table.deepcopy(data.raw["recipe"]["rocket-part"])
 rocket_part.name = "rocket-part-from-turbofuel"
-rocket_part.surface_conditions = { Rabbasca.above_harenic_threshold() }
+rocket_part.surface_conditions = { Rabbasca.within_harenic_threshold(1, 3) }
 rocket_part.ingredients = {
     { type = "item", name = "rabbasca-turbofuel", amount = 1 },
     { type = "item", name = "haronite-rocket-frame", amount = 1 },

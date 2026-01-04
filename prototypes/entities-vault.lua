@@ -401,7 +401,24 @@ vault_core.result_units = {
     {evolution_factor = 0, spawn_weight = 0.3},
   }},
 }
-
+vault_core.graphics_set = {
+  animations = {
+    layers =
+    {
+      {
+          filename = "__rabbasca-assets__/graphics/by-hurricane/conduit-emission.png",
+          frame_count = 60,
+          line_length = 10,
+          width = 200,
+          height = 290,
+          draw_as_glow = true,
+          blend_mode = "additive-soft",
+          scale = 1.0/3,
+          shift = {0, -0.5},
+          tint = {1.0, 0, 0}
+      },
+    },
+}}
 local capture_bot = {
   type = "capture-robot",
   icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png",

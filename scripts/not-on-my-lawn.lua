@@ -13,5 +13,8 @@ end
 for _, thing in pairs(data.raw["accumulator"]) do 
   Rabbasca.not_on_harenic_surface(thing)
 end
+for _, thing in pairs(data.raw["rocket-silo"]) do 
+  Rabbasca.not_on_harenic_surface(thing, 3)
+end
 
 Rabbasca.not_on_harenic_surface(data.raw["recipe"]["rocket-part"])

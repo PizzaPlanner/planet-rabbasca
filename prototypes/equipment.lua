@@ -68,6 +68,8 @@ data:extend {
     unavailable_until_unlocked = true,
     icon = "__rabbasca-assets__/graphics/recolor/icons/bunnyhop-jump.png",
     small_icon = "__rabbasca-assets__/graphics/recolor/icons/bunnyhop-jump.png",
+    icon_size = 56,
+    small_icon_size = 56,
     associated_control_input = "give-bunnyhop-engine",
 },
 {

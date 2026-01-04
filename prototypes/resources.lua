@@ -101,7 +101,7 @@ local harene_resource = {
   map_generator_bounding_box = {{-15, -15}, {15, 15}},
   autoplace = {
     tile_restriction = { "rabbasca-rough", "rabbasca-rough-2" },
-    probability_expression = "(rabbasca_down > 0) * (rabbasca_harene_pools < 0)\z
+    probability_expression = "(rabbasca_down(1) > 0) * (rabbasca_harene_pools < 0)\z
       * multioctave_noise{x = x, y = y, persistence = 0.44, seed0 = map_seed, input_scale = 3.6, seed1 = 'atomizedfish', octaves = 4 }\z
       * multioctave_noise{x = x, y = y, persistence = 0.62, seed0 = map_seed, input_scale = 4.3, seed1 = 'unlimitedpower', octaves = 7 }\z
       * multioctave_noise{x = x, y = y, persistence = 0.62, seed0 = map_seed, input_scale = 4.3, seed1 = 'canthisspreadbetterplease', octaves = 7 }",

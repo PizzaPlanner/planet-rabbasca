@@ -1,6 +1,7 @@
 -- Some globals black magic or something happening here, required for water borders
 table.insert(water_tile_type_names, "rabbasca-harenic-sludge")
 table.insert(water_tile_type_names, "harenic-lava")
+table.insert(out_of_map_tile_type_names, "rabbasca-underground-out-of-map")
 
 local lava_effect = util.merge { data.raw["tile-effect"]["lava"],
 {
@@ -63,6 +64,18 @@ util.merge{ table.deepcopy(data.raw["tile"]["midland-yellow-crust-2"]), {
     autoplace = { probability_expression = "rabbasca_fertile" },
     map_color = {0.61, 0.282, 0.1},
 }},
+util.merge{ table.deepcopy(data.raw["tile"]["volcanic-ash-flats"]), {
+    name = "rabbasca-underground-rubble",
+    autoplace = { probability_expression = "0" },
+    map_color = { 0.17, 0.06, 0.1 },
+}},
+util.merge { 
+    table.deepcopy(data.raw["tile"]["out-of-map"]),
+    {
+      name = "rabbasca-underground-out-of-map",
+      autoplace = { probability_expression = "(0.25 - rabbasca_underground_elevation) * 2" }
+    }
+},
 util.merge { 
     table.deepcopy(data.raw["tile"]["concrete"]),
     {

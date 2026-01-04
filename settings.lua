@@ -77,11 +77,4 @@ data:extend{
     },
     allow_blank = false
   },
-  {
-    type = "bool-setting",
-    name = "rabbasca-disable-train-extensions",
-    setting_type = "startup",
-    default_value = true,
-    allow_blank = false
-  },
 }

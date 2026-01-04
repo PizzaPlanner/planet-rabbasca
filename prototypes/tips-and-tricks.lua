@@ -34,4 +34,5 @@ data:extend {
         type = "research",
         technology = "bunnyhop-engine-1",
     },
-}}
+},
+}
