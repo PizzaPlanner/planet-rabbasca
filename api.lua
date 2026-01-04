@@ -12,6 +12,7 @@ function Rabbasca.get_warp_radius(quality) return math.min(120, (quality and (1 
 function Rabbasca.high_energy_device_threshold() return "5MW" end
 function Rabbasca.alertness_modulation_step() return 10 end
 function Rabbasca.alertness_modulation_max() return 50 end
+function Rabbasca.underground_pressure() return 45312 end
 
 if not data then return end
 
@@ -50,6 +51,10 @@ end
 function Rabbasca.only_on_harenic_surface(proto, multiplier)
 proto.surface_conditions = proto.surface_conditions or { }
 table.insert(proto.surface_conditions, Rabbasca.above_harenic_threshold(multiplier))
+end
+
+function Rabbasca.only_underground()
+    return { property = "pressure", min = Rabbasca.underground_pressure(), max = Rabbasca.underground_pressure() }
 end
 
 function Rabbasca.ears_flooring_rule(bbox)

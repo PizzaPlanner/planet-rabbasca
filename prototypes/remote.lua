@@ -336,6 +336,17 @@ data:extend {
     category = "rabbasca-remote",
     crafting_machine_tint = {primary = {0.3, 0.35, 0.4}}
 },
+{
+    type = "animation",
+    name = "rabbasca-warp-smoke",
+    lines_per_file = 4,
+    line_length = 8,
+    frame_count = 32,
+    width = 64,
+    height = 64,
+    draw_as_glow = true,
+    filename = "__rabbasca-assets__/graphics/textures/warp-smoke.png"
+}
 }
 
 data:extend {

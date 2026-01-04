@@ -186,57 +186,6 @@ local harene_resource = {
   map_grid = false
 }
 
-local carbonic_ore = util.merge {
-  table.deepcopy(data.raw["resource"]["coal"]),
-  {
-    name = "rabbasca-carbonic-ore",
-    icon = data.raw["item"]["coal"].icon,
-    minimum = 100,
-    normal = 100,
-    infinite = true,
-    map_color = { 0.03, 0.1, 0.07 },
-    -- stages = { sheet = { filename = "__rabbasca-assets__/graphics/recolor/icons/carotenoid-ore.png" } },
-    cliff_removal_probability = 0,
-    tree_removal_probability = 0,
-  }
-}
-carbonic_ore.minable.results =
-{
-  { type = "item", name = "coal",    amount = 1, probability = 0.25, },
-  { type = "item", name = "stone",    amount = 1, probability = 0.1, },
-  { type = "item", name = "sulfur",   amount = 1, probability = 0.03, },
-  -- { type = "item", name = "haronite",  amount = 1, probability = 0.03, },
-}
-carbonic_ore.autoplace = {
-  tile_restriction = { "rabbasca-underground-rubble" },
-  probability_expression = "rabbasca_underground_resources",
-  richness_expression = "100",
-}
-
-local lithium_amide = util.merge {
-  table.deepcopy(data.raw["resource"]["calcite"]),
-  {
-    name = "rabbasca-lithium-amide-ore",
-    icon = data.raw["item"]["calcite"].icon,
-    minimum = 100,
-    normal = 100,
-    infinite = false,
-    map_color = { 0.85, 0.94, 0.92 },
-    -- stages = { sheet = { filename = "__rabbasca-assets__/graphics/recolor/icons/carotenoid-ore.png" } },
-    cliff_removal_probability = 0,
-    tree_removal_probability = 0,
-  }
-}
-lithium_amide.minable.results =
-{
-  { type = "item", name = "rabbasca-lithium-amide", amount = 1 },
-  { type = "item", name = "calcite",  amount = 1, probability = 0.05, },
-}
-lithium_amide.autoplace = {
-  probability_expression = "rabbasca_underground_lithium_amide",
-  richness_expression = "4000 * (1 + sqrt(distance))",
-}
-
 local battle_scrap = util.merge {
   table.deepcopy(data.raw["resource"]["scrap"]),
   {
@@ -266,4 +215,4 @@ battle_scrap.autoplace = {
     * control:rabbasca_vaults:richness",
 }
 
-data:extend{ harene_resource, carrot_ore, battle_scrap, carbonic_ore, lithium_amide }
+data:extend{ harene_resource, carrot_ore, battle_scrap }

@@ -115,22 +115,6 @@ Rabbasca.create_vault_recipe("rabbasca-security-modulation-down", {
   energy_required = 60,
   allow_productivity = false,
 })
-Rabbasca.create_vault_recipe("rabbasca-packaged-pylon", {
-  icons = {
-    {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
-    {icon = data.raw["item"]["rabbasca-warp-pylon"].icon, icon_size = 64, shift = {8, 8}, scale = 0.4, tint = {0, 0, 0}},
-  },
-  ingredients = {
-      { type = "item", name = "haronite-plate", amount = 5 },
-      { type = "item",  name = "rabbasca-warp-pylon", amount = 1 },
-      { type = "item",  name = "rabbasca-energetic-concrete", amount = 4 },
-  },
-  results = { 
-      { type = "item", name = "rabbasca-packaged-pylon", amount = 1 },
-  },
-  energy_required = 40,
-  allow_productivity = false,
-})
 
 data:extend {
     {

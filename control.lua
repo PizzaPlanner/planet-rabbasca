@@ -46,7 +46,7 @@ local function handle_script_events(event)
     surface.force_generate_chunk_requests()
     local pos = surface.find_non_colliding_position("electromagnetic-plant", offset, radius, 1)
     if not pos then
-      game.forces.player.print(string.format("[Error] Could not build [entity=rabbasca-warp-pylon] here: [gps=%s,%s,rabbasca-underground]", offset.x, offset.y))
+      game.forces.player.print({ "rabbasca-extra.created-underground-pylon-error", offset.x, offset.y })
       return 
     end
     local tiles = {
@@ -63,7 +63,7 @@ local function handle_script_events(event)
       snap_to_grid = true,
     }
     if spawner then
-      game.forces.player.print(string.format("Built [entity=rabbasca-warp-pylon] here: %s", spawner.gps_tag))
+      game.forces.player.print({ "rabbasca-extra.created-underground-pylon", spawner.gps_tag })
       for _, p in pairs({
         { pos.x + 1.5, pos.y + 1.5 },
         { pos.x - 1.5, pos.y + 1.5 },
@@ -192,7 +192,7 @@ script.on_event(defines.events.on_surface_created, function(event)
     -- end
     if surface.name == "rabbasca-underground" then
       surface.min_brightness = 0
-      surface.daytime = 0.5
+      surface.daytime = 0.75
       surface.freeze_daytime = true
     end
   end

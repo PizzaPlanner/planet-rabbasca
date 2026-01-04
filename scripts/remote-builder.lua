@@ -25,6 +25,18 @@ local status_ok = {
     label = { "entity-status.rabbasca-warp-ok" }
 }
 
+local function play_smoke(surface, position, size)
+    rendering.draw_animation{
+        animation = "rabbasca-warp-smoke",
+        x_scale = size,
+        y_scale = size,
+        render_layer = "smoke",
+        time_to_live = 32,
+        target = position,
+        surface = surface
+    }
+end
+
 local function try_deconstruct(entity)
     if not entity.to_be_deconstructed() then return false, status_invalid_target end
     local is_tile = false
@@ -53,7 +65,10 @@ local function try_deconstruct(entity)
             local inventory = entity.get_inventory(k)
             if inventory then entity.surface.spill_inventory { position = entity.position, inventory = inventory } end
         end
-        return entity.mine{ inventory = builder.get_inventory(defines.inventory.chest) }
+        local surface, position, size = entity.surface, entity.position, 1
+        local result = entity.mine{ inventory = builder.get_inventory(defines.inventory.chest) }
+        if result then play_smoke(surface, position, size) end
+        return result
     else
         local to_place = proto.items_to_place_this[1]
         local name, count  = to_place.name, to_place.count
@@ -68,6 +83,7 @@ local function try_deconstruct(entity)
             surface.set_tiles({{position = pos, name = hidden or "out-of-map"}})
             surface.set_hidden_tile(pos, hidden_2)
             surface.set_double_hidden_tile(pos, nil)
+            play_smoke(surface, pos, 1)
             return true
         end
         builder.get_inventory(defines.inventory.chest).remove({name = name, quality = quality, count = inserted})
@@ -130,6 +146,7 @@ local function try_warp_module(request)
             for i, stack in pairs(plan.items.in_inventory) do
                 local item_with_quality = { name = name, quality = quality }
                 local inventory_id, where, count = stack.inventory, stack.stack, stack.count or 1
+                -- TODO: Restrict to modules? Note: inventory defines overlap between type, need to check type as well
                 local inventory = target.get_inventory(inventory_id)
                 if inventory and builder.get_inventory(defines.inventory.chest).get_item_count(item_with_quality) >= count then
                     local removed  = builder.get_inventory(defines.inventory.chest).remove({name = name, count = count, quality = quality})
@@ -139,6 +156,7 @@ local function try_warp_module(request)
                         target.surface.spill_inventory { position = target.position, inventory = temp }
                         temp.destroy()
                         clear_plans(request, inventory_id, where)
+                        play_smoke(target.surface, target.position, 1)
                         return true, status_ok
                     end
                 end
@@ -187,6 +205,7 @@ local function try_build_ghost(entity)
             chest.insert({name = name, count = removed, quality = quality})
             return false, status_invalid_target
         end
+        play_smoke(surface, position, 1)
         return true, status_ok
     end
     for _, player in pairs(entity.force.players) do

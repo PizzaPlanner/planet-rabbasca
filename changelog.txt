@@ -1,4 +1,21 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.9.0
+Date: 2026-01-04
+  Changes:
+    - Added security modulation recipes that can offset rabbasca alertness by various amounts
+    - Warp pylons can now warp in item requests and un-warp structures marked for deconstruction
+    - Warp pylons now act as radars
+    - Warp pylon warp-in is now instant
+    - Removed Rabbasca railway technology and associated rewards
+    - Graphics updates
+  Bugfixes:
+    - You can no longer bunnyhop with an active crafting queue (Thanks Wilgora for the suggestion)
+  Balancing:
+    - Warp pylon recycling now yields more warp cores and a haronite plate
+    - Reduced output of athletic science pack per craft (5 -> 3)
+    - Reduced output of protein powder per craft (5 -> 4)
+    - Increased haronite spoil time (5min -> 15min)
+---------------------------------------------------------------------------------------------------
 Version: 0.8.7
 Date: 2025-12-25
   Changes:
