@@ -320,7 +320,7 @@ data:extend {
             {type = "item", name = "rabbasca-turbofish", amount = 1 },
         },
         results = { 
-            { type = "item", name = "protein-powder", amount = 4 },
+            { type = "item", name = "protein-powder", amount = 5 },
         },
         main_product = "protein-powder",
         category = "crafting",

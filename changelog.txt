@@ -13,7 +13,6 @@ Date: 2026-01-04
   Balancing:
     - Warp pylon recycling now yields more warp cores and a haronite plate
     - Reduced output of athletic science pack per craft (5 -> 3)
-    - Reduced output of protein powder per craft (5 -> 4)
     - Increased haronite spoil time (5min -> 15min)
 ---------------------------------------------------------------------------------------------------
 Version: 0.8.7
