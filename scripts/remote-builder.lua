@@ -1,28 +1,7 @@
 local function awake(receiver)
     if not (receiver.valid and receiver.surface.planet) then return end
-
+                                                                        
     local radius = Rabbasca.get_warp_radius(receiver.quality)
-    for _, ghost in pairs(receiver.surface.find_entities_filtered{
-        name = { "entity-ghost", "tile-ghost" },
-        position = receiver.position,
-        radius = radius
-    }) do 
-        local e = receiver.surface.create_entity{
-            name = ghost.name.."-warpin",
-            position = ghost.position,
-            quality = ghost.quality,
-            fast_replace = true,
-            player = #receiver.force.players > 0 and receiver.force.players[1],
-            cause = receiver,
-            inner_name = ghost.ghost_name,
-            tags = ghost.tags
-        }
-        if e then 
-            game.print(e.gps_tag)
-            ghost.destroy{}
-        end
-    end
-
     if receiver.get_recipe() == nil then
         receiver.set_recipe("rabbasca-remote-warmup")
         receiver.recipe_locked = true
@@ -65,14 +44,19 @@ local function try_deconstruct(entity)
         end
     end
     local builder = storage.rabbasca_remote_builder
-
-    local to_place = proto.items_to_place_this[1]
-    local name, count, quality = to_place.name, to_place.count, (is_tile and "normal") or entity.quality
-    local item_with_quality = { name = name, quality = quality }
-    
-    local inserted = builder.get_inventory(defines.inventory.chest).insert({name = name, count = count, quality = quality})
-    if inserted == count then
-        if is_tile then
+    if not is_tile then
+        for k = 1, entity.get_max_inventory_index() do 
+            local inventory = entity.get_inventory(k)
+            if inventory then entity.surface.spill_inventory { position = entity.position, inventory = inventory } end
+        end
+        return entity.mine{ inventory = builder.get_inventory(defines.inventory.chest) }
+    else
+        local to_place = proto.items_to_place_this[1]
+        local name, count  = to_place.name, to_place.count
+        local item_with_quality = { name = name, quality = quality }
+        
+        local inserted = builder.get_inventory(defines.inventory.chest).insert({name = name, count = count})
+        if inserted == count then
             local hidden = entity.hidden_tile
             local hidden_2 = entity.double_hidden_tile
             local surface = entity.surface
@@ -80,18 +64,87 @@ local function try_deconstruct(entity)
             surface.set_tiles({{position = pos, name = hidden or "out-of-map"}})
             surface.set_hidden_tile(pos, hidden_2)
             surface.set_double_hidden_tile(pos, nil)
-        else
-            entity.destroy{}
+            return true
         end
-        return true
+        builder.get_inventory(defines.inventory.chest).remove({name = name, quality = quality, count = inserted})
+        return false
     end
-    builder.get_inventory(defines.inventory.chest).remove({name = name, quality = quality, count = inserted})
-    return false
+
 end
 
-local function try_warp_request(ghost)
-    -- game.print(ghost.name .. " -> " .. ghost.proxy_target.name)
-    return false
+local function clear_plans(request, inventory, index)
+    local old_plans = request.insert_plan
+    for i, plan in pairs(old_plans) do
+        for j, ii in pairs(plan.items.in_inventory) do
+            if ii.inventory == inventory and ii.stack == index then
+                plan.items.in_inventory[j] = nil
+                table.remove(plan.items.in_inventory, j)
+            end
+        end
+        if #plan.items.in_inventory == 0 then
+            old_plans[i] = nil
+            table.remove(old_plans, i)
+        end
+    end
+    request.insert_plan = old_plans
+
+    local old_plans = request.removal_plan
+    for i, plan in pairs(old_plans) do
+        for j, ii in pairs(plan.items.in_inventory) do
+            if ii.inventory == inventory and ii.stack == index then
+                plan.items.in_inventory[j] = nil
+                table.remove(plan.items.in_inventory, j)
+            end
+        end
+        if #plan.items.in_inventory == 0 then
+            old_plans[i] = nil
+            table.remove(old_plans, i)
+        end
+    end
+    request.removal_plan = old_plans
+end
+
+local function try_warp_module(request)
+    local target = request.proxy_target
+    if not target then return false, status_invalid_target end
+    if not (storage.rabbasca_remote_builder and storage.rabbasca_remote_builder.valid) then
+        local builders = (game.surfaces.rabbasca and game.surfaces.rabbasca.find_entities_filtered{name = "rabbasca-warp-cargo-pad"}) or { }
+        if #builders > 0 then
+            storage.rabbasca_remote_builder = builders[1]
+        else
+            return false, status_no_builder
+        end
+    end
+    local builder = storage.rabbasca_remote_builder
+    if not builder.valid or builder.to_be_deconstructed() then
+        return false, status_no_builder
+    end
+
+    for _, plan in pairs(request.insert_plan) do
+        if plan.items.in_inventory then
+            local name, quality = plan.id.name, plan.id.quality or "normal"
+            for i, stack in pairs(plan.items.in_inventory) do
+                local item_with_quality = { name = name, quality = quality }
+                local inventory_id, where, count = stack.inventory, stack.stack, stack.count or 1
+                local inventory = target.get_inventory(inventory_id)
+                if inventory and builder.get_inventory(defines.inventory.chest).get_item_count(item_with_quality) >= count then
+                    local removed  = builder.get_inventory(defines.inventory.chest).remove({name = name, count = count, quality = quality})
+                    local temp = game.create_inventory(1)
+                    temp.insert({name = name, count = removed, quality = quality})
+                    if inventory[where + 1].swap_stack(temp[1]) then
+                        target.surface.spill_inventory { position = target.position, inventory = temp }
+                        temp.destroy()
+                        clear_plans(request, inventory_id, where)
+                        return true, status_ok
+                    end
+                end
+            end
+        end
+    end
+    for _, player in pairs(target.force.players) do
+        player.add_alert(target, defines.alert_type.no_material_for_construction)
+    end
+    return false, status_no_items
 end
 
 local function try_build_ghost(entity)
@@ -119,38 +172,17 @@ local function try_build_ghost(entity)
     if builder.valid
     and not builder.to_be_deconstructed()
     and builder.get_inventory(defines.inventory.chest).get_item_count(item_with_quality) >= count then
-        local pod = nil
-        for _, hatch in pairs(builder.cargo_hatches) do
-            if hatch.owner == builder then
-                pod = hatch.create_cargo_pod()
-                break
-            end
-        end
-        if not pod then return true end -- all hatches busy, try again later
         local chest = builder.get_inventory(defines.inventory.chest)
         local removed = chest.remove({name = name, count = count, quality = quality})
-        local inserted = pod.get_inventory(defines.inventory.cargo_unit).insert({name = name, quality = quality, count = removed })
-        if inserted ~= removed then
-            chest.insert({name = name, count = removed - inserted, quality = quality})
+        local temp = game.create_inventory(255)
+        local surface, position = entity.surface, entity.position
+        local result = entity.revive{ raise_revive = true, overflow = temp }
+        surface.spill_inventory { position = position, inventory = temp }
+        temp.destroy()
+        if not result then
+            chest.insert({name = name, count = removed, quality = quality})
+            return false, status_invalid_target
         end
-        pod.cargo_pod_destination = {
-            type = defines.cargo_destination.surface,
-            surface = entity.surface,
-            position = entity.position,
-            land_at_exact_position = true
-        }
-        entity.custom_status = {
-            diode = defines.entity_status_diode.yellow,
-            label = { "entity-status.rabbasca-warp" }
-        }
-        rendering.draw_sprite{
-            sprite = "item.rabbasca-warp-sequence",
-            target = { entity = entity, offset = { 0, -0.5 } },
-            surface = entity.surface,
-            x_scale = 0.75,
-            y_scale = 0.75,
-            time_to_live = 30 * 60
-        }
         return true, status_ok
     end
     for _, player in pairs(entity.force.players) do
@@ -251,7 +283,7 @@ function M.attempt_module(pylon, radius)
         name = { "item-request-proxy" }
     }
     for _, ghost in pairs(ghosts) do
-        local result, status = try_warp_request(ghost)
+        local result, status = try_warp_module(ghost)
         pylon.custom_status = status
         if result then return end
     end
@@ -307,30 +339,6 @@ function M.attempt_build_ghost(pylon)
         M.attempt_module(pylon, radius)
     elseif recipe == "rabbasca-warp-sequence-reverse" then
         M.attempt_deconstruct(pylon, radius)
-    end
-end
-
-function M.finalize_build_ghost(pod)
-    local item = pod.get_inventory(defines.inventory.cargo_unit)[1]
-    if not (item.valid and item.valid_for_read) then return end
-    local is_tile = item.prototype.place_as_tile_result ~= nil
-    local ghost = pod.surface.find_entity({name = is_tile and "tile-ghost" or "entity-ghost", quality = item.quality }, pod.position)
-    if ghost and ghost.valid and ghost.ghost_prototype then
-        ghost.custom_status = nil
-        local required = ghost.ghost_prototype.items_to_place_this
-        if required and #required > 0 and required[1].name == item.name and required[1].count <= item.count then
-            ghost.revive{ raise_revive = true }
-            if not ghost.valid then -- if revive failed, ghost should still exist
-                item.count = item.count - required[1].count
-            end
-        end
-    end
-    if item.count > 0 then
-        pod.surface.spill_item_stack{
-            position = pod.position,
-            stack = item,
-            enable_looted = true
-        }
     end
 end
 
@@ -391,11 +399,10 @@ end
 script.on_event(build_events, function(event)
   if not event.entity.valid then return end
   if event.entity.name == "entity-ghost" 
-  or event.entity.name == "tile-ghost" then
+  or event.entity.name == "tile-ghost"
+  or event.entity.name == "item-request-proxy" then
     update_wake_area(event.entity, event.tick)
-elseif event.entity.name == "item-request-proxy" and event.entity.proxy_target then
-    update_wake_area(event.entity.proxy_target, event.tick)
-    elseif event.entity.name == "rabbasca-warp-cargo-pad" then
+  elseif event.entity.name == "rabbasca-warp-cargo-pad" then
     storage.rabbasca_remote_builder = event.entity -- Only one allowed for simplicity
     for _, surface in pairs(game.surfaces) do
         for _, receiver in pairs(surface.find_entities_filtered{name = "rabbasca-warp-pylon"}) do

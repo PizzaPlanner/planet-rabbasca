@@ -52,18 +52,6 @@ pad.surface_conditions = { Rabbasca.above_harenic_threshold() }
 
 data:extend {
   pad,
-  util.merge {
-    data.raw["entity-ghost"]["entity-ghost"],
-    {
-      name = "entity-ghost-warpin"
-    }
-  },
-  util.merge {
-    data.raw["tile-ghost"]["tile-ghost"],
-    {
-      name = "tile-ghost-warpin"
-    }
-  },
   {
     type = "assembling-machine",
     name = "rabbasca-warp-pylon",
@@ -357,7 +345,10 @@ data:extend {
     enabled = false,
     icons = generate_recycling_recipe_icons_from_item(data.raw.item["rabbasca-warp-pylon"]),
     ingredients = { { type = "item", name = "rabbasca-warp-pylon", amount = 1 }, },
-    results = { { type = "item", name = "rabbasca-warp-core", amount = 1 }, },
+    results = { 
+      { type = "item", name = "rabbasca-warp-core", amount = 3 }, 
+      { type = "item", name = "haronite-plate",     amount = 1 }, 
+    },
     category = "recycling",
     hide_from_player_crafting = true,
     energy_required = 30,
