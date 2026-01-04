@@ -617,10 +617,8 @@ data:extend {
 {
     type = "technology",
     name = "interplanetary-construction-2",
-    icons = {
-      { icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon-big.png", icon_size = 640, scale = 0.8 },
-      { icon = data.raw["assembling-machine"]["rabbasca-vault-crafter"].icon, icon_size = 64, shift = {12, 12}, scale = 0.5 },
-    },
+    icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon-big.png",
+    icon_size = 640,
     prerequisites = { "interplanetary-construction-1", "harene-synthesis" },
     effects =
     {

@@ -418,7 +418,11 @@ util.merge{
     name = "rabbasca-security-modulator",
     category = "rabbasca-security",
     order = "b[vault-access-key]",
-    icon = "__rabbasca-assets__/graphics/recolor/icons/omega-carotene.png",
+    icons = {
+      {icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png", icon_size = 64, shift = {-8,  0}, scale = 0.4 },
+      {icon = data.raw["virtual-signal"]["up-arrow"].icon,   icon_size = 64, shift = { 8, -8}, scale = 0.4, tint = {1, 0, 0} },
+      {icon = data.raw["virtual-signal"]["down-arrow"].icon, icon_size = 64, shift = { 8,  8}, scale = 0.4, tint = {0, 1, 0} },
+    },
     flags = { "ignore-spoil-time-modifier" },
     hidden = true,
     hidden_in_factoriopedia = true,
