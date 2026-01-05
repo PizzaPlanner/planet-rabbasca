@@ -471,6 +471,7 @@ data:extend {
         main_product = "harenic-stabilizer",
         category = "chemistry",
         hide_from_player_crafting = true,
+        enabled = false,
         energy_required = 7,
         results = {{type = "item", name = "harenic-stabilizer", amount = 1 }},
         ingredients = {

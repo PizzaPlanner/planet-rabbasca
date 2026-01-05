@@ -182,8 +182,8 @@ script.on_event(defines.events.on_player_changed_surface, function(event)
 end)
 
 script.on_event(defines.events.on_surface_created, function(event)
-  if (game.planets["rabbasca"].surface and event.surface_index == game.planets["rabbasca"].surface.index)
-  or (game.planets["rabbasca-underground"].surface and event.surface_index == game.planets["rabbasca-underground"].surface.index) then
+  if (game.planets["rabbasca"].surface and event.surface_index == game.planets["rabbasca"].surface.index) then
+  -- or (game.planets["rabbasca-underground"].surface and event.surface_index == game.planets["rabbasca-underground"].surface.index) then
     local surface = game.surfaces[event.surface_index]
     surface.create_global_electric_network()
     surface.request_to_generate_chunks({0, 0}, 1)

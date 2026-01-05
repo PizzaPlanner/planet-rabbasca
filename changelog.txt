@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.9.1
+Date: 2026-01-05
+  Changes:
+    - Added compatibility with Canal Excavator (Thanks jurgyy)
+  Bugfixes:
+    - Harenic stabilizer recipe is no longer unlocked without research
+    - Fixed crash when creating a new surface
+---------------------------------------------------------------------------------------------------
 Version: 0.9.0
 Date: 2026-01-04
   Changes:
