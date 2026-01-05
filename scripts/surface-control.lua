@@ -1,5 +1,13 @@
 local output = { }
 
+script.on_event(defines.events.on_object_destroyed, function(event)
+  if not storage.alertness_data then return end
+  local sp = storage.alertness_data.vaults[event.registration_number] or storage.alertness_data.meltdowns[event.registration_number]
+  storage.alertness_data.vaults[event.registration_number] = nil
+  storage.alertness_data.meltdowns[event.registration_number] = nil
+  if sp then output.update_alertness(sp[1], sp[2]) end 
+end)
+
 function output.rabbasca_set_vault_active(e, active)
   if (not e) or e.name ~= "rabbasca-vault-crafter" then return end
   e.active = true -- disabling prevents hp regeneration
@@ -10,9 +18,40 @@ function output.rabbasca_set_vault_active(e, active)
   end
 end
 
+function output.register_alertable(entity)
+  if entity.surface.name ~= "rabbasca" then return end
+  if not storage.alertness_data then
+    local v = entity.surface.find_entities_filtered { name = "rabbasca-vault-console", force = game.forces.player }
+    local m = entity.surface.find_entities_filtered { name = "rabbasca-vault-meltdown" }
+    storage.alertness_data = {
+        vaults = { },
+        meltdowns = { }
+    }
+    for _, vault in pairs(v) do
+      local id, _, _ = script.register_on_object_destroyed(vault)
+      storage.alertness_data.vaults[id] = { entity.surface, entity.position }
+    end
+    for _, md in pairs(m) do
+      local id, _, _ = script.register_on_object_destroyed(md)
+      storage.alertness_data.meltdowns[id] = { entity.surface, entity.position }
+    end
+  end
+  if entity.name == "rabbasca-vault-console" then
+    local id, _, _ = script.register_on_object_destroyed(entity)
+    storage.alertness_data.vaults[id] = { entity.surface, entity.position }
+  elseif entity.name == "rabbasca-vault-meltdown" then
+    local id, _, _ = script.register_on_object_destroyed(entity)
+    storage.alertness_data.meltdowns[id] = { entity.surface, entity.position }
+  end
+  output.update_alertness(entity.surface, entity.position)
+end
+
 function output.update_alertness(surface, position)
-  local active_vaults_count = #surface.find_entities_filtered { name = "rabbasca-vault-console", force = game.forces.player }
-  local is_meltdown = #surface.find_entities_filtered { name = "rabbasca-vault-meltdown" } > 0
+  local active_vaults_count = 0
+  for _, v in pairs(storage.alertness_data.vaults) do
+    active_vaults_count = active_vaults_count + 1
+  end
+  local is_meltdown = next(storage.alertness_data.meltdowns) ~= nil
   local modulation = storage.alertness_modulation or 0
   local new_evo = active_vaults_count * settings.global["rabbasca-evolution-per-vault"].value / 100 + modulation * Rabbasca.alertness_modulation_step() / 100
   new_evo = math.max(0, math.min(1, new_evo))
@@ -30,7 +69,7 @@ end
 
 local function create_evolution_bar(player)
     if player.gui.top.rabbasca_alertness then
-        player.gui.top.rabbasca_alertness.destroy() 
+        player.gui.top.rabbasca_alertness.destroy()
     end
     if not settings.get_player_settings(player)["rabbasca-show-alertness-ui"].value then return end
     

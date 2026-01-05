@@ -145,8 +145,17 @@ local access_console = util.merge{
 access_console.created_effect = {
   type = "direct",
   action_delivery = {
-    type = "delayed",
-    delayed_trigger = "rabbasca-calculate-evolution"
+    {
+      type = "delayed",
+      delayed_trigger = "rabbasca-calculate-evolution"
+    },
+    {
+      type = "instant",
+      source_effects = {
+        type = "script",
+        effect_id = "rabbasca_register_alertable"
+      }
+    }
   }
 }
 access_console.flags = { "placeable-player", "not-deconstructable", "not-repairable",  "not-rotatable", "player-creation", "placeable-off-grid" }
@@ -382,6 +391,13 @@ vault_core.created_effect = {
     {
       type = "delayed",
       delayed_trigger = "rabbasca-calculate-evolution"
+    },
+    {
+      type = "instant",
+      source_effects = {
+        type = "script",
+        effect_id = "rabbasca_register_alertable"
+      }
     }
   }
 }

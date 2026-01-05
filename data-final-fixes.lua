@@ -2,10 +2,9 @@
 local bunnyhop_engine = data.raw["item"]["bunnyhop-engine-equipment"]
 local warp_pylon = data.raw["assembling-machine"]["rabbasca-warp-pylon"]
 local console = data.raw["assembling-machine"]["rabbasca-vault-console"]
-console.result_inventory_size = 0 -- castra compatibility; not required but looks nicer
 console.crafting_speed_quality_multiplier = { }
 for _, quality in pairs(data.raw["quality"]) do
-  local multiplier = quality.default_multiplier or 1 + 0.3 * quality.level
+  local multiplier = quality.default_multiplier or (1 + 0.3 * quality.level)
   console.crafting_speed_quality_multiplier[quality.name] = 1
   warp_pylon.crafting_speed_quality_multiplier[quality.name] = 1
   bunnyhop_engine.custom_tooltip_fields[1].quality_values[quality.name] = {"tooltip-value.bunnyhop-engine-weight-multiplier", tostring(multiplier * 100)}
@@ -21,3 +20,4 @@ require("scripts.create-ears-variants")
 
 require("__planet-rabbasca__.compatibility.muluna-final-fixes")
 require("__planet-rabbasca__.compatibility.pelagos-final-fixes")
+require("__planet-rabbasca__.compatibility.adjustable-quality-final-fixes")

@@ -172,7 +172,7 @@ end
 local function try_build_ghost(entity)
     if not entity.valid then return false, status_invalid_target end
     if not entity.is_registered_for_construction() then return false, status_invalid_target end
-    if entity.custom_status and entity.custom_status.label[1] == "entity-status.rabbasca-warp" then 
+    if entity.custom_status and entity.custom_status.label[1] == "entity-status.rabbasca-warp" then
         return false, status_invalid_target
     end
     local proto = entity.ghost_prototype

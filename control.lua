@@ -13,10 +13,14 @@ local function handle_script_events(event)
     local from = event.source_entity or event.target_entity
     if not (from and from.name == "rabbasca-warp-container") then return end
     remote_builder.finalize_build_ghost(from)
+  elseif effect_id == "rabbasca_register_alertable" then
+    local from = event.source_entity or event.target_entity
+    if not from then return end
+    rutil.register_alertable(from)
   elseif effect_id == "rabbasca_on_recalc_evolution" then
     local from = event.source_entity or event.target_entity
     local position = (from and from.position) or event.target_position or event.source_position
-    rutil.update_alertness(game.surfaces[event.surface_index], position)
+    -- rutil.update_alertness(game.surfaces[event.surface_index], position)
     if from and from.name == "rabbasca-vault-spawner" then
       local vault = from.surface.find_entity("rabbasca-vault-crafter", position)
       rutil.rabbasca_set_vault_active(vault, false)
@@ -128,7 +132,7 @@ local function handle_script_events(event)
       { position = {pos.x, pos.y+ 1}, name = "rabbasca-energetic-concrete" },
       { position = {pos.x+ 1, pos.y+ 1}, name = "rabbasca-energetic-concrete" },
     }
-    
+
     local spawner = surface.create_entity {
       name = "rabbasca-vault-warp-spawner",
       position = pos,
@@ -187,9 +191,6 @@ script.on_event(defines.events.on_surface_created, function(event)
     local surface = game.surfaces[event.surface_index]
     surface.create_global_electric_network()
     surface.request_to_generate_chunks({0, 0}, 1)
-    -- for _, force in pairs(game.forces) do
-    --   force.chart(surface, {{-1, -1}, {1, 1}})
-    -- end
     if surface.name == "rabbasca-underground" then
       surface.min_brightness = 0
       surface.daytime = 0.75

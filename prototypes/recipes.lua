@@ -279,7 +279,6 @@ data:extend {
         results = { 
             { type = "item", name = "rabbasca-turbofuel", amount = 1 },
         },
-        enabled = false,
         allow_productivity = true,
         category = "chemistry",
         crafting_machine_tint =
@@ -538,7 +537,6 @@ data:extend {
         results = { 
             { type = "item", name = "rabbasca-hyperfuel", amount = 1 },
         },
-        enabled = false,
         allow_productivity = false,
         category = "chemistry-or-cryogenics",
         crafting_machine_tint =
@@ -562,7 +560,6 @@ data:extend {
         results = { 
             { type = "fluid", name = "omega-carotene", amount = 100 },
         },
-        enabled = false,
         allow_productivity = false,
         category = "chemistry-or-cryogenics",
         crafting_machine_tint =

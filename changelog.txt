@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.9.2
+Date: ????
+  Bugfixes:
+    - Fixed crash when using adjustable quality mod
+    - Improved performance of alertness recalculation
+---------------------------------------------------------------------------------------------------
 Version: 0.9.1
 Date: 2026-01-05
   Changes:
