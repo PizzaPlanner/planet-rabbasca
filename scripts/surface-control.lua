@@ -1,13 +1,5 @@
 local output = { }
 
-script.on_event(defines.events.on_object_destroyed, function(event)
-  if not storage.alertness_data then return end
-  local sp = storage.alertness_data.vaults[event.registration_number] or storage.alertness_data.meltdowns[event.registration_number]
-  storage.alertness_data.vaults[event.registration_number] = nil
-  storage.alertness_data.meltdowns[event.registration_number] = nil
-  if sp then output.update_alertness(sp[1], sp[2]) end 
-end)
-
 function output.rabbasca_set_vault_active(e, active)
   if (not e) or e.name ~= "rabbasca-vault-crafter" then return end
   e.active = true -- disabling prevents hp regeneration
@@ -16,6 +8,14 @@ function output.rabbasca_set_vault_active(e, active)
   else
     e.force = game.forces.rabbascans
   end
+end
+
+function output.deregister_alertable(id)
+  if not storage.alertness_data then return end
+  local sp = storage.alertness_data.vaults[id] or storage.alertness_data.meltdowns[id]
+  storage.alertness_data.vaults[id] = nil
+  storage.alertness_data.meltdowns[id] = nil
+  if sp then output.update_alertness(sp[1], sp[2]) end
 end
 
 function output.register_alertable(entity)

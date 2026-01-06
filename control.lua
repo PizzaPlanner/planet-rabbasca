@@ -1,5 +1,6 @@
 require("api")
-local remote_builder = require("__planet-rabbasca__.scripts.remote-builder")
+require("scripts.warp.ui")
+local remote = require("__planet-rabbasca__.scripts.warp.remote-builder")
 local rutil = require("__planet-rabbasca__.scripts.surface-control")
 local bunnyhop = require("__planet-rabbasca__.scripts.bunnyhop-control")
 
@@ -8,11 +9,7 @@ local function handle_script_events(event)
   if effect_id == "rabbasca_on_warp_attempt" then
     local from = event.source_entity or event.target_entity
     if not (from and from.name == "rabbasca-warp-pylon") then return end
-    remote_builder.attempt_build_ghost(from)
-  elseif effect_id == "rabbasca_on_warp_complete" then
-    local from = event.source_entity or event.target_entity
-    if not (from and from.name == "rabbasca-warp-container") then return end
-    remote_builder.finalize_build_ghost(from)
+    remote.attempt_build_ghost(from)
   elseif effect_id == "rabbasca_register_alertable" then
     local from = event.source_entity or event.target_entity
     if not from then return end
@@ -86,12 +83,6 @@ local function handle_script_events(event)
     local from = event.source_entity or event.target_entity
     if not from then return end
     from.force = game.forces.rabbascans
-  elseif effect_id == "rabbasca_init_receiver" then
-    local from = event.source_entity or event.target_entity
-    if from then 
-      from.set_recipe("rabbasca-remote-warmup")
-      from.recipe_locked = true
-    end
   elseif effect_id == "rabbasca_replace_tiles" then
     local pos = event.source_entity and event.source_entity.position or event.target_position
     if not pos then return end
@@ -169,6 +160,12 @@ script.on_load(function()
   bunnyhop.register_bunnyhop_handler()
 end)
 
+
+script.on_event(defines.events.on_object_destroyed, function(event)
+  rutil.deregister_alertable(event.registration_number)
+  remote.deregister_chunks(event.useful_id)
+end)
+
 script.on_event({
   defines.events.on_player_controller_changed, 
   defines.events.on_player_joined_game
@@ -235,4 +232,5 @@ end
 script.on_init(function()
   create_rabbasca_force()
   give_starter_items()
+  remote.init_storage()
 end)

@@ -84,20 +84,6 @@ data:extend {
         quality_values = { },
       }
     },
-    created_effect = {
-      type = "direct",
-      action_delivery =
-      {
-        type = "instant",
-        source_effects =
-        {
-          {
-            type = "script",
-            effect_id = "rabbasca_init_receiver"
-          },
-        }
-      },
-    },
     show_recipe_icon = false,
     graphics_set = {
       working_visualisations = {{
@@ -165,10 +151,6 @@ data:extend {
     destroy_on_empty = true,
     time_to_live = 1,
     inventory_size = 1,
-    dying_trigger_effect = {
-      type = "script",
-      effect_id = "rabbasca_on_warp_complete"
-    }
   },
   {
     type = "item",
@@ -378,5 +360,24 @@ data:extend {
     hide_from_player_crafting = true,
     results = { { type = "item", name = "rabbasca-warp-pylon", amount = 1 }, },
     main_product = "rabbasca-warp-pylon"
+  }
+}
+
+data:extend {
+  {
+    type = "roboport",
+    name = "rabbasca-network-cell-normal",
+    energy_source = { type = "void" },
+    energy_usage = "1MW",
+    recharge_minimum = "1MW",
+    robot_slots_count = 0,
+    material_slots_count = 0,
+    request_to_open_door_timeout = 0,
+    spawn_and_station_height = 0,
+    charge_approach_distance = 0,
+    logistics_radius = 0,
+    construction_radius = 20,
+    charging_energy = "1MW",
+    logistics_connection_distance = 120,
   }
 }
