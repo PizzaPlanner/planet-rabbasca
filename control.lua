@@ -1,6 +1,6 @@
 require("api")
 require("scripts.warp.ui")
-local remote = require("__planet-rabbasca__.scripts.warp.remote-builder")
+local warp = require("__planet-rabbasca__.scripts.warp.events")
 local rutil = require("__planet-rabbasca__.scripts.surface-control")
 local bunnyhop = require("__planet-rabbasca__.scripts.bunnyhop-control")
 
@@ -9,7 +9,7 @@ local function handle_script_events(event)
   if effect_id == "rabbasca_on_warp_attempt" then
     local from = event.source_entity or event.target_entity
     if not (from and from.name == "rabbasca-warp-pylon") then return end
-    remote.attempt_build_ghost(from)
+    warp.attempt_build_ghost(from)
   elseif effect_id == "rabbasca_register_alertable" then
     local from = event.source_entity or event.target_entity
     if not from then return end
@@ -163,7 +163,7 @@ end)
 
 script.on_event(defines.events.on_object_destroyed, function(event)
   rutil.deregister_alertable(event.registration_number)
-  remote.deregister_chunks(event.useful_id)
+  warp.deregister_chunks(event.useful_id)
 end)
 
 script.on_event({
@@ -232,5 +232,5 @@ end
 script.on_init(function()
   create_rabbasca_force()
   give_starter_items()
-  remote.init_storage()
+  warp.init_storage()
 end)

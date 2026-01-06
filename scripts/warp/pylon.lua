@@ -1,4 +1,4 @@
-local M = { }
+local M = require("__planet-rabbasca__.scripts.warp.warp_chunks")
 
 local status_invalid_target = {
     diode = defines.entity_status_diode.yellow,
@@ -32,18 +32,21 @@ end
 local function try_deconstruct(data, inventory)
     if not data.entity.to_be_deconstructed() then return false, status_invalid_target end
      
+    local entity = data.entity
     if not data.is_tile then
-        local entity = data.entity
         for k = 1, entity.get_max_inventory_index() do 
             local spill_inventory = entity.get_inventory(k)
             if spill_inventory then entity.surface.spill_inventory { position = entity.position, inventory = spill_inventory } end
         end
         local surface, position, size = entity.surface, entity.position, 1
         local result = entity.mine{ inventory = inventory }
-        if result then play_smoke(surface, position, size) end
-        return result
+        if result then 
+            play_smoke(surface, position, size)
+            return true
+        else
+            return false, status_invalid_target
+        end
     else
-        local entity = data.entity.surface.get_tile(data.entity.position.x, data.entity.position.y)
         local name, count  = data.name, data.count
         local inserted = inventory.insert({name = name, count = count})
         if inserted == count then
@@ -58,7 +61,7 @@ local function try_deconstruct(data, inventory)
             return true
         end
         inventory.remove({name = name, count = inserted})
-        return false
+        return false, status_invalid_target
     end
 
 end
@@ -141,7 +144,7 @@ local function try_build_ghost(data, inventory)
         temp.destroy()
         if not result then
             inventory.insert({name = name, count = removed, quality = quality})
-            return false, status_invalid_target
+            return false -- maybe missing tiles below etc. NOT invalid target
         end
         play_smoke(surface, position, 1)
         return true, status_ok
@@ -154,7 +157,12 @@ end
 
 function M.attempt_warmup(pylon)
     local id = pylon.unit_number
-    local queue = storage.warp_storage[id].queue
+    local queue = storage.warp_storage[id] and storage.warp_storage[id].queue
+    if not queue then
+        pylon.set_recipe(nil)
+        pylon.recipe_locked = true
+        return
+    end
     local is_any_success = false
     for _, data in pairs({
         { queue = queue.decon, recipe = "rabbasca-warp-sequence-reverse" },
@@ -176,6 +184,7 @@ function M.attempt_warmup(pylon)
         queue.tiles.success   = true
         queue.ghosts.success  = true
         queue.modules.success = true
+        M.reset_module_queue(pylon, queue)
         pylon.set_recipe("rabbasca-remote-warmup")
         pylon.recipe_locked = true
         return true
@@ -189,12 +198,16 @@ end
 
 local function attempt_warp(pylon, q, inventory, f)
     local id = pylon.unit_number
-    local queue = storage.warp_storage[id].queue[q]
+    local queue = storage.warp_storage[id] and storage.warp_storage[id].queue[q]
     for i, data in pairs(queue.targets) do
         if data.entity.valid then
             local result, status = f(data, inventory)
             pylon.custom_status = status
             queue.success = result
+            if status and status.label[1] == status_invalid_target.label[1] then
+                queue.targets[i] = nil
+                table.remove(queue.targets, i)
+            end
             if result then return true end
         else
             queue.targets[i] = nil
@@ -205,7 +218,6 @@ local function attempt_warp(pylon, q, inventory, f)
 end
 
 function M.attempt_build_ghost(pylon)
-    local radius = Rabbasca.get_warp_radius(pylon.quality)
     if not (storage.rabbasca_remote_builder and storage.rabbasca_remote_builder.valid and not storage.rabbasca_remote_builder.to_be_deconstructed()) then
         local builders = (game.surfaces.rabbasca and game.surfaces.rabbasca.find_entities_filtered{name = "rabbasca-warp-cargo-pad", to_be_deconstructed = false}) or { }
         if #builders > 0 then

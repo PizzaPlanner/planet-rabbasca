@@ -1,4 +1,4 @@
-local TARGET_MACHINE_NAME = "rabbasca-warp-pylon"
+local PYLON_NAME = "rabbasca-warp-pylon"
 local GUI_NAME = "rabbasca_warp_queue"
 
 local function destroy_gui(player)
@@ -7,27 +7,18 @@ local function destroy_gui(player)
     end
 end
 
-local function create_gui(player, machine)
+local function create_gui(player, pylon)
     destroy_gui(player)
 
-    local data = storage.warp_storage[machine.unit_number].queue
+    local data = storage.warp_storage[pylon.unit_number] and storage.warp_storage[pylon.unit_number].queue
     if not data then return end
-
-    local frame = player.gui.relative.add{
-        type = "frame",
-        name = GUI_NAME,
-        caption = "Warp Queue",
-        direction = "vertical",
-        anchor = {
-            gui = defines.relative_gui_type.assembling_machine_gui,
-            position = defines.relative_gui_position.right
-        }
-    }
 
     local items = { }
     for _, entry in pairs(data.modules.targets) do
-        local key = "[img=entity/item-request-proxy][img=entity/"..entry.entity.proxy_target.name.."]"
-        items[key] = (items[key] or 0) + 1
+        if entry.entity.valid and entry.entity.proxy_target.valid then 
+            local key = "[img=entity/item-request-proxy][img=entity/"..entry.entity.proxy_target.name.."]"
+            items[key] = (items[key] or 0) + 1
+        end
     end
     for _, entry in pairs(data.ghosts.targets) do
         local key = "[img=entity/entity-ghost][img=item/"..entry.name.."]"
@@ -47,6 +38,19 @@ local function create_gui(player, machine)
         table.insert(items_aggregated, { "", k, " x ", v })
     end
 
+    if #items_aggregated == 0 then return end
+
+    local frame = player.gui.relative.add{
+        type = "frame",
+        name = GUI_NAME,
+        caption = "Warp Queue",
+        direction = "vertical",
+        anchor = {
+            gui = defines.relative_gui_type.assembling_machine_gui,
+            position = defines.relative_gui_position.right
+        }
+    }
+
     frame.add {
       type = "list-box",
       items = items_aggregated
@@ -58,7 +62,7 @@ script.on_event(defines.events.on_gui_opened, function(event)
     if not event.entity or not event.entity.valid then return end
 
     local entity = event.entity
-    if entity.name ~= TARGET_MACHINE_NAME then return end
+    if entity.name ~= PYLON_NAME then return end
 
     local player = game.get_player(event.player_index)
     if not player then return end
