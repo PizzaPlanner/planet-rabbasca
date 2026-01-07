@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.9.3
+Date: 2026-01-07
+  Bugfixes:
+    - Fixed warp pylons using unresearched warp sequences
+    - Fixed recipe order causing wrong recipes to be set when using Set recipe on assembling machines
+---------------------------------------------------------------------------------------------------
 Version: 0.9.2
 Date: 2026-01-07
   Changes:

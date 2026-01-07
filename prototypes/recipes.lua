@@ -20,7 +20,7 @@ data:extend {
         type = "item-subgroup",
         name = "rabbasca-processes",
         group = "intermediate-products",
-        order = data.raw["item-subgroup"]["fulgora-processes"].name .."-b"
+        order = data.raw["item-subgroup"]["fulgora-processes"].order .."-b"
     },
     {
         type = "item-subgroup",
@@ -222,7 +222,7 @@ data:extend {
         },
         subgroup = "fluid-recipes",
         enabled = false,
-        order = "b[fluid-chemistry]-d[solid-fuel-from-energetic-residue]",
+        order = "b[fluid-chemistry]-f[solid-fuel-from-energetic-residue]",
         crafting_machine_tint =
         {
             primary = {r = 0.710, g = 0.633, b = 0.482, a = 1.000},

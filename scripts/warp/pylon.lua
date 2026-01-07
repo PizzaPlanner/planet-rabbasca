@@ -201,10 +201,10 @@ function M.attempt_build_ghost(pylon)
     end
 
     local inventory = storage.rabbasca_remote_builder.get_inventory(defines.inventory.chest)
-    if  (pylon.force.recipes["rabbasca-warp-sequence-reverse"] and attempt_warp(pylon, "decon", inventory, try_deconstruct)) or
-        (pylon.force.recipes["rabbasca-warp-sequence-tile"] and attempt_warp(pylon, "tiles", inventory, try_build_ghost)) or
-        (pylon.force.recipes["rabbasca-warp-sequence-building"] and attempt_warp(pylon, "ghosts", inventory, try_build_ghost)) or
-        (pylon.force.recipes["rabbasca-warp-sequence-module"] and attempt_warp(pylon, "modules", inventory, try_warp_module))
+    if  (pylon.force.recipes["rabbasca-warp-sequence-reverse"].enabled and attempt_warp(pylon, "decon", inventory, try_deconstruct)) or
+        (pylon.force.recipes["rabbasca-warp-sequence-tile"].enabled and attempt_warp(pylon, "tiles", inventory, try_build_ghost)) or
+        (pylon.force.recipes["rabbasca-warp-sequence-building"].enabled and attempt_warp(pylon, "ghosts", inventory, try_build_ghost)) or
+        (pylon.force.recipes["rabbasca-warp-sequence-module"].enabled and attempt_warp(pylon, "modules", inventory, try_warp_module))
     then
         pylon.set_recipe("rabbasca-warp-sequence-building")
     else 
