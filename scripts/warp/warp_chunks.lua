@@ -4,7 +4,6 @@ function M.init_storage()
     storage.warp_chunks = { }
     storage.warp_storage = { }
     storage.warp_queue = { }
-    game.print("Rabbasca init storage")
 end
 
 function M.mark_chunk_dirty(surface_id, chunk_id, min_ticks_passed)
@@ -123,7 +122,7 @@ function M.get_warp_cache(entity)
         local proto = entity.prototype
         local to_place = proto.items_to_place_this and proto.items_to_place_this[1]
         if not to_place then return nil end
-        return { entity = entity, name = to_place.name, count = to_place.count, quality = entity.quality.name, queue = "decon", is_tile = is_tile, position = entity.position }
+        return { entity = entity, name = to_place.name, count = to_place.count, quality = (is_tile and "normal") or entity.quality.name, queue = "decon", is_tile = is_tile, position = entity.position }
     end
 end
 

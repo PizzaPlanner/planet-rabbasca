@@ -6,7 +6,7 @@ local function awake(pylon)
         pylon.recipe_locked = true
     end
 end
---- Last TEST: ././7.5 VS ././5 VS ././7.5
+--- Last TEST: ././7.5 VS ././5 VS ././4
 
 script.on_nth_tick(20, function(event)
   for surface, chunks in pairs(storage.warp_chunks) do
@@ -17,16 +17,19 @@ script.on_nth_tick(20, function(event)
         table.remove(chunks.dirty, i)
         local area = chunks[chunk].area
         for qid, _ in pairs(chunks[chunk].queue) do chunks[chunk].queue[qid] = { } end
+        local is_empty = true
         for _, e in pairs(game.surfaces[surface].find_entities_filtered {
           name = { "entity-ghost", "tile-ghost", "item-request-proxy" },
           area = area,
-        }) do M.register(M.get_warp_cache(e), chunks[chunk]) end
+        }) do M.register(M.get_warp_cache(e), chunks[chunk]) is_empty = false end
         for _, e in pairs(game.surfaces[surface].find_entities_filtered {
           to_be_deconstructed = true,
           area = area,
-        }) do M.register(M.get_warp_cache(e), chunks[chunk]) end
-        for pid, _ in pairs(chunks[chunk].covered_by) do
-          awake(storage.warp_storage[pid].entity)
+        }) do M.register(M.get_warp_cache(e), chunks[chunk]) is_empty = false end
+        if not is_empty then
+          for pid, _ in pairs(chunks[chunk].covered_by) do
+            awake(storage.warp_storage[pid].entity)
+          end
         end
       end
       if i > 5 then break end
@@ -54,6 +57,10 @@ script.on_event(build_events, function(event)
     storage.rabbasca_remote_builder = e -- Only one allowed for simplicity
     M.mark_all_chunks_dirty(0)
   end
+end)
+
+script.on_event(defines.events.on_marked_for_deconstruction, function(event)
+  M.mark_chunk_dirty(event.entity.surface_index, M.chunk_id(event.entity.position))
 end)
 
 return M

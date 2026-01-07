@@ -165,7 +165,7 @@ local function attempt_warp(pylon, q, inventory, f)
         local queue = storage.warp_chunks[pylon.surface_index][chunkid].queue[q]
         for name, qq in pairs(queue) do
             for quality, entries in pairs(qq) do
-                local has = q == "modules" and 1 or inventory.get_item_count({ name = name, quality = quality })
+                local has = q == "modules" and 1 or q == "decon" and 1 or inventory.get_item_count({ name = name, quality = quality })
                 if has > 0 then
                     for i, data in pairs(entries) do
                         local pos_a = data.position
