@@ -29,7 +29,7 @@ local function play_smoke(surface, position, size)
     }
 end
 
-local function try_deconstruct(data, inventory)
+local function try_deconstruct(data, name, quality, inventory)
     if not data.entity.to_be_deconstructed() then return false, status_invalid_target end
      
     local entity = data.entity
@@ -98,7 +98,7 @@ local function clear_plans(request, inventory, index)
     request.removal_plan = old_plans
 end
 
-local function try_warp_module(data, inventory)
+local function try_warp_module(data, name, quality, inventory)
     local request = data.entity
     local target = request.proxy_target
     if not target then return false, status_invalid_target end
@@ -131,87 +131,57 @@ local function try_warp_module(data, inventory)
     return false, status_no_items
 end
 
-local function try_build_ghost(data, inventory)
-    local entity, name, count, quality = data.entity, data.name, data.count, data.entity.quality.name
-    local item_with_quality = { name = name, quality = quality }
+local function try_build_ghost(data, name, quality, inventory)
+    local entity, count = data.entity, data.count
 
-    if inventory.get_item_count(item_with_quality) >= count then
-        local removed = inventory.remove({name = name, count = count, quality = quality})
-        local temp = game.create_inventory(255)
-        local surface, position = entity.surface, entity.position
-        local result = entity.revive{ raise_revive = true, overflow = temp }
-        surface.spill_inventory { position = position, inventory = temp }
-        temp.destroy()
-        if not result then
-            inventory.insert({name = name, count = removed, quality = quality})
-            return false -- maybe missing tiles below etc. NOT invalid target
-        end
-        play_smoke(surface, position, 1)
-        return true, status_ok
+    local removed = inventory.remove({name = name, count = count, quality = quality})
+    local temp = game.create_inventory(255)
+    local surface, position = entity.surface, entity.position
+    local result = entity.revive{ raise_revive = true, overflow = temp }
+    surface.spill_inventory { position = position, inventory = temp }
+    temp.destroy()
+    if not result then
+        inventory.insert({name = name, count = removed, quality = quality})
+        return false -- maybe missing tiles below etc. NOT invalid target
     end
-    for _, player in pairs(entity.force.players) do
-        player.add_alert(entity, defines.alert_type.no_material_for_construction)
-    end
-    return false, status_no_items
+    play_smoke(surface, position, 1)
+    return true, status_ok
 end
 
-function M.attempt_warmup(pylon)
-    local id = pylon.unit_number
-    local queue = storage.warp_storage[id] and storage.warp_storage[id].queue
-    if not queue then
-        pylon.set_recipe(nil)
-        pylon.recipe_locked = true
-        return
+local function remove_entity(queue, name, quality, i)
+    table.remove(queue[name][quality], i)
+    if next(queue[name][quality]) == nil then
+        queue[name][quality] = nil
     end
-    local is_any_success = false
-    for _, data in pairs({
-        { queue = queue.decon, recipe = "rabbasca-warp-sequence-reverse" },
-        { queue = queue.tiles, recipe = "rabbasca-warp-sequence-tile" },
-        { queue = queue.ghosts, recipe = "rabbasca-warp-sequence-building" },
-        { queue = queue.modules, recipe = "rabbasca-warp-sequence-module" },
-    }) do
-        if #data.queue.targets > 0 and data.queue.success and pylon.force.recipes[data.recipe] then
-            pylon.set_recipe(data.recipe)
-            pylon.recipe_locked = true
-            return true
-        elseif data.queue.success and #data.queue.targets > 0 then
-            is_any_success = true
-        end
-    end
-
-    if not is_any_success then
-        queue.decon.success   = true
-        queue.tiles.success   = true
-        queue.ghosts.success  = true
-        queue.modules.success = true
-        M.reset_module_queue(pylon, queue)
-        pylon.set_recipe("rabbasca-remote-warmup")
-        pylon.recipe_locked = true
-        return true
-    else
-        pylon.set_recipe(nil)
-        pylon.recipe_locked = true
-        pylon.custom_status = status_invalid_target
-        return false
+    if next(queue[name]) == nil then
+        queue[name] = nil
     end
 end
 
 local function attempt_warp(pylon, q, inventory, f)
     local id = pylon.unit_number
-    local queue = storage.warp_storage[id] and storage.warp_storage[id].queue[q]
-    for i, data in pairs(queue.targets) do
-        if data.entity.valid then
-            local result, status = f(data, inventory)
-            pylon.custom_status = status
-            queue.success = result
-            if status and status.label[1] == status_invalid_target.label[1] then
-                queue.targets[i] = nil
-                table.remove(queue.targets, i)
+    local pdata = storage.warp_storage[id]
+    for _, chunkid in pairs(pdata.chunks) do
+        local queue = storage.warp_chunks[pylon.surface_index][chunkid].queue[q]
+        for name, qq in pairs(queue) do
+            for quality, entries in pairs(qq) do
+                local has = q == "modules" and 1 or inventory.get_item_count({ name = name, quality = quality })
+                if has > 0 then
+                    for i, data in pairs(entries) do
+                        local pos_a = data.position
+                        local pos_b = pdata.position
+                        local range = pdata.range
+                        local in_range = math.abs(pos_a.x - pos_b.x) <= range and math.abs(pos_a.y - pos_b.y) <= range
+                        if has >= data.count and data.entity.valid and in_range then
+                            local result, status = f(data, name, quality, inventory)
+                            pylon.custom_status = status
+                            if q ~= "modules" then remove_entity(queue, name, quality, i) end
+                            if result then return true end
+                            M.mark_chunk_dirty(pylon.surface_index, chunkid, 30 * 60) -- If failed, try again in 30 seconds
+                        end
+                    end
+                end
             end
-            if result then return true end
-        else
-            queue.targets[i] = nil
-            table.remove(queue.targets, i)
         end
     end
     return false
@@ -231,12 +201,27 @@ function M.attempt_build_ghost(pylon)
     end
 
     local inventory = storage.rabbasca_remote_builder.get_inventory(defines.inventory.chest)
-    local recipe = pylon.get_recipe() and pylon.get_recipe().name
-    if recipe == "rabbasca-warp-sequence-building" and attempt_warp(pylon, "ghosts", inventory, try_build_ghost) then
-    elseif recipe == "rabbasca-warp-sequence-tile" and attempt_warp(pylon, "tiles", inventory, try_build_ghost) then
-    elseif recipe == "rabbasca-warp-sequence-module" and attempt_warp(pylon, "modules", inventory, try_warp_module) then
-    elseif recipe == "rabbasca-warp-sequence-reverse" and attempt_warp(pylon, "decon", inventory, try_deconstruct) then
-    else M.attempt_warmup(pylon) end
+    if  (pylon.force.recipes["rabbasca-warp-sequence-reverse"] and attempt_warp(pylon, "decon", inventory, try_deconstruct)) or
+        (pylon.force.recipes["rabbasca-warp-sequence-tile"] and attempt_warp(pylon, "tiles", inventory, try_build_ghost)) or
+        (pylon.force.recipes["rabbasca-warp-sequence-building"] and attempt_warp(pylon, "ghosts", inventory, try_build_ghost)) or
+        (pylon.force.recipes["rabbasca-warp-sequence-module"] and attempt_warp(pylon, "modules", inventory, try_warp_module))
+    then
+        pylon.set_recipe("rabbasca-warp-sequence-building")
+    else 
+        local id = pylon.unit_number
+        for _, chunkid in pairs(storage.warp_storage[id].chunks) do
+            for _, queue in pairs(storage.warp_chunks[pylon.surface_index][chunkid].queue) do
+                if next(queue) ~= nil then
+                    pylon.set_recipe("rabbasca-remote-warmup")
+                    return
+                end
+            end
+            -- confirm actually empty
+            M.mark_chunk_dirty(pylon.surface_index, chunkid)
+        end
+        pylon.set_recipe(nil)
+        pylon.recipe_locked = true
+    end
 end
 
 return M

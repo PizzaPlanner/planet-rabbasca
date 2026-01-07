@@ -9,28 +9,22 @@ end
 
 local function create_gui(player, pylon)
     destroy_gui(player)
-
-    local data = storage.warp_storage[pylon.unit_number] and storage.warp_storage[pylon.unit_number].queue
-    if not data then return end
-
     local items = { }
-    for _, entry in pairs(data.modules.targets) do
-        if entry.entity.valid and entry.entity.proxy_target.valid then 
-            local key = "[img=entity/item-request-proxy][img=entity/"..entry.entity.proxy_target.name.."]"
-            items[key] = (items[key] or 0) + 1
+
+    local id = pylon.unit_number
+    local pdata = storage.warp_storage[id]
+    if not pdata then return end
+    for _, chunkid in pairs(pdata.chunks) do
+        for _, queue in pairs(storage.warp_chunks[pylon.surface_index][chunkid].queue) do 
+            for name, qq in pairs(queue) do
+                for quality, entries in pairs(qq) do
+                    for _, entry in pairs(entries) do
+                        local key = "[img=entity/entity-ghost][item="..name..",quality="..quality.."]"
+                        items[key] = (items[key] or 0) + entry.count
+                    end
+                end
+            end
         end
-    end
-    for _, entry in pairs(data.ghosts.targets) do
-        local key = "[img=entity/entity-ghost][img=item/"..entry.name.."]"
-        items[key] = (items[key] or 0) + 1
-    end
-    for _, entry in pairs(data.tiles.targets) do
-        local key = "[img=entity/tile-ghost][img=item/"..entry.name.."]"
-        items[key] = (items[key] or 0) + 1
-    end
-    for _, entry in pairs(data.decon.targets) do
-        local key = "[img=virtual-signal/signal-deny][img=item/"..entry.name.."]"
-        items[key] = (items[key] or 0) + 1
     end
 
     local items_aggregated = { }

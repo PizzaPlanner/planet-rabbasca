@@ -1,9 +1,28 @@
 local M = { }
 
 function M.init_storage()
-    storage.warp_chunks = storage.warp_chunks or { }
-    storage.warp_storage = storage.warp_storage or { }
-    storage.warp_queue = storage.warp_queue or { }
+    storage.warp_chunks = { }
+    storage.warp_storage = { }
+    storage.warp_queue = { }
+    game.print("Rabbasca init storage")
+end
+
+function M.mark_chunk_dirty(surface_id, chunk_id, min_ticks_passed)
+    if not (storage.warp_chunks[surface_id] and storage.warp_chunks[surface_id][chunk_id]) then return end
+    local c = storage.warp_chunks[surface_id][chunk_id]
+    if game.tick - c.last_update > (min_ticks_passed or 0) then
+        c.last_update = math.huge
+        table.insert(storage.warp_chunks[surface_id].dirty, chunk_id)
+        -- game.print("Chunk recalc [gps="..c.area[1][1]..","..c.area[1][2]..",rabbasca]")
+    end
+end
+
+function M.mark_all_chunks_dirty(min_ticks_passed)
+    for surface_id, chunks in pairs(storage.warp_chunks) do
+        for _, chunk_id in pairs(chunks) do
+            M.mark_chunk_dirty(surface_id, chunk_id, min_ticks_passed)
+        end
+    end
 end
 
 function M.chunk_id(position)
@@ -17,26 +36,36 @@ function M.get_covered_chunks(entity)
     local min_y = math.floor((entity.position.y - range) / 32)
     local max_y = math.floor((entity.position.y + range) / 32)
     local chunks = { }
+    local chunk_xy = { }
     for cx = min_x, max_x do
         for cy = min_y, max_y do
             table.insert(chunks, M.chunk_id({ x = cx * 32, y = cy * 32 }))
+            table.insert(chunk_xy, {{math.floor(cx * 32), math.floor(cy * 32)}, {math.floor(cx * 32) + 32, math.floor(cy * 32) + 32}})
         end
     end
-    return chunks
+    return chunks, chunk_xy
 end
 
 function M.deregister_chunks(id)
     local data = storage.warp_storage[id]
     if not data then return end
     for _, chunk in pairs(data.chunks) do
-        storage.warp_chunks[data.surface][chunk][id] = nil
+        storage.warp_chunks[data.surface][chunk].covered_by[id] = nil
         local is_chunk_empty = true
-        for _, _ in pairs(storage.warp_chunks[data.surface][chunk]) do
+        for _, _ in pairs(storage.warp_chunks[data.surface][chunk].covered_by) do
             is_chunk_empty = false
             break
         end
         if is_chunk_empty then
             storage.warp_chunks[data.surface][chunk] = nil
+            local is_surface_empty = false
+            for _, _ in pairs(storage.warp_chunks[data.surface]) do
+                is_surface_empty = true
+                break
+            end
+            if is_surface_empty then
+                storage.warp_chunks[data.surface] = nil
+            end
         end
     end
     storage.warp_storage[id] = nil
@@ -45,37 +74,30 @@ end
 function M.register_chunks(entity)
     script.register_on_object_destroyed(entity)
     local id = entity.unit_number
+    local chunks, chunk_xy = M.get_covered_chunks(entity)
     storage.warp_storage[id] = {
         surface = entity.surface_index,
-        chunks = M.get_covered_chunks(entity),
+        chunks = chunks,
         entity = entity,
-        queue = {
-            decon = { targets = { }, success = true },
-            ghosts = { targets = { }, success = true },
-            tiles = { targets = { }, success = true },
-            modules = { targets = { }, success = true },
-        }
+        position = entity.position,
+        range = Rabbasca.get_warp_radius(entity.quality),
     }
-    storage.warp_chunks[entity.surface_index] = storage.warp_chunks[entity.surface_index] or { }
-    for _, chunk in pairs(storage.warp_storage[id].chunks) do
-        storage.warp_chunks[entity.surface_index][chunk] = storage.warp_chunks[entity.surface_index][chunk] or { }
-        storage.warp_chunks[entity.surface_index][chunk][id] = true
+    storage.warp_chunks[entity.surface_index] = storage.warp_chunks[entity.surface_index] or { dirty = { } }
+    for i, chunk in pairs(storage.warp_storage[id].chunks) do
+        storage.warp_chunks[entity.surface_index][chunk] = storage.warp_chunks[entity.surface_index][chunk] or { 
+            last_update = 0, 
+            covered_by = { }, 
+            area = chunk_xy[i],
+            queue = {
+                decon = { },
+                ghosts = { },
+                tiles = { },
+                modules = { }
+            }
+        }
+        storage.warp_chunks[entity.surface_index][chunk].covered_by[id] = true
     end
     return id
-end
-
-function M.get_warp_range(entity)
-    if not storage.warp_chunks then return { } end
-    local surface = entity.surface_index
-    if not storage.warp_chunks[surface] then return { } end
-    return storage.warp_chunks[surface][M.chunk_id(entity.position)] or { }
-end
-
-local function awake(pylon)
-    if pylon.get_recipe() == nil then
-        pylon.set_recipe("rabbasca-remote-warmup")
-        pylon.recipe_locked = true
-    end
 end
 
 function M.get_warp_cache(entity)
@@ -84,15 +106,15 @@ function M.get_warp_cache(entity)
         local to_place = proto.items_to_place_this and proto.items_to_place_this[1]
         if not to_place then return nil end
         local name, count, quality = to_place.name, to_place.count, entity.quality.name
-        return { entity = entity, name = name, count = count, quality = quality, queue = "ghosts" }
+        return { entity = entity, name = name, count = count, quality = quality, queue = "ghosts", position = entity.position }
     elseif entity.name == "tile-ghost" then
         local proto = entity.ghost_prototype
         local to_place = proto.items_to_place_this and proto.items_to_place_this[1]
         if not to_place then return nil end
         local name, count, quality = to_place.name, to_place.count, entity.quality.name
-        return { entity = entity, name = name, count = count, quality = quality, queue = "tiles" }
+        return { entity = entity, name = name, count = count, quality = quality, queue = "tiles", position = entity.position }
     elseif entity.name == "item-request-proxy" then 
-        return { entity = entity, queue = "modules" }
+        return { entity = entity, name = "test", count = 1, quality = "normal", queue = "modules", position = entity.position }
     else
         local is_tile = entity.name == "deconstructible-tile-proxy"
         if is_tile then
@@ -101,74 +123,22 @@ function M.get_warp_cache(entity)
         local proto = entity.prototype
         local to_place = proto.items_to_place_this and proto.items_to_place_this[1]
         if not to_place then return nil end
-        return { entity = entity, name = to_place.name, count = to_place.count, queue = "decon", is_tile = is_tile }
+        return { entity = entity, name = to_place.name, count = to_place.count, quality = entity.quality.name, queue = "decon", is_tile = is_tile, position = entity.position }
     end
 end
 
-function M.register(data, pylon_id, do_range_check)
-    if not (data and data.queue and data.entity) then return end
-    local s = storage.warp_storage[pylon_id]
-    if not s then return end
-    if do_range_check then
-        local pos_a = s.entity.position
-        local pos_b = data.entity.position
-        local range = Rabbasca.get_warp_radius(s.entity.quality)
-        if math.abs(pos_a.x - pos_b.x) > range or math.abs(pos_a.y - pos_b.y) > range then return end
-    end 
-    table.insert(s.queue[data.queue].targets, data)
-    awake(s.entity)
-    -- rendering.draw_sprite {
-    --     sprite = "item.rabbasca-warp-sequence",
-    --     target = { entity = entity, offset = { 0, -0.5 } },
-    --     surface = entity.surface,
-    --     x_scale = 0.75,
-    --     y_scale = 0.75,
-    --     time_to_live = 10 * 60 -- just to indicate that this was registered
-    -- }
-end
-
-function M.try_register_for_warp(entity)
-    local data = nil
-    for r, _ in pairs(M.get_warp_range(entity)) do
-        data = data or M.get_warp_cache(entity)
-        M.register(data, r, true)
-    end
+function M.register(data, pstorage)
+    if not data then return end
+    local q = pstorage.queue[data.queue]
+    q[data.name] = q[data.name] or { }
+    q[data.name][data.quality] = q[data.name][data.quality] or { }
+    table.insert(q[data.name][data.quality], data)
 end
 
 function M.register_pylon(pylon)
     local id = M.register_chunks(pylon)
-    local range = Rabbasca.get_warp_radius(pylon.quality)
-    local area = {{pylon.position.x - range, pylon.position.y - range}, {pylon.position.x + range, pylon.position.y + range}}
-    for _, e in pairs(pylon.surface.find_entities_filtered {
-        name = { "entity-ghost", "tile-ghost" },
-        area = area,
-        force = pylon.force
-    }) do
-        M.register(M.get_warp_cache(e), id)
-    end
-    for _, e in pairs(pylon.surface.find_entities_filtered {
-        to_be_deconstructed = true,
-        area = area,
-        force = pylon.force
-    }) do
-        M.register(M.get_warp_cache(e), id)
-    end
-end
-
---- Workaround to ensure modules get registered, since their creation can not be caught via event
---- TODO: Get rid of this. not great for performance
---- Last TEST: ././7.5 VS ././5
-function reset_module_queue(pylon, queue)
-    local id = pylon.unit_number
-    local range = Rabbasca.get_warp_radius(pylon.quality)
-    local area = {{pylon.position.x - range, pylon.position.y - range}, {pylon.position.x + range, pylon.position.y + range}}
-    queue.modules.targets = { }
-    for _, e in pairs(pylon.surface.find_entities_filtered {
-        name = { "item-request-proxy" },
-        area = area,
-        force = pylon.force
-    }) do
-        M.register(M.get_warp_cache(e), id)
+    for _, chunk in pairs(storage.warp_storage[id].chunks) do
+        M.mark_chunk_dirty(pylon.surface_index, chunk, 0)
     end
 end
 
