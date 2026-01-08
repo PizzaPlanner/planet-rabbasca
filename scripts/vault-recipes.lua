@@ -131,7 +131,7 @@ data:extend {
         enabled = true,
         category = "rabbasca-vault-hacking",
         hide_from_player_crafting = true,
-        energy_required = 30,
+        energy_required = 15,
         ingredients = {{ type = "item", name = "vault-security-key", amount = 1 }},
         auto_recycle = false
     },

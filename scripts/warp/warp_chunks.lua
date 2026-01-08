@@ -50,17 +50,13 @@ function M.deregister_chunks(id)
     if not data then return end
     for _, chunk in pairs(data.chunks) do
         storage.warp_chunks[data.surface][chunk].covered_by[id] = nil
-        local is_chunk_empty = true
-        for _, _ in pairs(storage.warp_chunks[data.surface][chunk].covered_by) do
-            is_chunk_empty = false
-            break
-        end
-        if is_chunk_empty then
+        if next(storage.warp_chunks[data.surface][chunk].covered_by) == nil then
             storage.warp_chunks[data.surface][chunk] = nil
-            local is_surface_empty = false
-            for _, _ in pairs(storage.warp_chunks[data.surface]) do
-                is_surface_empty = true
-                break
+            local is_surface_empty = true
+            for cid, _ in pairs(storage.warp_chunks[data.surface]) do
+                if cid ~= "dirty" then
+                    is_surface_empty = false
+                end
             end
             if is_surface_empty then
                 storage.warp_chunks[data.surface] = nil

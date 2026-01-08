@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.9.4
+Date: 2026-01-08
+  Bugfixes:
+    - Fixed potential crash when deconstructing a warp pylon
+    - Fixed resources below vaults having selection priority over vaults
+  Balancing:
+    - Reduced extend hack duration crafting time (30 -> 15 seconds)
+    - Increased effectivity of extend hack duration (-12 -> -4 hp/second)
+    - Reduced vault health regeneration (6000 -> 100 hp/second)
+    - On meltdowns, a rabbascan emergency protocol now immediately stops all ongoing hacks
+---------------------------------------------------------------------------------------------------
 Version: 0.9.3
 Date: 2026-01-07
   Bugfixes:

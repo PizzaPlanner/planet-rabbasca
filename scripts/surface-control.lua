@@ -47,15 +47,21 @@ function output.register_alertable(entity)
 end
 
 function output.update_alertness(surface, position)
+  local data = storage.alertness_data or { vaults = { }, meltdowns = { } }
   local active_vaults_count = 0
-  for _, v in pairs(storage.alertness_data.vaults) do
+  for _, _ in pairs(data.vaults) do
     active_vaults_count = active_vaults_count + 1
   end
-  local is_meltdown = next(storage.alertness_data.meltdowns) ~= nil
+  local is_meltdown = next(data.meltdowns) ~= nil
   local modulation = storage.alertness_modulation or 0
   local new_evo = active_vaults_count * settings.global["rabbasca-evolution-per-vault"].value / 100 + modulation * Rabbasca.alertness_modulation_step() / 100
   new_evo = math.max(0, math.min(1, new_evo))
-  if is_meltdown then new_evo = 1 end
+  if is_meltdown then
+    new_evo = 1
+    for _, e in pairs(surface.find_entities_filtered { name = "rabbasca-vault-console" }) do
+      e.die()
+    end
+  end
   game.forces.rabbascans.set_evolution_factor(new_evo, surface)
   game.forces.enemy.set_evolution_factor(new_evo, surface) -- make sure factoriopedia evolution ui shows correct value
   storage.hacked_vaults = active_vaults_count
@@ -74,6 +80,8 @@ local function create_evolution_bar(player)
     if not settings.get_player_settings(player)["rabbasca-show-alertness-ui"].value then return end
     
     local vaults = storage.hacked_vaults or 0
+    local is_meltdown = storage.alertness_data and next(storage.alertness_data.meltdowns) ~= nil
+    local modulation = storage.alertness_modulation or 0
     local evo = game.forces["rabbascans"].get_evolution_factor("rabbasca")
     local color = { 0, 1, 0 }
     if evo > 0.9 then color = { 1, 0, 0 } 
@@ -89,6 +97,7 @@ local function create_evolution_bar(player)
         direction = "horizontal",
         style = "slot_window_frame",
     }
+    frame.style.vertically_stretchable = false
     frame.add{
         type = "sprite-button",
         sprite= "entity/rabbasca-vault-crafter",
@@ -97,9 +106,9 @@ local function create_evolution_bar(player)
         number = vaults,
         tooltip = {
           "rabbasca-extra.alertness-ui-tooltip", 
-          storage.hacked_vaults or 0, 
+          vaults, 
           settings.global["rabbasca-evolution-per-vault"].value, 
-          storage.alertness_modulation or 0, 
+          modulation, 
           Rabbasca.alertness_modulation_step(),
           string.format("%i", evo * 100) 
         }
@@ -109,19 +118,56 @@ local function create_evolution_bar(player)
         direction = "vertical",
         name = "right",
     }
-    right.style.top_padding = 2
-    right.add{
-        type = "label", 
-        name = "evolution_title",
-        caption = { "rabbasca-extra.alertness-ui", string.format("%i", evo * 100) }
-    }
+    right.style.top_padding = 1
     local bar = right.add{
         type = "progressbar",
         name = "evolution_bar",
-        value = evo
-    }
+        value = evo,
+        style = "production_progressbar",
+        caption = is_meltdown and { "rabbasca-extra.alertness-ui-meltdown" } or { "rabbasca-extra.alertness-ui", string.format("%i", evo * 100) }
+      }
+    bar.style.horizontal_align = is_meltdown and "center" or "right"
+    bar.style.minimal_width = 96
+    bar.style.natural_width = 96
     bar.style.horizontally_stretchable = true
+    bar.style.vertically_stretchable = true
+    -- bar.style.height = 0
+    -- bar.style.vertical_align = "center"
     bar.style.color = color
+    if not is_meltdown then
+      local mod_max = Rabbasca.alertness_modulation_max() / Rabbasca.alertness_modulation_step()
+      local bottom = right.add {
+          type = "flow",
+          direction = "horizontal",
+          name = "bottom"
+      }
+      bottom.style.horizontally_stretchable = true
+      bottom.style.horizontal_spacing = 2
+      for i = -mod_max, -1 do
+        local bar2 = bottom.add{
+          type = "progressbar",
+          name = "modulation_bar_neg_"..tostring(-i),
+          value = modulation <= i and 1 or 0,
+          style = "bonus_progressbar",
+        }
+        bar2.style.horizontally_stretchable = true
+        bar2.style.minimal_width = 8
+        bar2.style.natural_width = 8
+        bar2.style.color = { 0, 1, 0 }
+      end
+      for i = 1, mod_max do
+        local bar2 = bottom.add{
+          type = "progressbar",
+          name = "modulation_bar_pos_"..tostring(i),
+          value = modulation >= i and 1 or 0,
+          style = "bonus_progressbar",
+        }
+        bar2.style.horizontally_stretchable = true
+        bar2.style.minimal_width = 8
+        bar2.style.natural_width = 8
+        bar2.style.color = { 1, 0, 0 }
+      end
+    end
 end
 
 function output.update_evolution_bar(player)

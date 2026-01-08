@@ -122,7 +122,7 @@ local access_console = util.merge{
     max_health = 7200,
     healing_per_tick = -72 / second, -- does not do anything; just for factoriopedia
     production_health_effect = {
-      producing = -12 / second * 10 - 80, -- Values are per tick, reduced by physical resistance, both percentual and flat
+      producing = -4 / second * 10 - 80, -- Values are per tick, reduced by physical resistance, both percentual and flat
       not_producing = -72 / second * 10 - 80
     },
     enable_logistic_control_behavior = false,
@@ -190,14 +190,14 @@ local vault_crafter = {
   icon_size = 64,
   max_health = 72000,
   production_health_effect = {
-      not_producing = 100,
-      producing = 100
+      not_producing = 100 / second,
+      producing = 100 / second
   },
   friendly_map_color = {0.3, 1, 0.3},
   map_generator_bounding_box = {{-16, -16}, {16, 16}},
   collision_box = {{-2.4, -1.9},{2.4, 2.2}},
   selection_box = {{-2.5, -2.5},{2.5, 2.5}},
-  selection_priority = 30,
+  selection_priority = 45,
   subgroup = "enemies",
   order = "r[rabbasca]-a",
   crafting_speed = 1,
@@ -378,8 +378,8 @@ local vault_core = util.merge{
   selection_box = {{-0.5, -1},{1, 1}},
   order = "r[rabbasca]-x",
 }}
-vault_core.collision_mask = { 
-  layers = { }, 
+vault_core.collision_mask = {
+  layers = { },
   colliding_with_tiles_only = true,
 }
 vault_core.flags = { "placeable-neutral", "placeable-off-grid" }
