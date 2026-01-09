@@ -8,7 +8,7 @@ local defender_1 = util.merge{
     icon = "__base__/graphics/icons/defender.png",
     order = "r[rabbasca]-b1",
     max_health = 15,
-    healing_per_tick = -0.1 / second,
+    healing_per_tick = -0.5 / second,
     movement_speed = 0.13,
     distance_per_frame = 0.125,
     distraction_cooldown = 3 * second,
@@ -76,9 +76,9 @@ local defender_2 = util.merge {
     name = "vault-defender-2",
     icon = "__base__/graphics/icons/defender.png",
     order = "r[rabbasca]-b2",
-    max_health = 24,
+    max_health = 26,
     move_while_shooting = true,
-    healing_per_tick = -0.3 / second,
+    healing_per_tick = -1 / second,
     movement_speed = 0.3,
     distance_per_frame = 0.125,
     distraction_cooldown = 20,
@@ -156,7 +156,7 @@ local defender_heavy = util.merge {
     name = "vault-defender-heavy",
     icon = "__base__/graphics/icons/distractor.png",
     order = "r[rabbasca]-b3",
-    max_health = 820,
+    max_health = 620,
     healing_per_tick = -3.5 / second,
     move_while_shooting = true,
     movement_speed = 0.12,
@@ -171,7 +171,8 @@ defender_heavy.created_effect = {
     type = "instant",
     source_effects =
     {
-      { type = "create-entity", entity_name = "vault-defender-2", offset_deviation = {{-5, -5}, {5, 5}}, repeat_count = 5 },
+      { type = "create-entity", entity_name = "vault-distractor", offset_deviation = {{-8, -8}, {8, 8}}, repeat_count = 8 },
+      { type = "create-entity", entity_name = "vault-defender-2", offset_deviation = {{-5, -5}, {5, 5}}, repeat_count = 4 },
     }
   }
 }
@@ -181,7 +182,7 @@ defender_heavy.resistances = {
   { type = "explosion", percent = 17 },
   { type = "fire", percent = 0 },
   { type = "poison", percent = 100 },
-  { type = "acid", percent = 100 },
+  { type = "acid", percent = 5 },
   { type = "laser", percent = 30 },
   { type = "electric", percent = 50 },
 }
@@ -215,18 +216,20 @@ defender_ouchy.created_effect = {
     type = "instant",
     source_effects =
     {
-      { type = "create-entity", entity_name = "vault-defender-2", offset_deviation = {{-12, -12}, {12, 12}}, repeat_count = 8 },
+      { type = "create-entity", entity_name = "vault-defender-1", offset_deviation = {{-7, -7}, {7, 7}}, repeat_count = 3 },
+      { type = "create-entity", entity_name = "vault-defender-2", offset_deviation = {{-7, -7}, {7, 7}}, repeat_count = 2 },
+      { type = "create-entity", entity_name = "vault-defender-3", offset_deviation = {{-7, -7}, {7, 7}}, repeat_count = 1 },
     }
   }
 }
 defender_ouchy.run_animation = table.deepcopy(data.raw["combat-robot"]["destroyer"].in_motion)
 defender_ouchy.resistances = {
   { type = "physical", percent = 0, decrease = 14 },
-  { type = "explosion", percent = 0 },
+  { type = "explosion", percent = 10 },
   { type = "fire", percent = 0 },
   { type = "poison", percent = 100 },
   { type = "acid", percent = 100 },
-  { type = "laser", percent = 90, decrease = 3 },
+  { type = "laser", decrease = 5 },
   { type = "electric", percent = 95 },
 }
 defender_ouchy.attack_parameters = util.merge {
@@ -262,9 +265,8 @@ defender_spawny.created_effect = {
     type = "instant",
     source_effects =
     {
-      -- { type = "create-entity", entity_name = "rabbasca-vault-warp-spawner", offset_deviation = {{-20, -20}, {20, 20}}, repeat_count = 1, check_buildability = true, find_non_colliding_position = true },
-      { type = "create-entity", entity_name = "vault-defender-1", offset_deviation = {{-12, -12}, {12, 12}}, repeat_count = 6 },
-      { type = "create-entity", entity_name = "vault-defender-heavy", offset_deviation = {{-7, -7}, {7, 7}}, repeat_count = 3 },
+      { type = "create-entity", entity_name = "vault-defender-3", offset_deviation = {{-12, -12}, {12, 12}}, repeat_count = 3 },
+      { type = "create-entity", entity_name = "vault-defender-heavy", offset_deviation = {{-7, -7}, {7, 7}}, repeat_count = 2 },
     }
   }
 }
@@ -281,11 +283,11 @@ defender_spawny.attack_parameters = {
   type = "projectile",
   animation = table.deepcopy(data.raw["combat-robot"]["destroyer"].idle),
   activation_type = "throw",
-  cooldown = 6 * second,
+  cooldown = 8 * second,
   cooldown_deviation = 0.3,
   projectile_center = {0, 1},
   projectile_creation_distance = 0.6,
-  range = 8,
+  range = 5,
   warmup = 1 * second,
   ammo_category = "capsule",
   ammo_type =
@@ -302,8 +304,7 @@ defender_spawny.attack_parameters = {
           {
               type = "script",
               effect_id = "rabbasca_summon_pylon_grid_aligned",
-              repeat_count = 2, 
-              repeat_count_deviation = 1
+              repeat_count = 1,
           }
         }
       }
@@ -313,8 +314,87 @@ defender_spawny.attack_parameters = {
 defender_spawny.attack_parameters.animation.scale = 2
 defender_spawny.run_animation.scale = 2
 
+local defender_3 = util.merge { 
+  defender_2,
+  {
+    name = "vault-defender-3",
+    order = "r[rabbasca]-b3",
+    max_health = 177,
+    move_while_shooting = true,
+    healing_per_tick = -2 / second,
+    movement_speed = 0.85,
+    distance_per_frame = 0.225,
+    distraction_cooldown = 20,
+    min_pursue_time = 5 * second,
+    max_pursue_distance = 20,
+  }
+}
+defender_3.resistances = {
+  { type = "physical", percent = 25, decrease = 8 },
+  { type = "explosion", percent = 55 },
+  { type = "fire", percent = 0 },
+  { type = "poison", percent = 100 },
+  { type = "acid", percent = 100 },
+  { type = "laser", percent = 95 },
+  { type = "electric", percent = 0 },
+}
+defender_3.attack_parameters = {
+  type = "projectile",
+  animation = defender_2.attack_parameters.animation,
+  cooldown = 12,
+  cooldown_deviation = 0.2,
+  projectile_center = {0, 1},
+  projectile_creation_distance = 0.6,
+  range = 8,
+  sound = sounds.defender_gunshot,
+  ammo_category = "bullet",
+  ammo_type =
+  {
+    action =
+    {
+      type = "direct",
+      action_delivery =
+      {
+        type = "instant",
+        source_effects =
+        {
+          type = "create-explosion",
+          entity_name = "explosion-gunshot-small"
+        },
+        target_effects =
+        {
+          {
+            type = "create-entity",
+            entity_name = "explosion-hit"
+          },
+          {
+            type = "damage",
+            damage = { amount = 24, type = "physical"}
+          }
+        }
+      }
+    }
+  }
+}
+
 data:extend{
   vault_distractor, 
-  defender_1, defender_2, defender_spawny,
+  defender_1, defender_2, defender_3, defender_spawny,
   defender_heavy, defender_ouchy
 }
+
+local function localize_adds(thing)
+  thing.localised_description = { "", { "entity-description."..thing.name }, { "rabbasca-extra.robot-description-with-adds" } }
+  for _, add in pairs(thing.created_effect.action_delivery.source_effects) do
+    local name = add.entity_name
+    local count = add.repeat_count
+    local spawns_with = { "rabbasca-extra.robot-add-description", name, tostring(count) }
+    table.insert(thing.localised_description, spawns_with)
+  end
+
+end
+
+localize_adds(defender_heavy)
+localize_adds(defender_spawny)
+localize_adds(defender_ouchy)
+

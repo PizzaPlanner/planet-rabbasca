@@ -145,6 +145,8 @@ local map_gen = {
       {
         settings =
         {
+          ["rabbasca-vault-spawner"] = {}, -- Only to show current evolution in factoriopedia
+          ["rabbasca-vault-warp-spawner"] = {}, -- Only to show current evolution in factoriopedia 
           ["rabbasca-energy-source"] = {},
           ["rabbasca-vault-crafter"] = {},
           ["carotenoid-ore"] = {},
@@ -185,7 +187,7 @@ PlanetsLib:extend({
         ["gravity"] = 1,
         ["solar-power"] = 0,
         ["day-night-cycle"] = 12 * minute,
-        ["pressure"] = 14,
+        ["pressure"] = 20,
         ["magnetic-field"] = 0.01,
         ["harenic-energy-signatures"] = Rabbasca.surface_megawatts(),
     },

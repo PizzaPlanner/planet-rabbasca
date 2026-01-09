@@ -36,7 +36,13 @@ local spawner = util.merge{
   order = "r[rabbasca]-a"
 }}
 spawner.corpse = nil
-spawner.autoplace = nil -- IMPORTANT: prevents spawning on nauvis
+spawner.autoplace = {
+  probability_expression = "0",
+  placement_density = 0,
+  force = "rabbascans",
+  default_enabled = false
+}
+-- spawner.autoplace = nil -- IMPORTANT: prevents spawning on nauvis
 spawner.spawn_decoration = {}
 spawner.damaged_trigger_effect = nil
 spawner.absorptions_per_second = { }
@@ -76,24 +82,29 @@ spawner.result_units = {
   }},
 { unit = "vault-defender-2", spawn_points = {
     {evolution_factor = 0.1, spawn_weight = 0}, 
-    {evolution_factor = 0.15, spawn_weight = 0.5},
+    {evolution_factor = 0.2, spawn_weight = 0.5},
     {evolution_factor = 0.35, spawn_weight = 0.2},
-    {evolution_factor = 0.5, spawn_weight = 0.1},
+    {evolution_factor = 0.7, spawn_weight = 0.0},
+  }},
+{ unit = "vault-defender-3", spawn_points = {
+    {evolution_factor = 0.6, spawn_weight = 0}, 
+    {evolution_factor = 1, spawn_weight = 0.4},
   }},
 { unit = "vault-defender-heavy", spawn_points = {
     {evolution_factor = 0.25, spawn_weight = 0}, 
-    {evolution_factor = 0.3, spawn_weight = 0.6},
-    {evolution_factor = 1, spawn_weight = 0.4},
+    {evolution_factor = 0.6, spawn_weight = 0.25},
+    {evolution_factor = 1, spawn_weight = 0.9},
   }},
 { unit = "vault-defender-charged", spawn_points = {
-    {evolution_factor = 0.4, spawn_weight = 0}, 
-    {evolution_factor = 0.45, spawn_weight = 0.4},
-    {evolution_factor = 1, spawn_weight = 0.6},
+    {evolution_factor = 0.5, spawn_weight = 0}, 
+    {evolution_factor = 0.7, spawn_weight = 0.15},
+    {evolution_factor = 1, spawn_weight = 1},
   }},
 { unit = "vault-defender-spawny", spawn_points = {
-    {evolution_factor = 0.6, spawn_weight = 0}, 
-    {evolution_factor = 0.65, spawn_weight = 0.01},
-    {evolution_factor = 1, spawn_weight = 0.07},
+    {evolution_factor = 0.4, spawn_weight = 0},
+    {evolution_factor = 0.75, spawn_weight = 0.1}, 
+    {evolution_factor = 0.9, spawn_weight = 0.1},
+    {evolution_factor = 1, spawn_weight = 0.05},
   }},
 }
 spawner.graphics_set =
@@ -193,7 +204,7 @@ local vault_crafter = {
       not_producing = 100 / second,
       producing = 100 / second
   },
-  friendly_map_color = {0.3, 1, 0.3},
+  -- friendly_map_color = {0.3, 1, 0.3},
   map_generator_bounding_box = {{-16, -16}, {16, 16}},
   collision_box = {{-2.4, -1.9},{2.4, 2.2}},
   selection_box = {{-2.5, -2.5},{2.5, 2.5}},
@@ -283,7 +294,7 @@ local pylon = util.merge{
   icon_size = 64,
   max_health = 2336, -- will be much higher due to evolution
   healing_per_tick = -35 / second,
-  spawning_cooldown = {4 * second, 2.5 * second},
+  spawning_cooldown = {5 * second, 1.5 * second},
   time_to_capture = 60 * second,
   max_count_of_owned_units = 16,
   max_friends_around_to_spawn = 64,
@@ -308,15 +319,19 @@ pylon.resistances = {
 pylon.result_units = {
 { unit = "vault-defender-2", spawn_points = {
     {evolution_factor = 0.0, spawn_weight = 0.3}, 
-    {evolution_factor = 1.0, spawn_weight = 0.3},
+    {evolution_factor = 0.7, spawn_weight = 0.0},
+  }},
+{ unit = "vault-defender-3", spawn_points = {
+    {evolution_factor = 0.6, spawn_weight = 0.0}, 
+    {evolution_factor = 1.0, spawn_weight = 0.2},
   }},
 { unit = "vault-defender-heavy", spawn_points = {
-    {evolution_factor = 0.0, spawn_weight = 0.7}, 
-    {evolution_factor = 1.0, spawn_weight = 0.7},
-  }},
-{ unit = "vault-defender-charged", spawn_points = {
     {evolution_factor = 0.0, spawn_weight = 0.4}, 
     {evolution_factor = 1.0, spawn_weight = 0.4},
+  }},
+{ unit = "vault-defender-charged", spawn_points = {
+    {evolution_factor = 0.2, spawn_weight = 0.0}, 
+    {evolution_factor = 1.0, spawn_weight = 0.7},
   }},
 }
 pylon.graphics_set =

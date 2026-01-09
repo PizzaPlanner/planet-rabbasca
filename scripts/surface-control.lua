@@ -85,10 +85,10 @@ local function create_evolution_bar(player)
     local evo = game.forces["rabbascans"].get_evolution_factor("rabbasca")
     local color = { 0, 1, 0 }
     if evo > 0.9 then color = { 1, 0, 0 } 
-    elseif evo > 0.6  then color = { 0.75, 0.25, 0 }
-    elseif evo > 0.4  then color = { 1, 1, 0 }
-    elseif evo > 0.25 then color = { 0.5, 1, 0 }
-    elseif evo > 0.1  then color = { 0.25, 1, 0 }
+    elseif evo > 0.5  then color = { 0.75, 0.25, 0 }
+    elseif evo > 0.4  then color = { 1, 0.75, 0 }
+    elseif evo > 0.25 then color = { 1, 1, 0 }
+    elseif evo > 0.1  then color = { 0.5, 1, 0 }
     end
 
     local frame = player.gui.top.add{

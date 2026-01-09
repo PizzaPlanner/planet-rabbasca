@@ -133,6 +133,7 @@ data:extend {
         hide_from_player_crafting = true,
         energy_required = 15,
         ingredients = {{ type = "item", name = "vault-security-key", amount = 1 }},
-        auto_recycle = false
+        auto_recycle = false,
+        overload_multiplier = 1
     },
 }

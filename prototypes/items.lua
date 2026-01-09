@@ -389,7 +389,7 @@ util.merge{
     name = "vault-security-key",
     subgroup = "rabbasca-security",
     order = "a[vault-security-key]",
-    stack_size = 5,
+    stack_size = 20,
     ammo_type = {
       action = {
         action_delivery = {
