@@ -26,6 +26,10 @@ script.on_nth_tick(20, function(event)
           to_be_deconstructed = true,
           area = area,
         }) do M.register(M.get_warp_cache(e), chunks[chunk]) is_empty = false end
+        for _, e in pairs(game.surfaces[surface].find_entities_filtered {
+          to_be_upgraded = true,
+          area = area,
+        }) do M.register(M.get_warp_cache(e), chunks[chunk]) is_empty = false end
         if not is_empty then
           for pid, _ in pairs(chunks[chunk].covered_by) do
             awake(storage.warp_storage[pid].entity)
@@ -37,7 +41,6 @@ script.on_nth_tick(20, function(event)
   end
 end)
 
--- TODO: Does not trigger for item-request-proxy
 local build_events = {
     defines.events.on_built_entity,
     defines.events.on_robot_built_entity,
@@ -59,8 +62,16 @@ script.on_event(build_events, function(event)
   end
 end)
 
+script.on_event(defines.events.on_marked_for_upgrade, function(event)
+  M.mark_chunk_dirty(event.entity.surface_index, M.chunk_id(event.entity.position))
+end)
+
 script.on_event(defines.events.on_marked_for_deconstruction, function(event)
   M.mark_chunk_dirty(event.entity.surface_index, M.chunk_id(event.entity.position))
 end)
+
+-- script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
+-- -- TODO: can use this to show correct pylon radius??
+-- end)
 
 return M

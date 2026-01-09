@@ -1,5 +1,25 @@
 require("__quality__.prototypes.recycling")
 
+local function make_warp_sequence(name, icon, tint)
+return {
+    type = "recipe",
+    name = name,
+    icons = {
+      { icon = "__rabbasca-assets__/graphics/icons/warp.png", icon_size = 64 },
+      { icon = icon, icon_size = 64, scale = 0.25, shift = { 8, 8 } },
+    },
+    enabled = false,
+    hide_from_player_crafting = true,
+    result_is_always_fresh = true,
+    energy_required = 1,
+    ingredients = { },
+    results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1 } },
+    main_product = "rabbasca-warp-sequence",    
+    category = "rabbasca-remote",
+    crafting_machine_tint = {primary = tint or {1, 1, 1}}
+}
+end
+
 local hatch = { 
   cargo_unit_entity_to_spawn = "rabbasca-warp-sequence", 
   receiving_cargo_units = {},
@@ -169,6 +189,7 @@ data:extend {
       icon_size = 64,
       stack_size = 5,
       place_result = "rabbasca-warp-pylon",
+      weight = 200 * kg,
       subgroup = "space-interactors",
       order = "c[cargo-landing-pad]-r[rabbasca-warp-pylon]",
   },
@@ -226,82 +247,11 @@ data:extend {
     main_product = "rabbasca-warp-cargo-pad",
     category = "complex-machinery"
 },
-{
-    type = "recipe",
-    name = "rabbasca-warp-sequence-building",
-    icons = {
-      { icon = "__rabbasca-assets__/graphics/icons/warp.png", icon_size = 64 },
-      { icon = data.raw["entity-ghost"]["entity-ghost"].icon, icon_size = 64, scale = 0.25, shift = { 8, 8 } },
-    },
-    enabled = false,
-    -- hidden = true,
-    -- hidden_in_factoriopedia = true,
-    hide_from_player_crafting = true,
-    result_is_always_fresh = true,
-    energy_required = 1,
-    ingredients = { },
-    results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1 } },
-    main_product = "rabbasca-warp-sequence",    
-    category = "rabbasca-remote",
-    crafting_machine_tint = {primary = {1, 1, 1}}
-},
-{
-    type = "recipe",
-    name = "rabbasca-warp-sequence-tile",
-    icons = {
-      { icon = "__rabbasca-assets__/graphics/icons/warp.png", icon_size = 64 },
-      { icon = data.raw["tile-ghost"]["tile-ghost"].icon, icon_size = 64, scale = 0.25, shift = { 8, 8 } },
-    },
-    enabled = false,
-    -- hidden = true,
-    -- hidden_in_factoriopedia = true,
-    hide_from_player_crafting = true,
-    result_is_always_fresh = true,
-    energy_required = 1,
-    ingredients = { },
-    results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1 } },
-    main_product = "rabbasca-warp-sequence",    
-    category = "rabbasca-remote",
-    crafting_machine_tint = {primary = {1, 0.6, 1}}
-},
-{
-    type = "recipe",
-    name = "rabbasca-warp-sequence-module",
-    icons = {
-      { icon = "__rabbasca-assets__/graphics/icons/warp.png", icon_size = 64 },
-      { icon = data.raw["item-request-proxy"]["item-request-proxy"].icon, icon_size = 64, scale = 0.25, shift = { 8, 8 } },
-    },
-    enabled = false,
-    -- hidden = true,
-    -- hidden_in_factoriopedia = true,
-    hide_from_player_crafting = true,
-    result_is_always_fresh = true,
-    energy_required = 1,
-    ingredients = { },
-    results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1 } },
-    main_product = "rabbasca-warp-sequence",    
-    category = "rabbasca-remote",
-    crafting_machine_tint = {primary = {1, 1, 0.7}}
-},
-{
-    type = "recipe",
-    name = "rabbasca-warp-sequence-reverse",
-    icons = {
-      { icon = "__rabbasca-assets__/graphics/icons/warp.png", icon_size = 64 },
-      { icon = data.raw["deconstruction-item"]["deconstruction-planner"].icon, icon_size = 64, scale = 0.25, shift = { 8, 8 } },
-    },
-    enabled = false,
-    -- hidden = true,
-    -- hidden_in_factoriopedia = true,
-    hide_from_player_crafting = true,
-    result_is_always_fresh = true,
-    energy_required = 1,
-    ingredients = { },
-    results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1 } },
-    main_product = "rabbasca-warp-sequence",    
-    category = "rabbasca-remote",
-    crafting_machine_tint = {primary = {1, 0.3, 0.3}}
-},
+make_warp_sequence("rabbasca-warp-sequence-building", data.raw["entity-ghost"]["entity-ghost"].icon, {1, 1, 1}),
+make_warp_sequence("rabbasca-warp-sequence-tile", data.raw["tile-ghost"]["tile-ghost"].icon, {1, 0.6, 1}),
+make_warp_sequence("rabbasca-warp-sequence-module", data.raw["item-request-proxy"]["item-request-proxy"].icon, {1, 1, 0.7}),
+make_warp_sequence("rabbasca-warp-sequence-reverse", data.raw["deconstruction-item"]["deconstruction-planner"].icon, {1, 0.3, 0,3}),
+make_warp_sequence("rabbasca-warp-sequence-upgrade", data.raw["upgrade-item"]["upgrade-planner"].icon, {0.5, 1, 0.5}),
 {
     type = "recipe",
     name = "rabbasca-remote-warmup",
@@ -360,24 +310,5 @@ data:extend {
     hide_from_player_crafting = true,
     results = { { type = "item", name = "rabbasca-warp-pylon", amount = 1 }, },
     main_product = "rabbasca-warp-pylon"
-  }
-}
-
-data:extend {
-  {
-    type = "roboport",
-    name = "rabbasca-network-cell-normal",
-    energy_source = { type = "void" },
-    energy_usage = "1MW",
-    recharge_minimum = "1MW",
-    robot_slots_count = 0,
-    material_slots_count = 0,
-    request_to_open_door_timeout = 0,
-    spawn_and_station_height = 0,
-    charge_approach_distance = 0,
-    logistics_radius = 0,
-    construction_radius = 20,
-    charging_energy = "1MW",
-    logistics_connection_distance = 120,
   }
 }

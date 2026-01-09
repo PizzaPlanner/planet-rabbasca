@@ -17,6 +17,7 @@ for _, damage in pairs(data.raw["damage-type"]) do
 end
 
 require("scripts.create-ears-variants")
+require("scripts.warp.pylon-radar-dummies-final-fixes")
 
 require("__planet-rabbasca__.compatibility.muluna-final-fixes")
 require("__planet-rabbasca__.compatibility.pelagos-final-fixes")

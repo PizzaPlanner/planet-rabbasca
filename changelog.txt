@@ -1,4 +1,23 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.10.0
+Date: 2026-01-09
+  Changes:
+    - Added Vault defender gunner mk2
+    - Warp pylons now reveal the map and show their construction radius like a roboport
+    - [TODO] Warp pylons can now perform building upgrades
+  Balancing:
+    - Reduced robot energy usage (7.14x -> 5x)
+    - Increased vault security key stack size (5 -> 20)
+    - Vault defender shocker now spawns later (0.4 -> 0.5)
+    - Vault defender summoner and gunner loose health faster (-0.1 -> -0.5/s, -0.3 -> -1/s)
+    - Vault support requester now spawns earlier (0.6 -> 0.4)
+    - Vault support requester can now spawn a maximum of 3 pylons during their lifetime (down from 6)
+    - Changed adds of shocker, heavy and support requester. Adds are now mentioned in their factoriopedia entries.
+    - Adjusted spawning rates and curves of vault protection pylons, making them less overwhelming
+  Bugfixes:
+    - Warp pylon now has reasonable rocket capacity
+    - Factoriopedia entries for vault pylon and console now show current evolution level
+---------------------------------------------------------------------------------------------------
 Version: 0.9.4
 Date: 2026-01-08
   Bugfixes:

@@ -31,7 +31,6 @@ end
 
 local function try_deconstruct(data, name, quality, inventory)
     if not data.entity.to_be_deconstructed() then return false, status_invalid_target end
-     
     local entity = data.entity
     if not data.is_tile then
         for k = 1, entity.get_max_inventory_index() do 
@@ -131,6 +130,24 @@ local function try_warp_module(data, name, quality, inventory)
     return false, status_no_items
 end
 
+local function try_upgrade(data, name, quality, inventory)
+    local entity, count = data.entity, data.count
+    local new_proto, new_quality = entity.get_upgrade_target()
+    if not new_proto then return false end
+    if new_proto.name ~= data.name or new_quality.name ~= data.quality then return end -- upgrade changed since indexing?
+    local proto_old = entity.prototype
+    local to_place_old = proto_old.items_to_place_this and proto_old.items_to_place_this[1]
+    if not to_place_old then return false end
+    local old_name, old_count, old_quality = to_place_old.name, to_place_old.count, entity.quality.name
+    local old_item = { name = old_name, count = old_count, quality = old_quality }
+    if not inventory.can_insert(old_item) then return end
+    local upgraded, _ = entity.apply_upgrade()
+    if upgraded == nil then return false end
+    inventory.remove({ name = data.name, count = count, quality = data.quality })
+    inventory.insert(old_item)
+    return true, status_ok
+end
+
 local function try_build_ghost(data, name, quality, inventory)
     local entity, count = data.entity, data.count
 
@@ -204,6 +221,7 @@ function M.attempt_build_ghost(pylon)
     if  (pylon.force.recipes["rabbasca-warp-sequence-reverse"].enabled and attempt_warp(pylon, "decon", inventory, try_deconstruct)) or
         (pylon.force.recipes["rabbasca-warp-sequence-tile"].enabled and attempt_warp(pylon, "tiles", inventory, try_build_ghost)) or
         (pylon.force.recipes["rabbasca-warp-sequence-building"].enabled and attempt_warp(pylon, "ghosts", inventory, try_build_ghost)) or
+        (pylon.force.recipes["rabbasca-warp-sequence-upgrade"].enabled and attempt_warp(pylon, "upgrades", inventory, try_upgrade)) or
         (pylon.force.recipes["rabbasca-warp-sequence-module"].enabled and attempt_warp(pylon, "modules", inventory, try_warp_module))
     then
         pylon.set_recipe("rabbasca-warp-sequence-building")

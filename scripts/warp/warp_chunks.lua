@@ -48,6 +48,9 @@ end
 function M.deregister_chunks(id)
     local data = storage.warp_storage[id]
     if not data then return end
+    if data.radar and data.radar.valid then
+        data.radar.destroy{}
+    end
     for _, chunk in pairs(data.chunks) do
         storage.warp_chunks[data.surface][chunk].covered_by[id] = nil
         if next(storage.warp_chunks[data.surface][chunk].covered_by) == nil then
@@ -74,6 +77,7 @@ function M.register_chunks(entity)
         surface = entity.surface_index,
         chunks = chunks,
         entity = entity,
+        radar  = nil,
         position = entity.position,
         range = Rabbasca.get_warp_radius(entity.quality),
     }
@@ -87,7 +91,8 @@ function M.register_chunks(entity)
                 decon = { },
                 ghosts = { },
                 tiles = { },
-                modules = { }
+                modules = { },
+                upgrades = { },
             }
         }
         storage.warp_chunks[entity.surface_index][chunk].covered_by[id] = true
@@ -110,7 +115,13 @@ function M.get_warp_cache(entity)
         return { entity = entity, name = name, count = count, quality = quality, queue = "tiles", position = entity.position }
     elseif entity.name == "item-request-proxy" then 
         return { entity = entity, name = "test", count = 1, quality = "normal", queue = "modules", position = entity.position }
-    else
+    elseif entity.to_be_upgraded() then
+        local upgrade, up_quality = entity.get_upgrade_target()
+        local to_place = upgrade.items_to_place_this and upgrade.items_to_place_this[1]
+        if not to_place then return nil end
+        local name, count = to_place.name, to_place.count
+        return { entity = entity, name = name, count = count, quality = up_quality.name, queue = "upgrades", position = entity.position }
+    elseif entity.to_be_deconstructed() or entity.name == "deconstructible-tile-proxy" then
         local is_tile = entity.name == "deconstructible-tile-proxy"
         if is_tile then
             entity = entity.surface.get_tile(entity.position.x, entity.position.y)
@@ -132,6 +143,12 @@ end
 
 function M.register_pylon(pylon)
     local id = M.register_chunks(pylon)
+    local radar = pylon.surface.create_entity {
+        name = "rabbasca-network-cell-"..pylon.quality.name,
+        position = pylon.position,
+        force = pylon.force,
+    }
+    storage.warp_storage[id].radar = radar
     for _, chunk in pairs(storage.warp_storage[id].chunks) do
         M.mark_chunk_dirty(pylon.surface_index, chunk, 0)
     end

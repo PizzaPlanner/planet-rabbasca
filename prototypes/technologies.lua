@@ -634,6 +634,10 @@ data:extend {
         type = "unlock-recipe",
         recipe = "rabbasca-warp-sequence-reverse",
       },
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-warp-sequence-upgrade",
+      },
     },
     level = 2,
     unit = {
