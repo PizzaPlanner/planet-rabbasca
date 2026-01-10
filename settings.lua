@@ -64,6 +64,14 @@ data:extend{
     default_value = true,
     allow_blank = false
   },
+  -- {
+  --   type = "bool-setting",
+  --   name = "rabbasca-enable-underground",
+  --   setting_type = "startup",
+  --   hidden = true,
+  --   default_value = false,
+  --   allow_blank = false
+  -- },
   {
     type = "string-setting",
     name = "rabbasca-orbits",

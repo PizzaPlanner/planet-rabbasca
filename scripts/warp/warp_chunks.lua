@@ -48,9 +48,6 @@ end
 function M.deregister_chunks(id)
     local data = storage.warp_storage[id]
     if not data then return end
-    if data.radar and data.radar.valid then
-        data.radar.destroy{}
-    end
     for _, chunk in pairs(data.chunks) do
         storage.warp_chunks[data.surface][chunk].covered_by[id] = nil
         if next(storage.warp_chunks[data.surface][chunk].covered_by) == nil then
@@ -77,9 +74,7 @@ function M.register_chunks(entity)
         surface = entity.surface_index,
         chunks = chunks,
         entity = entity,
-        radar  = nil,
         position = entity.position,
-        range = Rabbasca.get_warp_radius(entity.quality),
     }
     storage.warp_chunks[entity.surface_index] = storage.warp_chunks[entity.surface_index] or { dirty = { } }
     for i, chunk in pairs(storage.warp_storage[id].chunks) do
@@ -151,6 +146,20 @@ function M.register_pylon(pylon)
     storage.warp_storage[id].radar = radar
     for _, chunk in pairs(storage.warp_storage[id].chunks) do
         M.mark_chunk_dirty(pylon.surface_index, chunk, 0)
+    end
+end
+
+function M.unregister_pylon(pylon_id)
+    local data = storage.warp_storage[pylon_id]
+    if not data then return end
+    local surface, position = game.surfaces[data.surface], data.position 
+    M.deregister_chunks(pylon_id)
+    if surface then
+        for _, dummy in pairs(surface.find_entities({position, position})) do
+            if string.find(dummy.name, "rabbasca%-network%-cell") then
+                dummy.destroy { }
+            end
+        end
     end
 end
 

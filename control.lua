@@ -17,7 +17,6 @@ local function handle_script_events(event)
   elseif effect_id == "rabbasca_on_recalc_evolution" then
     local from = event.source_entity or event.target_entity
     local position = (from and from.position) or event.target_position or event.source_position
-    -- rutil.update_alertness(game.surfaces[event.surface_index], position)
     if from and from.name == "rabbasca-vault-spawner" then
       local vault = from.surface.find_entity("rabbasca-vault-crafter", position)
       rutil.rabbasca_set_vault_active(vault, false)
@@ -45,16 +44,21 @@ local function handle_script_events(event)
     local radius = 3 * 32
     surface.request_to_generate_chunks(offset, 3)
     surface.force_generate_chunk_requests()
-    local pos = surface.find_non_colliding_position("electromagnetic-plant", offset, radius, 1)
+    local pos = surface.find_non_colliding_position("electromagnetic-plant", offset, radius, 1) -- anything that is 4x4
     if not pos then
       game.forces.player.print({ "rabbasca-extra.created-underground-pylon-error", offset.x, offset.y })
-      return 
+      return
     end
     local tiles = {
       { position = {pos.x, pos.y}, name = "rabbasca-energetic-concrete" },
       { position = {pos.x+ 1, pos.y}, name = "rabbasca-energetic-concrete" },
       { position = {pos.x, pos.y+ 1}, name = "rabbasca-energetic-concrete" },
       { position = {pos.x+ 1, pos.y+ 1}, name = "rabbasca-energetic-concrete" },
+      -- lamps
+      { position = {pos.x- 1, pos.y- 1}, name = "rabbasca-energetic-concrete" },
+      { position = {pos.x- 1, pos.y+ 2}, name = "rabbasca-energetic-concrete" },
+      { position = {pos.x+ 2, pos.y- 1}, name = "rabbasca-energetic-concrete" },
+      { position = {pos.x+ 2, pos.y+ 2}, name = "rabbasca-energetic-concrete" },
     }
     surface.set_tiles(tiles)
     local spawner = surface.create_entity {
@@ -62,6 +66,7 @@ local function handle_script_events(event)
       position = pos,
       force = game.forces.player,
       snap_to_grid = true,
+      raise_built = true
     }
     if spawner then
       game.forces.player.print({ "rabbasca-extra.created-underground-pylon", spawner.gps_tag })
@@ -72,10 +77,11 @@ local function handle_script_events(event)
         { pos.x - 1.5, pos.y - 1.5 },
       }) do
         surface.create_entity {
-          name = "small-lamp",
+          name = "harene-infused-small-lamp",
           position = p,
           force = game.forces.player,
           snap_to_grid = true,
+          raise_built = true
         }
       end
     end
@@ -163,7 +169,7 @@ end)
 
 script.on_event(defines.events.on_object_destroyed, function(event)
   rutil.deregister_alertable(event.registration_number)
-  warp.deregister_chunks(event.useful_id)
+  warp.unregister_pylon(event.useful_id)
 end)
 
 script.on_event({

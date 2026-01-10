@@ -18,3 +18,12 @@ for _, thing in pairs(data.raw["rocket-silo"]) do
 end
 
 Rabbasca.not_on_harenic_surface(data.raw["recipe"]["rocket-part"])
+
+-- TODO
+-- local specific = {
+--     data.raw["land-mine"]["teleporter"]
+-- }
+
+-- for _, proto in pairs(specific) do
+--     if proto then Rabbasca.not_on_harenic_surface(proto, 0) end
+-- end

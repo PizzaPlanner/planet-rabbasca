@@ -1,7 +1,7 @@
 local M = require("__planet-rabbasca__.scripts.warp.pylon")
 
 local function awake(pylon)
-    if pylon.get_recipe() == nil then
+    if pylon.valid and pylon.get_recipe() == nil then
         pylon.set_recipe("rabbasca-remote-warmup")
         pylon.recipe_locked = true
     end

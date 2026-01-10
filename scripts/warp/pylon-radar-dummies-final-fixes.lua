@@ -10,6 +10,7 @@ data:extend {
     localised_description = { "entity-localised_description.rabbasca-warp-pylon" },
     flags = { "not-on-map" },
     selectable_in_game = false,
+    hidden_in_factoriopedia = true,
     collision_box = pylon.collision_box,
     collision_mask = { layers = { } },
     energy_source = { type = "void" },
@@ -22,7 +23,7 @@ data:extend {
     charge_approach_distance = 0,
     logistics_radius = 0,
     construction_radius = Rabbasca.get_warp_radius(quality),
-    logistics_connection_distance = Rabbasca.get_warp_radius(quality),
+    logistics_connection_distance = 0,
     charging_energy = "1MW",
     radar_visualisation_color = { 0, 0.25, 0.8, 0.3 }
   }

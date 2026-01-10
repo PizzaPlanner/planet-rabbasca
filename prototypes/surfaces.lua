@@ -1,7 +1,6 @@
 local planet_lib = require("__PlanetsLib__.lib.planet")
 local parent_name = settings.startup["rabbasca-orbits"].value
 local gleba = data.raw["planet"][parent_name]
-local tau = 2*math.pi
 local planet_catalogue_aquilo = require("__space-age__.prototypes.planet.procession-catalogue-aquilo")
 
 local rabbasca_seed_offset = 2702224236 -- CRC of "rabbasca", default for rabbasca, but needs to be same for underground

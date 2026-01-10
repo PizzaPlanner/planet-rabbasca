@@ -3,20 +3,25 @@ Version: 0.10.0
 Date: 2026-01-09
   Changes:
     - Added Vault defender gunner mk2
-    - Warp pylons now reveal the map and show their construction radius like a roboport
-    - [TODO] Warp pylons can now perform building upgrades
+    - Warp pylons now reveal the map and show their construction radius when placing buildings like roboports
+    - Warp pylons can now perform building upgrades
+  Bugfixes:
+    - Warp pylons now have a reasonable rocket capacity
+    - Factoriopedia entries for vault pylon and console now show current evolution level
+    - Fixed range visuals for normal quality warp pylons (higher quality range is still wrong on hover, but correct when constructing ghosts) 
+    - Fixed another potential crash when deconstructing a warp pylon 
   Balancing:
     - Reduced robot energy usage (7.14x -> 5x)
     - Increased vault security key stack size (5 -> 20)
     - Vault defender shocker now spawns later (0.4 -> 0.5)
-    - Vault defender summoner and gunner loose health faster (-0.1 -> -0.5/s, -0.3 -> -1/s)
+    - Vault defender summoner and gunner lose health faster (-0.1 -> -0.5/s, -0.3 -> -1/s)
     - Vault support requester now spawns earlier (0.6 -> 0.4)
     - Vault support requester can now spawn a maximum of 3 pylons during their lifetime (down from 6)
     - Changed adds of shocker, heavy and support requester. Adds are now mentioned in their factoriopedia entries.
     - Adjusted spawning rates and curves of vault protection pylons, making them less overwhelming
-  Bugfixes:
-    - Warp pylon now has reasonable rocket capacity
-    - Factoriopedia entries for vault pylon and console now show current evolution level
+    - Adjusted warp pylon coverage area (40 tiles + 20/quality level -> 80 tiles + 10/quality level) 
+    - Reduced energy threshold for devices to be classified as an expensive E.A.R.S. upgrade requiring technology level 3 (5MW -> 3.75MW)
+    - Reduced machining assembler max. and min. energy consumption (9.3MW / 300kW -> 7MW / 180kW) 
 ---------------------------------------------------------------------------------------------------
 Version: 0.9.4
 Date: 2026-01-08

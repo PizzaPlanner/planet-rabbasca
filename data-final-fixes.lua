@@ -8,7 +8,7 @@ for _, quality in pairs(data.raw["quality"]) do
   console.crafting_speed_quality_multiplier[quality.name] = 1
   warp_pylon.crafting_speed_quality_multiplier[quality.name] = 1
   bunnyhop_engine.custom_tooltip_fields[1].quality_values[quality.name] = {"tooltip-value.bunnyhop-engine-weight-multiplier", tostring(multiplier * 100)}
-  warp_pylon.custom_tooltip_fields[1].quality_values[quality.name] = {"tooltip-value.rabbasca-warp-pylon-range", tostring(Rabbasca.get_warp_radius(quality))}
+  warp_pylon.custom_tooltip_fields[1].quality_values[quality.name] = {"tooltip-value.rabbasca-warp-pylon-range", tostring(Rabbasca.get_warp_radius(quality) * 2)}
 end
 
 local vault_core = data.raw["unit-spawner"]["rabbasca-vault-meltdown"]
