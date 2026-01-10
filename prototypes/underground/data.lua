@@ -1,3 +1,4 @@
+require("prototypes.underground.map-gen")
 require("prototypes.underground.items")
 require("prototypes.underground.entities")
 require("prototypes.underground.resources")

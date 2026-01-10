@@ -46,7 +46,7 @@ lithium_amide.minable.results =
 }
 lithium_amide.autoplace = {
   probability_expression = "rabbasca_underground_lithium_amide",
-  richness_expression = "550 * (1 + sqrt(distance))",
+  richness_expression = "(distance - 80) * (1 + sqrt(distance))",
 }
 
 data:extend{ carbonic_ore, lithium_amide }

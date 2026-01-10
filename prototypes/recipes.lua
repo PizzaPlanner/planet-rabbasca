@@ -106,7 +106,7 @@ data:extend {
         main_product = "harene",
         hide_from_player_crafting = true,
         category = "cryogenics",
-        surface_conditions = { { property = "magnetic-field", min = 99 } },
+        surface_conditions = { { property = "magnetic-field", min = 40 } },
     },
     {
         type = "recipe",

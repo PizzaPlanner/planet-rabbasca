@@ -204,7 +204,7 @@ local vault_crafter = {
       not_producing = 100 / second,
       producing = 100 / second
   },
-  -- friendly_map_color = {0.3, 1, 0.3},
+  map_color = {0.3, 1, 0.3},
   map_generator_bounding_box = {{-16, -16}, {16, 16}},
   collision_box = {{-2.4, -1.9},{2.4, 2.2}},
   selection_box = {{-2.5, -2.5},{2.5, 2.5}},

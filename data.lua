@@ -13,9 +13,7 @@ require("prototypes.recipes")
 require("prototypes.technologies")
 require("prototypes.equipment")
 require("prototypes.tips-and-tricks")
--- if settings.startup["rabbasca-enable-underground"].value then
---     require("prototypes.underground.data")
--- end
+require("prototypes.underground.data")
 
 if mods["any-planet-start"] then
     APS.add_planet{

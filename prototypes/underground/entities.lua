@@ -22,7 +22,114 @@ for _, pic in pairs(rock.pictures) do
   pic.scale = 5 * (pic.scale or 1)
 end
 
+local stabilizer = util.merge { data.raw["assembling-machine"]["assembling-machine-3"],
+{
+    name = "rabbasca-warp-stabilizer",
+    icon = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-icon.png",
+    icon_size = 640,
+    crafting_speed = 1,
+    collision_box = {{-4.2, -4.2}, {4.2, 4.2}},
+    selection_box = {{-4.5, -4.5}, {4.5, 4.5}},
+    energy_usage = "12GW",
+    module_slots = 20,
+  }}
+stabilizer.minable = nil
+stabilizer.placeable_by = nil
+stabilizer.allowed_effects = { "speed", "productivity", "quality" }
+stabilizer.flags = { "placeable-neutral", "player-creation" }
+stabilizer.energy_source.drain = "4GW"
+stabilizer.next_upgrade = nil
+stabilizer.deconstruction_alternative = nil
+stabilizer.crafting_categories = { "rabbasca-warp-stabilizer" }
+stabilizer.fluid_boxes = { 
+  {
+    volume = 1000,
+    pipe_picture = assembler3pipepictures(),
+    pipe_covers = pipecoverspictures(),
+    production_type = "input",
+    pipe_connections = 
+    {
+        {
+          flow_direction = "input-output",
+          position = {0, -4.2},
+          direction = defines.direction.north,
+        },
+    }
+  },
+  {
+    volume = 1000,
+    pipe_picture = assembler3pipepictures(),
+    pipe_covers = pipecoverspictures(),
+    production_type = "output",
+    pipe_connections = 
+    {
+      {
+        flow_direction = "output",
+        position = {0, 4.2},
+        direction = defines.direction.south,
+      },
+    }
+  },
+  {
+    volume = 1000,
+    pipe_picture = assembler3pipepictures(),
+    pipe_covers = pipecoverspictures(),
+    production_type = "input",
+    pipe_connections = 
+    {
+      {
+        flow_direction = "input-output",
+        position = {4.2, 0},
+        direction = defines.direction.east,
+      },
+    }
+  },
+  {
+    volume = 1000,
+    pipe_picture = assembler3pipepictures(),
+    pipe_covers = pipecoverspictures(),
+    production_type = "input",
+    pipe_connections = 
+    {
+      {
+        flow_direction = "input-output",
+        position = {-4.2, 0},
+        direction = defines.direction.west,
+      },
+    }
+  },
+}
+-- assembler.effect_receiver = { base_effect = {
+--   ["productivity"] = 1, 
+-- } }
+local sprite_data = {   
+  line_length = 10,
+  width = 4000 / 10,
+  height = 3840 / 8,
+  frame_count = 80,
+  scale = 0.75,
+}
+
+stabilizer.graphics_set = {
+  frozen_patch = util.merge {{ filename = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-frozen.png" }, sprite_data },
+  working_visualisations = {
+    {
+      fadeout = true, 
+      animation = util.merge { sprite_data, 
+      { filename = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-emission1.png", draw_as_glow = true, blend_mode = "additive" }},
+    },
+    {
+      fadeout = true, 
+      animation = util.merge { sprite_data, 
+      { filename = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-emission2.png", draw_as_glow = true, blend_mode = "additive" }},
+    },
+  },
+  shadow = { line_length = 1, frame_count = 80, width = 900, height = 500, draw_as_shadow = true, filename = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-shadow.png", scale = 0.75, },
+  idle_animation = { layers = { util.merge {{ filename = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-animation.png" }, sprite_data } } },
+  always_draw_idle_animation = true
+}
 data:extend {
+  stabilizer,
   rock,
   util.merge {
     data.raw["electric-energy-interface"]["rabbasca-energy-source"],
@@ -33,23 +140,6 @@ data:extend {
         buffer_capacity = (Rabbasca.surface_megawatts() * 5 / 6) .. "MJ", 
         output_flow_limit = Rabbasca.surface_megawatts() * 5 .. "MW",
       },
-      created_effect = {
-        type = "direct",
-        action_delivery = {
-          {
-            type = "instant",
-            target_effects =
-            {
-              {
-                type = "create-entity",
-                entity_name = "rabbasca-energy-consumer-big",
-                offsets = {{0, 0}},
-                protected = true,
-              },
-            }
-          }
-        }
-      }
     },
   },
   util.merge {

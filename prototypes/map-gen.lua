@@ -148,42 +148,4 @@ data:extend{
       b  = "multioctave_noise{x = x, y = y, persistence = 1.4, seed0 = map_seed, input_scale = 1/2, seed1 = 3, octaves = 7 }",                          
     }
   },
-  {
-    type = "noise-expression",
-    name = "rabbasca_devourer_territory_radius",
-    expression = 297
-  },
-  {
-    type = "noise-expression",
-    name = "rabbasca_devourer_territory_expression",
-    expression = "voronoi_cell_id{x = x + 1000 * rabbasca_devourer_territory_radius,\z
-                                  y = y + 1000 * rabbasca_devourer_territory_radius,\z
-                                  seed0 = map_seed,\z
-                                  seed1 = 0,\z
-                                  grid_size = rabbasca_devourer_territory_radius,\z
-                                  distance_type = 'manhattan',\z
-                                  jitter = 1} * rabbasca_underground_elevation * rabbasca_underground_elevation"
-  },
-  {
-    type = "noise-expression",
-    name = "rabbasca_underground_elevation",
-    expression = "1 - rabbasca_vaults_holes"
-  },
-  {
-    type = "noise-expression",
-    name = "rabbasca_underground_lithium_amide",
-    expression = "(rabbasca_underground_elevation > 0.9)\z
-                  * min(\z
-                    basis_noise{x = x, y = y, seed0 = map_seed, seed1 = 'lavalava', input_scale = 1/80 },  \z
-                    basis_noise{x = x, y = y, seed0 = map_seed, seed1 = 'lavaaval', input_scale = 1/65 },  \z
-                    basis_noise{x = x, y = y, seed0 = map_seed, seed1 = 57123, input_scale = 1/96 }, \z
-                    multioctave_noise{x = x, y = y, persistence = 0.5, seed0 = map_seed, seed1 = 'lavaoncrack', input_scale = 1/5, octaves = 3 }\z
-                  ) - 0.25"
-  },
-  {
-    type = "noise-expression",
-    name = "rabbasca_underground_resources",
-    expression = "(0.7 - rabbasca_underground_elevation)\z
-                  * (0.7 + multioctave_noise{x = x, y = y, persistence = 0.57, seed0 = map_seed, seed1 = 'kindoflikeasteroidcrushing', input_scale = 0.5, output_scale = 0.3, octaves = 3 })"
-  },
 }

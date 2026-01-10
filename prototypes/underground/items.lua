@@ -1,10 +1,44 @@
 data:extend{
 {
     type = "item",
-    name = "rabbasca-packaged-pylon",
+    name = "rabbasca-locate-stabilizer",
     category = "rabbasca-security",
     order = "b[vault-access-key]",
-    icon = "__rabbasca-assets__/graphics/recolor/icons/omega-carotene.png",
+    icon = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-icon.png",
+    icon_size = 640,
+    flags = { "ignore-spoil-time-modifier" },
+    hidden = true,
+    hidden_in_factoriopedia = true,
+    auto_recycle = false,
+    stack_size = 1,
+    spoil_ticks = 1,
+    spoil_to_trigger_result =
+    {
+      items_per_trigger = 1,
+      trigger =
+      {
+        type = "direct",
+        action_delivery =
+        {
+          type = "instant",
+          source_effects =
+          {
+            {
+              type = "script",
+              effect_id = "rabbasca_on_send_pylon_underground"
+            }
+          }
+        }
+      }
+    }
+},
+{
+    type = "item",
+    name = "rabbasca-reboot-stabilizer",
+    category = "rabbasca-security",
+    order = "b[vault-access-key]",
+    icon = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-icon.png",
+    icon_size = 640,
     flags = { "ignore-spoil-time-modifier" },
     hidden = true,
     hidden_in_factoriopedia = true,
@@ -50,4 +84,18 @@ data:extend{
   stack_size = 50,
   weight = 25 * kg,
 },
+{
+  type = "item",
+  name = "rabbasca-warp-matrix",
+  icon = data.raw["item"]["ice"].icon,
+  stack_size = 50,
+  weight = 10 * kg,
+  auto_recycle = false
+},
+util.merge { data.raw["tool"]["automation-science-pack"], {
+  name = "rabbasca-warp-proofed-science-pack",
+  icon = "__rabbasca-assets__/graphics/recolor/icons/athletic-science-pack.png",
+  icon_size = 64,
+  order = "x-r[rabbasca]",
+}},
 }

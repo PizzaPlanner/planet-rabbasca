@@ -19,7 +19,7 @@ local lava = util.merge{ table.deepcopy(data.raw["tile"]["lava"]), {
     fluid = "harenic-lava",
     particle_tints = { primary = { 111, 30, 180 }, secondary = { 145, 30, 180 },},
 }}
-lava.autoplace = nil
+lava.autoplace = { probability_expression = "rabbasca_underground_lava" }
 lava.variants.main[1].picture = "__rabbasca-assets__/graphics/recolor/textures/lava-transitions.png"
 lava.variants.main[2].picture = "__rabbasca-assets__/graphics/recolor/textures/lava-transitions.png"
 lava.variants.main[3].picture = "__rabbasca-assets__/graphics/recolor/textures/lava-transitions.png"

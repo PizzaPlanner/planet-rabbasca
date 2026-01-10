@@ -1,38 +1,34 @@
-local parent_name = settings.startup["rabbasca-orbits"].value
-local gleba = data.raw["planet"][parent_name]
-
 data:extend { 
   {
     type = "planet",
     name = "rabbasca-underground",
-    icon = "__rabbasca-assets__/graphics/by-openai/rabbasca-underground.png", 
-    icon_size = 128,
+    icon = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-icon.png", 
+    icon_size = 640,
     hidden = true,
     draw_orbit = false,
     distance = 10,
     orientation = 0,
-    gleba.order .. "-r[rabbasca-underground]",
-    map_seed_offset = rabbasca_seed_offset,
+    order = data.raw["planet"]["rabbasca"].order.."-a[underground]",
     surface_properties = {
-        ["gravity"] = 8,
+        ["gravity"] = 14,
         ["solar-power"] = 0,
         ["pressure"] = Rabbasca.underground_pressure(),
-        ["magnetic-field"] = 0.01,
+        ["magnetic-field"] = 45,
         ["harenic-energy-signatures"] = Rabbasca.surface_megawatts() * 0.1,
         ["day-night-cycle"] = 30 * second,
     },
     map_gen_settings = {
       cliff_settings = {
         name = "rabbasca-underground-cliff",
-        cliff_elevation_0 = 0.255,
-        cliff_elevation_interval = 0.4,
+        cliff_elevation_0 = 0.1,
+        cliff_elevation_interval = 0.6,
         cliff_smoothing = 0,
         -- richness = 10,
       },
       property_expression_names = {
         elevation = "rabbasca_underground_elevation",
         cliff_elevation = "rabbasca_underground_elevation",
-        cliffiness = "1",
+        cliffiness = "0.3",
       },
       autoplace_controls = 
       {
@@ -41,7 +37,8 @@ data:extend {
       autoplace_settings = {
       tile = { settings = {
         ["rabbasca-underground-rubble"] = {},
-        ["rabbasca-underground-out-of-map"] = {},
+        -- ["rabbasca-underground-out-of-map"] = {},
+        ["harenic-lava"] = {},
       }},
       entity = { settings = {
         ["rabbasca-energy-source-big"] = {},
