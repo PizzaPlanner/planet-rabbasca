@@ -1,27 +1,3 @@
-local rock = util.merge {
-    table.deepcopy(data.raw["simple-entity"]["big-volcanic-rock"]),
-    {
-      name = "rabbasca-underground-rock",
-      minable = { 
-        mining_time = 3,
-      },
-      autoplace = {
-        probability_expression = "rabbasca_underground_elevation > 0.85",
-      },
-      map_color = {0.09, 0.12, 0.17},
-      collision_box = {{-3, -3}, {3, 3.5}},
-      selection_box = {{-2.9, -2.9}, {2.9, 3.4}},
-    }
-}
-
-rock.minable.results = {
-  {type = "item", name = "stone", amount_min = 12, amount_max = 17 }, 
-  {type = "item", name = "calcite", amount_min = 9, amount_max = 12 }
-}
-for _, pic in pairs(rock.pictures) do
-  pic.scale = 5 * (pic.scale or 1)
-end
-
 local stabilizer = util.merge { data.raw["assembling-machine"]["assembling-machine-3"],
 {
     name = "rabbasca-warp-stabilizer",
@@ -30,32 +6,18 @@ local stabilizer = util.merge { data.raw["assembling-machine"]["assembling-machi
     crafting_speed = 1,
     collision_box = {{-4.2, -4.2}, {4.2, 4.2}},
     selection_box = {{-4.5, -4.5}, {4.5, 4.5}},
-    energy_usage = "12GW",
+    energy_usage = "8GW",
     module_slots = 20,
   }}
 stabilizer.minable = nil
 stabilizer.placeable_by = nil
 stabilizer.allowed_effects = { "speed", "productivity", "quality" }
 stabilizer.flags = { "placeable-neutral", "player-creation" }
-stabilizer.energy_source.drain = "4GW"
+stabilizer.energy_source.drain = "2GW"
 stabilizer.next_upgrade = nil
 stabilizer.deconstruction_alternative = nil
 stabilizer.crafting_categories = { "rabbasca-warp-stabilizer" }
 stabilizer.fluid_boxes = { 
-  {
-    volume = 1000,
-    pipe_picture = assembler3pipepictures(),
-    pipe_covers = pipecoverspictures(),
-    production_type = "input",
-    pipe_connections = 
-    {
-        {
-          flow_direction = "input-output",
-          position = {0, -4.2},
-          direction = defines.direction.north,
-        },
-    }
-  },
   {
     volume = 1000,
     pipe_picture = assembler3pipepictures(),
@@ -65,36 +27,50 @@ stabilizer.fluid_boxes = {
     {
       {
         flow_direction = "output",
+        position = {-2, 4.2},
+        direction = defines.direction.south,
+      },
+      {
+        flow_direction = "output",
         position = {0, 4.2},
+        direction = defines.direction.south,
+      },
+      {
+        flow_direction = "output",
+        position = {2, 4.2},
         direction = defines.direction.south,
       },
     }
   },
   {
-    volume = 1000,
-    pipe_picture = assembler3pipepictures(),
-    pipe_covers = pipecoverspictures(),
+    volume = 500,
     production_type = "input",
+    filter = "fusion-plasma",
     pipe_connections = 
     {
       {
         flow_direction = "input-output",
-        position = {4.2, 0},
-        direction = defines.direction.east,
+        position = {-4.2, 3},
+        direction = defines.direction.west,
+        connection_category = "fusion-plasma",
       },
-    }
-  },
-  {
-    volume = 1000,
-    pipe_picture = assembler3pipepictures(),
-    pipe_covers = pipecoverspictures(),
-    production_type = "input",
-    pipe_connections = 
-    {
+      {
+        flow_direction = "input-output",
+        position = {4.2, 3},
+        direction = defines.direction.east,
+        connection_category = "fusion-plasma",
+      },
       {
         flow_direction = "input-output",
         position = {-4.2, 0},
         direction = defines.direction.west,
+        connection_category = "fusion-plasma",
+      },
+      {
+        flow_direction = "input-output",
+        position = {4.2, 0},
+        direction = defines.direction.east,
+        connection_category = "fusion-plasma",
       },
     }
   },
@@ -128,9 +104,44 @@ stabilizer.graphics_set = {
   idle_animation = { layers = { util.merge {{ filename = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-animation.png" }, sprite_data } } },
   always_draw_idle_animation = true
 }
+
+local lab = util.merge {
+  data.raw["lab"]["lab"],
+  {
+    name = "rabbasca-warp-tech-analyzer",
+    energy_usage = "10MW",
+    burns_fluid = true,
+    scale_fluid_usage = true
+  }
+}
+lab.inputs = { "rabbasca-warp-core" }
+lab.energy_source = {
+  type = "fluid",
+  fluid_box = {
+    volume = 100,
+    filter = "harene",
+    pipe_picture = assembler2pipepictures(),
+    pipe_covers = pipecoverspictures(),
+    production_type = "input",
+    pipe_connections = 
+    {
+        {
+          flow_direction = "input-output",
+          position = {0, -1.2},
+          direction = defines.direction.north,
+        },
+        {
+          flow_direction = "input-output",
+          position = {0, 1.2},
+          direction = defines.direction.south,
+        },
+    },
+  },
+}
+
 data:extend {
   stabilizer,
-  rock,
+  lab,
   util.merge {
     data.raw["electric-energy-interface"]["rabbasca-energy-source"],
     {

@@ -480,7 +480,7 @@ data:extend {
     },
     {
       type = "unlock-recipe",
-      recipe = "rabbasca-warp-pylon",
+      recipe = "rabbasca-warp-pylon-indicator",
     },
     {
       type = "unlock-recipe",
@@ -624,14 +624,6 @@ data:extend {
     {
       {
         type = "unlock-recipe",
-        recipe = "vault-protocol-warp-pylon",
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-warp-sequence-module",
-      },
-      {
-        type = "unlock-recipe",
         recipe = "rabbasca-warp-sequence-reverse",
       },
       {
@@ -642,7 +634,7 @@ data:extend {
     level = 2,
     unit = {
       time = 60,
-      count = 1000,
+      count = 500,
       ingredients = {
         {"automation-science-pack", 1},
         {"logistic-science-pack", 1},
@@ -651,11 +643,7 @@ data:extend {
         {"military-science-pack", 1},
         {"production-science-pack", 1},
         {"utility-science-pack", 1},
-        {"metallurgic-science-pack", 1},
-        {"electromagnetic-science-pack", 1},
-        {"agricultural-science-pack", 1},
         {"athletic-science-pack", 1},
-        {"cryogenic-science-pack", 1},
       }
   }
 },

@@ -69,20 +69,6 @@ Rabbasca.create_vault_recipe("vault-protocol-sulfur", {
   maximum_productivity = 9,
   allow_productivity = true,
 })
-Rabbasca.create_vault_recipe("vault-protocol-warp-pylon", {
-  icons = {
-    {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
-    {icon = data.raw["item"]["rabbasca-warp-pylon"].icon, icon_size = 64, shift = {8, 8}, scale = 0.4},
-  },
-  ingredients = {
-    {type = "item", name = "haronite-plate", amount = 5 },
-  }, -- Enables quality pylons
-  results = {
-    {type = "item", name = "rabbasca-warp-pylon", amount = 1 },
-  }, 
-  energy_required = 600,
-  allow_productivity = true,
-})
 Rabbasca.create_vault_recipe("rabbasca-security-modulation-up", {
   icons = {
     {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},

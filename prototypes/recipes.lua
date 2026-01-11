@@ -32,7 +32,7 @@ data:extend {
         type = "item-subgroup",
         name = "rabbasca-vault-extraction",
         group = data.raw["item-group"]["rabbasca-extensions"] and "rabbasca-extensions" or "combat",
-        order = "a"
+        order = "a[extraction]"
     },
     {
         type = "recipe-category",
@@ -123,7 +123,7 @@ data:extend {
             {type = "item",  name = "harene-cryo-container-empty", amount = 1 },
         },
         main_product = "harene-cryo-container-empty",
-        surface_conditions = table.deepcopy(data.raw["recipe"]["cryogenic-plant"].surface_conditions),
+        surface_conditions = { { property = "pressure", min = 300 } },
         allow_productivity = true,
         hide_from_player_crafting = true,
         category = "crafting",

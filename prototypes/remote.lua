@@ -11,7 +11,7 @@ return {
     enabled = false,
     hide_from_player_crafting = true,
     result_is_always_fresh = true,
-    energy_required = 1,
+    energy_required = 0.5,
     ingredients = { },
     results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1 } },
     main_product = "rabbasca-warp-sequence",    
@@ -282,27 +282,27 @@ make_warp_sequence("rabbasca-warp-sequence-upgrade", data.raw["upgrade-item"]["u
 }
 
 data:extend {
+  -- {
+  --   type = "recipe",
+  --   name = "rabbasca-warp-pylon-recycling",
+  --   enabled = false,
+  --   icons = generate_recycling_recipe_icons_from_item(data.raw.item["rabbasca-warp-pylon"]),
+  --   ingredients = { { type = "item", name = "rabbasca-warp-pylon", amount = 1 }, },
+  --   results = { 
+  --     { type = "item", name = "rabbasca-warp-core", amount = 3 }, 
+  --     { type = "item", name = "haronite-plate",     amount = 1 }, 
+  --   },
+  --   category = "recycling",
+  --   hide_from_player_crafting = true,
+  --   energy_required = 30,
+  --   unlock_results = true,
+  --   subgroup = "rabbasca-security",
+  --   order = "x[rabbasca-warp-core]-recycling",
+  --   localised_name = {"recipe-name.recycling", {"entity-name.rabbasca-warp-pylon"}},
+  -- },
   {
     type = "recipe",
-    name = "rabbasca-warp-pylon-recycling",
-    enabled = false,
-    icons = generate_recycling_recipe_icons_from_item(data.raw.item["rabbasca-warp-pylon"]),
-    ingredients = { { type = "item", name = "rabbasca-warp-pylon", amount = 1 }, },
-    results = { 
-      { type = "item", name = "rabbasca-warp-core", amount = 3 }, 
-      { type = "item", name = "haronite-plate",     amount = 1 }, 
-    },
-    category = "recycling",
-    hide_from_player_crafting = true,
-    energy_required = 30,
-    unlock_results = true,
-    subgroup = "rabbasca-security",
-    order = "x[rabbasca-warp-core]-recycling",
-    localised_name = {"recipe-name.recycling", {"entity-name.rabbasca-warp-pylon"}},
-  },
-  {
-    type = "recipe",
-    name = "rabbasca-warp-pylon",
+    name = "rabbasca-warp-pylon-indicator",
     enabled = false,
     category = "parameters", -- can not be crafted, just for unlocking the icon in menus?
     hidden_in_factoriopedia = true,

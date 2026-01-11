@@ -15,7 +15,6 @@ data:extend {
         ["pressure"] = Rabbasca.underground_pressure(),
         ["magnetic-field"] = 45,
         ["harenic-energy-signatures"] = Rabbasca.surface_megawatts() * 0.1,
-        ["day-night-cycle"] = 30 * second,
     },
     map_gen_settings = {
       cliff_settings = {
@@ -41,9 +40,9 @@ data:extend {
         ["harenic-lava"] = {},
       }},
       entity = { settings = {
-        ["rabbasca-energy-source-big"] = {},
+        ["rabbasca-energy-source"] = {},
         -- ["rabbasca-underground-rock"] = {},
-        ["rabbasca-carbonic-ore"] = {},
+        -- ["rabbasca-carbonic-ore"] = {},
         ["rabbasca-lithium-amide"] = {},
       }}
       },
@@ -61,7 +60,6 @@ data:extend {
       clouds = nil,
       day_night_cycle_color_lookup = {
           {0.0, "__rabbasca-assets__/graphics/recolor/textures/lut-underground.png"},
-          {0.5, "__rabbasca-assets__/graphics/recolor/textures/lut-black.png"}
       },
       fog = util.merge {
         data.raw["planet"]["vulcanus"].surface_render_parameters.fog,

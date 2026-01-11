@@ -16,6 +16,9 @@ for _, damage in pairs(data.raw["damage-type"]) do
   table.insert(vault_core.resistances, { type = damage.name, percent = 100 })
 end
 
+data.raw["recipe"]["rabbasca-warp-pylon-recycling"].hidden = false
+data.raw["recipe"]["rabbasca-warp-pylon-recycling"].hidden_in_factoriopedia = false
+
 require("scripts.create-ears-variants")
 require("scripts.warp.pylon-radar-dummies-final-fixes")
 

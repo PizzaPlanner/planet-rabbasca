@@ -88,9 +88,9 @@ data:extend{
       allow_decomposition = false,
       always_show_products = true,
       ingredients = { },
-      result_is_always_fresh = true,
       category = "rabbasca-vault-extraction",
       subgroup = "rabbasca-vault-extraction",
+      result_is_always_fresh = true,
       auto_recycle = false, 
   }
 }

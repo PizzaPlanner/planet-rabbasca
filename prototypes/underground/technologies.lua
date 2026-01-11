@@ -1,21 +1,40 @@
-table.insert(data.raw["technology"]["interplanetary-construction-2"].effects, {
-  type = "unlock-recipe",
-  recipe = "rabbasca-locate-stabilizer"
-})
-
 data:extend{
 {
     type = "technology",
-    name = "rabbasca-underground",
+    name = "rabbasca-underground-preparations",
     icon = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-icon.png",
     icon_size = 640,
-    prerequisites = { "interplanetary-construction-2", "fusion-reactor" },
+    prerequisites = { "interplanetary-construction-2", "fusion-reactor", "harene-synthesis" },
     effects = {
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-locate-stabilizer"
+      },
       {
         type = "unlock-space-location",
         space_location = "rabbasca-underground",
         use_icon_overlay_constant = true
       },
+    },
+    unit = {
+      time = 60,
+      count = 100,
+      ingredients = {
+        {"metallurgic-science-pack", 1},
+        {"electromagnetic-science-pack", 1},
+        {"agricultural-science-pack", 1},
+        {"athletic-science-pack", 1},
+        {"cryogenic-science-pack", 1},
+      }
+    }
+},
+{
+    type = "technology",
+    name = "rabbasca-underground",
+    icon = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-icon.png",
+    icon_size = 640,
+    prerequisites = { "rabbasca-underground-preparations" },
+    effects = {
       {
         type = "unlock-recipe",
         recipe = "rabbasca-perfluorosulfonic-acid-from-atmosphere"
@@ -23,10 +42,6 @@ data:extend{
       {
         type = "unlock-recipe",
         recipe = "rabbasca-petroleum-gas-from-atmosphere"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-decompose-perfluorosulfonic-acid"
       },
     },
     research_trigger =
@@ -44,7 +59,7 @@ data:extend{
     effects = {
       {
         type = "unlock-recipe",
-        recipe = "rabbasca-lithium-amide-fission"
+        recipe = "rabbasca-decompose-perfluorosulfonic-acid"
       },
     },
     research_trigger =
@@ -65,6 +80,14 @@ data:extend{
         type = "unlock-recipe",
         recipe = "rabbasca-lithium-amide-fission"
       },
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-holmium-filter"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-holmium-from-harenic-lava"
+      },
     },
     research_trigger =
     {
@@ -74,7 +97,7 @@ data:extend{
 },
 {
     type = "technology",
-    name = "rabbasca-resource-materialization-1",
+    name = "rabbasca-warp-stabilizer",
     icon = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-icon.png",
     icon_size = 640,
     prerequisites = { "rabbasca-perfluorosulfonic-acid", "rabbasca-lithium-amide" },
@@ -95,21 +118,6 @@ data:extend{
         type = "unlock-recipe",
         recipe = "rabbasca-materialize-turbofish"
       },
-    },
-    research_trigger =
-    {
-        type = "craft-item",
-        item = "rabbasca-reboot-stabilizer",
-        count = 1
-    }
-},
-{
-    type = "technology",
-    name = "rabbasca-resource-materialization-2",
-    icon = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-icon.png",
-    icon_size = 640,
-    prerequisites = { "rabbasca-resource-materialization-1" },
-    effects = {
       {
         type = "unlock-recipe",
         recipe = "rabbasca-materialize-coal"
@@ -121,18 +129,102 @@ data:extend{
       },
       {
         type = "unlock-recipe",
-        recipe = "rabbasca-materialize-holmium"
+        recipe = "rabbasca-materialize-tungsten"
       },
       {
         type = "unlock-recipe",
-        recipe = "rabbasca-materialize-tungsten"
+        recipe = "rabbasca-coordinate-calibrations"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-spatial-anchor"
       },
     },
     research_trigger =
     {
         type = "craft-item",
-        item = "rabbasca-warp-matrix",
-        count = 100
+        item = "rabbasca-reboot-stabilizer",
+        count = 1
+    }
+},
+{
+    type = "technology",
+    name = "rabbasca-warp-technology-analysis",
+    icon = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-icon.png",
+    icon_size = 640,
+    prerequisites = { "rabbasca-warp-stabilizer" },
+    effects = {
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-warp-core"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-warp-tech-analyzer"
+      },
+    },
+    research_trigger =
+    {
+        type = "craft-item",
+        item = "rabbasca-spatial-anchor",
+        count = 10,
+    }
+},
+{
+    type = "technology",
+    name = "rabbasca-self-made-warp-pylon",
+    icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon-big.png",
+    icon_size = 640,
+    prerequisites = { "rabbasca-warp-technology-analysis" },
+    effects = {
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-warp-pylon"
+      },
+    },
+    unit = {
+      time = 60,
+      count = 250,
+      ingredients = {
+        { "rabbasca-warp-core", 1}
+      }
+    }
+},
+{
+    type = "technology",
+    name = "interplanetary-construction-3",
+    icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon-big.png",
+    icon_size = 640,
+    prerequisites = { "rabbasca-self-made-warp-pylon" },
+    effects = {
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-warp-sequence-module",
+      },
+    },
+    level = 3,
+    unit = {
+      time = 60,
+      count = 1000,
+      ingredients = {
+        {"rabbasca-warp-core", 1}
+      }
+    }
+},
+{
+    type = "technology",
+    name = "rabbasca-unrestricted-warp-pad",
+    icon = data.raw["technology"]["space-platform"].icon,
+    icon_size = data.raw["technology"]["space-platform"].icon_size,
+    prerequisites = { "rabbasca-warp-technology-analysis" },
+    effects = {
+    },
+    unit = {
+      time = 60,
+      count = 1000,
+      ingredients = {
+        {"rabbasca-warp-core", 1}
+      }
     }
 },
 }

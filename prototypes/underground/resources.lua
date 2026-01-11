@@ -49,4 +49,4 @@ lithium_amide.autoplace = {
   richness_expression = "(distance - 80) * (1 + sqrt(distance))",
 }
 
-data:extend{ carbonic_ore, lithium_amide }
+data:extend{ lithium_amide }
