@@ -6,6 +6,7 @@ Date: 2026-??-??
     - The warp-field analyzer will have its own surface close to rabbasca's core, featuring new crafting chains and its own technology tree
     - Rabbascan warp core is now a science pack used for the technologies provided by the analyzer
     - [TODO] Warp pylons can now utilize multiple interplanetary cargo landing pads
+    - Added a setting that restricts E.A.R.S. variants to surfaces with harenic energy field
   Balancing:
     - Warp pylons are now crafted in machining assembler instead of vaults, requring analyzer technology to unlock
     - The recipe for warp pylons now requires warp cores and E.A.R.S. subcores
@@ -14,6 +15,8 @@ Date: 2026-??-??
     - Reduced Warp sequence crafting time (1 -> 0.5s)
     - Interplanetary construction 2 no longer requires aquilo tech and has its cost reduced (1000 -> 500)
     - The purified harene crafting chain now has reduced surface conditions to allow crafting the full chain on the analyzer's surface
+  Bugfixes:
+    - Vaults no longer vanish from map view while hacked
 ---------------------------------------------------------------------------------------------------
 Version: 0.10.0
 Date: 2026-01-09

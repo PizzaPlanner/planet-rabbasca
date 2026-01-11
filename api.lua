@@ -139,6 +139,9 @@ function create_infused_thing_with_effect(original, extra_cost)
         original.energy_source,
         { type = "void" }
     }
+    if settings.startup["rabbasca-ears-local-only"].value then
+        Rabbasca.only_on_harenic_surface(new, 0.1)
+    end
 
 
     if not data.raw["item-subgroup"][new_item.subgroup] then

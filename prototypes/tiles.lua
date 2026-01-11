@@ -6,19 +6,19 @@ table.insert(out_of_map_tile_type_names, "rabbasca-underground-out-of-map")
 local lava_effect = util.merge { data.raw["tile-effect"]["lava"],
 {
   name = "harenic-lava",
-  foam_color = { 44, 10, 76 },
+  foam_color = { 155, 60, 130 },
   
 }}
 lava_effect.water.textures[2].filename = "__rabbasca-assets__/graphics/recolor/textures/lava.png"
 local lava = util.merge{ table.deepcopy(data.raw["tile"]["lava"]), {
     name = "harenic-lava",
-    effect_color = { 111, 30, 180 },
-    effect_color_secondary = { 140, 52, 111 },
-    map_color = { 0.5, 0.15, 0.85 },
     effect = "harenic-lava",
     fluid = "harenic-lava",
-    particle_tints = { primary = { 111, 30, 180 }, secondary = { 145, 30, 180 },},
 }}
+lava.effect_color = { 155, 60, 130 }
+lava.effect_color_secondary = { 140, 52, 111 }
+lava.map_color = { 0.6, 0.28, 0.53 }
+lava.particle_tints = { primary = { 155, 60, 130 }, secondary = { 140, 52, 111 },}
 lava.autoplace = { probability_expression = "rabbasca_underground_lava" }
 lava.variants.main[1].picture = "__rabbasca-assets__/graphics/recolor/textures/lava-transitions.png"
 lava.variants.main[2].picture = "__rabbasca-assets__/graphics/recolor/textures/lava-transitions.png"
@@ -39,7 +39,7 @@ util.merge{table.deepcopy(data.raw["tile"]["ammoniacal-ocean"]), {
   autoplace = { probability_expression = "rabbasca_harene_pools" },
   -- destroys_dropped_items = true,
   effect = "brash-ice-2",
-  effect_color = {60,55,97},
+  effect_color = { 60,55,97 },
   effect_color_secondary = { 70, 40, 120 },
   map_color = { 0.4, 0.1, 0.65},
   fluid = "energetic-residue"
@@ -64,7 +64,7 @@ util.merge{ table.deepcopy(data.raw["tile"]["midland-yellow-crust-2"]), {
     autoplace = { probability_expression = "rabbasca_fertile" },
     map_color = {0.61, 0.282, 0.1},
 }},
-util.merge{ table.deepcopy(data.raw["tile"]["volcanic-ash-flats"]), {
+util.merge{ table.deepcopy(data.raw["tile"]["volcanic-folds"]), {
     name = "rabbasca-underground-rubble",
     autoplace = { probability_expression = "0" },
     map_color = { 0.17, 0.06, 0.1 },
@@ -118,7 +118,7 @@ local lava_patch =
   height = 64
 }
 
-for _, tile in pairs({ "rabbasca-rough", "rabbasca-rough-2", "rabbasca-wasted"}) do
+for _, tile in pairs({ "rabbasca-rough", "rabbasca-rough-2", "rabbasca-wasted", "rabbasca-underground-rubble"}) do
   data.raw["tile"][tile].transitions[2].lightmap_layout = lava_transition
   data.raw["tile"][tile].transitions_between_transitions[1].water_patch = lava_patch 
 end

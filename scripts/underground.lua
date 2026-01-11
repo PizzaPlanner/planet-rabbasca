@@ -71,6 +71,7 @@ function M.init_underground(surface)
     stab.set_recipe("rabbasca-reboot-stabilizer")
     stab.recipe_locked = true
     register_stabilizer(stab)
+    game.forces.player.chart(surface, {{-48, -48}, {48, 48}})
     game.forces.player.print({ "rabbasca-extra.created-underground-stabilizer", stab.gps_tag})
 end
 

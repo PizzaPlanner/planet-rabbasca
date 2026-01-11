@@ -55,7 +55,7 @@ data:extend {
       },
     },
     surface_render_parameters = {
-      shadow_opacity = 0.8,
+      shadow_opacity = 0.3,
       draw_sprite_clouds = false,
       clouds = nil,
       day_night_cycle_color_lookup = {

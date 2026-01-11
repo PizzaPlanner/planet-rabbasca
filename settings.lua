@@ -64,6 +64,13 @@ data:extend{
     default_value = true,
     allow_blank = false
   },
+  {
+    type = "bool-setting",
+    name = "rabbasca-ears-local-only",
+    setting_type = "startup",
+    default_value = false,
+    allow_blank = false
+  },
   -- {
   --   type = "bool-setting",
   --   name = "rabbasca-enable-underground",

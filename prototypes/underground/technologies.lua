@@ -61,6 +61,14 @@ data:extend{
         type = "unlock-recipe",
         recipe = "rabbasca-decompose-perfluorosulfonic-acid"
       },
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-iron-from-harenic-lava"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-copper-from-harenic-lava"
+      },
     },
     research_trigger =
     {
@@ -82,7 +90,7 @@ data:extend{
       },
       {
         type = "unlock-recipe",
-        recipe = "rabbasca-holmium-filter"
+        recipe = "rabbasca-perfluorosulfonic-filter"
       },
       {
         type = "unlock-recipe",
@@ -98,8 +106,8 @@ data:extend{
 {
     type = "technology",
     name = "rabbasca-warp-stabilizer",
-    icon = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-icon.png",
-    icon_size = 640,
+    icon = "__rabbasca-assets__/graphics/by-openai/warp-matrix.png",
+    icon_size = 246,
     prerequisites = { "rabbasca-perfluorosulfonic-acid", "rabbasca-lithium-amide" },
     effects = {
       {

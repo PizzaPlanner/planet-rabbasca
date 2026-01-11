@@ -1,19 +1,19 @@
 local stabilizer = util.merge { data.raw["assembling-machine"]["assembling-machine-3"],
 {
     name = "rabbasca-warp-stabilizer",
-    icon = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-icon.png",
-    icon_size = 640,
+    icon = "__rabbasca-assets__/graphics/by-hurricane/custom-atom-forge-icon.png",
+    icon_size = 64,
     crafting_speed = 1,
     collision_box = {{-4.2, -4.2}, {4.2, 4.2}},
     selection_box = {{-4.5, -4.5}, {4.5, 4.5}},
-    energy_usage = "8GW",
+    energy_usage = "4GW",
     module_slots = 20,
   }}
 stabilizer.minable = nil
 stabilizer.placeable_by = nil
 stabilizer.allowed_effects = { "speed", "productivity", "quality" }
-stabilizer.flags = { "placeable-neutral", "player-creation" }
-stabilizer.energy_source.drain = "2GW"
+stabilizer.flags = { "placeable-player", "player-creation" }
+stabilizer.energy_source.drain = "1GW"
 stabilizer.next_upgrade = nil
 stabilizer.deconstruction_alternative = nil
 stabilizer.crafting_categories = { "rabbasca-warp-stabilizer" }
