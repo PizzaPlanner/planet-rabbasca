@@ -175,9 +175,7 @@ local function remove_entity(queue, name, quality, i)
     end
 end
 
-local function attempt_warp(pylon, q, inventory, range, f)
-    local id = pylon.unit_number
-    local pdata = storage.warp_storage[id]
+local function attempt_warp(pylon, q, pdata, inventory, range, f)
     for _, chunkid in pairs(pdata.chunks) do
         local queue = storage.warp_chunks[pylon.surface_index][chunkid].queue[q]
         for name, qq in pairs(queue) do
@@ -215,19 +213,23 @@ function M.attempt_build_ghost(pylon)
             return
         end
     end
-
+    local pdata = storage.warp_storage[pylon.unit_number]
+    if not pdata then
+        game.print("[ERROR] Pylon broken: "..pylon.gps_tag)
+        pylon.set_recipe(nil)
+        return
+    end
     local inventory = storage.rabbasca_remote_builder.get_inventory(defines.inventory.chest)
     local range = Rabbasca.get_warp_radius(pylon.quality)
-    if  (pylon.force.recipes["rabbasca-warp-sequence-reverse"].enabled and attempt_warp(pylon, "decon", inventory, range, try_deconstruct)) or
-        (pylon.force.recipes["rabbasca-warp-sequence-tile"].enabled and attempt_warp(pylon, "tiles", inventory, range, try_build_ghost)) or
-        (pylon.force.recipes["rabbasca-warp-sequence-building"].enabled and attempt_warp(pylon, "ghosts", inventory, range, try_build_ghost)) or
-        (pylon.force.recipes["rabbasca-warp-sequence-upgrade"].enabled and attempt_warp(pylon, "upgrades", inventory, range, try_upgrade)) or
-        (pylon.force.recipes["rabbasca-warp-sequence-module"].enabled and attempt_warp(pylon, "modules", inventory, range, try_warp_module))
+    if  (pylon.force.recipes["rabbasca-warp-sequence-reverse"].enabled and attempt_warp(pylon, "decon", pdata, inventory, range, try_deconstruct)) or
+        (pylon.force.recipes["rabbasca-warp-sequence-tile"].enabled and attempt_warp(pylon, "tiles", pdata, inventory, range, try_build_ghost)) or
+        (pylon.force.recipes["rabbasca-warp-sequence-building"].enabled and attempt_warp(pylon, "ghosts", pdata, inventory, range, try_build_ghost)) or
+        (pylon.force.recipes["rabbasca-warp-sequence-upgrade"].enabled and attempt_warp(pylon, "upgrades", pdata, inventory, range, try_upgrade)) or
+        (pylon.force.recipes["rabbasca-warp-sequence-module"].enabled and attempt_warp(pylon, "modules", pdata, inventory, range, try_warp_module))
     then
         pylon.set_recipe("rabbasca-warp-sequence-building")
     else 
-        local id = pylon.unit_number
-        for _, chunkid in pairs(storage.warp_storage[id].chunks) do
+        for _, chunkid in pairs(pdata.chunks) do
             for _, queue in pairs(storage.warp_chunks[pylon.surface_index][chunkid].queue) do
                 if next(queue) ~= nil then
                     pylon.set_recipe("rabbasca-remote-warmup")

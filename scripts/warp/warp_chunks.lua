@@ -138,12 +138,11 @@ end
 
 function M.register_pylon(pylon)
     local id = M.register_chunks(pylon)
-    local radar = pylon.surface.create_entity {
+    pylon.surface.create_entity {
         name = "rabbasca-network-cell-"..pylon.quality.name,
         position = pylon.position,
         force = pylon.force,
     }
-    storage.warp_storage[id].radar = radar
     for _, chunk in pairs(storage.warp_storage[id].chunks) do
         M.mark_chunk_dirty(pylon.surface_index, chunk, 0)
     end
