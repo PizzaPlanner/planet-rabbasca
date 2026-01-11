@@ -168,8 +168,10 @@ end)
 
 
 script.on_event(defines.events.on_object_destroyed, function(event)
-  rutil.deregister_alertable(event.registration_number)
-  warp.unregister_pylon(event.useful_id)
+  if event.type == defines.target_type.entity then
+    rutil.deregister_alertable(event.registration_number)
+    warp.unregister_pylon(event.useful_id)
+  end
 end)
 
 script.on_event({
