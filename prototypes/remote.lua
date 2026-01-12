@@ -1,4 +1,7 @@
 require("__quality__.prototypes.recycling")
+local hit_effects = require("__base__.prototypes.entity.hit-effects")
+local sounds = require("__base__.prototypes.entity.sounds")
+local logistic_chest_opened_duration = 7
 
 local function make_warp_sequence(name, icon, tint)
 return {
@@ -10,68 +13,105 @@ return {
     },
     enabled = false,
     hide_from_player_crafting = true,
+    hidden = true,
+    hide_from_stats = true,
+    hide_from_signal_gui = true,
+    hidden_in_factoriopedia = true,
     result_is_always_fresh = true,
     energy_required = 0.5,
     ingredients = { },
     results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1 } },
-    main_product = "rabbasca-warp-sequence",    
+    main_product = "rabbasca-warp-sequence",
+    crafting_machine_tint = {primary = tint or {1, 1, 1}},
     category = "rabbasca-remote",
-    crafting_machine_tint = {primary = tint or {1, 1, 1}}
+    subgroup = "rabbasca-remote-warping",
+    order = "c[sequence]",
 }
 end
 
-local hatch = { 
-  cargo_unit_entity_to_spawn = "rabbasca-warp-sequence", 
-  receiving_cargo_units = {},
-  travel_height = 2,
-  slice_height = 2, 
-  busy_timeout_ticks = 60, 
-  hatch_opening_ticks = 240, 
-  offset = {1.2, -2.7}, 
-}
 local warp_icons = {
       { icon = "__rabbasca-assets__/graphics/recolor/icons/item-warp-slot.png", icon_size = 64 },
       { icon = "__rabbasca-assets__/graphics/icons/warp.png", icon_size = 64, scale = 0.25, shift = {0, -3} }
 }
 
-local pad = util.merge {
-    data.raw["cargo-landing-pad"]["cargo-landing-pad"],
-    {
-        name = "rabbasca-warp-cargo-pad",
-        icon = "__rabbasca-assets__/graphics/by-hurricane/research-center-icon.png",
-        icon_size = 64,
-        minable = { result = "rabbasca-warp-cargo-pad", mining_time = 4 },
-        placeable_by = { item = "rabbasca-warp-cargo-pad", count = 1 },
-        inventory_size = 20,
-        trash_inventory_size = 20,
-    }
-}
-
-pad.cargo_station_parameters = {
-    prefer_packed_cargo_units = false,
-    is_input_station = true,
-    is_output_station = true,
-    hatch_definitions = { hatch, hatch, hatch, hatch, hatch, hatch, hatch, hatch, hatch },
-    giga_hatch_definitions = {{
-        covered_hatches = { 0, 1, 2, 3, 4, 5, 6, 7, 8 },
-        hatch_graphics_front = {
-            layers = {{
-                filename = "__rabbasca-assets__/graphics/by-hurricane/research-center-animation.png",
-                frame_count = 8 * 10,
-                line_length = 10,
-                width = 5900 / 10,
-                height = 5120 / 8,
-                scale = 0.17,
-                shift = {1.2, -2.7},
-            }}
-        }
-    }}
-}
-pad.flags = { "placeable-player", "player-creation" }
-pad.surface_conditions = { Rabbasca.above_harenic_threshold() }
-
 data:extend {
-  pad,
+  {
+    type = "virtual-signal",
+    name = "rabbasca-warp-inventory",
+    icon = "__rabbasca-assets__/graphics/icons/warp.png",
+    subgroup = "pictographs",
+    order = "r[warp-inventory]"
+  },
+  {
+    type = "logistic-container",
+    name = "rabbasca-warp-input",
+    icon = "__rabbasca-assets__/graphics/by-hurricane/research-center-icon.png",
+    icon_size = 64,
+    flags = { "placeable-player", "player-creation", "no-automated-item-removal" },
+    minable = {mining_time = 0.5, result = "rabbasca-warp-input"},
+    max_health = 100,
+    corpse = "requester-chest-remnants",
+    dying_explosion = "requester-chest-explosion",
+    collision_box = {{-0.85, -0.85}, {0.85, 0.85}},
+    selection_box = {{-1, -1}, {1, 1}},
+    damaged_trigger_effect = hit_effects.entity(),
+    resistances =
+    {
+      {
+        type = "fire",
+        percent = 90
+      },
+      {
+        type = "impact",
+        percent = 60
+      }
+    },
+    fast_replaceable_group = "container",
+    inventory_size = 9,
+    icon_draw_specification = {scale = 0.7},
+    trash_inventory_size = 10,
+    logistic_mode = "requester",
+    open_sound = sounds.metallic_chest_open,
+    close_sound = sounds.metallic_chest_close,
+    animation_sound = sounds.logistics_chest_open,
+    impact_category = "metal",
+    opened_duration = logistic_chest_opened_duration,
+    animation =
+    {
+      layers =
+      {
+        {
+          filename = "__rabbasca-assets__/graphics/by-hurricane/research-center-animation.png",
+          frame_count = 8 * 10,
+          line_length = 10,
+          width = 5900 / 10,
+          height = 5120 / 8,
+          scale = 0.1,
+          shift = {0, 0},
+        },
+      }
+    },
+  },
+  {
+      type = "item",
+      name = "rabbasca-warp-input",
+      icon = "__rabbasca-assets__/graphics/by-hurricane/research-center-icon.png",
+      icon_size = 64,
+      stack_size = 10,
+      place_result = "rabbasca-warp-input",
+      weight = 100 * kg,
+      subgroup = "rabbasca-remote-warping",
+      order = "a[placeable]-b[input]",
+  },
+  {
+    type = "recipe",
+    name = "rabbasca-warp-input",
+    energy_required = 8,
+    enabled = false,
+    category = "crafting",
+    ingredients = { { type = "item", name = "rabbasca-warp-core", amount = 5 } },
+    results = { { type = "item", name = "rabbasca-warp-input", amount = 1 } }
+  },
   {
     type = "assembling-machine",
     name = "rabbasca-warp-pylon",
@@ -104,7 +144,6 @@ data:extend {
         quality_values = { },
       }
     },
-    show_recipe_icon = false,
     graphics_set = {
       working_visualisations = {{
         animation = {
@@ -149,40 +188,6 @@ data:extend {
     },
   },
   {
-    type = "cargo-pod",
-    name = "rabbasca-warp-sequence",
-    icons = warp_icons,
-    flags = { "placeable-off-grid", "not-in-kill-statistics", "placeable-neutral" },
-    collision_mask = { layers = { } },
-    collision_box = {{0, 0}, {0, 0}},
-    -- hidden = true,
-    inventory_size = 1,
-    spawned_container = "rabbasca-warp-container",
-  },
-  {
-    name = "rabbasca-warp-container",
-    type = "temporary-container",
-    icon = "__rabbasca-assets__/graphics/recolor/icons/item-warp-slot.png",
-    icon_size = 64,
-    hidden = true,
-    flags = { "placeable-off-grid", "not-in-kill-statistics", "placeable-neutral" },
-    collision_mask = { layers = { } },
-    collision_box = {{0, 0}, {0, 0}},
-    destroy_on_empty = true,
-    time_to_live = 1,
-    inventory_size = 1,
-  },
-  {
-    type = "item",
-    name = "rabbasca-warp-cargo-pad",
-    icon = "__rabbasca-assets__/graphics/by-hurricane/research-center-icon.png",
-    icon_size = 64,
-    stack_size = 5,
-    place_result = "rabbasca-warp-cargo-pad",
-    subgroup = "space-interactors",
-    order = "c[cargo-landing-pad]-r[rabbasca-warp-cargo-pad]",
-  },
-  {
       type = "item",
       name = "rabbasca-warp-pylon",
       icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon.png",
@@ -190,62 +195,33 @@ data:extend {
       stack_size = 5,
       place_result = "rabbasca-warp-pylon",
       weight = 200 * kg,
-      subgroup = "space-interactors",
-      order = "c[cargo-landing-pad]-r[rabbasca-warp-pylon]",
+      subgroup = "rabbasca-remote-warping",
+      order = "a[placeable]-a[pylon]",
   },
-  {
-    type = "item",
+  Rabbasca.make_trigger_item({
     name = "rabbasca-warp-sequence",
-    category = "rabbasca-security",
-    order = "b[vault-access-key]",
+    category = "rabbasca-remote",
+    subgroup = "rabbasca-remote-warping",
+    order = "b[warp-sequence]",
     icons = warp_icons,
-    flags = { "ignore-spoil-time-modifier" },
-    hidden = true,
-    hidden_in_factoriopedia = true,
-    auto_recycle = false,
-    stack_size = 1,
-    spoil_ticks = 1,
-    spoil_to_trigger_result =
-    {
-      items_per_trigger = 1,
-      trigger =
-      {
-        type = "direct",
-        action_delivery =
-        {
-          type = "instant",
-          source_effects =
-          {
-            {
-              type = "script",
-              effect_id = "rabbasca_on_warp_attempt"
-            }
-          }
-        }
-      }
-    }
-},
+    hidden = false,
+    hidden_in_factoriopedia = false,
+  }, "rabbasca_on_warp_attempt"),
 {
     type = "recipe-category",
     name = "rabbasca-remote",
 },
 {
-    type = "recipe",
-    name = "rabbasca-warp-cargo-pad",
-    enabled = false,
-    energy_required = 20,
-    ingredients = {
-        {type = "item", name = "cargo-landing-pad",          amount = 1 }, 
-        {type = "item", name = "bunnyhop-engine-equipment",  amount = 1 },
-        {type = "item", name = "rabbasca-warp-core",         amount = 10 },
-        {type = "item", name = "superconductor",             amount = 30 },
-    },
-    results = { 
-        { type = "item", name = "rabbasca-warp-cargo-pad", amount = 1 },
-    },
-    surface_conditions = { Rabbasca.above_harenic_threshold() },
-    main_product = "rabbasca-warp-cargo-pad",
-    category = "complex-machinery"
+    type = "item-subgroup",
+    name = "rabbasca-remote",
+    group = data.raw["item-group"]["rabbasca-extensions"] and "rabbasca-extensions" or "space",
+    order = "03[remote]"
+},
+{
+    type = "item-subgroup",
+    name = "rabbasca-remote-warping",
+    group = data.raw["item-group"]["rabbasca-extensions"] and "rabbasca-extensions" or "space",
+    order = "03[remote-warping]"
 },
 make_warp_sequence("rabbasca-warp-sequence-building", data.raw["entity-ghost"]["entity-ghost"].icon, {1, 1, 1}),
 make_warp_sequence("rabbasca-warp-sequence-tile", data.raw["tile-ghost"]["tile-ghost"].icon, {1, 0.6, 1}),
@@ -257,15 +233,17 @@ make_warp_sequence("rabbasca-warp-sequence-upgrade", data.raw["upgrade-item"]["u
     name = "rabbasca-remote-warmup",
     icon = data.raw["virtual-signal"]["signal-hourglass"].icon,
     enabled = true,
-    hidden = true,
-    hidden_in_factoriopedia = true,
+    hidden = false,
     hide_from_player_crafting = true,
+    hide_from_stats = true,
+    hide_from_signal_gui = true,
     result_is_always_fresh = true,
     energy_required = 7,
     ingredients = { },
     results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1 } },
-    main_product = "rabbasca-warp-sequence",    
     category = "rabbasca-remote",
+    subgroup = "rabbasca-remote-warping",
+    order = "d[warmup]",
     crafting_machine_tint = {primary = {0.3, 0.35, 0.4}}
 },
 {

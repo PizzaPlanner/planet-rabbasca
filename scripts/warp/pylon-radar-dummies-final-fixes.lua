@@ -8,7 +8,7 @@ data:extend {
     icon = pylon.icon,
     localised_name = { "entity-name.rabbasca-warp-pylon" },
     localised_description = { "entity-localised_description.rabbasca-warp-pylon" },
-    flags = { "not-on-map" },
+    flags = { "not-on-map", "no-automated-item-removal", "no-automated-item-insertion" },
     selectable_in_game = false,
     hidden_in_factoriopedia = true,
     collision_box = pylon.collision_box,

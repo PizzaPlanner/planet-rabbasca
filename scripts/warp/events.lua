@@ -3,12 +3,25 @@ local M = require("__planet-rabbasca__.scripts.warp.pylon")
 local function awake(pylon)
     if pylon.valid and pylon.get_recipe() == nil then
         pylon.set_recipe("rabbasca-remote-warmup")
-        pylon.recipe_locked = true
     end
 end
 --- Last TEST: ././7.5 VS ././5 VS ././4
 
 script.on_nth_tick(20, function(event)
+  for i, warper in pairs(storage.inventory_warpers) do
+    if not warper.valid then table.remove(storage.inventory_warpers, i) 
+    else
+      local inv = warper.get_inventory(defines.inventory.chest)
+      for s = 1,#inv do
+        local stack = inv[s]
+        if stack.valid_for_read and storage.warp_inventory.can_insert(stack) then
+          storage.warp_inventory.insert(stack)
+          stack.clear()
+        end
+      end
+    end
+  end
+  M.update_logistic_section()
   for surface, chunks in pairs(storage.warp_chunks) do
     for i, chunk in pairs(chunks.dirty) do
       if chunks[chunk] then
@@ -58,9 +71,15 @@ script.on_event(build_events, function(event)
     M.mark_chunk_dirty(e.surface_index, M.chunk_id(e.position))
   elseif e.name == "rabbasca-warp-pylon" then
     M.register_pylon(e)
-  elseif e.name == "rabbasca-warp-cargo-pad" then
-    storage.rabbasca_remote_builder = e -- Only one allowed for simplicity
-    M.mark_all_chunks_dirty(0)
+  elseif e.name == "rabbasca-warp-input" then
+    table.insert(storage.inventory_warpers, e)
+    local sections = e.get_logistic_sections()
+    if not sections then return end
+    for _, section in pairs(sections.sections) do
+      if section.group == M.logistics_group_name() then return end
+    end
+    local new = sections.add_section(M.logistics_group_name())
+    if new then new.multiplier = -1 end
   end
 end)
 
@@ -70,6 +89,12 @@ end)
 
 script.on_event(defines.events.on_marked_for_deconstruction, function(event)
   M.mark_chunk_dirty(event.entity.surface_index, M.chunk_id(event.entity.position))
+end)
+
+script.on_event(defines.events.on_gui_click, function(event)
+  if event.element.name == "rabbasca_open_warp_inventory" then 
+    game.players[event.player_index].opened = storage.warp_inventory
+  end
 end)
 
 -- script.on_event(defines.events.on_player_cursor_stack_changed, function(event)

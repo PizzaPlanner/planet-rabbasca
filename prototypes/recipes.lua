@@ -32,7 +32,7 @@ data:extend {
         type = "item-subgroup",
         name = "rabbasca-vault-extraction",
         group = data.raw["item-group"]["rabbasca-extensions"] and "rabbasca-extensions" or "combat",
-        order = "a[extraction]"
+        order = "0[extraction]"
     },
     {
         type = "recipe-category",

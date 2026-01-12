@@ -14,6 +14,21 @@ function Rabbasca.alertness_modulation_step() return 10 end
 function Rabbasca.alertness_modulation_max() return 50 end
 function Rabbasca.underground_pressure() return 45312 end
 
+function Rabbasca.get_spoiled_in(event)
+    local e = event.source_entity or event.target_entity
+    if e and e.type == "inserter" then
+        local pos = event.source_position or event.target_position
+        if not pos then return nil end
+        local surface = game.surfaces[event.surface_index]
+        if surface then 
+            for _, e2 in pairs(surface.find_entities_filtered{position = pos, type = "inserter"}) do
+                return e2.pickup_target
+            end
+        end
+    end
+    return e
+end
+
 if not data then return end
 
 data:extend{{
@@ -211,4 +226,37 @@ function Rabbasca.make_complex_machinery(proto, require_assembling_machine_craft
   log("Add complex-machinery to additional_categories of: "..recipe.name)
   recipe.additional_categories = recipe.additional_categories or { }
   table.insert(recipe.additional_categories, "complex-machinery")
+end
+
+function Rabbasca.make_trigger_item(item, effect_id)
+    return util.merge {
+    {
+        type = "item",
+        flags = { "ignore-spoil-time-modifier", "not-stackable", "only-in-cursor" },
+        hidden = true,
+        hidden_in_factoriopedia = true,
+        auto_recycle = false,
+        stack_size = 1,
+        spoil_ticks = 1,
+        spoil_to_trigger_result =
+        {
+        items_per_trigger = 1,
+        trigger =
+        {
+            type = "direct",
+            action_delivery =
+            {
+            type = "instant",
+            source_effects =
+            {
+                {
+                type = "script",
+                effect_id = effect_id
+                }
+            }
+            }
+        }
+        }, 
+    },
+    item }
 end

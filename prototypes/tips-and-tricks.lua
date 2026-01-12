@@ -35,4 +35,16 @@ data:extend {
         technology = "bunnyhop-engine-1",
     },
 },
+{
+    type = "tips-and-tricks-item",
+    name = "rabbasca-warp-inventory",
+    category = "space-age",
+    tag = "[item=rabbasca-warp-sequence]",
+    indent = 1,
+    order = "r[rabbasca]-d",
+    trigger = {
+        type = "research",
+        technology = "interplanetary-construction-1",
+    },
+},
 }

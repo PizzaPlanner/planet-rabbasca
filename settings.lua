@@ -58,6 +58,14 @@ data:extend{
     allow_blank = false
   },
   {
+    type = "string-setting",
+    name = "rabbasca-warp-inventory-name",
+    setting_type = "runtime-global",
+    default_value = "[virtual-signal=rabbasca-warp-inventory] Warp inventory content",
+    allow_blank = false,
+    hidden = true
+  },
+  {
     type = "bool-setting",
     name = "rabbasca-show-alertness-ui",
     setting_type = "runtime-per-user",

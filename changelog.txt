@@ -5,8 +5,11 @@ Date: 2026-??-??
     - Added a new post-aquilo progression which involves finding and using the warp-field analyzer
     - The warp-field analyzer will have its own surface close to rabbasca's core, featuring new crafting chains and its own technology tree
     - Rabbascan warp core is now a science pack used for the technologies provided by the analyzer
-    - [TODO] Warp pylons can now utilize multiple interplanetary cargo landing pads
+    - Warp pylons now use a warp inventory for their operations
+    - Removed interplanetary cargo landing pad in favor of the warp inventory. previously placed landing pads will be replaced by vanilla landing pads
+    - Added warp inventory uplink, a requester chest that moves items into the warp inventory
     - Added a setting that restricts E.A.R.S. variants to surfaces with harenic energy field
+    - Warp pylons now show their recipe in alt mode and no longer have their recipe locked
   Balancing:
     - Warp pylons are now crafted in machining assembler instead of vaults, requring analyzer technology to unlock
     - The recipe for warp pylons now requires warp cores and E.A.R.S. subcores

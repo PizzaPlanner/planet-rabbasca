@@ -1,9 +1,11 @@
-local M = { }
+local M = require("__planet-rabbasca__.scripts.warp.inventory")
 
 function M.init_storage()
     storage.warp_chunks = { }
     storage.warp_storage = { }
     storage.warp_queue = { }
+
+    M.init_inventory()
 end
 
 function M.mark_chunk_dirty(surface_id, chunk_id, min_ticks_passed)

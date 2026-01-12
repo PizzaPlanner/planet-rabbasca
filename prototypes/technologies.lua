@@ -476,7 +476,7 @@ data:extend {
   {
     {
       type = "unlock-recipe",
-      recipe = "rabbasca-warp-cargo-pad",
+      recipe = "rabbasca-warp-input",
     },
     {
       type = "unlock-recipe",
@@ -488,11 +488,21 @@ data:extend {
     },
     {
       type = "unlock-recipe",
-      recipe = "rabbasca-warp-sequence-building",
+      recipe = "rabbasca-warp-sequence-building"
+    },
+    {
+      type = "nothing", -- needed as the recipe must be hidden to prevent manual selection
+      icons = data.raw["recipe"]["rabbasca-warp-sequence-building"].icons,
+      effect_description = { "recipe-description.rabbasca-warp-sequence-building" }
     },
     {
       type = "unlock-recipe",
-      recipe = "rabbasca-warp-sequence-tile",
+      recipe = "rabbasca-warp-sequence-tile"
+    },
+    {
+      type = "nothing", -- needed as the recipe must be hidden to prevent manual selection
+      icons = data.raw["recipe"]["rabbasca-warp-sequence-tile"].icons,
+      effect_description = { "recipe-description.rabbasca-warp-sequence-tile" }
     },
   },
   level = 1,
@@ -627,8 +637,18 @@ data:extend {
         recipe = "rabbasca-warp-sequence-reverse",
       },
       {
+        type = "nothing", -- needed as the recipe must be hidden to prevent manual selection
+        icons = data.raw["recipe"]["rabbasca-warp-sequence-reverse"].icons,
+        effect_description = { "recipe-description.rabbasca-warp-sequence-reverse" }
+      },
+      {
         type = "unlock-recipe",
         recipe = "rabbasca-warp-sequence-upgrade",
+      },
+      {
+        type = "nothing", -- needed as the recipe must be hidden to prevent manual selection
+        icons = data.raw["recipe"]["rabbasca-warp-sequence-upgrade"].icons,
+        effect_description = { "recipe-description.rabbasca-warp-sequence-upgrade" }
       },
     },
     level = 2,

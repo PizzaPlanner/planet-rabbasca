@@ -4,6 +4,7 @@ for _, surface in pairs(game.surfaces) do
     for _, e in pairs(surface.find_entities_filtered{ 
         name = "rabbasca-warp-pylon"
     }) do
+        e.recipe_locked = false
         remote.register_pylon(e)
     end
 end

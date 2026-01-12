@@ -4,10 +4,6 @@ local status_invalid_target = {
     diode = defines.entity_status_diode.yellow,
     label = { "entity-status.rabbasca-warp-no-target" }
 }
-local status_no_builder = {
-    diode = defines.entity_status_diode.red,
-    label = { "entity-status.rabbasca-warp-no-builder" }
-}
 local status_no_items = {
     diode = defines.entity_status_diode.yellow,
     label = { "entity-status.rabbasca-warp-no-items" }
@@ -202,24 +198,13 @@ local function attempt_warp(pylon, q, pdata, inventory, range, f)
 end
 
 function M.attempt_build_ghost(pylon)
-    if not (storage.rabbasca_remote_builder and storage.rabbasca_remote_builder.valid and not storage.rabbasca_remote_builder.to_be_deconstructed()) then
-        local builders = (game.surfaces.rabbasca and game.surfaces.rabbasca.find_entities_filtered{name = "rabbasca-warp-cargo-pad", to_be_deconstructed = false}) or { }
-        if #builders > 0 then
-            storage.rabbasca_remote_builder = builders[1]
-        else
-            pylon.set_recipe(nil)
-            pylon.recipe_locked = true
-            pylon.custom_status = status_no_builder
-            return
-        end
-    end
     local pdata = storage.warp_storage[pylon.unit_number]
     if not pdata then
         game.print("[ERROR] Pylon broken: "..pylon.gps_tag)
         pylon.set_recipe(nil)
         return
     end
-    local inventory = storage.rabbasca_remote_builder.get_inventory(defines.inventory.chest)
+    local inventory = storage.warp_inventory
     local range = Rabbasca.get_warp_radius(pylon.quality)
     if  (pylon.force.recipes["rabbasca-warp-sequence-reverse"].enabled and attempt_warp(pylon, "decon", pdata, inventory, range, try_deconstruct)) or
         (pylon.force.recipes["rabbasca-warp-sequence-tile"].enabled and attempt_warp(pylon, "tiles", pdata, inventory, range, try_build_ghost)) or
@@ -240,7 +225,6 @@ function M.attempt_build_ghost(pylon)
             M.mark_chunk_dirty(pylon.surface_index, chunkid)
         end
         pylon.set_recipe(nil)
-        pylon.recipe_locked = true
     end
 end
 

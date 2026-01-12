@@ -1,7 +1,10 @@
-local PYLON_NAME = "rabbasca-warp-pylon"
 local GUI_NAME = "rabbasca_warp_queue"
+local BUTTON_NAME = "rabbasca_warp_inventory"
 
 local function destroy_gui(player)
+    if player.gui.relative[BUTTON_NAME] then
+        player.gui.relative[BUTTON_NAME].destroy()
+    end
     if player.gui.relative[GUI_NAME] then
         player.gui.relative[GUI_NAME].destroy()
     end
@@ -9,8 +12,23 @@ end
 
 local function create_gui(player, pylon)
     destroy_gui(player)
-    local items = { }
+    local inventory_frame = player.gui.relative.add{
+        type = "frame",
+        name = BUTTON_NAME,
+        direction = "vertical",
+        anchor = {
+            gui = defines.relative_gui_type.assembling_machine_gui,
+            position = defines.relative_gui_position.right
+        }
+    }
 
+    inventory_frame.add{
+        type = "button",
+        name = "rabbasca_open_warp_inventory",
+        caption = "Show warp inventory"
+    }
+
+    local items = { }
     local id = pylon.unit_number
     local pdata = storage.warp_storage[id]
     if not pdata then return end
@@ -56,7 +74,7 @@ script.on_event(defines.events.on_gui_opened, function(event)
     if not event.entity or not event.entity.valid then return end
 
     local entity = event.entity
-    if entity.name ~= PYLON_NAME then return end
+    if not (entity.name == "rabbasca-warp-pylon" or entity.name == "rabbasca-warp-input") then return end
 
     local player = game.get_player(event.player_index)
     if not player then return end

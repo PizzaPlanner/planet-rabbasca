@@ -417,42 +417,16 @@ util.merge{
     shoot_protected = true,
     reload_time = 2 * second
 },
-{
-    type = "item",
-    name = "rabbasca-security-modulator",
-    category = "rabbasca-security",
-    order = "b[vault-access-key]",
-    icons = {
-      {icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png", icon_size = 64, shift = {-8,  0}, scale = 0.4 },
-      {icon = data.raw["virtual-signal"]["up-arrow"].icon,   icon_size = 64, shift = { 8, -8}, scale = 0.4, tint = {1, 0, 0} },
-      {icon = data.raw["virtual-signal"]["down-arrow"].icon, icon_size = 64, shift = { 8,  8}, scale = 0.4, tint = {0, 1, 0} },
-    },
-    flags = { "ignore-spoil-time-modifier" },
-    hidden = true,
-    hidden_in_factoriopedia = true,
-    auto_recycle = false,
-    stack_size = 1,
-    spoil_ticks = 1,
-    spoil_to_trigger_result =
-    {
-      items_per_trigger = 1,
-      trigger =
-      {
-        type = "direct",
-        action_delivery =
-        {
-          type = "instant",
-          source_effects =
-          {
-            {
-              type = "script",
-              effect_id = "rabbasca_on_modulate_vault_security"
-            }
-          }
-        }
-      }
-    }
-},
+Rabbasca.make_trigger_item({
+  name = "rabbasca-security-modulator",
+  category = "rabbasca-security",
+  order = "b[vault-access-key]",
+  icons = {
+    {icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png", icon_size = 64, shift = {-8,  0}, scale = 0.4 },
+    {icon = data.raw["virtual-signal"]["up-arrow"].icon,   icon_size = 64, shift = { 8, -8}, scale = 0.4, tint = {1, 0, 0} },
+    {icon = data.raw["virtual-signal"]["down-arrow"].icon, icon_size = 64, shift = { 8,  8}, scale = 0.4, tint = {0, 1, 0} },
+  },
+},"rabbasca_on_modulate_vault_security")
 }
 
 data:extend {

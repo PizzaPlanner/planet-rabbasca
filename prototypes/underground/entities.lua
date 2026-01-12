@@ -6,14 +6,14 @@ local stabilizer = util.merge { data.raw["assembling-machine"]["assembling-machi
     crafting_speed = 1,
     collision_box = {{-4.2, -4.2}, {4.2, 4.2}},
     selection_box = {{-4.5, -4.5}, {4.5, 4.5}},
-    energy_usage = "4GW",
+    energy_usage = "4.75GW",
     module_slots = 20,
   }}
 stabilizer.minable = nil
 stabilizer.placeable_by = nil
 stabilizer.allowed_effects = { "speed", "productivity", "quality" }
 stabilizer.flags = { "placeable-player", "player-creation" }
-stabilizer.energy_source.drain = "1GW"
+stabilizer.energy_source.drain = "250MW"
 stabilizer.next_upgrade = nil
 stabilizer.deconstruction_alternative = nil
 stabilizer.crafting_categories = { "rabbasca-warp-stabilizer" }
@@ -83,7 +83,8 @@ local sprite_data = {
   width = 4000 / 10,
   height = 3840 / 8,
   frame_count = 80,
-  scale = 0.75,
+  scale = 0.8,
+  shift = util.by_pixel(0, -20)
 }
 
 stabilizer.graphics_set = {
@@ -92,7 +93,8 @@ stabilizer.graphics_set = {
     {
       fadeout = true, 
       animation = util.merge { sprite_data, 
-      { filename = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-emission1.png", draw_as_glow = true, blend_mode = "additive" }},
+      { filename = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-emission1.png", draw_as_glow = true, blend_mode = "additive", apply_runtime_tint = true }},
+      apply_recipe_tint = "primary"
     },
     {
       fadeout = true, 
@@ -100,7 +102,7 @@ stabilizer.graphics_set = {
       { filename = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-emission2.png", draw_as_glow = true, blend_mode = "additive" }},
     },
   },
-  shadow = { line_length = 1, frame_count = 80, width = 900, height = 500, draw_as_shadow = true, filename = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-shadow.png", scale = 0.75, },
+  shadow = { line_length = 1, frame_count = 80, width = 900, height = 500, draw_as_shadow = true, filename = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-shadow.png", scale = 0.8, },
   idle_animation = { layers = { util.merge {{ filename = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-animation.png" }, sprite_data } } },
   always_draw_idle_animation = true
 }
@@ -114,7 +116,8 @@ local lab = util.merge {
     scale_fluid_usage = true
   }
 }
-lab.inputs = { "rabbasca-warp-core" }
+lab.inputs = { "rabbasca-warp-core", "rabbasca-warp-matrix" }
+lab.minable.result = "rabbasca-warp-tech-analyzer"
 lab.energy_source = {
   type = "fluid",
   fluid_box = {

@@ -61,6 +61,21 @@ local tech = game.forces.player.technologies["rabbasca-underground"]
     end
 end
 
+function M.change_affinity(stabilizer)
+    local recipe = stabilizer.get_recipe()
+    storage.rabbasca_affinity = recipe and string.match(recipe.name, "rabbasca%-initiate%-stabilizer%-affinity%-(.*)")
+    stabilizer.set_recipe(nil)
+    for p, data in pairs(prototypes.mod_data["rabbasca-materialize-recipes"].data) do
+        local enable = p == storage.rabbasca_affinity
+        for _, recipe in pairs(data) do
+            stabilizer.force.recipes[recipe].enabled = enable
+        end
+    end
+    for _, player in pairs(game.players) do
+        M.update_affinity_bar(player)
+    end
+end
+
 function M.init_underground(surface)
     local stab = surface.create_entity {
         name = "rabbasca-warp-stabilizer",
@@ -71,8 +86,49 @@ function M.init_underground(surface)
     stab.set_recipe("rabbasca-reboot-stabilizer")
     stab.recipe_locked = true
     register_stabilizer(stab)
+    M.change_affinity(stab)
     game.forces.player.chart(surface, {{-48, -48}, {48, 48}})
     game.forces.player.print({ "rabbasca-extra.created-underground-stabilizer", stab.gps_tag})
+end
+
+local function create_affinity_bar(player)
+    if player.gui.top.rabbasca_affinity then
+        player.gui.top.rabbasca_affinity.destroy()
+    end
+    if not settings.get_player_settings(player)["rabbasca-show-alertness-ui"].value then return end
+
+    local affinity = storage.rabbasca_affinity
+
+    local frame = player.gui.top.add{
+        type = "frame",
+        name = "rabbasca_affinity",
+        direction = "horizontal",
+        style = "slot_window_frame",
+    }
+    frame.style.vertically_stretchable = false
+    frame.add{
+        type = "sprite-button",
+        sprite= affinity and "space-location/"..affinity or "entity/rabbasca-warp-stabilizer",
+        style = "inventory_slot",
+        name = "icon",
+        tooltip = { "rabbasca-extra.affinity-ui-tooltip", affinity }
+    }
+    local right = frame.add {
+        type = "flow",
+        direction = "vertical",
+        name = "right",
+    }
+    right.style.top_padding = 1
+end
+
+function M.update_affinity_bar(player)
+    local is_on_rabbasca = player.surface and player.surface.name == "rabbasca-underground"
+    local ui = player.gui.top.rabbasca_affinity
+    if ui and not is_on_rabbasca then
+        ui.destroy()
+    elseif is_on_rabbasca then
+        create_affinity_bar(player)
+    end
 end
 
 return M

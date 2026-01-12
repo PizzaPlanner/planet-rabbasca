@@ -1,21 +1,3 @@
-local function make_materialize_recipe(name, icon, result, ingredients)
-    return {
-        type = "recipe",
-        name = name,
-        icons = {
-            { icon = icon },
-            { icon = "__rabbasca-assets__/graphics/by-hurricane/custom-atom-forge-icon.png", icon_size = 64, scale = 0.3, shift = {8, 8} },
-        },
-        energy_required = 20,
-        ingredients = ingredients,
-        results = { result },
-        enabled = false,
-        auto_recycle = false,
-        category = "rabbasca-warp-stabilizer",
-        subgroup = "rabbasca-warp-stabilizer",
-        order = "f[materialized]-"..result.name,
-    }
-end
 data:extend {
     {
         type = "recipe-category",
@@ -25,7 +7,7 @@ data:extend {
         type = "item-subgroup",
         name = "rabbasca-warp-stabilizer",
         group = data.raw["item-group"]["rabbasca-extensions"] and "rabbasca-extensions" or "intermediate-products",
-        order = "a[stabilizer]"
+        order = "1[stabilizer]"
     },
     {
         type = "recipe",
@@ -105,7 +87,7 @@ data:extend {
         },
         results = { 
             { type = "item", name = "lithium", amount = 5 },
-            { type = "fluid", name = "ammonia", amount = 60 },
+            { type = "fluid", name = "ammonia", amount = 80 },
         },
         surface_conditions = { Rabbasca.only_underground() },
         category = "electromagnetics"
@@ -116,11 +98,31 @@ data:extend {
         enabled = false,
         energy_required = 7,
         ingredients = {
+            { type = "item", name = "tungsten-ore", amount = 5 },
             { type = "fluid", name = "holmium-solution", amount = 70 },
             { type = "fluid", name = "rabbasca-perfluorosulfonic-acid", amount = 100 },
         },
         results = {
             { type = "item", name = "rabbasca-holmium-coating", amount = 1 },
+        },
+        allow_productivity = true,
+        category = "metallurgy",
+        surface_conditions = { Rabbasca.only_underground() },
+        subgroup = "fluid-recipes",
+        order = "r[rabbasca]-b[holmium-coating]",
+    },
+    {
+        type = "recipe",
+        name = "rabbasca-spacetime-evolutionizer",
+        enabled = false,
+        energy_required = 12,
+        ingredients = {
+            { type = "item", name = "rabbasca-warp-matrix", amount = 5 },
+            { type = "item", name = "carbon-fiber", amount = 5 },
+            { type = "item", name = "pentapod-egg", amount = 1 },
+        },
+        results = {
+            { type = "item", name = "rabbasca-spacetime-evolutionizer", amount = 1 },
         },
         allow_productivity = true,
         category = "metallurgy",
@@ -169,8 +171,8 @@ data:extend {
             { type = "item",  name = "rabbasca-perfluorosulfonic-filter", amount = 1 },
         },
         results = { 
-            { type = "fluid", name = "harenic-lava", amount = 490 },
-            { type = "item", name = "rabbasca-perfluorosulfonic-filter", amount = 1, probability = 0.7 },
+            { type = "fluid", name = "harenic-lava", amount = 490, ignored_by_productivity = 500 },
+            { type = "item", name = "rabbasca-perfluorosulfonic-filter", amount = 1, probability = 0.7, ignored_by_productivity = 1 },
             { type = "fluid", name = "holmium-solution", amount = 10, },
         },
         category = "metallurgy"
@@ -190,8 +192,8 @@ data:extend {
             { type = "item",  name = "rabbasca-perfluorosulfonic-filter", amount = 1 },
         },
         results = { 
-            { type = "fluid", name = "harenic-lava", amount = 450 },
-            { type = "item", name = "rabbasca-perfluorosulfonic-filter", amount = 1, probability = 0.7 },
+            { type = "fluid", name = "harenic-lava", amount = 450, ignored_by_productivity = 500 },
+            { type = "item", name = "rabbasca-perfluorosulfonic-filter", amount = 1, probability = 0.7, ignored_by_productivity = 1 },
             { type = "fluid", name = "molten-copper", amount = 50, },
         },
         category = "metallurgy"
@@ -211,8 +213,8 @@ data:extend {
             { type = "item",  name = "rabbasca-perfluorosulfonic-filter", amount = 1 },
         },
         results = { 
-            { type = "fluid", name = "harenic-lava", amount = 420 },
-            { type = "item", name = "rabbasca-perfluorosulfonic-filter", amount = 1, probability = 0.7 },
+            { type = "fluid", name = "harenic-lava", amount = 420, ignored_by_productivity = 500 },
+            { type = "item", name = "rabbasca-perfluorosulfonic-filter", amount = 1, probability = 0.7, ignored_by_productivity = 1 },
             { type = "fluid", name = "molten-iron", amount = 50, },
         },
         category = "metallurgy"
@@ -222,13 +224,13 @@ data:extend {
         name = "rabbasca-warp-matrix",
         enabled = false,
         main_product = "rabbasca-warp-matrix",
-        energy_required = 25,
+        energy_required = 5,
         result_is_always_fresh = true,
         preserve_products_in_machine_output = true,
         ingredients = {
             { type = "fluid", name = "fusion-plasma",  amount = 100 },
         },
-        results = { { type = "item", name = "rabbasca-warp-matrix", amount = 20 } },
+        results = { { type = "item", name = "rabbasca-warp-matrix", amount = 5 } },
         category = "rabbasca-warp-stabilizer"
     },
     {
@@ -259,11 +261,12 @@ data:extend {
         type = "recipe",
         name = "rabbasca-warp-core",
         enabled = false,
-        main_product = "rabbasca-warp-core",
+        auto_recycle = false,
         energy_required = 25,
         ingredients = {
             { type = "item", name = "rabbasca-coordinate-calibrations", amount = 1 },
             { type = "item", name = "rabbasca-spatial-anchor",  amount = 1 },
+            { type = "item", name = "rabbasca-spacetime-evolutionizer",  amount = 1 },
         },
         results = { { type = "item", name = "rabbasca-warp-core", amount = 1 } },
         category = "electromagnetics"
@@ -280,24 +283,6 @@ data:extend {
         results = { { type = "item", name = "rabbasca-warp-tech-analyzer", amount = 1 } },
         category = "crafting"
     },
-    make_materialize_recipe("rabbasca-materialize-beta-carotene", data.raw["fluid"]["beta-carotene"].icon,
-        { type = "fluid", name = "beta-carotene", amount = 100, },
-        {{ type = "item", name = "rabbasca-warp-matrix", amount = 5 }}),
-    make_materialize_recipe("rabbasca-materialize-turbofish", data.raw["capsule"]["rabbasca-turbofish"].icon,
-        { type = "item", name = "rabbasca-turbofish", amount = 1, },
-        {{ type = "item", name = "rabbasca-warp-matrix", amount = 5 }}),
-    make_materialize_recipe("rabbasca-materialize-haronite", data.raw["item"]["haronite"].icon,
-        { type = "item", name = "haronite", amount = 30, },
-        {{ type = "item", name = "rabbasca-warp-matrix", amount = 5 }}),
-    make_materialize_recipe("rabbasca-materialize-yumako", data.raw["capsule"]["yumako"].icon,
-        { type = "item", name = "yumako", amount = 15, },
-        {{ type = "item", name = "rabbasca-warp-matrix", amount = 10 }, { type = "fluid", name = "fusion-plasma", amount = 50 } }),
-    make_materialize_recipe("rabbasca-materialize-coal", data.raw["item"]["coal"].icon,
-        { type = "item", name = "coal", amount = 75, },
-        {{ type = "item", name = "rabbasca-warp-matrix", amount = 25 }, { type = "fluid", name = "fusion-plasma", amount = 50 } }),
-    make_materialize_recipe("rabbasca-materialize-tungsten", data.raw["item"]["tungsten-ore"].icon,
-        { type = "item", name = "tungsten-ore", amount = 30, },
-        {{ type = "item", name = "rabbasca-warp-matrix", amount = 25 }, { type = "fluid", name = "fusion-plasma", amount = 50 } }),
     {
         type = "recipe",
         name = "rabbasca-warp-pylon",

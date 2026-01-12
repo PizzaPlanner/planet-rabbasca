@@ -1,69 +1,18 @@
 data:extend{
-{
-    type = "item",
-    name = "rabbasca-locate-stabilizer",
-    category = "rabbasca-security",
-    order = "z[locate-underground]",
-    icon = "__rabbasca-assets__/graphics/by-hurricane/custom-atom-forge-icon.png",
-    icon_size = 64,
-    flags = { "ignore-spoil-time-modifier" },
-    hidden = true,
-    hidden_in_factoriopedia = true,
-    auto_recycle = false,
-    stack_size = 1,
-    spoil_ticks = 1,
-    spoil_to_trigger_result =
-    {
-      items_per_trigger = 1,
-      trigger =
-      {
-        type = "direct",
-        action_delivery =
-        {
-          type = "instant",
-          source_effects =
-          {
-            {
-              type = "script",
-              effect_id = "rabbasca_on_send_pylon_underground"
-            }
-          }
-        }
-      }
-    }
-},
-{
-    type = "item",
-    name = "rabbasca-reboot-stabilizer",
-    category = "rabbasca-security",
-    icon = "__rabbasca-assets__/graphics/by-hurricane/custom-atom-forge-icon.png",
-    icon_size = 64,
-    flags = { "ignore-spoil-time-modifier" },
-    hidden = true,
-    hidden_in_factoriopedia = true,
-    auto_recycle = false,
-    stack_size = 1,
-    spoil_ticks = 1,
-    spoil_to_trigger_result =
-    {
-      items_per_trigger = 1,
-      trigger =
-      {
-        type = "direct",
-        action_delivery =
-        {
-          type = "instant",
-          source_effects =
-          {
-            {
-              type = "script",
-              effect_id = "rabbasca_on_send_pylon_underground"
-            }
-          }
-        }
-      }
-    }
-},
+Rabbasca.make_trigger_item({
+  name = "rabbasca-locate-stabilizer",
+  category = "rabbasca-security",
+  order = "z[locate-underground]",
+  icon = "__rabbasca-assets__/graphics/by-hurricane/custom-atom-forge-icon.png",
+  icon_size = 64,
+}, "rabbasca_on_send_pylon_underground"),
+Rabbasca.make_trigger_item({
+  name = "rabbasca-reboot-stabilizer",
+  category = "rabbasca-security",
+  order = "z[locate-underground-reboot]",
+  icon = "__rabbasca-assets__/graphics/by-hurricane/custom-atom-forge-icon.png",
+  icon_size = 64,
+}, "rabbasca_on_send_pylon_underground"),
 {
     type = "fluid",
     name = "rabbasca-perfluorosulfonic-acid",
@@ -89,7 +38,7 @@ data:extend{
 {
   type = "item",
   name = "rabbasca-holmium-coating",
-  icon = data.raw["item"]["ice"].icon,
+  icon = data.raw["item"]["tungsten-carbide"].icon,
   stack_size = 100,
   weight = 50 * kg,
   order = "u[underground]-b[coating]"
@@ -110,7 +59,7 @@ data:extend{
   icon_size = 246,
   stack_size = 50,
   weight = 1 * kg,
-  spoil_ticks = 3 * minute,
+  spoil_ticks = 15 * second,
   auto_recycle = false,
   subgroup = "rabbasca-warp-stabilizer",
   order = "a[warp-matrix]",
@@ -124,6 +73,16 @@ data:extend{
   auto_recycle = false,
   subgroup = "rabbasca-warp-stabilizer",
   order = "a[warp-matrix-calibrated]",
+},
+{
+  type = "item",
+  name = "rabbasca-spacetime-evolutionizer",
+  icon = data.raw["item"]["pentapod-egg"].icon,
+  stack_size = 200,
+  weight = 1 * kg,
+  auto_recycle = false,
+  subgroup = "rabbasca-warp-stabilizer",
+  order = "a[warp-matrix-evolver]",
 },
 {
   type = "item",

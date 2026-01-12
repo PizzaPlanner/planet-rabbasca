@@ -8,7 +8,7 @@ local bunnyhop = require("__planet-rabbasca__.scripts.bunnyhop-control")
 local function handle_script_events(event)
   local effect_id = event.effect_id
   if effect_id == "rabbasca_on_warp_attempt" then
-    local from = event.source_entity or event.target_entity
+    local from = Rabbasca.get_spoiled_in(event)
     if not (from and from.name == "rabbasca-warp-pylon") then return end
     warp.attempt_build_ghost(from)
   elseif effect_id == "rabbasca_register_alertable" then
@@ -26,16 +26,20 @@ local function handle_script_events(event)
       local vault = from.surface.find_entity("rabbasca-vault-crafter", position)
       rutil.rabbasca_set_vault_active(vault, true)
     end
+  elseif effect_id == "rabbasca_on_change_affinity" then
+    game.print("blerp!")
+    local from = Rabbasca.get_spoiled_in(event)
+    if not from then return end
+    underground.change_affinity(from)
   elseif effect_id == "rabbasca_on_modulate_vault_security" then
-    local from = event.source_entity or event.target_entity
-    local position = (from and from.position) or event.target_position or event.source_position
+    local from = Rabbasca.get_spoiled_in(event)
     if not from then return end
     local recipe = from.get_recipe()
     if not recipe then return end
     local max = Rabbasca.alertness_modulation_max() / Rabbasca.alertness_modulation_step()
     local offset = recipe.name == "rabbasca-security-modulation-up" and 1 or -1
     storage.alertness_modulation = math.max(-max, math.min(max, (storage.alertness_modulation or 0) + offset))
-    rutil.update_alertness(game.surfaces[event.surface_index], position)
+    rutil.update_alertness(game.surfaces[event.surface_index], from.position)
   elseif effect_id == "rabbasca_on_send_pylon_underground" then
     local from = event.source_entity or event.target_entity
     if from and from.name == "rabbasca-warp-stabilizer" then
@@ -146,6 +150,7 @@ end)
 script.on_event(defines.events.on_player_changed_surface, function(event)
     local player = game.players[event.player_index]
     rutil.update_evolution_bar(player)
+    underground.update_affinity_bar(player)
 end)
 
 script.on_event(defines.events.on_surface_created, function(event)

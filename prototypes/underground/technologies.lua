@@ -114,39 +114,6 @@ data:extend{
         type = "unlock-recipe",
         recipe = "rabbasca-warp-matrix"
       },
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-materialize-haronite"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-materialize-beta-carotene"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-materialize-turbofish"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-materialize-coal"
-      },
-
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-materialize-yumako"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-materialize-tungsten"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-coordinate-calibrations"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-spatial-anchor"
-      },
     },
     research_trigger =
     {
@@ -160,7 +127,7 @@ data:extend{
     name = "rabbasca-warp-technology-analysis",
     icon = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-icon.png",
     icon_size = 640,
-    prerequisites = { "rabbasca-warp-stabilizer" },
+    prerequisites = {  },-- filled later
     effects = {
       {
         type = "unlock-recipe",
@@ -175,7 +142,7 @@ data:extend{
     {
         type = "craft-item",
         item = "rabbasca-spatial-anchor",
-        count = 10,
+        count = 20,
     }
 },
 {
@@ -208,6 +175,11 @@ data:extend{
       {
         type = "unlock-recipe",
         recipe = "rabbasca-warp-sequence-module",
+      },
+      {
+        type = "nothing", -- needed as the recipe must be hidden to prevent manual selection
+        icons = data.raw["recipe"]["rabbasca-warp-sequence-module"].icons,
+        effect_description = { "recipe-description.rabbasca-warp-sequence-module" }
       },
     },
     level = 3,

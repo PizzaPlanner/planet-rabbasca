@@ -6,5 +6,4 @@ require("prototypes.underground.surfaces")
 require("prototypes.underground.recipes")
 require("prototypes.underground.technologies")
 require("prototypes.underground.tips-and-tricks")
-
-require("prototypes.underground.create-ears-variants")
+require("prototypes.underground.materialize")
