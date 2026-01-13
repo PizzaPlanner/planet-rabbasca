@@ -39,6 +39,7 @@ local lithium_amide = util.merge {
     tree_removal_probability = 0,
   }
 }
+lithium_amide.minable.mining_time = 0.5
 lithium_amide.minable.results =
 {
   { type = "item", name = "rabbasca-lithium-amide", amount = 1 },

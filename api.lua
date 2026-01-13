@@ -68,8 +68,13 @@ proto.surface_conditions = proto.surface_conditions or { }
 table.insert(proto.surface_conditions, Rabbasca.above_harenic_threshold(multiplier))
 end
 
-function Rabbasca.only_underground()
-    return { property = "pressure", min = Rabbasca.underground_pressure(), max = Rabbasca.underground_pressure() }
+function Rabbasca.only_underground(needs_stabilizer)
+    if needs_stabilizer then return { property = "rabbasca-underground", min = 1, max = 1 }
+    else return { property = "pressure", min = Rabbasca.underground_pressure(), max = Rabbasca.underground_pressure() } end
+end
+
+function Rabbasca.not_underground()
+    return { property = "rabbasca-underground", min = 0, max = 0 }
 end
 
 function Rabbasca.ears_flooring_rule(bbox)

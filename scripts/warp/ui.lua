@@ -1,3 +1,5 @@
+if not settings.global["rabbasca-debug-mode"].value then return end
+
 local GUI_NAME = "rabbasca_warp_queue"
 local BUTTON_NAME = "rabbasca_warp_inventory"
 

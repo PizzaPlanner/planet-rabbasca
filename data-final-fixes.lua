@@ -21,6 +21,7 @@ data.raw["recipe"]["rabbasca-warp-pylon-recycling"].hidden_in_factoriopedia = fa
 
 require("scripts.create-ears-variants")
 require("scripts.warp.pylon-radar-dummies-final-fixes")
+require("prototypes.underground.data-final-fixes")
 
 require("__planet-rabbasca__.compatibility.muluna-final-fixes")
 require("__planet-rabbasca__.compatibility.pelagos-final-fixes")

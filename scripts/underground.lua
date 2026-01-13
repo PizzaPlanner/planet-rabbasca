@@ -63,13 +63,13 @@ end
 
 function M.change_affinity(stabilizer)
     local recipe = stabilizer.get_recipe()
-    storage.rabbasca_affinity = recipe and string.match(recipe.name, "rabbasca%-initiate%-stabilizer%-affinity%-(.*)")
-    stabilizer.set_recipe(nil)
-    for p, data in pairs(prototypes.mod_data["rabbasca-materialize-recipes"].data) do
-        local enable = p == storage.rabbasca_affinity
-        for _, recipe in pairs(data) do
-            stabilizer.force.recipes[recipe].enabled = enable
-        end
+    storage.rabbasca_affinity = recipe and string.match(recipe.name, "rabbasca%-change%-affinity%-(.*)")
+    if storage.rabbasca_affinity then
+        stabilizer.set_recipe(nil)
+    end
+    for tech, planet in pairs(prototypes.mod_data["rabbasca-attunement-techs"].data) do
+        local researched = planet == storage.rabbasca_affinity
+        stabilizer.force.technologies[tech].researched = researched
     end
     for _, player in pairs(game.players) do
         M.update_affinity_bar(player)
@@ -83,10 +83,10 @@ function M.init_underground(surface)
         force = game.forces.player
     }
     if not stab then game.forces.player.print("[ERROR] Could not create [entity=rabbasca-warp-stabilizer]. This should never happen. Please report a bug.") return end
-    stab.set_recipe("rabbasca-reboot-stabilizer")
-    stab.recipe_locked = true
     register_stabilizer(stab)
     M.change_affinity(stab)
+    stab.set_recipe("rabbasca-reboot-stabilizer")
+    stab.recipe_locked = true
     game.forces.player.chart(surface, {{-48, -48}, {48, 48}})
     game.forces.player.print({ "rabbasca-extra.created-underground-stabilizer", stab.gps_tag})
 end
@@ -115,10 +115,22 @@ local function create_affinity_bar(player)
     }
     local right = frame.add {
         type = "flow",
-        direction = "vertical",
+        direction = "horizontal",
         name = "right",
     }
     right.style.top_padding = 1
+
+    local tech = player.force.technologies["rabbasca-warp-anchoring-"..affinity]
+    if tech then
+        for i, reward in pairs(tech.prototype.effects) do
+            if reward.recipe then right.add {
+                type = "sprite-button",
+                sprite = "recipe."..reward.recipe,
+                style = "inventory_slot",
+                name = "icon_"..tostring(i),
+            } end
+        end
+    end
 end
 
 function M.update_affinity_bar(player)

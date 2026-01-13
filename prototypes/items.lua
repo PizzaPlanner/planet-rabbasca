@@ -232,7 +232,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
     order = "b[processed]-a[bottle]",
 },
 {
-    type = "tool",
+    type = "item",
     icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon.png",
     icon_size = 64,
     name = "rabbasca-warp-core",
@@ -241,9 +241,6 @@ util.merge { data.raw["item"]["rocket-fuel"],
     subgroup = "rabbasca-security",
     order = "x[rabbasca-warp-core]",
     auto_recycle = false,
-    durability = data.raw["tool"]["automation-science-pack"].durability,
-    durability_description_key   = data.raw["tool"]["automation-science-pack"].durability_description_key,
-    durability_description_value = data.raw["tool"]["automation-science-pack"].durability_description_value
 },
 {
   type = "fluid",

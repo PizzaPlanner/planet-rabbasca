@@ -1,5 +1,5 @@
 require("api")
--- require("scripts.warp.ui")
+require("scripts.warp.ui")
 local warp = require("__planet-rabbasca__.scripts.warp.events")
 local rutil = require("__planet-rabbasca__.scripts.surface-control")
 local underground = require("__planet-rabbasca__.scripts.underground")
@@ -27,7 +27,6 @@ local function handle_script_events(event)
       rutil.rabbasca_set_vault_active(vault, true)
     end
   elseif effect_id == "rabbasca_on_change_affinity" then
-    game.print("blerp!")
     local from = Rabbasca.get_spoiled_in(event)
     if not from then return end
     underground.change_affinity(from)

@@ -1,15 +1,25 @@
 data:extend { 
   {
+    type = "surface-property",
+    name = "rabbasca-underground",
+    default_value = 0,
+    hidden = true,
+    hidden_in_factoriopedia = true
+  },
+  {
     type = "planet",
     name = "rabbasca-underground",
     icon = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-icon.png", 
     icon_size = 640,
     hidden = true,
+    hidden_in_factoriopedia = false,
     draw_orbit = false,
     distance = 10,
     orientation = 0,
-    order = data.raw["planet"]["rabbasca"].order.."-a[underground]",
+    subgroup = "rabbasca-warp-stabilizer",
+    order = "a[surface]",
     surface_properties = {
+        ["rabbasca-underground"] = 1,
         ["gravity"] = 14,
         ["solar-power"] = 0,
         ["pressure"] = Rabbasca.underground_pressure(),

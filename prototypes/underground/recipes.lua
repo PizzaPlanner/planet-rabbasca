@@ -94,44 +94,6 @@ data:extend {
     },
     {
         type = "recipe",
-        name = "rabbasca-holmium-coating",
-        enabled = false,
-        energy_required = 7,
-        ingredients = {
-            { type = "item", name = "tungsten-ore", amount = 5 },
-            { type = "fluid", name = "holmium-solution", amount = 70 },
-            { type = "fluid", name = "rabbasca-perfluorosulfonic-acid", amount = 100 },
-        },
-        results = {
-            { type = "item", name = "rabbasca-holmium-coating", amount = 1 },
-        },
-        allow_productivity = true,
-        category = "metallurgy",
-        surface_conditions = { Rabbasca.only_underground() },
-        subgroup = "fluid-recipes",
-        order = "r[rabbasca]-b[holmium-coating]",
-    },
-    {
-        type = "recipe",
-        name = "rabbasca-spacetime-evolutionizer",
-        enabled = false,
-        energy_required = 12,
-        ingredients = {
-            { type = "item", name = "rabbasca-warp-matrix", amount = 5 },
-            { type = "item", name = "carbon-fiber", amount = 5 },
-            { type = "item", name = "pentapod-egg", amount = 1 },
-        },
-        results = {
-            { type = "item", name = "rabbasca-spacetime-evolutionizer", amount = 1 },
-        },
-        allow_productivity = true,
-        category = "metallurgy",
-        surface_conditions = { Rabbasca.only_underground() },
-        subgroup = "fluid-recipes",
-        order = "r[rabbasca]-b[holmium-coating]",
-    },
-    {
-        type = "recipe",
         name = "rabbasca-reboot-stabilizer",
         enabled = true,
         hidden = true,
@@ -240,10 +202,11 @@ data:extend {
         energy_required = 5,
         ingredients = {
             { type = "item",  name = "rabbasca-warp-matrix", amount = 5 },
-            { type = "item", name = "rabbasca-holmium-coating",  amount = 3 },
+            { type = "item", name = "low-density-structure",  amount = 1 },
         },
         results = { { type = "item", name = "rabbasca-coordinate-calibrations", amount = 1 } },
-        category = "rabbasca-warp-stabilizer"
+        surface_conditions = { Rabbasca.only_underground(true) },
+        category = "cryogenics"
     },
     {
         type = "recipe",
@@ -255,7 +218,42 @@ data:extend {
             { type = "item",  name = "haronite-plate",  amount = 5 },
         },
         results = { { type = "item", name = "rabbasca-spatial-anchor", amount = 1 } },
-        category = "rabbasca-warp-stabilizer"
+        category = "electromagnetics",
+        surface_conditions = { Rabbasca.only_underground(true) },
+    },
+    {
+        type = "recipe",
+        name = "rabbasca-holmium-coating",
+        enabled = false,
+        energy_required = 7,
+        ingredients = {
+            { type = "item", name = "tungsten-ore", amount = 5 },
+            { type = "fluid", name = "holmium-solution", amount = 70 },
+            { type = "fluid", name = "rabbasca-perfluorosulfonic-acid", amount = 100 },
+        },
+        results = {
+            { type = "item", name = "rabbasca-holmium-coating", amount = 1 },
+        },
+        allow_productivity = true,
+        category = "metallurgy",
+        surface_conditions = { Rabbasca.only_underground(true) },
+    },
+    {
+        type = "recipe",
+        name = "rabbasca-spacetime-evolutionizer",
+        enabled = false,
+        energy_required = 12,
+        ingredients = {
+            { type = "item", name = "rabbasca-warp-matrix", amount = 5 },
+            { type = "item", name = "carbon-fiber", amount = 5 },
+            { type = "item", name = "pentapod-egg", amount = 1 },
+        },
+        results = {
+            { type = "item", name = "rabbasca-spacetime-evolutionizer", amount = 1 },
+        },
+        allow_productivity = true,
+        surface_conditions = { Rabbasca.only_underground(true) },
+        category = "organic",
     },
     {
         type = "recipe",
@@ -264,6 +262,7 @@ data:extend {
         auto_recycle = false,
         energy_required = 25,
         ingredients = {
+            { type = "item", name = "rabbasca-holmium-coating", amount = 1 },
             { type = "item", name = "rabbasca-coordinate-calibrations", amount = 1 },
             { type = "item", name = "rabbasca-spatial-anchor",  amount = 1 },
             { type = "item", name = "rabbasca-spacetime-evolutionizer",  amount = 1 },

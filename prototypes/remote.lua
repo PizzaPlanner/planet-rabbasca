@@ -89,6 +89,16 @@ data:extend {
           scale = 0.1,
           shift = {0, 0},
         },
+        {
+          filename = "__rabbasca-assets__/graphics/by-hurricane/research-center-hr-shadow.png",
+          frame_count = 1,
+          repeat_count = 80,
+          width = 1200,
+          height = 700,
+          scale = 0.1,
+          shift = {0, 0},
+          draw_as_shadow = true
+        },
       }
     },
   },

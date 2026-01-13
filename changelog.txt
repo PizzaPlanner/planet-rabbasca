@@ -2,22 +2,22 @@
 Version: 1.0.0
 Date: 2026-??-??
   Changes:
-    - Added a new post-aquilo progression which involves finding and using the warp-field analyzer
+    - Added a new post-aquilo progression which involves locating and using the warp-field analyzer
     - The warp-field analyzer will have its own surface close to rabbasca's core, featuring new crafting chains and its own technology tree
-    - Rabbascan warp core is now a science pack used for the technologies provided by the analyzer
+    - Added a new science lab with specialized science packs dedicated to working with these new techs
     - Warp pylons now use a warp inventory for their operations
     - Removed interplanetary cargo landing pad in favor of the warp inventory. previously placed landing pads will be replaced by vanilla landing pads
     - Added warp inventory uplink, a requester chest that moves items into the warp inventory
-    - Added a setting that restricts E.A.R.S. variants to surfaces with harenic energy field
+    - Added a setting that restricts placing E.A.R.S. variants to surfaces with harenic energy field (off by default)
     - Warp pylons now show their recipe in alt mode and no longer have their recipe locked
   Balancing:
-    - Warp pylons are now crafted in machining assembler instead of vaults, requring analyzer technology to unlock
-    - The recipe for warp pylons now requires warp cores and E.A.R.S. subcores
     - Warp pylon recycling now matches the crafting recipe and in turn yields more warp cores (3 -> 5)
     - Warp sequence: Modules now requires analyzer tech to unlock
     - Reduced Warp sequence crafting time (1 -> 0.5s)
     - Interplanetary construction 2 no longer requires aquilo tech and has its cost reduced (1000 -> 500)
     - The purified harene crafting chain now has reduced surface conditions to allow crafting the full chain on the analyzer's surface
+    - Warp pylons are now crafted in machining assembler instead of vaults, requring analyzer technology to unlock
+    - The recipe for warp pylons now requires warp cores
   Bugfixes:
     - Vaults no longer vanish from map view while hacked
 ---------------------------------------------------------------------------------------------------

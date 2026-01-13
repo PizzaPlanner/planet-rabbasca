@@ -114,6 +114,10 @@ data:extend{
         type = "unlock-recipe",
         recipe = "rabbasca-warp-matrix"
       },
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-warp-tech-analyzer"
+      },
     },
     research_trigger =
     {
@@ -127,22 +131,21 @@ data:extend{
     name = "rabbasca-warp-technology-analysis",
     icon = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-icon.png",
     icon_size = 640,
-    prerequisites = {  },-- filled later
+    prerequisites = { "rabbasca-warp-stabilizer" },
     effects = {
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-warp-core"
-      },
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-warp-tech-analyzer"
-      },
+
     },
-    research_trigger =
-    {
-        type = "craft-item",
-        item = "rabbasca-spatial-anchor",
-        count = 20,
+    ignore_tech_cost_multiplier = true,
+    order = "r[warp-tech]-0[analysis]",
+    unit = {
+      time = 10,
+      count = 100,
+      ingredients = {
+        { "rabbasca-warp-matrix", 1 },
+        { "rabbasca-spatial-anchor", 1 },
+        { "rabbasca-coordinate-calibrations", 1 },
+        { "rabbasca-spacetime-evolutionizer", 1 },
+      }
     }
 },
 {
@@ -154,14 +157,22 @@ data:extend{
     effects = {
       {
         type = "unlock-recipe",
+        recipe = "rabbasca-warp-core"
+      },
+      {
+        type = "unlock-recipe",
         recipe = "rabbasca-warp-pylon"
       },
     },
+    ignore_tech_cost_multiplier = true,
     unit = {
-      time = 60,
-      count = 250,
+      time = 10,
+      count = 1000,
       ingredients = {
-        { "rabbasca-warp-core", 1}
+        { "rabbasca-warp-matrix", 1 },
+        { "rabbasca-spatial-anchor", 1 },
+        { "rabbasca-coordinate-calibrations", 1 },
+        { "rabbasca-spacetime-evolutionizer", 1 },
       }
     }
 },
@@ -182,12 +193,16 @@ data:extend{
         effect_description = { "recipe-description.rabbasca-warp-sequence-module" }
       },
     },
+    ignore_tech_cost_multiplier = true,
     level = 3,
     unit = {
-      time = 60,
-      count = 1000,
+      time = 10,
+      count = 3000,
       ingredients = {
-        {"rabbasca-warp-core", 1}
+        { "rabbasca-warp-matrix", 1 },
+        { "rabbasca-spatial-anchor", 1 },
+        { "rabbasca-coordinate-calibrations", 1 },
+        { "rabbasca-spacetime-evolutionizer", 1 },
       }
     }
 },
@@ -199,11 +214,15 @@ data:extend{
     prerequisites = { "rabbasca-warp-technology-analysis" },
     effects = {
     },
+    ignore_tech_cost_multiplier = true,
     unit = {
-      time = 60,
+      time = 10,
       count = 1000,
       ingredients = {
-        {"rabbasca-warp-core", 1}
+        { "rabbasca-warp-matrix", 1 },
+        { "rabbasca-spatial-anchor", 1 },
+        { "rabbasca-coordinate-calibrations", 1 },
+        { "rabbasca-spacetime-evolutionizer", 1 },
       }
     }
 },
