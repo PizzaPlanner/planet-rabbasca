@@ -31,6 +31,8 @@ end
 
 if not data then return end
 
+local recycling = require("__quality__.prototypes.recycling")
+
 data:extend{{
     type = "mod-data",
     name = "rabbasca-bunnyhop-requirements",
@@ -173,10 +175,7 @@ function create_infused_thing_with_effect(original, extra_cost)
             }
         } }
     end
-    data:extend {
-      new,
-      new_item,
-      {
+    local new_recipe = {
         type = "recipe",
         name = new_name,
         enabled = false,
@@ -190,8 +189,13 @@ function create_infused_thing_with_effect(original, extra_cost)
         hide_from_player_crafting = true,
         category = "install-ears-core",
         maximum_productivity = 1
-      }
     }
+    data:extend {
+      new,
+      new_item,
+      new_recipe
+    }
+    recycling.generate_recycling_recipe(new_recipe)
     return new_name
 end
 

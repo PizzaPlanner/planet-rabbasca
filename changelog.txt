@@ -8,6 +8,7 @@ Date: 2026-??-??
     - Warp pylons now use a warp inventory for their operations
     - Removed interplanetary cargo landing pad in favor of the warp inventory. previously placed landing pads will be replaced by vanilla landing pads
     - Added warp inventory uplink, a requester chest that moves items into the warp inventory
+    - Warp sequence: inversion can now also pick up items on ground marked for deconstruction
     - Added a setting that restricts placing E.A.R.S. variants to surfaces with harenic energy field (off by default)
     - Warp pylons now show their recipe in alt mode and no longer have their recipe locked
   Balancing:
@@ -15,11 +16,16 @@ Date: 2026-??-??
     - Warp sequence: Modules now requires analyzer tech to unlock
     - Reduced Warp sequence crafting time (1 -> 0.5s)
     - Interplanetary construction 2 no longer requires aquilo tech and has its cost reduced (1000 -> 500)
-    - The purified harene crafting chain now has reduced surface conditions to allow crafting the full chain on the analyzer's surface
+    - The purified harene crafting chain now has reduced surface conditions
     - Warp pylons are now crafted in machining assembler instead of vaults, requring analyzer technology to unlock
     - The recipe for warp pylons now requires warp cores
+    - Reduced crafting time of E.A.R.S. subcore (900 -> 300s). Time with local E.A.R.S. only setting unchanged
+    - E.A.R.S. variants can now be recycled
   Bugfixes:
     - Vaults no longer vanish from map view while hacked
+    - Fixed protein shakes not creating plastic bottles when used as fuel
+    - Vault access consoles are now excluded from kill statistics
+    - [TODO] Warp pylons now wake up when a ghost from a dying entity is created
 ---------------------------------------------------------------------------------------------------
 Version: 0.10.1
 Date: 2026-01-11

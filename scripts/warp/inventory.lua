@@ -1,7 +1,7 @@
 local M = { }
 
-function M.is_type_supported(type)
-
+function M.is_proto_supported(proto)
+    return proto.place_result or proto.place_as_tile_result or proto.type == "module"
 end
 
 function M.logistics_group_name()

@@ -169,7 +169,7 @@ access_console.created_effect = {
     }
   }
 }
-access_console.flags = { "placeable-player", "not-deconstructable", "not-repairable",  "not-rotatable", "player-creation", "placeable-off-grid" }
+access_console.flags = { "placeable-player", "not-deconstructable", "not-repairable",  "not-rotatable", "player-creation", "placeable-off-grid", "not-in-kill-statistics" }
 access_console.circuit_connector = nil
 access_console.circuit_connector_flipped = nil
 access_console.allowed_effects = { }

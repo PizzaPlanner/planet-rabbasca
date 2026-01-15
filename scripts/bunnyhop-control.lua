@@ -64,7 +64,6 @@ local function get_max_range_and_weight(force)
     if all_techs[tech] then 
       local levels = all_techs[tech].level - all_techs[tech].prototype.level
       if all_techs[tech].researched then levels = levels + 1 end
-      -- game.print(tech..": "..levels) 
       for _, effect in pairs(all_techs[tech].prototype.effects) do
         if effect.effect_description and effect.effect_description[1] == "modifier-description.bunnyhop-engine-range" then range = range + effect.effect_description[2] * levels
         elseif effect.effect_description and effect.effect_description[1] == "modifier-description.bunnyhop-engine-weight" then weight = weight + effect.effect_description[2] * levels

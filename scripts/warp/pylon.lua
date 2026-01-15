@@ -25,13 +25,18 @@ local function play_smoke(surface, position, size)
     }
 end
 
-local function try_deconstruct(data, name, quality, inventory)
+local function try_deconstruct(data, name, quality, inventory, pylon)
     if not data.entity.to_be_deconstructed() then return false, status_invalid_target end
     local entity = data.entity
-    if not data.is_tile then
+    if data.name == "item-on-ground" then
+        local inv = data.is_trash and pylon.get_inventory(defines.inventory.crafter_trash) or inventory
+        local added = inv.insert(entity.stack)
+        entity.stack.count = entity.stack.count - added
+        return added > 0
+    elseif not data.is_tile then
         for k = 1, entity.get_max_inventory_index() do 
             local spill_inventory = entity.get_inventory(k)
-            if spill_inventory then entity.surface.spill_inventory { position = entity.position, inventory = spill_inventory } end
+            if spill_inventory then entity.surface.spill_inventory { position = entity.position, inventory = spill_inventory, force = pylon.force } end
         end
         local surface, position, size = entity.surface, entity.position, 1
         local result = entity.mine{ inventory = inventory }
@@ -93,7 +98,7 @@ local function clear_plans(request, inventory, index)
     request.removal_plan = old_plans
 end
 
-local function try_warp_module(data, name, quality, inventory)
+local function try_warp_module(data, name, quality, inventory, pylon)
     local request = data.entity
     local target = request.proxy_target
     if not target then return false, status_invalid_target end
@@ -126,7 +131,7 @@ local function try_warp_module(data, name, quality, inventory)
     return false, status_no_items
 end
 
-local function try_upgrade(data, name, quality, inventory)
+local function try_upgrade(data, name, quality, inventory, pylon)
     local entity, count = data.entity, data.count
     local new_proto, new_quality = entity.get_upgrade_target()
     if not new_proto then return false end
@@ -144,7 +149,7 @@ local function try_upgrade(data, name, quality, inventory)
     return true, status_ok
 end
 
-local function try_build_ghost(data, name, quality, inventory)
+local function try_build_ghost(data, name, quality, inventory, pylon)
     local entity, count = data.entity, data.count
 
     local removed = inventory.remove({name = name, count = count, quality = quality})
@@ -183,7 +188,7 @@ local function attempt_warp(pylon, q, pdata, inventory, range, f)
                         local pos_b = pdata.position
                         local in_range = math.abs(pos_a.x - pos_b.x) <= range and math.abs(pos_a.y - pos_b.y) <= range
                         if has >= data.count and data.entity.valid and in_range then
-                            local result, status = f(data, name, quality, inventory)
+                            local result, status = f(data, name, quality, inventory, pylon)
                             pylon.custom_status = status
                             if q ~= "modules" then remove_entity(queue, name, quality, i) end
                             if result then return true end

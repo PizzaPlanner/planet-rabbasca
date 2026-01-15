@@ -1,4 +1,3 @@
-require("__quality__.prototypes.recycling")
 local hit_effects = require("__base__.prototypes.entity.hit-effects")
 local sounds = require("__base__.prototypes.entity.sounds")
 local logistic_chest_opened_duration = 7
@@ -76,6 +75,7 @@ data:extend {
     animation_sound = sounds.logistics_chest_open,
     impact_category = "metal",
     opened_duration = logistic_chest_opened_duration,
+    surface_conditions = { Rabbasca.above_harenic_threshold(0.1) },
     animation =
     {
       layers =
@@ -118,8 +118,8 @@ data:extend {
     name = "rabbasca-warp-input",
     energy_required = 8,
     enabled = false,
-    category = "crafting",
-    ingredients = { { type = "item", name = "rabbasca-warp-core", amount = 5 } },
+    category = "complex-machinery",
+    ingredients = { { type = "item", name = "rabbasca-warp-core", amount = 10 }, { type = "item", name = "steel-plate", amount = 20 }, { type = "item", name = "processing-unit", amount = 5 } },
     results = { { type = "item", name = "rabbasca-warp-input", amount = 1 } }
   },
   {
@@ -135,6 +135,7 @@ data:extend {
     surface_conditions = {
       { property = "gravity", min = 0.01 }
     },
+    trash_inventory_size = 1,
     energy_usage = "1MW",
     crafting_speed = 1,
     crafting_speed_quality_multiplier = { }, -- filled in final-fixes
@@ -270,24 +271,6 @@ make_warp_sequence("rabbasca-warp-sequence-upgrade", data.raw["upgrade-item"]["u
 }
 
 data:extend {
-  -- {
-  --   type = "recipe",
-  --   name = "rabbasca-warp-pylon-recycling",
-  --   enabled = false,
-  --   icons = generate_recycling_recipe_icons_from_item(data.raw.item["rabbasca-warp-pylon"]),
-  --   ingredients = { { type = "item", name = "rabbasca-warp-pylon", amount = 1 }, },
-  --   results = { 
-  --     { type = "item", name = "rabbasca-warp-core", amount = 3 }, 
-  --     { type = "item", name = "haronite-plate",     amount = 1 }, 
-  --   },
-  --   category = "recycling",
-  --   hide_from_player_crafting = true,
-  --   energy_required = 30,
-  --   unlock_results = true,
-  --   subgroup = "rabbasca-security",
-  --   order = "x[rabbasca-warp-core]-recycling",
-  --   localised_name = {"recipe-name.recycling", {"entity-name.rabbasca-warp-pylon"}},
-  -- },
   {
     type = "recipe",
     name = "rabbasca-warp-pylon-indicator",

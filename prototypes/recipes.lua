@@ -85,6 +85,13 @@ data:extend {
         category = "organic-or-chemistry",
         allow_productivity = true,
         auto_recycle = false,
+        crafting_machine_tint =
+        {
+            primary = { 0.8, 0.42, 0.02 },
+            secondary = { 0.78, 0.5, 0.05 },
+            tertiary = { 0.8, 0.42, 0.02 },
+            quaternary = { 0.78, 0.5, 0.05 },
+        }
     },
     {
         type = "recipe",
@@ -147,7 +154,7 @@ data:extend {
         category = "metallurgy",
         spoil_ticks = 30 * second,
         spoil_result = "harene-cryo-container-empty",
-        surface_conditions = { Rabbasca.above_harenic_threshold() },
+        surface_conditions = { Rabbasca.above_harenic_threshold(0.1) },
     },
     {
         type = "recipe",
@@ -167,7 +174,7 @@ data:extend {
         },
         main_product = "haronite-plate",
         category = "metallurgy",
-        surface_conditions = { Rabbasca.above_harenic_threshold() },
+        surface_conditions = { Rabbasca.above_harenic_threshold(0.1) },
     },
     {
         type = "recipe",
@@ -283,11 +290,11 @@ data:extend {
         category = "chemistry",
         crafting_machine_tint =
         {
-            primary = {r = 0.710, g = 0.633, b = 0.482, a = 1.000},
-            secondary = {r = 0.745, g = 0.672, b = 0.527, a = 1.000},
-            tertiary = {r = 0.894, g = 0.773, b = 0.596, a = 1.000},
-            quaternary = {r = 0.812, g = 0.583, b = 0.202, a = 1.000},
-        }
+            primary = { 0.65, 0.31, 0.92},
+            secondary = { 0.45, 0.11, 1},
+            tertiary = { 0.65, 0.31, 0.92},
+            quaternary = { 0.45, 0.11, 1},
+        },
     },
     {
         type = "recipe",
@@ -309,6 +316,13 @@ data:extend {
         subgroup = "nauvis-agriculture",
         order = "b[nauvis-agriculture]-b[turbofish-breeding]",
         auto_recycle = false,
+        crafting_machine_tint =
+        {
+            primary = { 0.23, 0.31, 0.92},
+            secondary = { 0.2, 0.37, 1},
+            tertiary = { 0.25, 0.35, 0.92},
+            quaternary = { 0.19, 0.27, 1},
+        },
     },
     {
         type = "recipe",
@@ -352,6 +366,7 @@ data:extend {
             {type = "fluid", name = "energetic-residue", amount = 10 },
         },
         results = { { type = "fluid", name = "lubricant", amount = 10 } },
+        crafting_machine_tint = data.raw["recipe"]["lubricant"] and table.deepcopy(data.raw["recipe"]["lubricant"].crafting_machine_tint),
         main_product = "lubricant",
         category = "chemistry",
         subgroup = "rabbasca-processes",
@@ -371,6 +386,13 @@ data:extend {
         },
         results = {
             { type = "item", name = "rabbasca-protein-shake", amount = 2 }
+        },
+        crafting_machine_tint =
+        {
+            primary = { 0.05, 1, 0.15 },
+            secondary = { 0, 0.96, 0.18 },
+            tertiary = { 0.05, 1, 0.15 },
+            quaternary = { 0, 0.96, 0.18 },
         },
         category = "organic-or-chemistry",
     },
@@ -516,6 +538,13 @@ data:extend {
         ingredients = {
             { type = "item", name = "haronite", amount = 1 },
             { type = "fluid", name = "sulfuric-acid", amount = 15 },
+        },
+        crafting_machine_tint =
+        {
+            primary = { 0.65, 0.31, 0.92},
+            secondary = { 0.45, 0.11, 1},
+            tertiary = { 0.65, 0.31, 0.92},
+            quaternary = { 0.45, 0.11, 1},
         },
         allow_productivity = true,
         subgroup = "rabbasca-processes",

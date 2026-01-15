@@ -14,7 +14,7 @@ script.on_nth_tick(20, function(event)
       local inv = warper.get_inventory(defines.inventory.chest)
       for s = 1,#inv do
         local stack = inv[s]
-        if stack.valid_for_read and storage.warp_inventory.can_insert(stack) then
+        if stack.valid_for_read and storage.warp_inventory.can_insert(stack) and M.is_proto_supported(stack.prototype) then
           storage.warp_inventory.insert(stack)
           stack.clear()
         end

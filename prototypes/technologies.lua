@@ -629,7 +629,7 @@ data:extend {
     name = "interplanetary-construction-2",
     icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon-big.png",
     icon_size = 640,
-    prerequisites = { "interplanetary-construction-1", "harene-synthesis" },
+    prerequisites = { "interplanetary-construction-1" },
     effects =
     {
       {
@@ -654,7 +654,7 @@ data:extend {
     level = 2,
     unit = {
       time = 60,
-      count = 500,
+      count = 1000,
       ingredients = {
         {"automation-science-pack", 1},
         {"logistic-science-pack", 1},

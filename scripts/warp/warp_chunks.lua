@@ -122,6 +122,10 @@ function M.get_warp_cache(entity)
         local is_tile = entity.name == "deconstructible-tile-proxy"
         if is_tile then
             entity = entity.surface.get_tile(entity.position.x, entity.position.y)
+        elseif entity.name == "item-on-ground" then
+            local proto = entity.stack.prototype
+            local is_trash = not M.is_proto_supported(proto) 
+            return { entity = entity, name = "item-on-ground", count = 1, quality = "normal", queue = "decon", position = entity.position, is_trash = is_trash }
         end
         local proto = entity.prototype
         local to_place = proto.items_to_place_this and proto.items_to_place_this[1]

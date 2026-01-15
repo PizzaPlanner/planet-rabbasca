@@ -18,6 +18,10 @@ end
 
 data.raw["recipe"]["rabbasca-warp-pylon-recycling"].hidden = false
 data.raw["recipe"]["rabbasca-warp-pylon-recycling"].hidden_in_factoriopedia = false
+data.raw["recipe"]["rabbasca-warp-pylon-recycling"].hide_from_player_crafting = true
+
+local biochamber = data.raw["assembling-machine"]["biochamber"]
+biochamber.energy_source.burnt_inventory_size = biochamber.energy_source.burnt_inventory_size or 1
 
 require("scripts.create-ears-variants")
 require("scripts.warp.pylon-radar-dummies-final-fixes")
