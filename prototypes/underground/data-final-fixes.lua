@@ -6,3 +6,5 @@ for _, furnace in pairs(data.raw["furnace"]) do
         end
     end
 end
+
+require("prototypes.underground.stabilizer-config-final-fixes")

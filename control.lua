@@ -40,12 +40,14 @@ local function handle_script_events(event)
     storage.alertness_modulation = math.max(-max, math.min(max, (storage.alertness_modulation or 0) + offset))
     rutil.update_alertness(game.surfaces[event.surface_index], from.position)
   elseif effect_id == "rabbasca_on_send_pylon_underground" then
-    local from = event.source_entity or event.target_entity
+    local from = Rabbasca.get_spoiled_in(event)
     if from and from.name == "rabbasca-warp-stabilizer" then
       underground.reboot_stabilizer(from)
     else
       underground.on_locate_progress()
     end
+  elseif effect_id == "rabbasca_surface_malfunction" then
+    underground.on_stabilization(game.surfaces[event.surface_index])
   elseif effect_id == "rabbasca_init_spawner" then
     local from = event.source_entity or event.target_entity
     if not from then return end
@@ -125,6 +127,7 @@ script.on_event(defines.events.on_script_trigger_effect, handle_script_events)
 
 script.on_load(function()
   bunnyhop.register_bunnyhop_handler()
+  underground.register_ui_handler()
 end)
 
 script.on_event(defines.events.on_object_destroyed, function(event)

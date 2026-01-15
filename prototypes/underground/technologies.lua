@@ -4,7 +4,7 @@ data:extend{
     name = "rabbasca-underground-preparations",
     icon = "__rabbasca-assets__/graphics/by-hurricane/atom-forge-icon.png",
     icon_size = 640,
-    prerequisites = { "interplanetary-construction-2", "fusion-reactor", "harene-synthesis" },
+    prerequisites = { "interplanetary-construction-2", "rabbasca-ears-technology-2", "fusion-reactor", "harene-synthesis" },
     effects = {
       {
         type = "unlock-recipe",

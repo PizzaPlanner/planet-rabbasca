@@ -66,14 +66,14 @@ util.merge{ table.deepcopy(data.raw["tile"]["midland-yellow-crust-2"]), {
 }},
 util.merge{ table.deepcopy(data.raw["tile"]["volcanic-folds"]), {
     name = "rabbasca-underground-rubble",
-    autoplace = { probability_expression = "0" },
+    autoplace = { probability_expression = "rabbasca_underground_elevation" },
     map_color = { 0.17, 0.06, 0.1 },
 }},
 util.merge { 
     table.deepcopy(data.raw["tile"]["out-of-map"]),
     {
       name = "rabbasca-underground-out-of-map",
-      autoplace = { probability_expression = "(0.25 - rabbasca_underground_elevation) * 2" }
+      autoplace = { probability_expression = "rabbasca_underground_edge" }
     }
 },
 util.merge { 

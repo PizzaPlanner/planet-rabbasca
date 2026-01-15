@@ -99,11 +99,14 @@ data:extend {
         hidden = true,
         hidden_in_factoriopedia = true,
         energy_required = 30,
-        ingredients = { { type = "fluid", name = "fusion-plasma", amount = 200 } },
+        ingredients = { { type = "item", name = "lithium-plate", amount = 1 } },
         results = { { type = "item", name = "rabbasca-reboot-stabilizer", amount = 1 } },
         category = "rabbasca-warp-stabilizer",
         result_is_always_fresh = true,
-        auto_recycle = false, 
+        auto_recycle = false,
+        crafting_machine_tint = {
+            primary = { 0.95, 0.83, 0.14 }
+        }
     },
     {
         type = "recipe",
@@ -186,13 +189,17 @@ data:extend {
         name = "rabbasca-warp-matrix",
         enabled = false,
         main_product = "rabbasca-warp-matrix",
-        energy_required = 5,
+        energy_required = 1,
         result_is_always_fresh = true,
         preserve_products_in_machine_output = true,
-        ingredients = {
-            { type = "fluid", name = "fusion-plasma",  amount = 100 },
+        ingredients = { },
+        results = { 
+            { type = "item", name = "rabbasca-warp-matrix", amount = 5 },
         },
-        results = { { type = "item", name = "rabbasca-warp-matrix", amount = 5 } },
+        crafting_machine_tint =
+        {
+            primary = { 0.5, 0.83, 1 }
+        },
         category = "rabbasca-warp-stabilizer"
     },
     {

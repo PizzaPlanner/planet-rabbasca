@@ -1,11 +1,26 @@
 local mod_data = {
     type = "mod-data",
-    name = "rabbasca-attunement-techs",
-    data = { }
+    name = "rabbasca-stabilizer-config",
+    data = { planets = { }, water_tiles = { }, stabilization_required = 100 }
 }
 
-local function make_materialize_recipe(name, type, affinity, results, ingredients)
+local function add_planet(name, fluid, entities, lut)
+    mod_data.data.planets[name] = {
+        water = fluid,
+        autoplace_entities = { },
+        lut = lut,
+        tech = nil,
+        tech_prep = nil,
+        lut_index = nil
+    }
+    if entities then
+        for _, e in pairs(entities) do 
+            mod_data.data.planets[name].autoplace_entities[e] = { }
+        end    
+    end
+end
 
+local function make_materialize_recipe(name, type, affinity, results, ingredients)
     table.insert(data.raw["technology"]["rabbasca-warp-anchoring-"..affinity].effects, { type = "unlock-recipe", recipe = "rabbasca-attuned-materialize-"..name })
     return {
         type = "recipe",
@@ -28,29 +43,9 @@ local function make_materialize_recipe(name, type, affinity, results, ingredient
     }
 end
 
-local function make_affinity_recipe(name, icon, color)
-    return {
-        type = "recipe",
-        name = "rabbasca-change-affinity-"..name,
-        icons = {
-            { icon = icon },
-            { icon = "__rabbasca-assets__/graphics/by-hurricane/custom-atom-forge-icon.png", icon_size = 64, scale = 0.3, shift = {8, 8} },
-        },
-        energy_required = 30,
-        localised_name = { "recipe-name.rabbasca-change-affinity", { "space-location-name."..name } },
-        localised_description = { "recipe-description.rabbasca-change-affinity" },
-        ingredients = { { type = "item", name = "rabbasca-warp-matrix", amount = 1 }, { type = "fluid", name = "fusion-plasma", amount = 200 } },
-        results = { { type = "item", name = "rabbasca-change-affinity-"..name, amount = 1 } },
-        enabled = false,
-        auto_recycle = false,
-        result_is_always_fresh = true,
-        crafting_machine_tint = { primary = color },
-        category = "rabbasca-warp-stabilizer",
-        subgroup = "rabbasca-remote",
-        order = "f[planet]-"..name.."-a",
-    }
-end
-local function create_affinity_tech(planet, icon, color, matrix_count, unlocked_part)
+local function create_affinity_tech(planet, unlocked_part, fluid, entities, lut)
+  add_planet(planet, fluid, entities, lut)
+  local icon = data.raw["planet"][planet].icon
   local tech_pre = {
     type = "technology",
     name = "rabbasca-warp-prep-"..planet,
@@ -59,20 +54,20 @@ local function create_affinity_tech(planet, icon, color, matrix_count, unlocked_
     prerequisites = { "rabbasca-warp-stabilizer" },
     effects = {
         { 
-            type = "unlock-recipe",
-            recipe = "rabbasca-change-affinity-"..planet,
+            type = "nothing",
+            icon = icon,
+            effect_description = { "rabbasca-extra.stabilizer-recipes-unknown", planet }
         },
         { 
             type = "unlock-recipe",
             recipe = unlocked_part,
         },
     },
-    order = "r[warp-tech]-"..matrix_count,
+    order = "r[warp-tech]-"..planet,
     research_trigger =
     {
-        type = "craft-item",
-        item = "rabbasca-warp-matrix",
-        count = matrix_count
+        type = "scripted",
+        trigger_description = { "technology-description.rabbasca-warp-prep", planet }
     }
   }
   local tech_flex = {
@@ -101,22 +96,21 @@ local function create_affinity_tech(planet, icon, color, matrix_count, unlocked_
     localised_name = "item-name.rabbasca-change-affinity",
     subgroup = "rabbasca-warp-stabilizer"
   }, "rabbasca_on_change_affinity")
-  local affinity_recipe = make_affinity_recipe(planet, icon, color)
-  mod_data.data[tech_flex.name] = planet
+  mod_data.data.planets[planet].tech = tech_flex.name
+  mod_data.data.planets[planet].tech_prep = tech_pre.name
   table.insert(data.raw["assembling-machine"]["rabbasca-warp-pylon"].crafting_categories, "rabbasca-remote-affinity-"..planet)
   data:extend{
     tech_pre,
     tech_flex,
     item,
-    affinity_recipe,
     affinity_category
   }
 end
 
-create_affinity_tech("vulcanus", data.raw["planet"]["vulcanus"].icon, {0.8, 0.36, 0.13}, 10, "rabbasca-holmium-coating")
-create_affinity_tech("solar-system-edge", data.raw["space-location"]["solar-system-edge"].icon, {0.14, 0.2, 0.41}, 50, "rabbasca-coordinate-calibrations")
-create_affinity_tech("gleba", data.raw["planet"]["gleba"].icon, {0.2, 0.76, 0.42}, 100, "rabbasca-spacetime-evolutionizer")
-create_affinity_tech("rabbasca", data.raw["planet"]["rabbasca"].icon, {0.4, 0.14, 0.75}, 150, "rabbasca-spatial-anchor")
+create_affinity_tech("rabbasca", "rabbasca-spatial-anchor", "harenic-lava", { "rabbasca-lithium-amide", "rabbasca-energy-source" }, "__rabbasca-assets__/graphics/recolor/textures/lut-underground.png")
+create_affinity_tech("vulcanus", "rabbasca-holmium-coating", "lava-hot", { "calcite" }, "__rabbasca-assets__/graphics/recolor/textures/lut-underground-vulcanus.png")
+create_affinity_tech("gleba", "rabbasca-spacetime-evolutionizer", "water", nil, "__rabbasca-assets__/graphics/recolor/textures/lut-underground-gleba.png")
+create_affinity_tech("fulgora", "rabbasca-coordinate-calibrations", "fulgoran-sand", nil, "__rabbasca-assets__/graphics/recolor/textures/lut-underground-gleba.png")
 
 data:extend{
     make_materialize_recipe("beta-carotene", "fluid", "rabbasca",
@@ -136,12 +130,6 @@ data:extend{
         {{ type = "item", name = "rabbasca-warp-matrix", amount = 1 }}),
     make_materialize_recipe("tungsten-ore", "item", "vulcanus",
         {{ type = "item", name = "tungsten-ore", amount = 9, }},
-        {{ type = "item", name = "rabbasca-warp-matrix", amount = 1 }}),
-    make_materialize_recipe("metallic-asteroid-chunk", "item", "solar-system-edge",
-        {{ type = "item", name = "iron-ore", amount = 20, }, { type = "item", name = "copper-ore", amount = 8, }},
-        {{ type = "item", name = "rabbasca-warp-matrix", amount = 1 }}),
-    make_materialize_recipe("promethium-asteroid-chunk", "item", "solar-system-edge",
-        {{ type = "item", name = "promethium-asteroid-chunk", amount = 1, }},
         {{ type = "item", name = "rabbasca-warp-matrix", amount = 1 }}),
 }
 

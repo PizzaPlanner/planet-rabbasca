@@ -3,10 +3,12 @@ local stabilizer = util.merge { data.raw["assembling-machine"]["assembling-machi
     name = "rabbasca-warp-stabilizer",
     icon = "__rabbasca-assets__/graphics/by-hurricane/custom-atom-forge-icon.png",
     icon_size = 64,
+    max_health = 10000,
+    healing_per_tick = 100,
     crafting_speed = 1,
     collision_box = {{-4.2, -4.2}, {4.2, 4.2}},
     selection_box = {{-4.5, -4.5}, {4.5, 4.5}},
-    energy_usage = "4.75GW",
+    energy_usage = "1GW",
     module_slots = 20,
     hidden = false,
     hidden_in_factoriopedia = false,
@@ -17,68 +19,39 @@ stabilizer.minable = nil
 stabilizer.placeable_by = nil
 stabilizer.allowed_effects = { "speed", "productivity", "quality" }
 stabilizer.flags = { "placeable-player", "player-creation" }
-stabilizer.energy_source.drain = "250MW"
-stabilizer.next_upgrade = nil
-stabilizer.deconstruction_alternative = nil
-stabilizer.crafting_categories = { "rabbasca-warp-stabilizer" }
-stabilizer.fluid_boxes = { 
-  {
-    volume = 1000,
+stabilizer.energy_source = {
+  type = "fluid",
+  burns_fluid = true,
+  scale_fluid_usage = true,
+  fluid_box =   {
+    volume = 100000,
+    filter = "harene",
     pipe_picture = assembler3pipepictures(),
     pipe_covers = pipecoverspictures(),
-    production_type = "output",
+    production_type = "input",
     pipe_connections = 
     {
       {
-        flow_direction = "output",
+        flow_direction = "input-output",
         position = {-2, 4.2},
         direction = defines.direction.south,
       },
       {
-        flow_direction = "output",
+        flow_direction = "input-output",
         position = {0, 4.2},
         direction = defines.direction.south,
       },
       {
-        flow_direction = "output",
+        flow_direction = "input-output",
         position = {2, 4.2},
         direction = defines.direction.south,
       },
     }
   },
-  {
-    volume = 500,
-    production_type = "input",
-    filter = "fusion-plasma",
-    pipe_connections = 
-    {
-      {
-        flow_direction = "input-output",
-        position = {-4.2, 3},
-        direction = defines.direction.west,
-        connection_category = "fusion-plasma",
-      },
-      {
-        flow_direction = "input-output",
-        position = {4.2, 3},
-        direction = defines.direction.east,
-        connection_category = "fusion-plasma",
-      },
-      {
-        flow_direction = "input-output",
-        position = {-4.2, 0},
-        direction = defines.direction.west,
-        connection_category = "fusion-plasma",
-      },
-      {
-        flow_direction = "input-output",
-        position = {4.2, 0},
-        direction = defines.direction.east,
-        connection_category = "fusion-plasma",
-      },
-    }
-  },
 }
+stabilizer.next_upgrade = nil
+stabilizer.deconstruction_alternative = nil
+stabilizer.crafting_categories = { "rabbasca-warp-stabilizer" }
 local sprite_data = {   
   line_length = 10,
   width = 4000 / 10,
@@ -151,26 +124,16 @@ data:extend {
   util.merge {
     data.raw["electric-energy-interface"]["rabbasca-energy-source"],
     {
-      name = "rabbasca-energy-source-big",
-      energy_production = Rabbasca.surface_megawatts() * 5 .. "MW",
-      energy_source = { 
-        buffer_capacity = (Rabbasca.surface_megawatts() * 5 / 6) .. "MJ", 
-        output_flow_limit = Rabbasca.surface_megawatts() * 5 .. "MW",
-      },
-    },
-  },
-  util.merge {
-    data.raw["electric-energy-interface"]["rabbasca-energy-source"],
-    {
-      name = "rabbasca-energy-consumer-big",
-      icon = data.raw["segmented-unit"]["big-demolisher"].icon,
+      name = "rabbasca-stabilizer-consumer",
+      icon = stabilizer.icon,
+      factoriopedia_alternative = "rabbasca-warp-stabilizer",
       type = "beacon",
       flags = data.raw["electric-energy-interface"]["rabbasca-energy-source"].flags,
       energy_source = {
         type = "electric",
         usage_priority = "secondary-input",
       },
-      energy_usage = Rabbasca.surface_megawatts() * 50 .. "MW",
+      energy_usage = Rabbasca.surface_megawatts() * 25 .. "MW",
       supply_area_distance = 0,
       distribution_effectivity = 0,
       module_slots = 0,

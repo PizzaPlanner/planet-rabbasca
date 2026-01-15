@@ -50,9 +50,29 @@ util.merge {
     name = "rabbasca-warp-matrix",
     icon = "__rabbasca-assets__/graphics/by-openai/warp-matrix.png",
     icon_size = 246,
-    stack_size = 50,
+    stack_size = 1000,
     weight = 1 * kg,
+    localised_description = { "item-description.rabbasca-warp-matrix" },
     spoil_ticks = 15 * second,
+    spoil_to_trigger_result = {
+      items_per_trigger = 1,
+      trigger =
+      {
+          type = "direct",
+          -- probability = 0.3,
+          action_delivery =
+          {
+          type = "instant",
+          source_effects =
+          {
+              {
+              type = "script",
+              effect_id = "rabbasca_surface_malfunction",
+              }
+          }
+          }
+      }
+    }, 
     auto_recycle = false,
     subgroup = "rabbasca-warp-stabilizer",
     order = "a[warp-matrix]",

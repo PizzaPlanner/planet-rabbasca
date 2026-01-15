@@ -27,34 +27,26 @@ data:extend {
         ["harenic-energy-signatures"] = Rabbasca.surface_megawatts() * 0.1,
     },
     map_gen_settings = {
-      cliff_settings = {
-        name = "rabbasca-underground-cliff",
-        cliff_elevation_0 = 0.1,
-        cliff_elevation_interval = 0.6,
-        cliff_smoothing = 0,
-        -- richness = 10,
-      },
+      -- cliff_settings = {
+      --   name = "rabbasca-underground-cliff",
+      --   cliff_elevation_0 = 0.1,
+      --   cliff_elevation_interval = 0.6,
+      --   cliff_smoothing = 0,
+      --   -- richness = 10,
+      -- },
       property_expression_names = {
         elevation = "rabbasca_underground_elevation",
-        cliff_elevation = "rabbasca_underground_elevation",
-        cliffiness = "0.3",
+        -- cliff_elevation = "rabbasca_underground_elevation",
+        -- cliffiness = "0.3",
       },
-      autoplace_controls = 
-      {
-          ["rabbasca_vaults"] = {},
-      },
+      autoplace_controls = { },
       autoplace_settings = {
-      tile = { settings = {
-        ["rabbasca-underground-rubble"] = {},
-        -- ["rabbasca-underground-out-of-map"] = {},
-        ["harenic-lava"] = {},
-      }},
-      entity = { settings = {
-        ["rabbasca-energy-source"] = {},
-        -- ["rabbasca-underground-rock"] = {},
-        -- ["rabbasca-carbonic-ore"] = {},
-        ["rabbasca-lithium-amide"] = {},
-      }}
+        tile = { settings = {
+          ["rabbasca-underground-rubble"] = {},
+          ["rabbasca-underground-out-of-map"] = {},
+          ["harenic-lava"] = {},
+        }},
+        entity = { settings = { }} -- filled in script
       },
       territory_settings =
       {
@@ -69,13 +61,14 @@ data:extend {
       draw_sprite_clouds = false,
       clouds = nil,
       day_night_cycle_color_lookup = {
-          {0.0, "__rabbasca-assets__/graphics/recolor/textures/lut-underground.png"},
+          {0.0, "identity"},
+          {1.0, "identity"},
       },
       fog = util.merge {
         data.raw["planet"]["vulcanus"].surface_render_parameters.fog,
         {
-          color1 = {0.45, 0.3706, 1},
-          color2 = {0.4, 0.2706,  0.9902},
+          color1 = {0.7, 0.7, 0.7},
+          color2 = {0.4, 0.4,  0.4},
           tick_factor = 0.0005,
         }
       }
