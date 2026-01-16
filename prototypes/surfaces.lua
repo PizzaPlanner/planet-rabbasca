@@ -96,13 +96,6 @@ data:extend {
       autoplace = { probability_expression = "rabbasca_carrot_noise" }
     }
   },
-  util.merge {
-    data.raw["cliff"]["cliff-vulcanus"],
-    {
-      name = "rabbasca-underground-cliff",
-      collision_mask = { layers = { is_object = true, is_lower_object = true, cliff = true, lava_tile = true }, not_colliding_with_itself = true }
-    }
-  }
 }
 
 local map_gen = {
