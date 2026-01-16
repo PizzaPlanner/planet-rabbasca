@@ -43,11 +43,11 @@ data:extend {
   },
   {
     type = "logistic-container",
-    name = "rabbasca-warp-input",
+    name = "rabbasca-warp-uplink",
     icon = "__rabbasca-assets__/graphics/by-hurricane/research-center-icon.png",
     icon_size = 64,
     flags = { "placeable-player", "player-creation", "no-automated-item-removal" },
-    minable = {mining_time = 0.5, result = "rabbasca-warp-input"},
+    minable = {mining_time = 0.5, result = "rabbasca-warp-uplink"},
     max_health = 100,
     corpse = "requester-chest-remnants",
     dying_explosion = "requester-chest-explosion",
@@ -104,23 +104,24 @@ data:extend {
   },
   {
       type = "item",
-      name = "rabbasca-warp-input",
+      name = "rabbasca-warp-uplink",
       icon = "__rabbasca-assets__/graphics/by-hurricane/research-center-icon.png",
       icon_size = 64,
       stack_size = 10,
-      place_result = "rabbasca-warp-input",
+      place_result = "rabbasca-warp-uplink",
       weight = 100 * kg,
       subgroup = "rabbasca-remote-warping",
       order = "a[placeable]-b[input]",
   },
   {
     type = "recipe",
-    name = "rabbasca-warp-input",
+    name = "rabbasca-warp-uplink",
     energy_required = 8,
     enabled = false,
+    hide_from_player_crafting = true,
     category = "complex-machinery",
     ingredients = { { type = "item", name = "rabbasca-warp-core", amount = 10 }, { type = "item", name = "steel-plate", amount = 20 }, { type = "item", name = "processing-unit", amount = 5 } },
-    results = { { type = "item", name = "rabbasca-warp-input", amount = 1 } }
+    results = { { type = "item", name = "rabbasca-warp-uplink", amount = 1 } }
   },
   {
     type = "assembling-machine",
@@ -209,6 +210,22 @@ data:extend {
       subgroup = "rabbasca-remote-warping",
       order = "a[placeable]-a[pylon]",
   },
+  {
+    type = "recipe",
+    name = "rabbasca-warp-pylon",
+    enabled = false,
+    hidden = true,
+    hidden_in_factoriopedia = true,
+    hide_from_player_crafting = true,
+    factoriopedia_alternative = "rabbasca-warp-pylon-recycling",
+    energy_required = 10,
+    ingredients = {
+        { type = "item", name = "rabbasca-warp-core", amount = 20 },
+        { type = "item", name = "haronite-plate",  amount = 4 },
+    },
+    results = { { type = "item", name = "rabbasca-warp-pylon", amount = 1 } },
+    category = "complex-machinery"
+  },
   Rabbasca.make_trigger_item({
     name = "rabbasca-warp-sequence",
     category = "rabbasca-remote",
@@ -267,7 +284,7 @@ make_warp_sequence("rabbasca-warp-sequence-upgrade", data.raw["upgrade-item"]["u
     height = 64,
     draw_as_glow = true,
     filename = "__rabbasca-assets__/graphics/textures/warp-smoke.png"
-}
+},
 }
 
 data:extend {

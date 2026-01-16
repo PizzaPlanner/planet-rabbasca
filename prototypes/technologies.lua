@@ -476,7 +476,7 @@ data:extend {
   {
     {
       type = "unlock-recipe",
-      recipe = "rabbasca-warp-input",
+      recipe = "rabbasca-warp-uplink",
     },
     {
       type = "unlock-recipe",
@@ -585,6 +585,43 @@ data:extend {
   }
 },
 {
+    type = "technology",
+    name = "interplanetary-construction-3",
+    icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon-big.png",
+    icon_size = 640,
+    prerequisites = { "interplanetary-construction-2" },
+    effects = {
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-warp-sequence-module",
+      },
+      {
+        type = "nothing", -- needed as the recipe must be hidden to prevent manual selection
+        icons = data.raw["recipe"]["rabbasca-warp-sequence-module"].icons,
+        effect_description = { "recipe-description.rabbasca-warp-sequence-module" }
+      },
+    },
+    level = 3,
+    unit = {
+      time = 60,
+      count = 1000,
+      ingredients = {
+        {"automation-science-pack", 1},
+        {"logistic-science-pack", 1},
+        {"chemical-science-pack", 1},
+        {"space-science-pack", 1},
+        {"military-science-pack", 1},
+        {"production-science-pack", 1},
+        {"utility-science-pack", 1},
+        {"metallurgic-science-pack", 1},
+        {"electromagnetic-science-pack", 1},
+        {"agricultural-science-pack", 1},
+        {"cryogenic-science-pack", 1},
+        {"athletic-science-pack", 1},
+      }
+    }
+},
+{
   type = "technology",
   name = "rabbasca-ears-technology-3",
   icon = data.raw["item"]["harene-ears-core"].icon,
@@ -654,7 +691,7 @@ data:extend {
     level = 2,
     unit = {
       time = 60,
-      count = 1000,
+      count = 500,
       ingredients = {
         {"automation-science-pack", 1},
         {"logistic-science-pack", 1},

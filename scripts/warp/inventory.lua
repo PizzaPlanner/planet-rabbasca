@@ -12,7 +12,7 @@ function M.init_inventory()
     storage.inventory_warpers = { }
     storage.invetory_logistic_section = storage.invetory_logistic_section or { }
     for _, surface in pairs(game.surfaces) do
-        for _, e in pairs(surface.find_entities_filtered { name = "rabbasca-warp-input" }) do
+        for _, e in pairs(surface.find_entities_filtered { name = "rabbasca-warp-uplink" }) do
             table.insert(storage.inventory_warpers, e)
         end
     end

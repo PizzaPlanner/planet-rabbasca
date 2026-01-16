@@ -2,8 +2,8 @@ require("api")
 require("scripts.warp.ui")
 local warp = require("__planet-rabbasca__.scripts.warp.events")
 local rutil = require("__planet-rabbasca__.scripts.surface-control")
-local underground = require("__planet-rabbasca__.scripts.underground")
 local bunnyhop = require("__planet-rabbasca__.scripts.bunnyhop-control")
+local underground = settings.startup["rabbasca-enable-underground-test"].value and require("__planet-rabbasca__.scripts.underground")
 
 local function handle_script_events(event)
   local effect_id = event.effect_id
@@ -27,9 +27,7 @@ local function handle_script_events(event)
       rutil.rabbasca_set_vault_active(vault, true)
     end
   elseif effect_id == "rabbasca_on_change_affinity" then
-    local from = Rabbasca.get_spoiled_in(event)
-    if not from then return end
-    underground.change_affinity(from)
+    underground.change_affinity()
   elseif effect_id == "rabbasca_on_modulate_vault_security" then
     local from = Rabbasca.get_spoiled_in(event)
     if not from then return end
@@ -47,7 +45,7 @@ local function handle_script_events(event)
       underground.on_locate_progress()
     end
   elseif effect_id == "rabbasca_surface_malfunction" then
-    underground.on_stabilization(game.surfaces[event.surface_index])
+    underground.on_stabilization()
   elseif effect_id == "rabbasca_init_spawner" then
     local from = event.source_entity or event.target_entity
     if not from then return end
@@ -127,14 +125,18 @@ script.on_event(defines.events.on_script_trigger_effect, handle_script_events)
 
 script.on_load(function()
   bunnyhop.register_bunnyhop_handler()
-  underground.register_ui_handler()
+  if underground then
+    underground.register_handlers()
+  end
 end)
 
 script.on_event(defines.events.on_object_destroyed, function(event)
   if event.type == defines.target_type.entity then
     rutil.deregister_alertable(event.registration_number)
     warp.unregister_pylon(event.useful_id)
-    underground.on_stabilizer_died(event.registration_number)
+    if underground then
+      underground.on_stabilizer_died(event.registration_number)
+    end
   end
 end)
 
@@ -152,18 +154,21 @@ end)
 script.on_event(defines.events.on_player_changed_surface, function(event)
     local player = game.players[event.player_index]
     rutil.update_evolution_bar(player)
-    underground.update_affinity_bar(player)
+    if underground then 
+      underground.update_affinity_bar(player)
+    end
 end)
 
 script.on_event(defines.events.on_surface_created, function(event)
   if (game.planets["rabbasca"] and game.planets["rabbasca"].surface and event.surface_index == game.planets["rabbasca"].surface.index)
   or (game.planets["rabbasca-underground"] and game.planets["rabbasca-underground"].surface and event.surface_index == game.planets["rabbasca-underground"].surface.index) then
     local surface = game.surfaces[event.surface_index]
-    surface.create_global_electric_network()
-    surface.request_to_generate_chunks({0, 0}, 1)
-    surface.force_generate_chunk_requests()
     if surface.name == "rabbasca-underground" then
       underground.init_underground(surface)
+    else
+      surface.create_global_electric_network()
+      surface.request_to_generate_chunks({0, 0}, 1)
+      surface.force_generate_chunk_requests()
     end
   end
 end)

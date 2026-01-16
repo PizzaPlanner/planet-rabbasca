@@ -40,14 +40,40 @@ local lithium_amide = util.merge {
   }
 }
 lithium_amide.minable.mining_time = 0.5
-lithium_amide.minable.results =
-{
-  { type = "item", name = "rabbasca-lithium-amide", amount = 1 },
-  -- { type = "item", name = "calcite",  amount = 1, probability = 0.05, },
-}
+lithium_amide.minable.results = {{ type = "item", name = "rabbasca-lithium-amide", amount = 1 }}
 lithium_amide.autoplace = {
-  probability_expression = "rabbasca_underground_lithium_amide",
-  richness_expression = "(distance - 80) * (1 + sqrt(distance))",
+  probability_expression = "rabbasca_underground_resource_spots",
+  richness_expression = "500 * (1 + rabbasca_underground_resource_spots)",
 }
 
-data:extend{ lithium_amide }
+local tungsten_ore = util.merge {
+  data.raw["resource"]["tungsten-ore"],
+  {
+    name = "rabbasca-underground-tungsten-ore",
+    factoriopedia_alternative = "tungsten-ore",
+    localised_name = { "entity-name.tungsten-ore" },
+    localised_description = { "entity-description.tungsten-ore" }
+  }
+}
+
+tungsten_ore.autoplace = {
+  probability_expression = "rabbasca_underground_resource_spots",
+  richness_expression = "500 * (1 + rabbasca_underground_resource_spots)",
+}
+
+local haronite_ore = util.merge {
+  tungsten_ore,
+  data.raw["item"]["haronite"],
+  {
+    name = "haronite",
+    type = "resource",
+    category = "basic-solid",
+    factoriopedia_alternative = "haronite",
+    localised_name = { "item-name.haronite" },
+    localised_description = { "item-description.haronite" }
+  }
+}
+haronite_ore.minable.mining_time = 3
+haronite_ore.minable.results = {{ type = "item", name = "haronite", amount = 1, percent_spoiled = 0.9 }}
+
+data:extend{ lithium_amide, tungsten_ore, haronite_ore }

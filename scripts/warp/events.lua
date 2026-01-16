@@ -71,7 +71,7 @@ script.on_event(build_events, function(event)
     M.mark_chunk_dirty(e.surface_index, M.chunk_id(e.position))
   elseif e.name == "rabbasca-warp-pylon" then
     M.register_pylon(e)
-  elseif e.name == "rabbasca-warp-input" then
+  elseif e.name == "rabbasca-warp-uplink" then
     table.insert(storage.inventory_warpers, e)
     local sections = e.get_logistic_sections()
     if not sections then return end

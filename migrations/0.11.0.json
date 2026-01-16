@@ -1,0 +1,6 @@
+{
+    "entity":[
+        ["rabbasca-warp-cargo-pad", "cargo-landing-pad"],
+        ["rabbasca-warp-input", "rabbasca-warp-uplink"]
+    ]
+}

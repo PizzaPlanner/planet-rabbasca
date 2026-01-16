@@ -178,36 +178,6 @@ data:extend{
 },
 {
     type = "technology",
-    name = "interplanetary-construction-3",
-    icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon-big.png",
-    icon_size = 640,
-    prerequisites = { "rabbasca-self-made-warp-pylon" },
-    effects = {
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-warp-sequence-module",
-      },
-      {
-        type = "nothing", -- needed as the recipe must be hidden to prevent manual selection
-        icons = data.raw["recipe"]["rabbasca-warp-sequence-module"].icons,
-        effect_description = { "recipe-description.rabbasca-warp-sequence-module" }
-      },
-    },
-    ignore_tech_cost_multiplier = true,
-    level = 3,
-    unit = {
-      time = 10,
-      count = 3000,
-      ingredients = {
-        { "rabbasca-warp-matrix", 1 },
-        { "rabbasca-spatial-anchor", 1 },
-        { "rabbasca-coordinate-calibrations", 1 },
-        { "rabbasca-spacetime-evolutionizer", 1 },
-      }
-    }
-},
-{
-    type = "technology",
     name = "rabbasca-unrestricted-warp-pad",
     icon = data.raw["technology"]["space-platform"].icon,
     icon_size = data.raw["technology"]["space-platform"].icon_size,
@@ -226,4 +196,17 @@ data:extend{
       }
     }
 },
+}
+
+local warp_tech_3 = data.raw["technology"]["interplanetary-construction-3"]
+warp_tech_3.prerequisites = { "rabbasca-self-made-warp-pylon" }
+warp_tech_3.unit = {
+  time = 10,
+  count = 3000,
+  ingredients = {
+    { "rabbasca-warp-matrix", 1 },
+    { "rabbasca-spatial-anchor", 1 },
+    { "rabbasca-coordinate-calibrations", 1 },
+    { "rabbasca-spacetime-evolutionizer", 1 },
+  }
 }
