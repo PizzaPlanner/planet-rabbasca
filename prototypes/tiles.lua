@@ -19,7 +19,7 @@ lava.effect_color = { 155, 60, 130 }
 lava.effect_color_secondary = { 140, 52, 111 }
 lava.map_color = { 0.6, 0.28, 0.53 }
 lava.particle_tints = { primary = { 155, 60, 130 }, secondary = { 140, 52, 111 },}
-lava.autoplace = { probability_expression = "rabbasca_underground_lava" }
+lava.autoplace = nil
 lava.variants.main[1].picture = "__rabbasca-assets__/graphics/recolor/textures/lava-transitions.png"
 lava.variants.main[2].picture = "__rabbasca-assets__/graphics/recolor/textures/lava-transitions.png"
 lava.variants.main[3].picture = "__rabbasca-assets__/graphics/recolor/textures/lava-transitions.png"
@@ -64,18 +64,6 @@ util.merge{ table.deepcopy(data.raw["tile"]["midland-yellow-crust-2"]), {
     autoplace = { probability_expression = "rabbasca_fertile" },
     map_color = {0.61, 0.282, 0.1},
 }},
-util.merge{ table.deepcopy(data.raw["tile"]["volcanic-folds"]), {
-    name = "rabbasca-underground-rubble",
-    autoplace = { probability_expression = "rabbasca_underground_elevation" },
-    map_color = { 0.17, 0.06, 0.1 },
-}},
-util.merge { 
-    table.deepcopy(data.raw["tile"]["out-of-map"]),
-    {
-      name = "rabbasca-underground-out-of-map",
-      autoplace = { probability_expression = "rabbasca_underground_edge" }
-    }
-},
 util.merge { 
     table.deepcopy(data.raw["tile"]["concrete"]),
     {

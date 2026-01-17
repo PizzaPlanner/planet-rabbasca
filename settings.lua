@@ -63,14 +63,6 @@ data:extend{
     order="a[balance]"
   },
   {
-    type = "bool-setting",
-    name = "rabbasca-enable-underground-test",
-    setting_type = "startup",
-    hidden = true,
-    default_value = false,
-    allow_blank = false
-  },
-  {
     type = "string-setting",
     name = "rabbasca-orbits",
     setting_type = "startup",

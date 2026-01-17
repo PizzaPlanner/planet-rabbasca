@@ -25,9 +25,6 @@ biochamber.energy_source.burnt_inventory_size = biochamber.energy_source.burnt_i
 
 require("scripts.create-ears-variants")
 require("scripts.warp.pylon-radar-dummies-final-fixes")
-if settings.startup["rabbasca-enable-underground-test"].value then
-  require("prototypes.underground.data-final-fixes")
-end
 
 require("__planet-rabbasca__.compatibility.muluna-final-fixes")
 require("__planet-rabbasca__.compatibility.pelagos-final-fixes")
