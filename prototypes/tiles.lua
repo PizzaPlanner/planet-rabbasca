@@ -1,7 +1,6 @@
 -- Some globals black magic or something happening here, required for water borders
 table.insert(water_tile_type_names, "rabbasca-harenic-sludge")
 table.insert(water_tile_type_names, "harenic-lava")
-table.insert(out_of_map_tile_type_names, "rabbasca-underground-out-of-map")
 
 local lava_effect = util.merge { data.raw["tile-effect"]["lava"],
 {
@@ -106,7 +105,7 @@ local lava_patch =
   height = 64
 }
 
-for _, tile in pairs({ "rabbasca-rough", "rabbasca-rough-2", "rabbasca-wasted", "rabbasca-underground-rubble"}) do
+for _, tile in pairs({ "rabbasca-rough", "rabbasca-rough-2", "rabbasca-wasted" }) do
   data.raw["tile"][tile].transitions[2].lightmap_layout = lava_transition
   data.raw["tile"][tile].transitions_between_transitions[1].water_patch = lava_patch 
 end
