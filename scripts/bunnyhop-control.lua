@@ -56,22 +56,17 @@ function M.clear_bunnyhop_ui(player)
 end
 
 local function get_max_range_and_weight(force)
-  local bunnyhop_techs = { "bunnyhop-engine-1", "bunnyhop-engine-2", "bunnyhop-engine-3", "bunnyhop-engine-4" }
-  local all_techs = force.technologies 
+  local all_techs = force.technologies
   local range = 0
   local weight = 0
-  for _, tech in pairs(bunnyhop_techs) do
-    if all_techs[tech] then 
+  for tech, data in pairs(prototypes.mod_data["rabbasca-bunnyhop-effects"].data) do
+    if all_techs[tech] then
       local levels = all_techs[tech].level - all_techs[tech].prototype.level
       if all_techs[tech].researched then levels = levels + 1 end
-      for _, effect in pairs(all_techs[tech].prototype.effects) do
-        if effect.effect_description and effect.effect_description[1] == "modifier-description.bunnyhop-engine-range" then range = range + effect.effect_description[2] * levels
-        elseif effect.effect_description and effect.effect_description[1] == "modifier-description.bunnyhop-engine-weight" then weight = weight + effect.effect_description[2] * levels
-        elseif effect.effect_description then game.print(effect.effect_description[1])
-        end
-      end
+      range = range + (data.range or 0) * levels
+      weight = weight + (data.weight or 0) * levels
     end
-  end 
+  end
   if settings.startup["rabbasca-bunnyhop-force-naked"].value then
     weight = 0
   end
@@ -187,7 +182,7 @@ function M.show_bunnyhop_ui(player, equipment)
     local frame = player.gui.screen.add{
         type = "frame",
         name = "bunnyhop_ui",
-        caption = "Bunnyhop within "..max_range.."km",
+        caption = { "rabbasca-extra.bunnyhop-range", max_range },
         direction = "vertical"
     }
     frame.auto_center = true

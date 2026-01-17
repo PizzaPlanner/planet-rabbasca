@@ -1,22 +1,3 @@
-local function bunnyhop_range(value)
-return {
-  type = "nothing",
-  icon = "__base__/graphics/technology/engine.png",
-  icon_size = 256,
-  effect_description = { "modifier-description.bunnyhop-engine-range", tostring(value) }
-}
-end
-
-local function bunnyhop_weight(value)
-if settings.startup["rabbasca-bunnyhop-force-naked"].value then return nil end
-return {
-  type = "nothing",
-  icon = "__base__/graphics/technology/engine.png",
-  icon_size = 256,
-  effect_description = { "modifier-description.bunnyhop-engine-weight", tostring(value) }
-}
-end
-
 data:extend { 
 {
     type = "technology",
@@ -347,9 +328,7 @@ data:extend {
     {
       type = "unlock-recipe",
       recipe = "ears-subcore-reactor-equipment"
-    },
-    bunnyhop_range(1000),
-    bunnyhop_weight(250)
+    }
   },
   research_trigger =
   {
@@ -364,10 +343,7 @@ data:extend {
   icon = "__base__/graphics/technology/engine.png",
   icon_size = 256,
   prerequisites = { "athletic-science-pack", "space-science-pack" },
-  effects = {
-    bunnyhop_range(2000),
-    bunnyhop_weight(125)
-  },
+  effects = { },
   level = 2,
   unit = {
     count = 200,
@@ -385,10 +361,7 @@ data:extend {
   icon_size = 256,
   level = 3,
   prerequisites = { "bunnyhop-engine-2" },
-  effects = {
-    bunnyhop_range(2000),
-    bunnyhop_weight(125)
-  },
+  effects = { },
   unit = {
     count = 500,
     time = 30,
@@ -786,10 +759,7 @@ data:extend{
   prerequisites = { "bunnyhop-engine-3", "utility-science-pack", "production-science-pack" },
   level = 4,
   max_level = "infinite",
-  effects = {
-    bunnyhop_range(5000),
-    bunnyhop_weight(250)
-  },
+  effects = { },
   unit = {
     time = 60,
     count_formula = "1000+300*2^(L-3)",
@@ -806,3 +776,14 @@ data:extend{
 },
 }
 end
+
+Rabbasca.bunnyhop.add_range_bonus("bunnyhop-engine-1", 1000)
+Rabbasca.bunnyhop.add_weight_bonus("bunnyhop-engine-1", 250)
+
+Rabbasca.bunnyhop.add_range_bonus("bunnyhop-engine-2", 2000)
+Rabbasca.bunnyhop.add_weight_bonus("bunnyhop-engine-2", 125)
+Rabbasca.bunnyhop.add_range_bonus("bunnyhop-engine-3", 2000)
+Rabbasca.bunnyhop.add_weight_bonus("bunnyhop-engine-3", 125)
+
+Rabbasca.bunnyhop.add_range_bonus("bunnyhop-engine-4", 5000)
+Rabbasca.bunnyhop.add_weight_bonus("bunnyhop-engine-4", 250)

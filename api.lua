@@ -33,11 +33,40 @@ if not data then return end
 
 local recycling = require("__quality__.prototypes.recycling")
 
-data:extend{{
-    type = "mod-data",
-    name = "rabbasca-bunnyhop-requirements",
-    data = { }
-}}
+local function bunnyhop_range(value)
+return {
+  type = "nothing",
+  icon = "__base__/graphics/technology/engine.png",
+  icon_size = 256,
+  effect_description = { "modifier-description.bunnyhop-engine-range", tostring(value) }
+}
+end
+
+local function bunnyhop_weight(value)
+return {
+  type = "nothing",
+  icon = "__base__/graphics/technology/engine.png",
+  icon_size = 256,
+  effect_description = { "modifier-description.bunnyhop-engine-weight", tostring(value) }
+}
+end
+
+function Rabbasca.bunnyhop.add_range_bonus(tech_name, range_in_km_per_level)
+  local tech = data.raw["technology"][tech_name]
+  if not tech then return end
+  data.raw["mod-data"]["rabbasca-bunnyhop-effects"].data[tech_name] = data.raw["mod-data"]["rabbasca-bunnyhop-effects"].data[tech_name] or { }
+  data.raw["mod-data"]["rabbasca-bunnyhop-effects"].data[tech_name].range = range_in_km_per_level
+  table.insert(tech.effects, bunnyhop_range(range_in_km_per_level))
+end
+
+function Rabbasca.bunnyhop.add_weight_bonus(tech_name, weight_in_kg_per_level)
+  if settings.startup["rabbasca-bunnyhop-force-naked"].value then return end
+  local tech = data.raw["technology"][tech_name]
+  if not tech then return end
+  data.raw["mod-data"]["rabbasca-bunnyhop-effects"].data[tech_name] = data.raw["mod-data"]["rabbasca-bunnyhop-effects"].data[tech_name] or { }
+  data.raw["mod-data"]["rabbasca-bunnyhop-effects"].data[tech_name].weight = weight_in_kg_per_level
+  table.insert(tech.effects, bunnyhop_weight(weight_in_kg_per_level))
+end
 
 function Rabbasca.bunnyhop.set_requirements(name, requirements)
   if not data.raw.planet[name] then return end

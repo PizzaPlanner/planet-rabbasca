@@ -1,5 +1,6 @@
 require("api")
 
+require("prototypes.mod-data")
 require("prototypes.items")
 require("prototypes.units-vault")
 require("prototypes.entities")
