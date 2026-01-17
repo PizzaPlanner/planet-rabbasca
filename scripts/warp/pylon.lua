@@ -63,7 +63,7 @@ local function try_deconstruct(data, name, quality, inventory, pylon)
             surface.set_tiles({{position = pos, name = hidden or "out-of-map"}})
             surface.set_hidden_tile(pos, hidden_2)
             surface.set_double_hidden_tile(pos, nil)
-            play_smoke(surface, pos, 1)
+            play_smoke(surface, {x = pos.x + 0.5, y = pos.y + 0.5}, 1)
             return true
         end
         inventory.remove({name = name, count = inserted})
@@ -165,7 +165,6 @@ local function try_build_ghost(data, name, quality, inventory, pylon)
     local result = entity.revive{ raise_revive = true, overflow = temp }
     surface.spill_inventory { position = position, inventory = temp }
     temp.destroy()
-    game.print(serpent.line(result))
     if not result then
         inventory.insert({name = name, count = removed, quality = quality})
         return false -- maybe missing tiles below etc. NOT invalid target

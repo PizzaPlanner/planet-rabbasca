@@ -223,10 +223,10 @@ data:extend {
             { type = "item", name = "solid-fuel", amount = 1 }
         },
         allow_productivity = true,
-        icons = {
-            { icon = "__base__/graphics/icons/solid-fuel.png", icon_size = 64, scale = 0.8 },
-            { icon = data.raw["fluid"]["energetic-residue"].icon, icon_size = 64, scale = 0.35, shift = { -8, -8 } }
-        },
+        icons = Rabbasca.icons({
+            { icon = "__base__/graphics/icons/solid-fuel.png", scale = 0.8 },
+            { proto = data.raw["fluid"]["energetic-residue"], scale = 0.35, shift = { -8, -8 } }
+        }),
         subgroup = "fluid-recipes",
         enabled = false,
         order = "b[fluid-chemistry]-f[solid-fuel-from-energetic-residue]",
@@ -355,10 +355,10 @@ data:extend {
     {
         type = "recipe",
         name = "lubricant-from-energetic-residue",
-        icons = { 
-            { icon = data.raw["fluid"]["lubricant"].icon, icon_size = 64, },
-            { icon = data.raw["fluid"]["energetic-residue"].icon, scale = 0.3, icon_size = 64,shift = { -8, -8 } },
-        },
+        icons = Rabbasca.icons({ 
+            { proto = data.raw["fluid"]["lubricant"] },
+            { proto = data.raw["fluid"]["energetic-residue"], scale = 0.3, shift = { -8, -8 } },
+        }),
         enabled = false,
         energy_required = 3.5,
         hide_from_player_crafting = true,
@@ -412,12 +412,12 @@ data:extend {
     {
         type = "recipe",
         name = "rabbasca-residue-skimming",
-        icons = {
-            { icon = data.raw["fluid"]["energetic-residue"].icon, scale = 0.5, shift = {-3, -8}, icon_size = 64 },
-            { icon = data.raw["item"]["plastic-bottle"].icon, icon_size = 64, scale = 0.4, shift = {-12, 12} },
-            { icon = data.raw["item"]["spoilage"].icon, icon_size = 64, scale = 0.4, shift = {12, -3} },
-            { icon = data.raw["item"]["advanced-circuit"].icon, icon_size = 64, scale = 0.4, shift = {8, 9} },
-        },
+        icons = Rabbasca.icons({
+            { proto = data.raw["fluid"]["energetic-residue"], scale = 0.5, shift = {-3, -8} },
+            { proto = data.raw["item"]["plastic-bottle"], scale = 0.4, shift = {-12, 12} },
+            { proto = data.raw["item"]["spoilage"], scale = 0.4, shift = {12, -3} },
+            { proto = data.raw["item"]["advanced-circuit"], scale = 0.4, shift = {8, 9} },
+        }),
         enabled = false,
         energy_required = 1.5,
         ingredients = {

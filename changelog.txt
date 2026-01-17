@@ -1,8 +1,12 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.11.3
-Date: ????
+Date: 2026-01-17
   Changes:
-    - other mods can now add bunnyhop range and weight modifiers to technologies
+    - Other mods can now add bunnyhop range and weight modifiers to technologies
+    - Added warp animation
+    - Updated visuals for harenic lava
+  Bugfixes:
+    - Fixed crash when lubricant icon was removed
 ---------------------------------------------------------------------------------------------------
 Version: 0.11.2
 Date: 2026-01-16

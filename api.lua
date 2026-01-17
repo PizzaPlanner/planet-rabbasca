@@ -298,3 +298,24 @@ function Rabbasca.make_trigger_item(item, effect_id)
     },
     item }
 end
+
+function Rabbasca.icons(data)
+    local icons = { }
+    for _, entry in pairs(data) do  
+        if entry.icon then
+            local scale = 64 / (entry.icon_size or 64)
+            table.insert(icons, { icon = entry.icon, icon_size = entry.icon_size, tint = entry.tint, shift = entry.shift, scale = entry.scale and entry.scale * scale })
+        elseif entry.proto then 
+            if entry.proto.icons then
+                for _, icon in pairs(entry.proto.icons) do
+                    local scale = 64 / (icon.icon_size or 64)
+                    table.insert(icons, { icon = icon.icon, icon_size = icon.icon_size, tint = entry.tint, shift = entry.shift, scale = entry.scale and entry.scale * scale })
+                end
+            elseif entry.proto.icon then
+                local scale = 64 / (entry.proto.icon_size or 64)
+                table.insert(icons, { icon = entry.proto.icon, icon_size = entry.proto.icon_size, tint = entry.tint, shift = entry.shift, scale = entry.scale and entry.scale * scale })
+            end
+        end
+    end
+    return icons
+end

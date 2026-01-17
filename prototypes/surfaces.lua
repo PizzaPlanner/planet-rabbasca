@@ -1,9 +1,6 @@
-local planet_lib = require("__PlanetsLib__.lib.planet")
 local parent_name = settings.startup["rabbasca-orbits"].value
 local gleba = data.raw["planet"][parent_name]
 local planet_catalogue_aquilo = require("__space-age__.prototypes.planet.procession-catalogue-aquilo")
-
-local rabbasca_seed_offset = 2702224236 -- CRC of "rabbasca", default for rabbasca, but needs to be same for underground
 
 data:extend{
 {
@@ -160,7 +157,6 @@ PlanetsLib:extend({
     icon_size = 64,
     starmap_icon = "__rabbasca-assets__/graphics/recolor/icons/vulcanus-bw.png",
     starmap_icon_size = 64,
-    map_seed_offset = rabbasca_seed_offset,
     draw_orbit = true,
     solar_power_in_space = gleba.solar_power_in_space,
     auto_save_on_first_trip = true,
