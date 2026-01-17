@@ -277,11 +277,12 @@ make_warp_sequence("rabbasca-warp-sequence-upgrade", data.raw["upgrade-item"]["u
 {
     type = "animation",
     name = "rabbasca-warp-smoke",
-    lines_per_file = 4,
+    lines_per_file = 2,
     line_length = 8,
-    frame_count = 32,
-    width = 64,
-    height = 64,
+    frame_count = 16,
+    max_advance = 1,
+    width = 128,
+    height = 128,
     draw_as_glow = true,
     filename = "__rabbasca-assets__/graphics/textures/warp-smoke.png"
 },

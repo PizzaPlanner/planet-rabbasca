@@ -14,12 +14,16 @@ local status_ok = {
 }
 
 local function play_smoke(surface, position, size)
+    local frames = 16
+    local offset = (frames - (game.tick % frames)) % frames - 1
     rendering.draw_animation{
         animation = "rabbasca-warp-smoke",
-        x_scale = size,
-        y_scale = size,
+        x_scale = 0.25 + size / 4,
+        y_scale = 0.25 + size / 4,
+        animation_speed = 1,
         render_layer = "smoke",
-        time_to_live = 32,
+        time_to_live = 16,
+        animation_offset = offset,
         target = position,
         surface = surface
     }
@@ -29,6 +33,7 @@ local function try_deconstruct(data, name, quality, inventory, pylon)
     if not data.entity.to_be_deconstructed() then return false, status_invalid_target end
     local entity = data.entity
     if data.name == "item-on-ground" then
+        play_smoke(entity.surface, data.position, 0.5)
         local inv = data.is_trash and pylon.get_inventory(defines.inventory.crafter_trash) or inventory
         local added = inv.insert(entity.stack)
         entity.stack.count = entity.stack.count - added
@@ -38,10 +43,11 @@ local function try_deconstruct(data, name, quality, inventory, pylon)
             local spill_inventory = entity.get_inventory(k)
             if spill_inventory then entity.surface.spill_inventory { position = entity.position, inventory = spill_inventory, force = pylon.force } end
         end
-        local surface, position, size = entity.surface, entity.position, 1
+        local surface, position = entity.surface, entity.position
+        local size = { entity.bounding_box.right_bottom.x - entity.bounding_box.left_top.x, entity.bounding_box.right_bottom.y - entity.bounding_box.left_top.y }
         local result = entity.mine{ inventory = inventory }
         if result then 
-            play_smoke(surface, position, size)
+            play_smoke(surface, position, math.max(size[1], size[2]))
             return true
         else
             return false, status_invalid_target
@@ -155,14 +161,17 @@ local function try_build_ghost(data, name, quality, inventory, pylon)
     local removed = inventory.remove({name = name, count = count, quality = quality})
     local temp = game.create_inventory(255)
     local surface, position = entity.surface, entity.position
+    local bbox = entity.bounding_box
     local result = entity.revive{ raise_revive = true, overflow = temp }
     surface.spill_inventory { position = position, inventory = temp }
     temp.destroy()
+    game.print(serpent.line(result))
     if not result then
         inventory.insert({name = name, count = removed, quality = quality})
         return false -- maybe missing tiles below etc. NOT invalid target
     end
-    play_smoke(surface, position, 1)
+    local size = { bbox.right_bottom.x - bbox.left_top.x, bbox.right_bottom.y - bbox.left_top.y }
+    play_smoke(surface, position, math.max(size[1], size[2]))
     return true, status_ok
 end
 
