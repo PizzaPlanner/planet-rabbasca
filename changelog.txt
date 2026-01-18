@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.11.4
+Date: 2026-01-18
+  Bugfixes:
+    - Fixed pylons deconstructing belts would move belt contents to warp inventory. Contents are now spilled and marked for deconstruction
+---------------------------------------------------------------------------------------------------
 Version: 0.11.3
 Date: 2026-01-17
   Changes:

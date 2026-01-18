@@ -40,7 +40,7 @@ util.merge{table.deepcopy(data.raw["tile"]["ammoniacal-ocean"]), {
   effect = "brash-ice-2",
   effect_color = { 60,55,97 },
   effect_color_secondary = { 70, 40, 120 },
-  map_color = { 0.4, 0.1, 0.65},
+  map_color = { 0.4, 0.1, 0.65 },
   fluid = "energetic-residue"
 }},
 util.merge{ table.deepcopy(data.raw["tile"]["volcanic-ash-flats"]), {

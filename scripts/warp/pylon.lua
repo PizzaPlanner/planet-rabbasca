@@ -38,6 +38,27 @@ local function try_deconstruct(data, name, quality, inventory, pylon)
         local added = inv.insert(entity.stack)
         entity.stack.count = entity.stack.count - added
         return added > 0
+    elseif data.is_belt then
+        local temp = game.create_inventory(1)
+        for i = 1, entity.get_max_transport_line_index() do
+            local line = entity.get_transport_line(i)
+            temp.resize(#temp + #line)
+            for j = 1, #line do
+                temp.insert(line[j])
+            end
+            line.clear()
+        end
+        local surface, position = entity.surface, entity.position
+        local size = { entity.bounding_box.right_bottom.x - entity.bounding_box.left_top.x, entity.bounding_box.right_bottom.y - entity.bounding_box.left_top.y }
+        local result = entity.mine{ inventory = inventory }
+        surface.spill_inventory { position = position, inventory = temp, force = pylon.force }
+        temp.destroy()
+        if result then
+            play_smoke(surface, position, math.max(size[1], size[2]))
+            return true
+        else
+            return false, status_invalid_target
+        end
     elseif not data.is_tile then
         for k = 1, entity.get_max_inventory_index() do 
             local spill_inventory = entity.get_inventory(k)

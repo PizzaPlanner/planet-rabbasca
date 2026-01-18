@@ -120,17 +120,26 @@ function M.get_warp_cache(entity)
         return { entity = entity, name = name, count = count, quality = up_quality.name, queue = "upgrades", position = entity.position }
     elseif entity.to_be_deconstructed() or entity.name == "deconstructible-tile-proxy" then
         local is_tile = entity.name == "deconstructible-tile-proxy"
+        local is_belt = false
         if is_tile then
             entity = entity.surface.get_tile(entity.position.x, entity.position.y)
         elseif entity.name == "item-on-ground" then
             local proto = entity.stack.prototype
             local is_trash = not M.is_proto_supported(proto) 
             return { entity = entity, name = "item-on-ground", count = 1, quality = "normal", queue = "decon", position = entity.position, is_trash = is_trash }
+        elseif entity.type == "lane-splitter" 
+            or entity.type == "linked-belt" 
+            or entity.type == "loader-1x1"
+            or entity.type == "loader" 
+            or entity.type == "splitter" 
+            or entity.type == "transport-belt" 
+            or entity.type == "underground-belt" then
+                is_belt = true
         end
         local proto = entity.prototype
         local to_place = proto.items_to_place_this and proto.items_to_place_this[1]
         if not to_place then return nil end
-        return { entity = entity, name = to_place.name, count = to_place.count, quality = (is_tile and "normal") or entity.quality.name, queue = "decon", is_tile = is_tile, position = entity.position }
+        return { entity = entity, name = to_place.name, count = to_place.count, quality = (is_tile and "normal") or entity.quality.name, queue = "decon", is_tile = is_tile, is_belt = is_belt, position = entity.position }
     end
 end
 
