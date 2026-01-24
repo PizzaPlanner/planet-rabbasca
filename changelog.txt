@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.11.5
+Date: 2026-01-24
+  Changes:
+    - Vaults are now assigned to the force which captured their console in situations with multiple player forces
+    - Bunnyhop engine cooldown is no longer shared with other consumables and configurable via map setting
+    - Bunnyhop engine no longer goes on cooldown when jump is cancelled or failed
+    - Using bunnyhop engine on cooldown will now show an error message
+    - When "Must be naked to bunnyhop" setting is active, you can now bunnyhop to planets with active cargo drop restrictions
+---------------------------------------------------------------------------------------------------
 Version: 0.11.4
 Date: 2026-01-18
   Bugfixes:

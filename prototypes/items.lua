@@ -136,9 +136,9 @@ util.merge {
       attack_parameters = {
         type = "projectile",
         activation_type = "activate",
-        ammo_category = "capsule",
-        cooldown = 2 * minute,
         range = 0,
+        cooldown = 30,
+        ammo_categories = { "electric" },
         ammo_type =
         {
           target_type = "position",

@@ -1,7 +1,8 @@
 local M = { }
 
 function M.default_requirements(planet)
-    -- If there is a cargo drop restriction, also forbid to bunnyhop cargo in
+    -- If there is a cargo drop restriction, also forbid to bunnyhop cargo in. Ignored in naked mode
+    if settings.startup["rabbasca-bunnyhop-force-naked"].value then return { } end
     return { "planetslib-"..planet.. "-cargo-drops" }
 end
 
@@ -11,10 +12,10 @@ function M.get_requirements(name)
 end
 
 
-function M.can_jump_to(planet)
-  if not game.planets[planet] or not game.forces.player.is_space_location_unlocked(planet) then return false end
+function M.can_jump_to(planet, force)
+  if not game.planets[planet] or not force.is_space_location_unlocked(planet) then return false end
   local requirements = M.get_requirements(planet)
-  local techs = game.forces.player.technologies
+  local techs = force.technologies
   for _, req in pairs(requirements) do
     if req == "bunnyhop-never" then return false end
     if techs[req] and not techs[req].researched then return false end
@@ -24,12 +25,12 @@ end
 
 -- Initial range is 1000km (Planet <-> Moon / Moon <-> Moon), but can be extended with infinity research, 
 --   restricting Planet <-> Planet to very late game usually.
-function M.get_connections(from, max_range)
+function M.get_connections(from, max_range, force)
   local surfaces = { }
   for _, conn in pairs(prototypes.space_connection) do
     if conn.length <= max_range and (conn.from.name == from or conn.to.name == from) then
       local target = (conn.from.name == from) and conn.to.name or conn.from.name
-      if M.can_jump_to(target) and (from == "rabbasca" or not settings.startup["rabbasca-bunnyhop-rabbasca-only"].value) then
+      if M.can_jump_to(target, force) and (from == "rabbasca" or not settings.startup["rabbasca-bunnyhop-rabbasca-only"].value) then
         display = {"", "[img=space-location/" .. target .. "] ", game.planets[target].prototype.localised_name or target}
         table.insert(surfaces, display)
       end
@@ -140,6 +141,7 @@ local function on_charge_bunnyhop(event)
     storage.last_bunnyhops = storage.last_bunnyhops or { }
     storage.last_bunnyhops[cid] = storage.last_bunnyhops[cid] or {}
     storage.last_bunnyhops[cid][character.surface_index] = character.position
+    storage.last_bunnyhops[cid]["next_cooldown"] = settings.global["rabbasca-bunnyhop-cooldown"].value * 60 + game.tick
 
     local offset = storage.last_bunnyhops[cid][surface.index]
     if not (offset and offset.x and offset.y) then offset = {x = 0, y = 0} end
@@ -151,6 +153,29 @@ local function on_charge_bunnyhop(event)
     if not player.teleport(start_pos, surface) then 
       player.print({"rabbasca-extra.bunnyhop-error"})
     end
+end
+
+function M.attempt_bunnyhop(player)
+    if not player.character then return end
+    local cid = player.character.unit_number
+    local last_hops = storage.last_bunnyhops and storage.last_bunnyhops[cid] or { }
+    local cooldown_until = last_hops["next_cooldown"] or 0
+    if cooldown_until > game.tick then
+      local seconds = math.ceil((storage.last_bunnyhops[cid]["next_cooldown"] - game.tick) / 60)
+      player.create_local_flying_text { text = { "rabbasca-extra.bunnyhop-on-cooldown", seconds }, create_at_cursor = true }
+      return
+    end 
+    local armor = player.get_inventory(defines.inventory.character_armor)[1]
+    if armor and armor.valid_for_read and armor.grid then
+      for _, eq in pairs(armor.grid.equipment) do
+        if eq.name == "bunnyhop-engine-equipment" then
+          player.create_local_flying_text { text = { "rabbasca-extra.bunnyhop-initiating" }, create_at_cursor = true }
+          M.show_bunnyhop_ui(player, eq)
+          return
+        end
+      end
+    end
+    player.create_local_flying_text { text = { "rabbasca-extra.bunnyhop-not-equipped" } , create_at_cursor = true }
 end
 
 -- called in on_load: must adhere to https://lua-api.factorio.com/latest/classes/LuaBootstrap.html#on_load
@@ -166,7 +191,7 @@ function M.show_bunnyhop_ui(player, equipment)
     local max_range, max_weight = get_max_range_and_weight(player.force)
     max_weight = max_weight * (equipment.quality.default_multiplier or 1)
     local surface = player.surface
-    local reachable_surfaces = M.get_connections(surface.name, max_range)
+    local reachable_surfaces = M.get_connections(surface.name, max_range, player.force)
 
     if #reachable_surfaces == 0 then
       if settings.startup["rabbasca-bunnyhop-rabbasca-only"].value then

@@ -17,13 +17,9 @@ local function handle_script_events(event)
   elseif effect_id == "rabbasca_on_recalc_evolution" then
     local from = event.source_entity or event.target_entity
     local position = (from and from.position) or event.target_position or event.source_position
-    if from and from.name == "rabbasca-vault-spawner" then
+    if from and (from.name == "rabbasca-vault-spawner" or from.name == "rabbasca-vault-console") then
       local vault = from.surface.find_entity("rabbasca-vault-crafter", position)
-      rutil.rabbasca_set_vault_active(vault, false)
-    end
-    if from and from.name == "rabbasca-vault-console" then
-      local vault = from.surface.find_entity("rabbasca-vault-crafter", position)
-      rutil.rabbasca_set_vault_active(vault, true)
+      rutil.rabbasca_udpate_vault_force(vault, from.force)
     end
   elseif effect_id == "rabbasca_on_modulate_vault_security" then
     local from = Rabbasca.get_spoiled_in(event)
@@ -94,18 +90,7 @@ local function handle_script_events(event)
     local engine = event.source_entity or event.target_entity
     local player = engine.player or engine.owner_location.player
     if not player then return end
-    local armor = player.get_inventory(defines.inventory.character_armor)[1]
-    if armor and armor.valid_for_read and armor.grid then 
-      for _, eq in pairs(armor.grid.equipment) do
-        if eq.name == "bunnyhop-engine-equipment" then
-          player.create_local_flying_text { text = "Initiating bunnyhop...", create_at_cursor = true }
-          bunnyhop.show_bunnyhop_ui(player, eq)
-          return
-        end
-      end
-    -- TODO: This still consumes the cooldown. Can it be reset?
-    player.create_local_flying_text { text = "No bunnyhop engine equipped", create_at_cursor = true }
-    end
+    bunnyhop.attempt_bunnyhop(player)
   end
 end
 

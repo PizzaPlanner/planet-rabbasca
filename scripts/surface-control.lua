@@ -1,13 +1,9 @@
 local output = { }
 
-function output.rabbasca_set_vault_active(e, active)
+function output.rabbasca_udpate_vault_force(e, force)
   if (not e) or e.name ~= "rabbasca-vault-crafter" then return end
-  e.active = true -- disabling prevents hp regeneration
-  if active then
-    e.force = game.forces.player
-  else
-    e.force = game.forces.rabbascans
-  end
+  e.force = force
+  e.active = force ~= game.forces.rabbascans
 end
 
 function output.deregister_alertable(id)

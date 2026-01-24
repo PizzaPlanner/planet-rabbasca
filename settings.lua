@@ -87,6 +87,16 @@ data:extend{
     order="a[balance]"
   },
   {
+    type = "int-setting",
+    name = "rabbasca-bunnyhop-cooldown",
+    setting_type = "runtime-global",
+    default_value = 120,
+    minimum_value = 0,
+    maximum_value = 3600,
+    allow_blank = false,
+    order="a[balance]"
+  },
+  {
     type = "string-setting",
     name = "rabbasca-warp-inventory-name",
     setting_type = "runtime-global",
