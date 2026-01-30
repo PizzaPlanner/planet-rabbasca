@@ -20,6 +20,7 @@ assembler.crafting_categories = { "complex-machinery", "install-ears-core" }
 assembler.fluid_boxes = { 
 {
   volume = 1000,
+  render_layer = "object-under",
   pipe_picture = util.merge { assembler2pipepictures(), { 
     north = { shift = util.by_pixel(0, 28), filename = "__base__/graphics/entity/pipe/pipe-ending-down.png", width = 128, height = 128,  },
     east  = { shift = util.by_pixel(-24.5 - 6, 1), },
@@ -82,6 +83,15 @@ assembler.graphics_set = {
   idle_animation = { layers = { util.merge {{ filename = "__rabbasca-assets__/graphics/by-hurricane/gravity-assembler-animation.png" }, sprite_data } } },
   always_draw_idle_animation = true
 }
+assembler.circuit_connector = circuit_connector_definitions.create_vector(
+    universal_connector_template,
+    {
+      { variation = 25, main_offset = util.by_pixel_hr(-104, 92), shadow_offset = util.by_pixel_hr(0, 0), show_shadow = false, },
+      { variation = 25, main_offset = util.by_pixel_hr(-104, 92), shadow_offset = util.by_pixel_hr(0, 0), show_shadow = false, },
+      { variation = 25, main_offset = util.by_pixel_hr(-104, 92), shadow_offset = util.by_pixel_hr(0, 0), show_shadow = false, },
+      { variation = 25, main_offset = util.by_pixel_hr(-104, 92), shadow_offset = util.by_pixel_hr(0, 0), show_shadow = false, },
+    }
+  )
 
 data:extend{ 
   assembler,

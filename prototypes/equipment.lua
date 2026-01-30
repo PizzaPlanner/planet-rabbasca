@@ -51,14 +51,6 @@ data:extend {
   categories = {"armor"}
 },
 {
-    type = "equipment-grid",
-    name = "train-equipment-grid",
-    width = 6,
-    height = 2,
-    equipment_categories = {"armor"},
-    locked = false
-},
-{
     type = "shortcut",
     name = "activate-bunnyhop-engine",
     action = "spawn-item",
