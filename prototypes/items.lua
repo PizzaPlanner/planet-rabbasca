@@ -423,6 +423,15 @@ Rabbasca.make_trigger_item({
     {icon = data.raw["virtual-signal"]["up-arrow"].icon,   icon_size = 64, shift = { 8, -8}, scale = 0.4, tint = {1, 0, 0} },
     {icon = data.raw["virtual-signal"]["down-arrow"].icon, icon_size = 64, shift = { 8,  8}, scale = 0.4, tint = {0, 1, 0} },
   },
+},"rabbasca_on_modulate_vault_security"),
+Rabbasca.make_trigger_item({
+  name = "rabbasca-quality-assurance",
+  category = "rabbasca-security",
+  order = "b[vault-access-key]",
+  icons = {
+    {icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png", icon_size = 64, shift = {-8,  0}, scale = 0.4 },
+    {icon = data.raw["virtual-signal"]["signal-any-quality"].icon,   icon_size = 64, shift = { 8, 8}, scale = 0.4 },
+  },
 },"rabbasca_on_modulate_vault_security")
 }
 

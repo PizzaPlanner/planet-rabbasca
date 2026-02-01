@@ -14,6 +14,17 @@ local delayed_recalc_trigger = {
   }
 }
 
+local vault_resistances = {
+  { type = "physical", percent = 95, decrease = 8000 },
+  { type = "explosion", percent = 80, decrease = 400 },
+  { type = "fire", percent = 100 },
+  { type = "poison", percent = 100 },
+  { type = "acid", percent = 100 },
+  { type = "laser", percent = 100 },
+  { type = "electric", percent = 99 },
+  { type = "impact", percent = 99 },
+}
+
 local spawner = util.merge{ 
   table.deepcopy(data.raw["unit-spawner"]["spitter-spawner"]), 
 {
@@ -63,16 +74,7 @@ spawner.created_effect = {
     }
   }
 }
-spawner.resistances = {
-  { type = "physical", percent = 90, decrease = 80,  },
-  { type = "explosion", percent = 85, decrease = 200, },
-  { type = "fire", percent = 90 },
-  { type = "poison", percent = 100 },
-  { type = "acid", percent = 100 },
-  { type = "laser", percent = 95, decrease = 15 },
-  { type = "electric", percent = 87, decrease = 40, },
-  { type = "impact", percent = 80 },
-}
+spawner.resistances = vault_resistances
 spawner.result_units = {
 { unit = "vault-defender-1", spawn_points = {
     {evolution_factor = 0, spawn_weight = 1}, 
@@ -133,8 +135,8 @@ local access_console = util.merge{
     max_health = 7200,
     healing_per_tick = -72 / second, -- does not do anything; just for factoriopedia
     production_health_effect = {
-      producing = -4 / second * 10 - 80, -- Values are per tick, reduced by physical resistance, both percentual and flat
-      not_producing = -72 / second * 10 - 80
+      producing = -4 / second, -- Influenced by physical resistance, updated in data-final-fixes
+      not_producing = -72 / second
     },
     enable_logistic_control_behavior = false,
     -- show_recipe_icon = false,
@@ -152,6 +154,16 @@ local access_console = util.merge{
     hidden_in_factoriopedia = true,
     cant_insert_at_source_message_key = "inventory-restriction.not-a-vault-key",
   }
+}
+access_console.resistances = {
+  { type = "physical", decrease = 3 },
+  { type = "explosion", percent = 20, decrease = 400 },
+  { type = "fire", percent = 90 },
+  { type = "poison", percent = 100 },
+  { type = "acid", percent = 100 },
+  { type = "laser", percent = 40 },
+  { type = "electric", percent = 80 },
+  { type = "impact", percent = 5 },
 }
 access_console.created_effect = {
   type = "direct",
@@ -232,16 +244,7 @@ local vault_crafter = {
   circuit_connector = data.raw["assembling-machine"]["foundry"].circuit_connector,
   icon_draw_specification = data.raw["assembling-machine"]["foundry"].icon_draw_specification,
   icons_positioning = data.raw["assembling-machine"]["foundry"].icons_positioning,
-  resistances = {
-    { type = "physical", percent = 95, decrease = 8000 },
-    { type = "explosion", percent = 80, decrease = 400 },
-    { type = "fire", percent = 100 },
-    { type = "poison", percent = 100 },
-    { type = "acid", percent = 100 },
-    { type = "laser", percent = 100 },
-    { type = "electric", percent = 99 },
-    { type = "impact", percent = 99 },
-  },
+  resistances = vault_resistances,
   graphics_set = {
     animation = {
         filename = "__Krastorio2Assets__/buildings/stabilizer-charging-station/stabilizer-charging-station.png",

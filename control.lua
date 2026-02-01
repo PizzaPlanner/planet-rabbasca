@@ -18,18 +18,23 @@ local function handle_script_events(event)
     local from = event.source_entity or event.target_entity
     local position = (from and from.position) or event.target_position or event.source_position
     if from and (from.name == "rabbasca-vault-spawner" or from.name == "rabbasca-vault-console") then
-      local vault = from.surface.find_entity("rabbasca-vault-crafter", position)
+      local vaults = from.surface.find_entities_filtered{ name = "rabbasca-vault-crafter", position = position }
+      local vault = vaults and vaults[1]
       rutil.rabbasca_udpate_vault_force(vault, from.force)
     end
   elseif effect_id == "rabbasca_on_modulate_vault_security" then
     local from = Rabbasca.get_spoiled_in(event)
     if not from then return end
-    local recipe = from.get_recipe()
+    local recipe, quality = from.get_recipe()
     if not recipe then return end
-    local max = Rabbasca.alertness_modulation_max() / Rabbasca.alertness_modulation_step()
-    local offset = recipe.name == "rabbasca-security-modulation-up" and 1 or -1
-    storage.alertness_modulation = math.max(-max, math.min(max, (storage.alertness_modulation or 0) + offset))
-    rutil.update_alertness(game.surfaces[event.surface_index], from.position)
+    if recipe.name == "rabbasca-quality-assurance" then
+      rutil.upgrade_vault_quality(from, quality)
+    else
+      local max = Rabbasca.alertness_modulation_max() / Rabbasca.alertness_modulation_step()
+      local offset = recipe.name == "rabbasca-security-modulation-up" and 1 or -1
+      storage.alertness_modulation = math.max(-max, math.min(max, (storage.alertness_modulation or 0) + offset))
+      rutil.update_alertness(game.surfaces[event.surface_index], from.position)
+    end
   elseif effect_id == "rabbasca_init_spawner" then
     local from = event.source_entity or event.target_entity
     if not from then return end

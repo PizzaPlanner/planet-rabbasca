@@ -6,6 +6,42 @@ function output.rabbasca_udpate_vault_force(e, force)
   e.active = force ~= game.forces.rabbascans
 end
 
+function output.upgrade_vault_quality(vault, quality)
+  if not quality then return end
+  if quality.level <= vault.quality.level then return end
+  for _, e in pairs(vault.surface.find_entities_filtered { 
+    name = { "rabbasca-vault-spawner", "rabbasca-vault-console" },
+    area = vault.bounding_box
+  }) do
+    e.destroy { }
+  end
+  local up = vault.surface.create_entity {
+      name = vault.name,
+      quality = quality,
+      position = vault.position,
+      force = game.forces.rabbascans,
+      source = vault,
+      fast_replace = true,
+  }
+
+  if up and vault and vault.valid then
+      for k = 1, vault.get_max_inventory_index() do 
+          local spill_inventory = vault.get_inventory(k)
+          local to_inventory = up.get_inventory(k)
+          if spill_inventory and to_inventory then
+            for i = 1,#spill_inventory do
+              if #to_inventory >= i then
+                spill_inventory[i].swap_stack(to_inventory[i])
+              else
+                vault.surface.spill_item_stack{ stack = spill_inventory[i], position = vault.position }
+              end
+            end
+          end
+      end
+      vault.destroy { }
+  end
+end
+
 function output.deregister_alertable(id)
   if not storage.alertness_data then return end
   local sp = storage.alertness_data.vaults[id] or storage.alertness_data.meltdowns[id]

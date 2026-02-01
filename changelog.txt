@@ -1,8 +1,13 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.11.6
-Date: ????
+Date: 2026-01-31
+  Changes:
+    - Added a technology to upgrade vault quality. Also upgrades access console quality and their spawns, making quality warp pylons possible again
   Bugfixes:
-    - Fixed graphics for machining assembler pipe covers 
+    - Fixed wrong graphics for machining assembler pipes and circuit connectors
+  Balancing:
+    - Vault access consoles now have the same resistances as vaults (but hacked console is less durable)
+    - Vault access console crafting speed now scales with quality, requiring more security keys to keep higher quality vaults hacked
 ---------------------------------------------------------------------------------------------------
 Version: 0.11.5
 Date: 2026-01-24

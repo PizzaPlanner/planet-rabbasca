@@ -20,7 +20,7 @@ data:extend({
             { type = "item", name = "rabbasca-turbofuel", amount = 1 },
             { type = "item", name = "haronite", amount = 3 },
         },
-        energy_required = 75,
+        energy_required = 8,
         msppr = {
             result = { type = "item", name = "msppr-rabbasca", amount = 1 },
             recipe_chain_order = "rabbasca",

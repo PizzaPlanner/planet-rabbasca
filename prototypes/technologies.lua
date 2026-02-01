@@ -747,6 +747,32 @@ data:extend {
       }
   }
 },
+{
+    type = "technology",
+    name = "rabbasca-quality-assurance",
+    icons = {
+      { icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
+      { icon = data.raw["virtual-signal"]["signal-any-quality"].icon, icon_size = 64, shift = {24, 24}, scale = 1.25 },
+    },
+    prerequisites = { "interplanetary-construction-1" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "rabbasca-quality-assurance",
+      },
+    },
+    unit = {
+      time = 60,
+      count = 1000,
+      ingredients = {
+        {"military-science-pack", 1},
+        {"production-science-pack", 1},
+        {"electromagnetic-science-pack", 1},
+        {"athletic-science-pack", 1},
+      }
+  }
+},
 }
 
 if settings.startup["rabbasca-cap-bunnyhop-research"].value == false then

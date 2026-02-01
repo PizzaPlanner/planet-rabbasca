@@ -12,7 +12,6 @@ function Rabbasca.get_warp_radius(quality) return math.min(160, 40 + (quality an
 function Rabbasca.high_energy_device_threshold() return "3.75MW" end
 function Rabbasca.alertness_modulation_step() return 10 end
 function Rabbasca.alertness_modulation_max() return 50 end
-function Rabbasca.underground_pressure() return 45312 end
 
 function Rabbasca.get_spoiled_in(event)
     local e = event.source_entity or event.target_entity
@@ -99,15 +98,6 @@ proto.surface_conditions = proto.surface_conditions or { }
 table.insert(proto.surface_conditions, Rabbasca.above_harenic_threshold(multiplier))
 end
 
-function Rabbasca.only_underground(needs_stabilizer)
-    if needs_stabilizer then return { property = "rabbasca-underground", min = 1, max = 1 }
-    else return { property = "pressure", min = Rabbasca.underground_pressure(), max = Rabbasca.underground_pressure() } end
-end
-
-function Rabbasca.not_underground()
-    return { property = "rabbasca-underground", min = 0, max = 0 }
-end
-
 function Rabbasca.ears_flooring_rule(bbox)
     return 
     { 
@@ -148,7 +138,7 @@ data:extend{
 }
 end
 
-function create_infused_thing_with_effect(original, extra_cost)
+local function create_infused_thing_with_effect(original, extra_cost)
     if original.no_ears_upgrade or original.hidden then return nil end 
     local item = data.raw["item"][original.name]
     -- TODO: should no subgroup be supported? 
