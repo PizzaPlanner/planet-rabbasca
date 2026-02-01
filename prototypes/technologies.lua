@@ -752,7 +752,7 @@ data:extend {
     name = "rabbasca-quality-assurance",
     icons = {
       { icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
-      { icon = data.raw["virtual-signal"]["signal-any-quality"].icon, icon_size = 64, shift = {24, 24}, scale = 1.25 },
+      { icon = data.raw["virtual-signal"]["signal-any-quality"].icon, icon_size = 64, shift = {32, 32}, scale = 0.75 },
     },
     prerequisites = { "interplanetary-construction-1" },
     effects =

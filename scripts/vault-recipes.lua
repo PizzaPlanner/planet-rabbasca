@@ -84,6 +84,7 @@ Rabbasca.create_vault_recipe("rabbasca-security-modulation-up", {
   },
   energy_required = 60,
   allow_productivity = false,
+  order = "z[effects]-m[up]"
 })
 Rabbasca.create_vault_recipe("rabbasca-security-modulation-down", {
   icons = {
@@ -100,6 +101,7 @@ Rabbasca.create_vault_recipe("rabbasca-security-modulation-down", {
   },
   energy_required = 60,
   allow_productivity = false,
+  order = "z[effects]-m[down]"
 })
 Rabbasca.create_vault_recipe("rabbasca-quality-assurance", {
   icons = {
@@ -115,6 +117,7 @@ Rabbasca.create_vault_recipe("rabbasca-quality-assurance", {
   },
   energy_required = 60,
   allow_productivity = false,
+  order = "z[effects]-q[quality]"
 })
 
 data:extend {
