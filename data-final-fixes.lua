@@ -20,9 +20,9 @@ data.raw["recipe"]["rabbasca-warp-pylon-recycling"].hide_from_player_crafting = 
 local console = data.raw["assembling-machine"]["rabbasca-vault-console"]
 for _, res in pairs(console.resistances) do
   if res.type == "physical" then
-    local console_res_flat = res.decrease or 0
-    local console_res_perc = (res.percent or 100) / 100
-    console.production_health_effect = {
+    local console_res_flat = 0 --res.decrease or 0
+    local console_res_perc = 100 / (100 - (res.percent or 0))
+    console.production_health_effect = { -- TODO: formula is wrong? flat reduction not applied anymore??
       producing = console.production_health_effect.producing * console_res_perc - console_res_flat,
       not_producing = console.production_health_effect.not_producing * console_res_perc - console_res_flat
     }

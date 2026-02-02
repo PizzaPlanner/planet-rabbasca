@@ -156,7 +156,7 @@ local access_console = util.merge{
   }
 }
 access_console.resistances = {
-  { type = "physical", decrease = 3 },
+  { type = "physical", percent = 33, decrease = 0 }, -- TODO: decrease must be 0 for now, PHE formula changed, wait for 2.1
   { type = "explosion", percent = 20, decrease = 400 },
   { type = "fire", percent = 90 },
   { type = "poison", percent = 100 },

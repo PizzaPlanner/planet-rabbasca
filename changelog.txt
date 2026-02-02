@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.11.7
+Date: 2026-02-01
+  Bugfixes:
+    - Fixed extend hack not reducing console health loss properly due to changed resistances
+---------------------------------------------------------------------------------------------------
 Version: 0.11.6
 Date: 2026-01-31
   Changes:
