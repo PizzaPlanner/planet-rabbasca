@@ -55,7 +55,7 @@ local function try_deconstruct(data, name, quality, inventory, pylon)
         temp.destroy()
         if result then
             play_smoke(surface, position, math.max(size[1], size[2]))
-            return true
+            return true, status_ok
         else
             return false, status_invalid_target
         end
@@ -69,7 +69,7 @@ local function try_deconstruct(data, name, quality, inventory, pylon)
         local result = entity.mine{ inventory = inventory }
         if result then 
             play_smoke(surface, position, math.max(size[1], size[2]))
-            return true
+            return true, status_ok
         else
             return false, status_invalid_target
         end
@@ -85,7 +85,7 @@ local function try_deconstruct(data, name, quality, inventory, pylon)
             surface.set_hidden_tile(pos, hidden_2)
             surface.set_double_hidden_tile(pos, nil)
             play_smoke(surface, {x = pos.x + 0.5, y = pos.y + 0.5}, 1)
-            return true
+            return true, status_ok
         end
         inventory.remove({name = name, count = inserted})
         return false, status_invalid_target
@@ -161,16 +161,16 @@ end
 local function try_upgrade(data, name, quality, inventory, pylon)
     local entity, count = data.entity, data.count
     local new_proto, new_quality = entity.get_upgrade_target()
-    if not new_proto then return false end
+    if not new_proto then return false, status_invalid_target end
     if new_proto.name ~= data.name or new_quality.name ~= data.quality then return end -- upgrade changed since indexing?
     local proto_old = entity.prototype
     local to_place_old = proto_old.items_to_place_this and proto_old.items_to_place_this[1]
-    if not to_place_old then return false end
+    if not to_place_old then return false, status_invalid_target end
     local old_name, old_count, old_quality = to_place_old.name, to_place_old.count, entity.quality.name
     local old_item = { name = old_name, count = old_count, quality = old_quality }
-    if not inventory.can_insert(old_item) then return end
+    if not inventory.can_insert(old_item) then return false end
     local upgraded, _ = entity.apply_upgrade()
-    if upgraded == nil then return false end
+    if upgraded == nil then return false, status_invalid_target end
     inventory.remove({ name = data.name, count = count, quality = data.quality })
     inventory.insert(old_item)
     return true, status_ok
@@ -219,9 +219,9 @@ local function attempt_warp(pylon, q, pdata, inventory, range, f)
                         if has >= data.count and data.entity.valid and in_range then
                             local result, status = f(data, name, quality, inventory, pylon)
                             pylon.custom_status = status
-                            if q ~= "modules" then remove_entity(queue, name, quality, i) end
+                            if q ~= "modules" and status ~= nil then remove_entity(queue, name, quality, i) end
                             if result then return true end
-                            M.mark_chunk_dirty(pylon.surface_index, chunkid, 30 * 60) -- If failed, try again in 30 seconds
+                            M.mark_chunk_dirty(pylon.surface_index, chunkid, 30 * 60)
                         end
                     end
                 end

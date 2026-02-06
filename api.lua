@@ -172,6 +172,7 @@ local function create_infused_thing_with_effect(original, extra_cost)
     new.hidden = true
     new.icons = icons
     new.no_ears_upgrade = true
+    -- new.fast_replaceable_group = original.fast_replaceable_group or original.name TODO: Upgrades ignore tile restrictions
     new.next_upgrade = nil
     new.placeable_by = { item = new_name, count = 1 }
     new.minable.result = new_name
