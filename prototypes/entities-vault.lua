@@ -53,7 +53,6 @@ spawner.autoplace = {
   force = "rabbascans",
   default_enabled = false
 }
--- spawner.autoplace = nil -- IMPORTANT: prevents spawning on nauvis
 spawner.spawn_decoration = {}
 spawner.damaged_trigger_effect = nil
 spawner.absorptions_per_second = { }
@@ -294,7 +293,7 @@ local pylon = util.merge{
   table.deepcopy(spawner), 
 {
   name = "rabbasca-vault-warp-spawner",
-  icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon.png",
+  icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon-2.png",
   icon_size = 64,
   max_health = 2336, -- will be much higher due to evolution
   healing_per_tick = -35 / second,

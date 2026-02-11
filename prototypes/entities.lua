@@ -106,7 +106,8 @@ data:extend{
       usage_priority = "primary-output", 
       buffer_capacity = (Rabbasca.surface_megawatts() / 6) .. "MJ", 
       output_flow_limit = Rabbasca.surface_megawatts() .. "MW",
-      render_no_power_icon = false
+      render_no_power_icon = false,
+      render_no_network_icon = false
     },
     gui_mode = "none",
     flags = { "placeable-neutral", "placeable-off-grid", "not-on-map", "not-deconstructable", "not-selectable-in-game" },

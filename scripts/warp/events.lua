@@ -91,12 +91,6 @@ script.on_event(defines.events.on_marked_for_deconstruction, function(event)
   M.mark_chunk_dirty(event.entity.surface_index, M.chunk_id(event.entity.position))
 end)
 
-script.on_event(defines.events.on_gui_click, function(event)
-  if event.element.name == "rabbasca_open_warp_inventory" then 
-    game.players[event.player_index].opened = storage.warp_inventory
-  end
-end)
-
 -- script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
 -- -- TODO: can use this to show correct pylon radius??
 -- end)

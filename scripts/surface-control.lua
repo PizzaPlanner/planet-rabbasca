@@ -134,7 +134,7 @@ local function create_evolution_bar(player)
         type = "sprite-button",
         sprite= "entity/rabbasca-vault-crafter",
         style = "inventory_slot",
-        name = "icon",
+        name = "rabbasca_alertbar_icon",
         number = vaults,
         tooltip = {
           "rabbasca-extra.alertness-ui-tooltip", 

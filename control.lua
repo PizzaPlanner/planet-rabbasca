@@ -112,6 +112,17 @@ script.on_event(defines.events.on_object_destroyed, function(event)
   end
 end)
 
+script.on_event(defines.events.on_gui_click, function(event)
+  if event.element.name == "rabbasca_open_warp_inventory" then 
+    game.players[event.player_index].opened = storage.warp_inventory
+  elseif event.element.name == "rabbasca_alertbar_icon" then
+    local player = game.get_player(event.player_index)
+    if player then
+      player.open_factoriopedia_gui(prototypes.entity["rabbasca-vault-spawner"])
+    end
+  end
+end)
+
 script.on_event({
   defines.events.on_player_controller_changed, 
   defines.events.on_player_joined_game

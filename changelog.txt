@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.11.9
+Date: 2026-02-11
+  Changes:
+    - Clicking the vault icon on rabbasca's alertness bar now opens factoriopedia showing current enemy spawn probabilities
+  Bugfixes:
+    - Fixed Bunnyhoping onto an unvisited surface could cause the character getting stuck in something not yet generated
+    - Fixed upgrade planner could upgrade structures to their E.A.R.S. variants, bypassing tile restrictions
+---------------------------------------------------------------------------------------------------
 Version: 0.11.8
 Date: 2026-02-06
   Bugfixes:

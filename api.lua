@@ -172,7 +172,7 @@ local function create_infused_thing_with_effect(original, extra_cost)
     new.hidden = true
     new.icons = icons
     new.no_ears_upgrade = true
-    -- new.fast_replaceable_group = original.fast_replaceable_group or original.name TODO: Upgrades ignore tile restrictions
+    new.fast_replaceable_group = (original.fast_replaceable_group or original.name) .. "-with-ears" -- ignores tile restrictions in upgrades, so we cannot upgrade from base variants
     new.next_upgrade = nil
     new.placeable_by = { item = new_name, count = 1 }
     new.minable.result = new_name
@@ -285,15 +285,17 @@ function Rabbasca.make_trigger_item(item, effect_id)
             }
             }
         }
-        }, 
+        },
     },
     item }
 end
 
 function Rabbasca.icons(data)
     local icons = { }
+    local shift_multiplier = 1
     for _, entry in pairs(data) do
-        if entry.icon then
+        if entry.shift_multiplier then shift_multiplier = entry.shift_multiplier
+        elseif entry.icon then
             local scale = 64 / (entry.icon_size or 64)
             table.insert(icons, { icon = entry.icon, icon_size = entry.icon_size, tint = entry.tint, shift = entry.shift, scale = entry.scale and entry.scale * scale })
         elseif entry.proto then 
@@ -309,6 +311,11 @@ function Rabbasca.icons(data)
                 local scale = 64 / (entry.proto.icon_size or 64)
                 table.insert(icons, { icon = entry.proto.icon, icon_size = entry.proto.icon_size, tint = entry.tint, shift = entry.shift, scale = entry.scale and entry.scale * scale })
             end
+        end
+    end
+    for _, entry in pairs(icons) do
+        if entry.shift then
+            entry.shift = { entry.shift[1] * shift_multiplier, entry.shift[2] * shift_multiplier }
         end
     end
     return icons
