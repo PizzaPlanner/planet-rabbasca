@@ -296,20 +296,20 @@ function Rabbasca.icons(data)
     for _, entry in pairs(data) do
         if entry.shift_multiplier then shift_multiplier = entry.shift_multiplier
         elseif entry.icon then
-            local scale = 64 / (entry.icon_size or 64)
-            table.insert(icons, { icon = entry.icon, icon_size = entry.icon_size, tint = entry.tint, shift = entry.shift, scale = entry.scale and entry.scale * scale })
+            local scale = 64 / (entry.icon_size or 64) * (entry.scale or 1)
+            table.insert(icons, { icon = entry.icon, icon_size = entry.icon_size, tint = entry.tint, shift = entry.shift, scale = entry.scale and scale })
         elseif entry.proto then 
             if entry.proto.icons then
                 for _, icon in pairs(entry.proto.icons) do
-                    local scale = 64 / (icon.icon_size or 64) * (entry.scale or 1) * (icon.scale or 1)
+                    local scale = 64 / (icon.icon_size or 64) * (entry.scale or 1) * (entry.scale or 1) * (icon.scale or 1) -- Why squared scale??
                     local shift_a = (entry.shift or {0, 0})
                     local shift_b = (icon.shift or {0, 0})
                     local shift = {shift_a[1] + shift_b[1], shift_a[2] + shift_b[2]}
-                    table.insert(icons, { icon = icon.icon, icon_size = icon.icon_size, tint = entry.tint, shift = shift, scale = entry.scale and entry.scale * scale })
+                    table.insert(icons, { icon = icon.icon, icon_size = icon.icon_size, tint = entry.tint, shift = shift, scale = entry.scale and scale })
                 end
             elseif entry.proto.icon then
-                local scale = 64 / (entry.proto.icon_size or 64)
-                table.insert(icons, { icon = entry.proto.icon, icon_size = entry.proto.icon_size, tint = entry.tint, shift = entry.shift, scale = entry.scale and entry.scale * scale })
+                local scale = 64 / (entry.proto.icon_size or 64) * (entry.scale or 1)
+                table.insert(icons, { icon = entry.proto.icon, icon_size = entry.proto.icon_size, tint = entry.tint, shift = entry.shift, scale = entry.scale and scale })
             end
         end
     end
