@@ -128,10 +128,10 @@ data:extend {
         localised_description = {"recipe-description.rabbasca-extend-hack"},
         subgroup = "rabbasca-security",
         order = "h[hack-extension]-b",
-        icons = { 
-          { icon = data.raw["ammo"]["vault-security-key"].icon, icon_size = 64 },
-          { icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png", icon_size = 64, scale = 0.3, shift = { 8, 8 } },
-        },
+        icons = Rabbasca.icons({
+          { proto = data.raw["virtual-signal"]["signal-hourglass"] },
+          { proto = data.raw["ammo"]["vault-security-key"], scale = 0.4, shift = { 8, 8 } }
+        }),
         enabled = true,
         category = "rabbasca-vault-hacking",
         hide_from_player_crafting = true,

@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.11.10
+Date: ????
+  Changes:
+    - Moon discovery and science pack techs are now marked essential
+  Balancing:
+    - Energetic residue no longer has a fuel value
+    - Reduced Harene gas fuel value (1MJ -> 120kJ)
+---------------------------------------------------------------------------------------------------
 Version: 0.11.9
 Date: 2026-02-11
   Changes:

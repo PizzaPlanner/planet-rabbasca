@@ -3,8 +3,8 @@ data:extend {
     type = "technology",
     name = "planet-discovery-rabbasca",
     icons = PlanetsLib.technology_icon_moon("__rabbasca-assets__/graphics/recolor/technologies/rabbasca-big.png", 256),
-    icon_size = 64,
     prerequisites = { "gun-turret", "power-armor" }, -- and planet discovery from parent in data-updates
+    essential = true,
     effects = {
       {
         type = "unlock-space-location",
@@ -48,6 +48,7 @@ data:extend {
     icon = "__rabbasca-assets__/graphics/recolor/technologies/athletic-science-pack-big.png",
     icon_size = 256,
     prerequisites = { "bunnyhop-engine-1", "rabbasca-turbofish-breeding" },
+    essential = true,
     effects =
     {
       {
