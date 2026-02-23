@@ -184,6 +184,12 @@ PlanetsLib:extend({
       draw_sprite_clouds = false,
       clouds = nil,
       fog = nil,
+      day_night_cycle_color_lookup = {
+          {0.0, "__rabbasca-assets__/graphics/recolor/textures/lut-rabbasca-day.png"},
+          {0.25, "__rabbasca-assets__/graphics/recolor/textures/lut-rabbasca-day.png"},
+          {0.4, "__rabbasca-assets__/graphics/recolor/textures/lut-rabbasca.png"},
+          {0.7, "__rabbasca-assets__/graphics/recolor/textures/lut-rabbasca.png"},
+      },
     },
     map_gen_settings = map_gen,
     parked_platforms_orientation = 0.27,

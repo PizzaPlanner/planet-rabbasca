@@ -139,7 +139,7 @@ data:extend {
       name = "rabbasca-turbofish",
       icon = "__rabbasca-assets__/graphics/recolor/icons/turbofish.png",
       minable = { result = "rabbasca-turbofish" },
-      autoplace = { probability_expression = "rabbasca_harene_pools - 0.5" },
+      autoplace = { probability_expression = "0.3" },
       -- collision_mask = { layers = { ground_tile = true } }
       map_generator_bounding_box = {{-1.5, -1.5}, {1.5, 1.5}},
       collision_mask = { layers = { lava_tile = true, ground_tile = true }, colliding_with_tiles_only = true }

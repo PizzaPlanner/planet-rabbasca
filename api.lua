@@ -28,6 +28,20 @@ function Rabbasca.get_spoiled_in(event)
     return e
 end
 
+if remote then
+    function Rabbasca.add_to_warp_inventory(inventory)
+        if inventory and inventory.valid then
+            for i = 1, #inventory do
+                local stack = inventory[i]
+                if stack and stack.valid_for_read then
+                    local inserted = remote.call("rabbasca_warp_inventory", "try_insert", stack)
+                    stack.count = stack.count - inserted
+                end
+            end
+        end
+    end
+end
+
 if not data then return end
 
 local recycling = require("__quality__.prototypes.recycling")

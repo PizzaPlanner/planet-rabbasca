@@ -41,4 +41,12 @@ function M.update_logistic_section()
     l.filters = filters
 end
 
+remote.add_interface("rabbasca_warp_inventory", {
+    try_insert = function(stack)
+        if not stack or not stack.valid_for_read then return 0 end
+        if not M.is_proto_supported(stack.prototype) then return 0 end
+        return storage.warp_inventory.insert(stack)
+    end
+})
+
 return M
