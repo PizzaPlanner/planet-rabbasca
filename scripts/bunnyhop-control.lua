@@ -23,15 +23,81 @@ function M.can_jump_to(planet, force)
   return true
 end
 
+-- Like can_jump_to but allows orbit/no-surface locations to be used as intermediate hops.
+-- Still respects unlock and technology requirements so locked orbits still block traversal.
+function M.can_traverse_through(planet, force)
+  if not force.is_space_location_unlocked(planet) then return false end
+  local requirements = M.get_requirements(planet)
+  local techs = force.technologies
+  for _, req in pairs(requirements) do
+    if req == "bunnyhop-never" then return false end
+    if techs[req] and not techs[req].researched then return false end
+  end
+  return true
+end
+
 -- Initial range is 1000km (Planet <-> Moon / Moon <-> Moon), but can be extended with infinity research, 
 --   restricting Planet <-> Planet to very late game usually.
+-- Multi-hop: all planets reachable within max_range by summing connection lengths along the path.
+-- Intermediate planets must also satisfy can_jump_to (i.e. be unlocked), so you can't reach
+-- A -> B -> C if B is locked even if the total distance is within range.
 function M.get_connections(from, max_range, force)
-  local surfaces = { }
+  -- Build an adjacency list from all space connections (bidirectional)
+  local adj = {}
   for _, conn in pairs(prototypes.space_connection) do
-    if conn.length <= max_range and (conn.from.name == from or conn.to.name == from) then
-      local target = (conn.from.name == from) and conn.to.name or conn.from.name
-      if M.can_jump_to(target, force) and (from == "rabbasca" or not settings.startup["rabbasca-bunnyhop-rabbasca-only"].value) then
-        display = {"", "[img=space-location/" .. target .. "] ", game.planets[target].prototype.localised_name or target}
+    local a, b = conn.from.name, conn.to.name
+    adj[a] = adj[a] or {}
+    adj[b] = adj[b] or {}
+    table.insert(adj[a], {target = b, length = conn.length})
+    table.insert(adj[b], {target = a, length = conn.length})
+  end
+
+  -- Dijkstra from `from`, tracking cumulative distance to each reachable planet
+  local dist = {[from] = 0}
+  local visited = {}
+  -- Queue entries: {name, d}
+  local queue = {{name = from, d = 0}}
+
+  while #queue > 0 do
+    -- Find the unvisited entry with the smallest distance
+    local min_i, min_d = 1, queue[1].d
+    for i = 2, #queue do
+      if queue[i].d < min_d then
+        min_i, min_d = i, queue[i].d
+      end
+    end
+    local node = table.remove(queue, min_i)
+    local planet, d = node.name, node.d
+
+    if visited[planet] then goto continue end
+    visited[planet] = true
+
+    -- Only allows traversal *through* a location if it is unlocked.
+    -- can_traverse_through is used here rather than can_jump_to so that orbit/no-surface
+    -- locations don't block the path, while still respecting research requirements.
+    if planet ~= from and not M.can_traverse_through(planet, force) then goto continue end
+
+    -- Explore neighbours
+    for _, edge in pairs(adj[planet] or {}) do
+      local nd = d + edge.length
+      if nd <= max_range and not visited[edge.target] then
+        if not dist[edge.target] or nd < dist[edge.target] then
+          dist[edge.target] = nd
+          table.insert(queue, {name = edge.target, d = nd})
+        end
+      end
+    end
+
+    ::continue::
+  end
+
+  -- Collect every reachable planet (excluding origin) that can be jumped to
+  local surfaces = {}
+  local can_jump_from_here = (from == "rabbasca" or not settings.startup["rabbasca-bunnyhop-rabbasca-only"].value)
+  if can_jump_from_here then
+    for planet, _ in pairs(dist) do
+      if planet ~= from and M.can_jump_to(planet, force) then
+        local display = {"", "[img=space-location/" .. planet .. "] ", game.planets[planet].prototype.localised_name or planet}
         table.insert(surfaces, display)
       end
     end
