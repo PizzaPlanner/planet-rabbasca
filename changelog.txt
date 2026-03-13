@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.13.0
+Date: 2026-03-13
+  Changes:
+    - Bunnyhop engine can now hop over multiple space locations in one jump given enough range (Thanks AtlasV1224)
+---------------------------------------------------------------------------------------------------
 Version: 0.12.0
 Date: 2026-02-23
   Changes:

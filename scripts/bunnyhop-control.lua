@@ -12,21 +12,8 @@ function M.get_requirements(name)
 end
 
 
-function M.can_jump_to(planet, force)
-  if not game.planets[planet] or not force.is_space_location_unlocked(planet) then return false end
-  local requirements = M.get_requirements(planet)
-  local techs = force.technologies
-  for _, req in pairs(requirements) do
-    if req == "bunnyhop-never" then return false end
-    if techs[req] and not techs[req].researched then return false end
-  end
-  return true
-end
-
--- Like can_jump_to but allows orbit/no-surface locations to be used as intermediate hops.
--- Still respects unlock and technology requirements so locked orbits still block traversal.
-function M.can_traverse_through(planet, force)
-  if not force.is_space_location_unlocked(planet) then return false end
+function M.can_jump_to(planet, force, is_passthrough)
+  if not (is_passthrough or game.planets[planet]) or not force.is_space_location_unlocked(planet) then return false end
   local requirements = M.get_requirements(planet)
   local techs = force.technologies
   for _, req in pairs(requirements) do
@@ -42,6 +29,8 @@ end
 -- Intermediate planets must also satisfy can_jump_to (i.e. be unlocked), so you can't reach
 -- A -> B -> C if B is locked even if the total distance is within range.
 function M.get_connections(from, max_range, force)
+  if not (from == "rabbasca" or not settings.startup["rabbasca-bunnyhop-rabbasca-only"].value) then return { } end
+
   -- Build an adjacency list from all space connections (bidirectional)
   local adj = {}
   for _, conn in pairs(prototypes.space_connection) do
@@ -72,10 +61,7 @@ function M.get_connections(from, max_range, force)
     if visited[planet] then goto continue end
     visited[planet] = true
 
-    -- Only allows traversal *through* a location if it is unlocked.
-    -- can_traverse_through is used here rather than can_jump_to so that orbit/no-surface
-    -- locations don't block the path, while still respecting research requirements.
-    if planet ~= from and not M.can_traverse_through(planet, force) then goto continue end
+    if planet ~= from and not M.can_jump_to(planet, force, true) then goto continue end
 
     -- Explore neighbours
     for _, edge in pairs(adj[planet] or {}) do
@@ -93,13 +79,10 @@ function M.get_connections(from, max_range, force)
 
   -- Collect every reachable planet (excluding origin) that can be jumped to
   local surfaces = {}
-  local can_jump_from_here = (from == "rabbasca" or not settings.startup["rabbasca-bunnyhop-rabbasca-only"].value)
-  if can_jump_from_here then
-    for planet, _ in pairs(dist) do
-      if planet ~= from and M.can_jump_to(planet, force) then
-        local display = {"", "[img=space-location/" .. planet .. "] ", game.planets[planet].prototype.localised_name or planet}
-        table.insert(surfaces, display)
-      end
+  for planet, _ in pairs(dist) do
+    if planet ~= from and M.can_jump_to(planet, force) then
+      local display = {"", "[img=space-location/" .. planet .. "] ", game.planets[planet].prototype.localised_name or planet}
+      table.insert(surfaces, display)
     end
   end
   return surfaces
