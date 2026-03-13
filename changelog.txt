@@ -3,6 +3,8 @@ Version: 0.13.0
 Date: 2026-03-13
   Changes:
     - Bunnyhop engine can now hop over multiple space locations in one jump given enough range (Thanks AtlasV1224)
+  Bugfixes:
+    - E.A.R.S. variants of beacons are now shown in the tooltips of machines affected by them
 ---------------------------------------------------------------------------------------------------
 Version: 0.12.0
 Date: 2026-02-23

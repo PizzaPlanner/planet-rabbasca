@@ -183,7 +183,7 @@ local function create_infused_thing_with_effect(original, extra_cost)
     new.localised_description = original.localised_description and {"rabbasca-extra.with-ears-description", original.localised_description} or {"rabbasca-extra.with-ears-description-noparam"}
     new.factoriopedia_alternative = original.name
     new.hidden_in_factoriopedia = true
-    new.hidden = true
+    new.hidden = new.type ~= "beacon" -- if true, variant is hidden in "Made in" list in tooltips, but hides also hidden in list of beacons affecting a machine
     new.icons = icons
     new.no_ears_upgrade = true
     new.fast_replaceable_group = (original.fast_replaceable_group or original.name) .. "-with-ears" -- ignores tile restrictions in upgrades, so we cannot upgrade from base variants
