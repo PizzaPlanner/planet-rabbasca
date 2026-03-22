@@ -12,7 +12,7 @@
         "space-age", 
         "PlanetsLib", 
         "Krastorio2Assets", 
-        "rabbasca-assets >= 1.6.0",
+        "rabbasca-assets >= 1.7.0",
         "tile-upgrade-planner-muluna >= 1.0.1",
         "? any-planet-start",
         "(?) planet-muluna",

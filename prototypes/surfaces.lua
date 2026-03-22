@@ -153,10 +153,10 @@ PlanetsLib:extend({
 {
     type = "planet",
     name = "rabbasca",
-    icon = "__rabbasca-assets__/graphics/recolor/icons/vulcanus-bw.png",
+    icon = "__rabbasca-assets__/graphics/by-talandar/rabbasca64.png",
     icon_size = 64,
-    starmap_icon = "__rabbasca-assets__/graphics/recolor/icons/vulcanus-bw.png",
-    starmap_icon_size = 64,
+    starmap_icon = "__rabbasca-assets__/graphics/by-talandar/rabbasca2048.png",
+		starmap_icon_size = 2048,
     draw_orbit = true,
     solar_power_in_space = gleba.solar_power_in_space,
     auto_save_on_first_trip = true,
@@ -203,7 +203,7 @@ PlanetsLib:extend({
       },
       sprite = {
         type = "sprite",
-        filename = "__rabbasca-assets__/graphics/recolor/icons/vulcanus-bw.png",
+        filename = "__rabbasca-assets__/graphics/by-talandar/rabbasca64.png",
         size = 64,
         scale = 0.25,
       }

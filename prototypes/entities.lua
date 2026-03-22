@@ -98,7 +98,7 @@ data:extend{
   {
     type = "electric-energy-interface",
     name = "rabbasca-energy-source",
-    icon = "__rabbasca-assets__/graphics/recolor/icons/vulcanus-bw.png",
+    icon = "__rabbasca-assets__/graphics/by-talandar/rabbasca64.png",
     energy_production = Rabbasca.surface_megawatts() .. "MW",
 
     energy_source = { 

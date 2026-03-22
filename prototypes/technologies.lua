@@ -2,7 +2,7 @@ data:extend {
 {
     type = "technology",
     name = "planet-discovery-rabbasca",
-    icons = PlanetsLib.technology_icon_moon("__rabbasca-assets__/graphics/recolor/technologies/rabbasca-big.png", 256),
+    icons = PlanetsLib.technology_icon_moon("__rabbasca-assets__/graphics/by-talandar/rabbasca256.png", 256),
     prerequisites = { "gun-turret", "power-armor" }, -- and planet discovery from parent in data-updates
     essential = true,
     effects = {
