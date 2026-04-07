@@ -97,6 +97,14 @@ data:extend{
     order="a[balance]"
   },
   {
+    type = "bool-setting",
+    name = "rabbasca-deconstruct-captured-pylons",
+    setting_type = "runtime-global",
+    default_value = false,
+    allow_blank = false,
+    order="u[ux]"
+  },
+  {
     type = "string-setting",
     name = "rabbasca-warp-inventory-name",
     setting_type = "runtime-global",

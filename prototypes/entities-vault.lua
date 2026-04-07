@@ -463,6 +463,16 @@ local capture_bot = {
   speed = 0.01,
   hidden_in_factoriopedia = true,
   alert_when_damaged = false,
+  created_effect = {
+    type = "direct",
+    action_delivery = {
+      type = "instant",
+      source_effects = {
+        type = "create-entity",
+        entity_name = "rabbasca-capture-dummy",
+      }
+    }
+  }
 }
 
 local capture_bot_2 = {
@@ -475,13 +485,49 @@ local capture_bot_2 = {
   speed = 0.01,
   hidden_in_factoriopedia = true,
   alert_when_damaged = false,
+  created_effect = {
+    type = "direct",
+    action_delivery = {
+      type = "instant",
+      source_effects = {
+        type = "create-entity",
+        entity_name = "rabbasca-capture-dummy",
+      }
+    }
+  }
+}
+
+-- TODO: dying_trigger_effect not triggered on successful capture
+-- Workaround for checking whether a pylon was built or captured
+local captured_dummy = {
+    name = "rabbasca-capture-dummy",
+    type = "temporary-container",
+    icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png",
+    icon_size = 64,
+    hidden = true,
+    flags = { "placeable-off-grid", "not-in-kill-statistics", "placeable-neutral" },
+    collision_mask = { layers = { } },
+    collision_box = {{0, 0}, {0, 0}},
+    destroy_on_empty = false,
+    time_to_live = 0,
+    inventory_size = 1,
+    created_effect = {
+      type = "direct",
+      action_delivery = {
+        type = "instant",
+        source_effects = {
+          type = "script",
+          effect_id = "rabbasca_on_pylon_capturing"
+        }
+      }
+    },
 }
 
 data:extend {
   delayed_recalc_trigger,
   spawner, pylon,
   access_console,
-  capture_bot, capture_bot_2,
+  capture_bot, capture_bot_2, captured_dummy,
   vault_crafter, vault_core
 }
 

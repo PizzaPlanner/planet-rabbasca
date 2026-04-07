@@ -160,20 +160,14 @@ local function create_infused_thing_with_effect(original, extra_cost)
     local new_name = "harene-infused-"..original.name
     local new = table.deepcopy(original)
     if not Rabbasca.require_ears_flooring(new) then return nil end
-    local icons = {}
-    if item.icon then
-        table.insert(icons, { icon = item.icon, icon_size = item.icon_size or 64 })
-    elseif item.icons then
-        for _, icon in pairs(table.deepcopy(item.icons)) do
-            table.insert(icons, icon)
-        end
-    end
     local ears_item = data.raw["item"]["harene-ears-core"]
-    table.insert(icons, { icon = ears_item.icon, icon_size = ears_item.icon_size, scale = 0.3, shift = {0, 12} })
     local new_item = table.deepcopy(item)
     new_item.name = new_name
     new_item.hidden_in_factoriopedia = true
-    new_item.icons = icons
+    new_item.icons = Rabbasca.icons({
+        { proto = item },
+        { proto = ears_item, scale = 0.3, shift = {0, 12} }
+    })
     new_item.place_result = new_name
     new_item.subgroup = (new_item.subgroup or "unknown") .. "-with-ears-core" 
     new_item.factoriopedia_alternative = original.name
@@ -184,7 +178,10 @@ local function create_infused_thing_with_effect(original, extra_cost)
     new.factoriopedia_alternative = original.name
     new.hidden_in_factoriopedia = true
     new.hidden = new.type ~= "beacon" -- if true, variant is hidden in "Made in" list in tooltips, but hides also hidden in list of beacons affecting a machine
-    new.icons = icons
+    new.icons = Rabbasca.icons({
+        { proto = original },
+        { proto = ears_item, scale = 0.3, shift = {0, 12} }
+    })
     new.no_ears_upgrade = true
     new.fast_replaceable_group = (original.fast_replaceable_group or original.name) .. "-with-ears" -- ignores tile restrictions in upgrades, so we cannot upgrade from base variants
     new.next_upgrade = nil

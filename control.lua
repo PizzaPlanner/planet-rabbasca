@@ -95,8 +95,30 @@ local function handle_script_events(event)
     local engine = event.source_entity or event.target_entity
     local player = engine.player or engine.owner_location.player
     if not player then return end
-    bunnyhop.attempt_bunnyhop(player)
+    bunnyhop.attempt_bunnyhop(player)  
+  elseif effect_id == "rabbasca_on_pylon_capturing" then
+    local e = event.source_entity
+    if not e then return end
+    local pylon = e.surface.find_entities_filtered{ name ="rabbasca-vault-warp-spawner", position = e.position }
+    if not (pylon and #pylon > 0) then return end
+    storage.captured_pylon_cleanups = storage.captured_pylon_cleanups or {}
+    local id, _, _ = script.register_on_object_destroyed(pylon[1])
+    storage.captured_pylon_cleanups[id] = { dummy = e, quality = pylon[1].quality }
   end
+end
+
+local function on_pylon_capture_ended(id)
+  if not (storage.captured_pylon_cleanups and storage.captured_pylon_cleanups[id]) then return end
+  local data = storage.captured_pylon_cleanups[id]
+  if not data then return end
+  storage.captured_pylon_cleanups[id] = nil
+  local dummy, quality = data.dummy, data.quality
+  if not (dummy and dummy.valid) then return end
+  local pylon = dummy.surface.find_entity({name = "rabbasca-warp-pylon", quality = quality}, dummy.position)
+  if pylon and settings.global["rabbasca-deconstruct-captured-pylons"].value then
+    pylon.order_deconstruction(pylon.force)
+  end
+  dummy.destroy{}
 end
 
 script.on_event(defines.events.on_script_trigger_effect, handle_script_events)
@@ -109,6 +131,7 @@ script.on_event(defines.events.on_object_destroyed, function(event)
   if event.type == defines.target_type.entity then
     rutil.deregister_alertable(event.registration_number)
     warp.unregister_pylon(event.useful_id)
+    on_pylon_capture_ended(event.registration_number)
   end
 end)
 
