@@ -3,6 +3,7 @@ Version: 0.13.1
 Date: 2026-04-07
   Changes:
     - Added setting to automatically mark captured pylons for deconstruction (off by default)
+    - Added Japanese locale (Thanks OhashiReon)
   Bugfixes:
     - Fixed some cases where E.A.R.S. variants had a different icon than their original
 ---------------------------------------------------------------------------------------------------
