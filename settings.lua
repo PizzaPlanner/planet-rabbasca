@@ -5,6 +5,14 @@ end
 data:extend{
   {
     type = "bool-setting",
+    name = "rabbasca-enable-new-vault-progression",
+    setting_type = "startup",
+    default_value = true,
+    allow_blank = false,
+    order="0[progression]"
+  },
+  {
+    type = "bool-setting",
     name = "rabbasca-cap-bunnyhop-research",
     setting_type = "startup",
     default_value = false,

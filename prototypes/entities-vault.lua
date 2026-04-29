@@ -416,7 +416,15 @@ vault_core.created_effect = {
         type = "script",
         effect_id = "rabbasca_register_alertable"
       }
-    }
+    },
+    {
+      type = "instant",
+      source_effects = {
+        type = "create-explosion",
+        entity_name = "rocket-silo-explosion",
+        ignore_no_enemies_mode = true,
+      }
+    },
   }
 }
 vault_core.dying_trigger_effect = require("__planet-rabbasca__.prototypes.meltdown")

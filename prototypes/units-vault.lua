@@ -8,6 +8,8 @@ local defender_1 = util.merge{
     icon = "__base__/graphics/icons/defender.png",
     order = "r[rabbasca]-b1",
     max_health = 15,
+    hidden = true,
+    hidden_in_factoriopedia = false,
     healing_per_tick = -0.5 / second,
     movement_speed = 0.13,
     distance_per_frame = 0.125,
@@ -139,6 +141,8 @@ local vault_distractor = util.merge {
   table.deepcopy(data.raw["combat-robot"]["distractor"]),
   {
     name = "vault-distractor",
+    hidden = true,
+    hidden_in_factoriopedia = false,
     max_health = 5,
     time_to_live = 8 * second,
     subgroup = defender_1.subgroup,

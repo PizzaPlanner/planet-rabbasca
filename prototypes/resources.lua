@@ -66,6 +66,7 @@ local harene_resource = {
   icons = {{ icon = "__space-age__/graphics/icons/fluorine-vent.png", icon_size = 64, tint = color }},
   flags = {"placeable-neutral"},
   category = "basic-fluid",
+  subgroup = "mineable-fluids",
   order="a-b-f",
   infinite = true,
   highlight = true,

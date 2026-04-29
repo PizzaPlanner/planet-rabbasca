@@ -29,6 +29,8 @@ local function handle_script_events(event)
     if not recipe then return end
     if recipe.name == "rabbasca-quality-assurance" then
       rutil.upgrade_vault_quality(from, quality)
+    elseif recipe.name == "rabbasca-core-extraction-protocol" then
+      from.die(from.force, from)
     else
       local max = Rabbasca.alertness_modulation_max() / Rabbasca.alertness_modulation_step()
       local offset = recipe.name == "rabbasca-security-modulation-up" and 1 or -1
