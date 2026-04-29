@@ -1,4 +1,5 @@
 local M = require("__planet-rabbasca__.scripts.warp.pylon")
+local rebuild_network = require("__planet-rabbasca__.scripts.warp.rebuild-warp-network")
 
 local function awake(pylon)
     if pylon.valid and pylon.get_recipe() == nil then
@@ -81,6 +82,10 @@ script.on_event(build_events, function(event)
     local new = sections.add_section(M.logistics_group_name())
     if new then new.multiplier = -1 end
   end
+end)
+
+script.on_configuration_changed(function(_)
+  rebuild_network.rebuild_network()
 end)
 
 script.on_event(defines.events.on_marked_for_upgrade, function(event)
