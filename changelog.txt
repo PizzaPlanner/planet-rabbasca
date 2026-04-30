@@ -6,6 +6,7 @@ Date: 2026-04-30
     - The first step required to access harenic lava is now directly mentioned in the unhealthy fluids tech description when using the new unlock method
     - Vaults no longer block "realistic" projectiles from some other mods when using the new unlock method
     - Vaults and unhacked vault access consoles can no longer be destroyed by weapons
+    - Security modulation technology now requires vault mainenance inspection instead of interplanetary construction 2
   Bugfixes:
     - Fixed crash when warp pylons tried to warp in something from a mod that was removed
     - Fixed Factoriopedia category for Harene Vent

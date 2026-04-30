@@ -726,7 +726,7 @@ data:extend {
       { icon = data.raw["virtual-signal"]["down-arrow"].icon, icon_size = 64, shift = { 24,  24}, scale = 1.3, tint = {0, 1, 0} },
       { icon = data.raw["virtual-signal"]["up-arrow"].icon,   icon_size = 64, shift = { 24, -24}, scale = 1.3, tint = {1, 0, 0} },
     },
-    prerequisites = { "interplanetary-construction-2" },
+    prerequisites = { "rabbasca-quality-assurance" },
     effects =
     {
       {
