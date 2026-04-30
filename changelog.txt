@@ -4,8 +4,7 @@ Date: 2026-04-30
   Changes:
     - Unlocking harenic lava is now gated behind crafting a recipe instead of combat. Old behaviour can be restored via "Use new harenic lava unlock" setting for now
     - The first step required to access harenic lava is now directly mentioned in the unhealthy fluids tech description when using the new unlock method
-    - Vaults no longer block "realistic" projectiles from some other mods when using the new unlock method
-    - Vaults and unhacked vault access consoles can no longer be destroyed by weapons
+    - Vaults no longer block "realistic" projectiles from some other mods and are immune to damage when using the new unlock method
     - Security modulation technology now requires vault mainenance inspection instead of interplanetary construction 2
   Bugfixes:
     - Fixed crash when warp pylons tried to warp in something from a mod that was removed
