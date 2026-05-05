@@ -517,7 +517,7 @@ local captured_dummy = {
     collision_mask = { layers = { } },
     collision_box = {{0, 0}, {0, 0}},
     destroy_on_empty = false,
-    time_to_live = 0,
+    time_to_live = 2 * minute,
     inventory_size = 1,
     created_effect = {
       type = "direct",

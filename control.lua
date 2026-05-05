@@ -106,7 +106,10 @@ local function handle_script_events(event)
     local e = event.source_entity
     if not e then return end
     local pylon = e.surface.find_entities_filtered{ name ="rabbasca-vault-warp-spawner", position = e.position }
-    if not (pylon and #pylon > 0) then return end
+    if not (pylon and #pylon > 0) then 
+      e.destroy { }
+      return 
+    end
     storage.captured_pylon_cleanups = storage.captured_pylon_cleanups or {}
     local id, _, _ = script.register_on_object_destroyed(pylon[1])
     storage.captured_pylon_cleanups[id] = { dummy = e, quality = pylon[1].quality }
