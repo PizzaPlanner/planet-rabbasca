@@ -517,17 +517,11 @@ local captured_dummy = {
     collision_mask = { layers = { } },
     collision_box = {{0, 0}, {0, 0}},
     destroy_on_empty = false,
-    time_to_live = 2 * minute,
+    time_to_live = 1,
     inventory_size = 1,
-    created_effect = {
-      type = "direct",
-      action_delivery = {
-        type = "instant",
-        source_effects = {
-          type = "script",
-          effect_id = "rabbasca_on_pylon_capturing"
-        }
-      }
+    dying_trigger_effect = {
+      type = "script",
+      effect_id = "rabbasca_on_pylon_capturing"
     },
 }
 

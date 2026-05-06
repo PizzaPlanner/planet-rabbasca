@@ -107,12 +107,11 @@ local function handle_script_events(event)
     if not e then return end
     local pylon = e.surface.find_entities_filtered{ name ="rabbasca-vault-warp-spawner", position = e.position }
     if not (pylon and #pylon > 0) then 
-      e.destroy { }
       return 
     end
-    storage.captured_pylon_cleanups = storage.captured_pylon_cleanups or {}
     local id, _, _ = script.register_on_object_destroyed(pylon[1])
-    storage.captured_pylon_cleanups[id] = { dummy = e, quality = pylon[1].quality }
+    storage.captured_pylon_cleanups = storage.captured_pylon_cleanups or {}
+    storage.captured_pylon_cleanups[id] = { position = pylon[1].position, quality = pylon[1].quality, surface = pylon[1].surface_index }
   end
 end
 
@@ -121,13 +120,11 @@ local function on_pylon_capture_ended(id)
   local data = storage.captured_pylon_cleanups[id]
   if not data then return end
   storage.captured_pylon_cleanups[id] = nil
-  local dummy, quality = data.dummy, data.quality
-  if not (dummy and dummy.valid) then return end
-  local pylon = dummy.surface.find_entity({name = "rabbasca-warp-pylon", quality = quality}, dummy.position)
+  if not game.surfaces[data.surface] then return end
+  local pylon = game.surfaces[data.surface].find_entity({name = "rabbasca-warp-pylon", quality = data.quality}, data.position)
   if pylon and settings.global["rabbasca-deconstruct-captured-pylons"].value then
     pylon.order_deconstruction(pylon.force)
   end
-  dummy.destroy{}
 end
 
 script.on_event(defines.events.on_script_trigger_effect, handle_script_events)
