@@ -186,7 +186,14 @@ local function create_infused_thing_with_effect(original, extra_cost)
     new.fast_replaceable_group = (original.fast_replaceable_group or original.name) .. "-with-ears" -- ignores tile restrictions in upgrades, so we cannot upgrade from base variants
     new.next_upgrade = nil
     new.placeable_by = { item = new_name, count = 1 }
-    new.minable.result = new_name
+    if new.minable.result == original.name then new.minable.result = new_name end
+    if new.minable.results then
+        for _, entry in pairs(new.minable.results) do
+            if entry.name and entry.name == original.name then
+                entry.name = new_name
+            end
+        end
+    end
     new.factoriopedia_alternative = original.name
     new.energy_source = util.merge{
         original.energy_source,

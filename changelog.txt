@@ -1,6 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.14.2
+Date: 2026-05-19
+  Changes:
+    - Unhealthy fluids tech now requires vault maintenance inspection when using the new harenic lava unlock method
+  Bugfixes:
+    - Fixed an issue where picking up some E.A.R.S. variants would give the wrong item
+    - Fixed vault maintenance inspection tech not depending on electromagnetic science pack tech despite requiring it
+    - Fixed interplanetary construction 2 tech not depending on utility science pack tech despite requiring it
+---------------------------------------------------------------------------------------------------
 Version: 0.14.1
-Date: 2026-04-06
+Date: 2026-05-06
   Bugfixes:
     - Fixed leak where dummy entities for pylon capture detection were never destroyed
 ---------------------------------------------------------------------------------------------------

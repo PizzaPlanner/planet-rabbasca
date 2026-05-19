@@ -640,7 +640,7 @@ data:extend {
     name = "interplanetary-construction-2",
     icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon-big.png",
     icon_size = 640,
-    prerequisites = { "interplanetary-construction-1" },
+    prerequisites = { "interplanetary-construction-1", "utility-science-pack" },
     effects =
     {
       {
@@ -755,7 +755,7 @@ data:extend {
       { icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
       { icon = data.raw["virtual-signal"]["signal-any-quality"].icon, icon_size = 64, shift = {32, 32}, scale = 0.75 },
     },
-    prerequisites = { "interplanetary-construction-1" },
+    prerequisites = { "interplanetary-construction-1", "electromagnetic-science-pack" },
     effects =
     {
       {
