@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.14.3
+Date: 2026-05-20
+  Bugfixes:
+    - [with Hard Tech Tree] Added compatibility to fix bunnyhop engine 5 and 6 techs not doing anything
+---------------------------------------------------------------------------------------------------
 Version: 0.14.2
 Date: 2026-05-19
   Changes:
