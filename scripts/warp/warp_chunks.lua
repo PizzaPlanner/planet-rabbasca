@@ -111,7 +111,7 @@ function M.get_warp_cache(entity)
         local name, count, quality = to_place.name, to_place.count, entity.quality.name
         return { entity = entity, name = name, count = count, quality = quality, queue = "tiles", position = entity.position }
     elseif entity.name == "item-request-proxy" then 
-        return { entity = entity, name = "test", count = 1, quality = "normal", queue = "modules", position = entity.position }
+        return { entity = entity, name = "item-request-proxy", count = 1, quality = "normal", queue = "modules", position = entity.position }
     elseif entity.to_be_upgraded() then
         local upgrade, up_quality = entity.get_upgrade_target()
         local to_place = upgrade.items_to_place_this and upgrade.items_to_place_this[1]

@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.14.4
+Date: 2026-05-25
+  Bugfixes:
+    - Fixed an issue where warping in modules would fail under certain circumstances
+    - Fixed an issue where warp animation would play on items on ground when warp attempt failed
+---------------------------------------------------------------------------------------------------
 Version: 0.14.3
 Date: 2026-05-20
   Bugfixes:

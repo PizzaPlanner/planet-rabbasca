@@ -33,9 +33,9 @@ local function try_deconstruct(data, name, quality, inventory, pylon)
     if not data.entity.to_be_deconstructed() then return false, status_invalid_target end
     local entity = data.entity
     if data.name == "item-on-ground" then
-        play_smoke(entity.surface, data.position, 0.5)
         local inv = data.is_trash and pylon.get_inventory(defines.inventory.crafter_trash) or inventory
         local added = inv.insert(entity.stack)
+        if added > 0 then play_smoke(entity.surface, data.position, 0.5) end
         entity.stack.count = entity.stack.count - added
         return added > 0
     elseif data.is_belt then
@@ -147,6 +147,10 @@ local function try_warp_module(data, name, quality, inventory, pylon)
                         clear_plans(request, inventory_id, where)
                         play_smoke(target.surface, target.position, 1)
                         return true, status_ok
+                    else
+                        target.surface.spill_inventory { position = target.position, inventory = temp }
+                        temp.destroy()
+                        -- game.print("[ERROR] Could not warp module into target inventory at "..target.gps_tag)
                     end
                 end
             end
@@ -213,15 +217,20 @@ local function attempt_warp(pylon, q, pdata, inventory, range, f)
                 local has = q == "modules" and 1 or q == "decon" and 1 or inventory.get_item_count({ name = name, quality = quality })
                 if has > 0 then
                     for i, data in pairs(entries) do
-                        local pos_a = data.position
-                        local pos_b = pdata.position
-                        local in_range = math.abs(pos_a.x - pos_b.x) <= range and math.abs(pos_a.y - pos_b.y) <= range
-                        if has >= data.count and data.entity.valid and in_range then
-                            local result, status = f(data, name, quality, inventory, pylon)
-                            pylon.custom_status = status
-                            if q ~= "modules" and status ~= nil then remove_entity(queue, name, quality, i) end
-                            if result then return true end
-                            M.mark_chunk_dirty(pylon.surface_index, chunkid, 30 * 60)
+                        if not data.entity.valid then
+                            remove_entity(queue, name, quality, i)
+                            M.mark_chunk_dirty(pylon.surface_index, chunkid)
+                        else
+                            local pos_a = data.position
+                            local pos_b = pdata.position
+                            local in_range = math.abs(pos_a.x - pos_b.x) <= range and math.abs(pos_a.y - pos_b.y) <= range
+                            if has >= data.count and in_range then
+                                local result, status = f(data, name, quality, inventory, pylon)
+                                pylon.custom_status = status
+                                if q ~= "modules" and status ~= nil then remove_entity(queue, name, quality, i) end
+                                if result then return true end
+                                M.mark_chunk_dirty(pylon.surface_index, chunkid, 30 * 60)
+                            end
                         end
                     end
                 end

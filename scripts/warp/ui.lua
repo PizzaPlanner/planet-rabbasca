@@ -35,11 +35,11 @@ local function create_gui(player, pylon)
     local pdata = storage.warp_storage[id]
     if not pdata then return end
     for _, chunkid in pairs(pdata.chunks) do
-        for _, queue in pairs(storage.warp_chunks[pylon.surface_index][chunkid].queue) do 
+        for qname, queue in pairs(storage.warp_chunks[pylon.surface_index][chunkid].queue) do 
             for name, qq in pairs(queue) do
                 for quality, entries in pairs(qq) do
                     for _, entry in pairs(entries) do
-                        local key = "[img=entity/entity-ghost][item="..name..",quality="..quality.."]"
+                        local key = qname == "modules" and "[img=entity/entity-ghost][entity="..name..",quality="..quality.."]" or "[img=entity/entity-ghost][item="..name..",quality="..quality.."]"
                         items[key] = (items[key] or 0) + entry.count
                     end
                 end
