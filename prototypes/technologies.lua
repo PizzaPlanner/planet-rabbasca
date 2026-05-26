@@ -404,7 +404,7 @@ data:extend {
       { icon = data.raw["item"]["haronite-plate"].icon, icon_size = 64, shift = {12, 12}, scale = 0.5 },
     },
     icon_size = 256,
-    prerequisites = { "metallurgic-science-pack", "athletic-science-pack", "rabbasca-unhealthy-fluids" },
+    prerequisites = { "metallurgic-science-pack", "athletic-science-pack", "rabbasca-unhealthy-fluids", "cryogenic-science-pack" },
     effects =
     {
       {
@@ -617,7 +617,7 @@ data:extend {
     name = "rabbasca-unhealthy-fluids",
     icon = "__rabbasca-assets__/graphics/recolor/icons/harenic-lava.png",
     icon_size = 64,
-    prerequisites = { "cryogenic-science-pack", "rabbasca-healthy-fluids" },
+    prerequisites = { "rabbasca-healthy-fluids" },
     effects =
     {
       {
@@ -726,7 +726,7 @@ data:extend {
       { icon = data.raw["virtual-signal"]["down-arrow"].icon, icon_size = 64, shift = { 24,  24}, scale = 1.3, tint = {0, 1, 0} },
       { icon = data.raw["virtual-signal"]["up-arrow"].icon,   icon_size = 64, shift = { 24, -24}, scale = 1.3, tint = {1, 0, 0} },
     },
-    prerequisites = { "rabbasca-quality-assurance" },
+    prerequisites = { "rabbasca-quality-assurance", "utility-science-pack" },
     effects =
     {
       {

@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.14.5
+Date: ????
+  Changes:
+    - Increased carotenoid stack size to prevent vaults from clogging when connected to circuit network (20 -> 50)
+  Bugfixes:
+    - Fixed some cases of technologies not depending the science pack techs required for their research
+---------------------------------------------------------------------------------------------------
 Version: 0.14.4
 Date: 2026-05-25
   Bugfixes:

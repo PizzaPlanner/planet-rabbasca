@@ -39,6 +39,8 @@ data:extend({
 })
 
 table.insert(data.raw["technology"]["rabbasca-quality-assurance"].effects, { type = "unlock-recipe", recipe = "rabbasca-core-extraction-protocol" })
+table.insert(data.raw["technology"]["rabbasca-quality-assurance"].prerequisites, "metallurgic-science-pack")
+table.insert(data.raw["technology"]["rabbasca-quality-assurance"].prerequisites, "agricultural-science-pack")
 data.raw["technology"]["rabbasca-unhealthy-fluids"].localised_description = { "technology-description.rabbasca-unhealthy-fluids-alt" }
 table.insert(data.raw["technology"]["rabbasca-unhealthy-fluids"].prerequisites, "rabbasca-quality-assurance")
 data.raw["fluid"]["harenic-lava"].localised_description = { "" }
