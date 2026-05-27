@@ -96,8 +96,4 @@ script.on_event(defines.events.on_marked_for_deconstruction, function(event)
   M.mark_chunk_dirty(event.entity.surface_index, M.chunk_id(event.entity.position))
 end)
 
--- script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
--- -- TODO: can use this to show correct pylon radius??
--- end)
-
 return M

@@ -151,8 +151,21 @@ function M.register(data, pstorage)
     table.insert(q[data.name][data.quality], data)
 end
 
+function M.attach_warp_radius_visualization(e, quality)
+    return rendering.draw_sprite {
+        sprite = "utility.construction_radius_visualization",
+        tint = { 0.05, 0.1, 0.7, 0.2 },
+        render_layer = "radius-visualization",
+        target = e,
+        surface = e.surface,
+        x_scale = Rabbasca.get_warp_radius(quality) * 6.4,
+        y_scale = Rabbasca.get_warp_radius(quality) * 6.4,
+    }
+end
+
 function M.register_pylon(pylon)
     local id = M.register_chunks(pylon)
+    -- local spr = M.attach_warp_radius_visualization(pylon, pylon.quality)
     pylon.surface.create_entity {
         name = "rabbasca-network-cell-"..pylon.quality.name,
         position = pylon.position,

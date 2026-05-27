@@ -1,10 +1,12 @@
 ---------------------------------------------------------------------------------------------------
-Version: 0.14.5
-Date: ????
+Version: 0.15.0
+Date: 2026-05-27
   Changes:
     - Increased carotenoid stack size to prevent vaults from clogging when connected to circuit network (20 -> 50)
+    - Added incompatibility with Bullet Tracers (Ownly's) mod because it removes the hacking capabilities from vault access/security keys
   Bugfixes:
     - Fixed some cases of technologies not depending the science pack techs required for their research
+    - [with Crushing Industry] Fixed energetic concrete being uncraftable when CI's concrete mix was disabled via setting
 ---------------------------------------------------------------------------------------------------
 Version: 0.14.4
 Date: 2026-05-25
