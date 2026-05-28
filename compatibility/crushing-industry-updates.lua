@@ -5,7 +5,7 @@ CrushingIndustry.concrete_recipes["rabbasca-energetic-concrete"] = { ignore = tr
 local recipe = data.raw["recipe"]["rabbasca-energetic-concrete"]
 local mix  = data.raw["fluid"]["concrete-mix"]
 local residue = data.raw["fluid"]["energetic-residue"]
-local setting = settings.startup["crushing-industry-concrete-mix"].value
+local setting = settings.startup["crushing-industry-concrete-mix"]
 if not mix then return end
 if not (setting and setting.value) then return end
 if not recipe then return end
