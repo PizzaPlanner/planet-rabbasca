@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.15.2
+Date: 2026-05-30
+  Changes:
+    - Added polish locale (Thanks S3BA)
+  Bugfixes:
+    - Fixed vault access/security keys being shot repeatedly into access consoles that are currently being hacked
+---------------------------------------------------------------------------------------------------
 Version: 0.15.1
 Date: 2026-05-27
   Bugfixes:
