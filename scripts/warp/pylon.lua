@@ -79,6 +79,14 @@ local function try_deconstruct(data, name, quality, inventory, pylon)
         end
     else
         local name, count  = data.name, data.count
+        if entity.surface.get_tile(entity.position.x, entity.position.y).name ~= name then
+            return false -- prevent deconstructing hidden tiles first
+        end
+        local c = entity.position
+        c = { x = c.x + 0.5, y = c.y + 0.5}
+        local objs = entity.surface.find_entities_filtered{ area = {left_top = {c.x - 0.3, c.y - 0.3}, right_bottom = {c.x + 0.3, c.y + 0.3}}, collision_mask = "object" }
+        if #objs > 0 then return false end
+        
         local inserted = inventory.insert({name = name, count = count})
         if inserted == count then
             local hidden = entity.hidden_tile

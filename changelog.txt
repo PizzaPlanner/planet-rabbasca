@@ -3,6 +3,7 @@ Version: 0.15.3
 Date: 2026-05-31
   Bugfixes:
     - Fixed deconstructing inserters via warp sequence would also send their held items to warp inventory
+    - Fixed deconstructing tiles via warp sequence could remove buildings placed on top
 ---------------------------------------------------------------------------------------------------
 Version: 0.15.2
 Date: 2026-05-30
