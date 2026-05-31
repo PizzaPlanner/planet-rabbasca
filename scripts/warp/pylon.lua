@@ -64,6 +64,10 @@ local function try_deconstruct(data, name, quality, inventory, pylon)
             local spill_inventory = entity.get_inventory(k)
             if spill_inventory then entity.surface.spill_inventory { position = entity.position, inventory = spill_inventory, force = pylon.force } end
         end
+        if entity.type == "inserter" and entity.held_stack.valid_for_read then
+            entity.surface.spill_item_stack{ position = entity.position, stack = entity.held_stack, force = pylon.force }
+            entity.held_stack.clear()
+        end
         local surface, position = entity.surface, entity.position
         local size = { entity.bounding_box.right_bottom.x - entity.bounding_box.left_top.x, entity.bounding_box.right_bottom.y - entity.bounding_box.left_top.y }
         local result = entity.mine{ inventory = inventory }
