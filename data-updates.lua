@@ -31,6 +31,6 @@ if settings.startup["rabbasca-harene-easy-mode"].value then
 end
 
 require("scripts.not-on-my-lawn")
-require("scripts.machine-assembly")
+require("scripts.machine-assembly-updates")
 
 require("compatibility.crushing-industry-updates")

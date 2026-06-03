@@ -252,24 +252,10 @@ function Rabbasca.create_ears_variant(thing, tech, extra_cost)
     return new_thing
 end
 
-local function is_assembled(recipe)
-    local assembled_categories = data.raw["assembling-machine"]["assembling-machine-3"].crafting_categories
-    for _, category in pairs(assembled_categories) do
-        if not recipe.category or (recipe.category == category) then return true end
-        if recipe.additional_categories then 
-            for _, add in pairs(recipe.additional_categories) do
-                if add == category then return true end
-            end
-        end
-    end
-    return false
-end
-
-function Rabbasca.make_complex_machinery(proto, require_assembling_machine_craftable)
+function Rabbasca.make_complex_machinery(proto)
   if not proto then return end
   local recipe = data.raw["recipe"][proto.name]
   if not recipe then return end
-  if require_assembling_machine_craftable and (not is_assembled(recipe)) then return end
   log("Add complex-machinery to additional_categories of: "..recipe.name)
   recipe.additional_categories = recipe.additional_categories or { }
   table.insert(recipe.additional_categories, "complex-machinery")
