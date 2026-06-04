@@ -28,6 +28,10 @@ local defender_1 = util.merge{
     render_layer = "air-object",
   }
 }
+defender_1.working_sound = nil
+defender_1.warcry = { filename = "__base__/sound/fight/robot-die-vox-1.ogg" }
+defender_1.dying_sound = { filename = "__base__/sound/fight/robot-selfdestruct-1.ogg", min_volume = 0.4, max_volume = 0.6}
+defender_1.dying_explosion = { "defender-robot-explosion" }
 defender_1.factoriopedia_simulation = table.deepcopy(data.raw["combat-robot"]["defender"].factoriopedia_simulation)
 defender_1.corpse = nil
 defender_1.absorptions_to_join_attack = { }
@@ -153,6 +157,7 @@ local vault_distractor = util.merge {
     }
   }
 }
+vault_distractor.corpse = nil
 
 local defender_heavy = util.merge {
     table.deepcopy(defender_2), 
@@ -181,6 +186,7 @@ defender_heavy.created_effect = {
   }
 }
 defender_heavy.run_animation = table.deepcopy(data.raw["combat-robot"]["distractor"].in_motion)
+defender_heavy.dying_explosion = { "distractor-robot-explosion" }
 defender_heavy.resistances = {
   { type = "physical", percent = 80, decrease = 12 },
   { type = "explosion", percent = 17 },
@@ -227,6 +233,7 @@ defender_ouchy.created_effect = {
   }
 }
 defender_ouchy.run_animation = table.deepcopy(data.raw["combat-robot"]["destroyer"].in_motion)
+defender_heavy.dying_explosion = { "destroyer-robot-explosion" }
 defender_ouchy.resistances = {
   { type = "physical", percent = 0, decrease = 14 },
   { type = "explosion", percent = 10 },

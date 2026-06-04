@@ -21,7 +21,7 @@ Rabbasca.create_vault_recipe("rabbasca-core-extraction-protocol", {
   },
   ingredients = {
       { type = "item", name = "vault-security-key", amount = 100 },
-      { type = "item",  name = "haronite-plate", amount = 5 },
+      { type = "item",  name = "rabbasca-warp-core", amount = 10 },
   },
   results = { 
       { type = "item", name = "rabbasca-core-extraction-protocol", amount = 1 },
