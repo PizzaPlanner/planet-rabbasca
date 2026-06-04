@@ -22,6 +22,16 @@ local function handle_script_events(event)
       local vault = vaults and vaults[1]
       rutil.rabbasca_udpate_vault_force(vault, from.force)
     end
+  elseif effect_id == "rabbasca_on_warp_explosion" then
+    local e = event.target_entity
+    if not e then return end
+    if e.type == "character" or e.type == "car" or e.type == "spider-vehicle" or e.type == "unit" then
+      local pos_new = { x = e.position.x + math.random(-286, 286), y = e.position.y + math.random(-286, 286) }
+      pos_new = e.surface.find_non_colliding_position(e.name, pos_new, 24, 1, true)
+      if pos_new then e.teleport(pos_new, nil, true) end
+    elseif not e.has_flag("not-on-map") then
+      e.damage(255, event.source_entity and event.source_entity.force or nil, "impact", event.source_entity, event.source_entity)
+    end
   elseif effect_id == "rabbasca_on_modulate_vault_security" then
     local from = Rabbasca.get_spoiled_in(event)
     if not from then return end

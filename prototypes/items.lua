@@ -1,3 +1,80 @@
+local sounds = require("__base__.prototypes.entity.sounds")
+require("prototypes.warp-grenade")
+
+local core_impact_effects = {
+{
+  type = "direct",
+  action_delivery =
+  {
+    type = "instant",
+    target_effects =
+    {
+      {
+        type = "create-entity",
+        entity_name = "rabbasca-warp-grenade-fissure"
+      },
+    }
+  }
+},
+{
+  type = "area",
+  radius = 5,
+  action_delivery =
+  {
+    type = "instant",
+    target_effects =
+    {
+      {
+        type = "damage",
+        damage = {amount = 55, type = "explosion"}
+      },
+      {
+        type = "create-entity",
+        entity_name = "explosion"
+      }
+    }
+  }
+}
+}
+
+data:extend {
+{
+    type = "projectile",
+    name = "rabbasca-warp-core",
+    flags = {"not-on-map"},
+    hidden = true,
+    acceleration = 0.01,
+    action = core_impact_effects,
+    light = {intensity = 0.5, size = 4},
+    animation =
+    {
+      filename = "__base__/graphics/entity/grenade/grenade.png",
+      draw_as_glow = true,
+      frame_count = 15,
+      line_length = 8,
+      animation_speed = 0.250,
+      width = 48,
+      height = 54,
+      shift = util.by_pixel(0.5, 0.5),
+      priority = "high",
+      scale = 0.5
+    },
+    shadow =
+    {
+      filename = "__base__/graphics/entity/grenade/grenade-shadow.png",
+      frame_count = 15,
+      line_length = 8,
+      animation_speed = 0.250,
+      width = 50,
+      height = 40,
+      shift = util.by_pixel(2, 6),
+      priority = "high",
+      draw_as_shadow = true,
+      scale = 0.5
+    }
+  },
+}
+
 data:extend {
 {
   type = "fuel-category",
@@ -49,10 +126,8 @@ data:extend {
 },
 {
     type = "item",
-    icons = {
-        { icon = data.raw["item"]["low-density-structure"].icon, icon_size = 64, scale = 0.8, shift = {6, 4} },
-        { icon = "__Krastorio2Assets__/icons/items/imersium-plate.png", icon_size = 64, scale = 0.5, shift = {-6, -4} },
-    },
+    icon = "__rabbasca-assets__/graphics/recolor/icons/haronite-lds.png",
+    icon_size = 64,
     name = "haronite-rocket-frame",
     stack_size = 50,
     weight = 20*kg,
@@ -232,14 +307,68 @@ util.merge { data.raw["item"]["rocket-fuel"],
     order = "b[processed]-a[bottle]",
 },
 {
-    type = "item",
-    icon = "__rabbasca-assets__/graphics/by-openai/warp-core.png",
-    icon_size = 432,
+    type = "capsule",
+    icons = {
+      { icon = "__rabbasca-assets__/graphics/by-openai/warp-trace.png", icon_size = 256 },
+      { icon = "__rabbasca-assets__/graphics/recolor/icons/warp-core.png", icon_size = 64 }
+    },
     name = "rabbasca-warp-core",
+    capsule_action =
+    {
+      type = "throw",
+      attack_parameters =
+      {
+        type = "projectile",
+        activation_type = "throw",
+        ammo_category = "grenade",
+        cooldown = 30,
+        projectile_creation_distance = 0.6,
+        range = 25,
+        ammo_type =
+        {
+          target_type = "position",
+          action =
+          {
+            {
+              type = "direct",
+              action_delivery =
+              {
+                type = "projectile",
+                projectile = "rabbasca-warp-core",
+                starting_speed = 0.5
+              }
+            },
+            {
+              type = "direct",
+              action_delivery =
+              {
+                type = "instant",
+                target_effects =
+                {
+                  {
+                    type = "play-sound",
+                    sound = sounds.throw_projectile
+                  },
+                  {
+                    type = "play-sound",
+                    sound = sounds.throw_grenade
+                  },
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     stack_size = 5,
     weight = 100*kg,
-    subgroup = "rabbasca-security",
-    order = "x[rabbasca-warp-core]",
+    subgroup = "rabbasca-processes",
+    order = "w[warp]-a[warp-core]",
+    spoil_ticks = 2 * hour,
+    spoil_to_trigger_result = {
+      items_per_trigger = 1,
+      trigger = core_impact_effects,
+    },
     auto_recycle = false,
 },
 {
