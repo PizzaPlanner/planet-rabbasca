@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.16.0
+Date: 2026-06-04
+  Changes:
+    - Rabbasca's purple tint is now less aggressive
+    - Updated icons for warp core and haronite rocket frame
+    - Warp core is now unstable. It can be thrown as a grenade and will spoil into an explosion
+    - Core extraction protocol recipe now takes 10 warp cores instead of 5 haronite plates
+    - Vault defenders now use correct sounds and dying animation
+  Bugfixes:
+    - Fixed harenic energy field not being immune to damage
+---------------------------------------------------------------------------------------------------
 Version: 0.15.4
 Date: 2026-06-04
   Changes:
