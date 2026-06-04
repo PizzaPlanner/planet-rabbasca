@@ -29,6 +29,11 @@ for _, res in pairs(console.resistances) do
   end
 end
 
+local efield = data.raw["electric-energy-interface"]["rabbasca-energy-source"]
+efield.resistances = efield.resistances or { }
+for _, damage in pairs(data.raw["damage-type"]) do
+  table.insert(efield.resistances, { type = damage.name, percent = 100 })
+end
 
 local biochamber = data.raw["assembling-machine"]["biochamber"]
 biochamber.energy_source.burnt_inventory_size = biochamber.energy_source.burnt_inventory_size or 1
