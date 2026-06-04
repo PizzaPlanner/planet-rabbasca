@@ -174,6 +174,10 @@ script.on_event(defines.events.on_surface_created, function(event)
     surface.create_global_electric_network()
     surface.request_to_generate_chunks({0, 0}, 1)
     surface.force_generate_chunk_requests()
+    if surface.no_enemies_mode then
+      game.print({ "rabbasca-extra.no-enemies-mode-ignored" })
+      surface.no_enemies_mode = false
+    end
   end
 end)
 

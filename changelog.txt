@@ -1,6 +1,8 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.15.4
-Date: 2026-06-03
+Date: 2026-06-04
+  Changes:
+    - "No enemies" setting is now ignored on Rabbasca, as progression is impossible without enemies. 
   Bugfixes:
     - Fixed alternative recipes for machines not being usable in machining assembler
 ---------------------------------------------------------------------------------------------------
