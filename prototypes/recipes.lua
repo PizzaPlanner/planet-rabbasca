@@ -53,10 +53,10 @@ data:extend {
     {
         type = "recipe",
         name = "carbon-from-carotenoid",
-        icons = {
-            { icon = data.raw["item"]["carbon"].icon, icon_size = 64, scale = 0.8, shift = {6, 4} },
-            { icon = data.raw["item"]["carotenoid-ore"].icon, icon_size = 64, scale = 0.5, shift = {-6, -4} },
-        },
+        icons = Rabbasca.icons({
+            { proto = data.raw["item"]["carbon"], scale = 0.8, shift = {6, 4} },
+            { proto = data.raw["item"]["carotenoid-ore"], scale = 0.5, shift = {-6, -4} },
+        }),
         energy_required = 7.0,
         enabled = false,
         ingredients = { 

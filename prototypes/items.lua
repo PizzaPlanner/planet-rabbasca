@@ -364,7 +364,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
     weight = 100*kg,
     subgroup = "rabbasca-processes",
     order = "w[warp]-a[warp-core]",
-    spoil_ticks = 2 * hour,
+    spoil_ticks = settings.startup["rabbasca-warp-core-spoils"].value and 2 * hour or 0,
     spoil_to_trigger_result = {
       items_per_trigger = 1,
       trigger = core_impact_effects,

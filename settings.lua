@@ -106,6 +106,13 @@ data:extend{
   },
   {
     type = "bool-setting",
+    name = "rabbasca-warp-core-spoils",
+    setting_type = "startup",
+    default_value = true,
+    order="u[ux]"
+  },
+  {
+    type = "bool-setting",
     name = "rabbasca-deconstruct-captured-pylons",
     setting_type = "runtime-global",
     default_value = false,

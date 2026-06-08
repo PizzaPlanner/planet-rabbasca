@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.16.1
+Date: 2026-06-08
+  Changes:
+    - Added a setting to disable warp core spoiling (default: spoiling enabled)
+  Bugfixes:
+    - Fixed crash when another mod modifies the carbon icon
+---------------------------------------------------------------------------------------------------
 Version: 0.16.0
 Date: 2026-06-04
   Changes:
