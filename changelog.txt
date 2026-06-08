@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.16.2
+Date: 2026-06-08
+  Changes:
+    - [with k2so and APS on rabbasca] Added submachine gun and shelter to starting gear
+    - [with k2so] Intruder remains now also contain rifle magazine and anti-materiel rifle magazine
+  Bugfixes:
+    - Fixed omega carotene being shown in player crafting
+---------------------------------------------------------------------------------------------------
 Version: 0.16.1
 Date: 2026-06-08
   Changes:

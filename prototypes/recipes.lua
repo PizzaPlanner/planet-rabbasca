@@ -590,6 +590,7 @@ data:extend {
             { type = "fluid", name = "omega-carotene", amount = 100 },
         },
         allow_productivity = false,
+        hide_from_player_crafting = true,
         category = "chemistry-or-cryogenics",
         crafting_machine_tint =
         {

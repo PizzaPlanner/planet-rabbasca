@@ -194,17 +194,24 @@ end)
 local function give_starter_items()
   if not Rabbasca.is_aps_planet() then return end
   if not remote.interfaces["freeplay"] then return end
-  remote.call("freeplay", "set_ship_items", 
-  {
-      ["iron-plate"] = 100,
-  })
-  remote.call("freeplay", "set_created_items", {
+  local starter_gear = {
       ["pistol"] = 1,
       ["firearm-magazine"] = 40,
       ["transport-belt"] = 200,
       ["small-electric-pole"] = 1,
       ["burner-mining-drill"] = 2
+  }
+  if prototypes.item["pistol"].attack_parameters.ammo_categories[1] ~= prototypes.item["vault-access-key"].ammo_category.name then
+    starter_gear["submachine-gun"] = 1
+  end
+  if prototypes.item["kr-shelter"] then
+    starter_gear["kr-shelter"] = 1
+  end
+  remote.call("freeplay", "set_ship_items", 
+  {
+      ["iron-plate"] = 100,
   })
+  remote.call("freeplay", "set_created_items", starter_gear)
   remote.call("freeplay", "set_debris_items", {
       ["iron-plate"] = 15,
   })
