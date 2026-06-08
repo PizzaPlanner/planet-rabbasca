@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.16.3
+Date: 2026-06-08
+  Bugfixes:
+    - Fixed vault defenders not selectable in turret target priorities list. This reverts a previous fix that made them hidden in the bonus UI
+---------------------------------------------------------------------------------------------------
 Version: 0.16.2
 Date: 2026-06-08
   Changes:
