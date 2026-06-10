@@ -15,10 +15,10 @@ for _, damage in pairs(data.raw["damage-type"]) do
 end
 
 Rabbasca.create_vault_recipe("rabbasca-core-extraction-protocol", {
-  icons = {
+  icons = Rabbasca.icons({
     { icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64 },
-    { icon = data.raw["virtual-signal"]["signal-explosion"].icon, icon_size = 64, scale = 0.3, shift = { 8, 8 } }
-  },
+    { proto = data.raw["virtual-signal"]["signal-explosion"], scale = 0.3, shift = { 8, 8 } }
+  }),
   ingredients = {
       { type = "item", name = "vault-security-key", amount = 100 },
       { type = "item",  name = "rabbasca-warp-core", amount = 10 },
@@ -36,10 +36,10 @@ data:extend({
       subgroup = "rabbasca-vault-extraction",
       hidden = false,
       order = "z[bye]",
-      icons = {
+      icons = Rabbasca.icons({
         { icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64 },
-        { icon = data.raw["virtual-signal"]["signal-explosion"].icon, icon_size = 64, scale = 0.3, shift = { 8, 8 } }
-      }
+        { proto = data.raw["virtual-signal"]["signal-explosion"], scale = 0.3, shift = { 8, 8 } }
+      })
     },"rabbasca_on_modulate_vault_security")
 })
 
