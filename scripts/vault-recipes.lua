@@ -1,8 +1,8 @@
 Rabbasca.create_vault_recipe("vault-protocol-haronite", {
-  icons = {
+  icons = Rabbasca.icons({
     {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
-    {icon = data.raw["item"]["haronite"].icon, icon_size = 64, shift = {8, 8}, scale = 0.4},
-  },
+    {proto = data.raw["item"]["haronite"], shift = {8, 8}, scale = 0.4},
+  }),
   results = {{type = "item", name = "haronite", amount = 5 }}, 
   energy_required = 45,
   main_product = "haronite",
@@ -11,10 +11,10 @@ Rabbasca.create_vault_recipe("vault-protocol-haronite", {
 })
 Rabbasca.create_vault_recipe("vault-protocol-harene-ears-subcore",
 {
-  icons = {
+  icons = Rabbasca.icons({
     {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
-    {icon = data.raw["item"]["harene-ears-core"].icon, icon_size = 64, shift = {8, 8}, scale = 0.4},
-  },
+    {proto = data.raw["item"]["harene-ears-core"], shift = {8, 8}, scale = 0.4},
+  }),
   results = {{type = "item", name = "harene-ears-subcore", amount = 1 }}, 
   energy_required = settings.startup["rabbasca-ears-local-only"].value and 90 or 300,
   main_product = "harene-ears-subcore",
@@ -22,10 +22,10 @@ Rabbasca.create_vault_recipe("vault-protocol-harene-ears-subcore",
   allow_productivity = true,
 })
 Rabbasca.create_vault_recipe("vault-protocol-iron-ore", {
-  icons = {
+  icons = Rabbasca.icons({
     {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
-    {icon = data.raw["item"]["iron-ore"].icon, icon_size = 64, shift = {8, 8}, scale = 0.4},
-  },
+    {proto = data.raw["item"]["iron-ore"], shift = {8, 8}, scale = 0.4},
+  }),
   results = {
     {type = "item", name = "iron-ore", amount = 100 },
   }, 
@@ -34,10 +34,10 @@ Rabbasca.create_vault_recipe("vault-protocol-iron-ore", {
   allow_productivity = true,
 })
 Rabbasca.create_vault_recipe("vault-protocol-copper-ore", {
-  icons = {
+  icons = Rabbasca.icons({
     {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
-    {icon = data.raw["item"]["copper-ore"].icon, icon_size = 64, shift = {8, 8}, scale = 0.4},
-  },
+    {proto = data.raw["item"]["copper-ore"], shift = {8, 8}, scale = 0.4},
+  }),
   results = {
     {type = "item", name = "copper-ore", amount = 90 },
   }, 
@@ -46,10 +46,10 @@ Rabbasca.create_vault_recipe("vault-protocol-copper-ore", {
   allow_productivity = true,
 })
 Rabbasca.create_vault_recipe("vault-protocol-water", {
-  icons = {
+  icons = Rabbasca.icons({
     {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
-    {icon = data.raw["fluid"]["water"].icon, icon_size = 64, shift = {8, 8}, scale = 0.4},
-  },
+    {proto = data.raw["fluid"]["water"], shift = {8, 8}, scale = 0.4},
+  }),
   results = {
     {type = "item", name = "water-barrel", amount = 10 },
   }, 
@@ -58,10 +58,10 @@ Rabbasca.create_vault_recipe("vault-protocol-water", {
   allow_productivity = true,
 })
 Rabbasca.create_vault_recipe("vault-protocol-sulfur", {
-  icons = {
+  icons = Rabbasca.icons({
     {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
-    {icon = data.raw["item"]["sulfur"].icon, icon_size = 64, shift = {8, 8}, scale = 0.4},
-  },
+    {proto = data.raw["item"]["sulfur"], shift = {8, 8}, scale = 0.4},
+  }),
   results = {
     {type = "item", name = "sulfur", amount = 8 },
   }, 
@@ -70,11 +70,11 @@ Rabbasca.create_vault_recipe("vault-protocol-sulfur", {
   allow_productivity = true,
 })
 Rabbasca.create_vault_recipe("rabbasca-security-modulation-up", {
-  icons = {
+  icons = Rabbasca.icons({
     {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
-    {icon = data.raw["unit"]["vault-defender-heavy"].icon, icon_size = 64, shift = {-8, 8}, scale = 0.4 },
-    {icon = data.raw["virtual-signal"]["up-arrow"].icon,   icon_size = 64, shift = { 8, 8}, scale = 0.4, tint = {1, 0, 0} },
-  },
+    {proto = data.raw["unit"]["vault-defender-heavy"], shift = {-8, 8}, scale = 0.4 },
+    {proto = data.raw["virtual-signal"]["up-arrow"], shift = { 8, 8}, scale = 0.4, tint = {1, 0, 0} },
+  }),
   ingredients = {
       { type = "item", name = "vault-security-key", amount = 5 },
       { type = "item",  name = "haronite-plate", amount = 1 },
@@ -87,11 +87,11 @@ Rabbasca.create_vault_recipe("rabbasca-security-modulation-up", {
   order = "z[effects]-m[up]"
 })
 Rabbasca.create_vault_recipe("rabbasca-security-modulation-down", {
-  icons = {
+  icons = Rabbasca.icons({
     {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
-    {icon = data.raw["unit"]["vault-defender-heavy"].icon, icon_size = 64, shift = {-8, 8}, scale = 0.4 },
-    {icon = data.raw["virtual-signal"]["down-arrow"].icon, icon_size = 64, shift = { 8, 8}, scale = 0.4, tint = {0, 1, 0} },
-  },
+    {proto = data.raw["unit"]["vault-defender-heavy"], shift = {-8, 8}, scale = 0.4 },
+    {proto = data.raw["virtual-signal"]["down-arrow"], shift = { 8, 8}, scale = 0.4, tint = {0, 1, 0} },
+  }),
   ingredients = {
       { type = "item", name = "vault-security-key", amount = 5 },
       { type = "item",  name = "haronite-plate", amount = 1 },
@@ -104,10 +104,10 @@ Rabbasca.create_vault_recipe("rabbasca-security-modulation-down", {
   order = "z[effects]-m[down]"
 })
 Rabbasca.create_vault_recipe("rabbasca-quality-assurance", {
-  icons = {
+  icons = Rabbasca.icons({
     {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
-    {icon = data.raw["virtual-signal"]["signal-any-quality"].icon, icon_size = 64, shift = {8, 8}, scale = 0.4 },
-  },
+    {proto = data.raw["virtual-signal"]["signal-any-quality"], shift = {8, 8}, scale = 0.4 },
+  }),
   ingredients = {
       { type = "item", name = "vault-security-key", amount = 10 },
       { type = "item",  name = "rabbasca-warp-core", amount = 3 },
