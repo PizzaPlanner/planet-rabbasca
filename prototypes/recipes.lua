@@ -425,10 +425,10 @@ data:extend {
         },
         results = {
             { type = "fluid", name = "energetic-residue", amount = 90 },
-            { type = "item", name = "spoilage", amount = 1, probability = 0.06 },
-            { type = "item", name = "advanced-circuit", amount = 1, probability = 0.05 },
+            { type = "item", name = "spoilage", amount = 1, probability = 0.033 },
+            { type = "item", name = "advanced-circuit", amount = 1, probability = 0.09 },
             { type = "item", name = "electronic-circuit", amount = 1, probability = 0.04 },
-            { type = "item", name = "plastic-bottle", amount = 1, probability = 0.03 },
+            { type = "item", name = "plastic-bottle", amount = 1, probability = 0.045 },
         },
         allow_quality = false,
         hide_from_player_crafting = true,
