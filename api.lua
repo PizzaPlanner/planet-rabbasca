@@ -169,7 +169,7 @@ local function create_infused_thing_with_effect(original, extra_cost)
         { proto = ears_item, scale = 0.3, shift = {0, 12} }
     })
     new_item.place_result = new_name
-    new_item.subgroup = (new_item.subgroup or "unknown") .. "-with-ears-core" 
+    new_item.subgroup = (new_item.subgroup or "unknown") .. "-with-ears-core"
     new_item.factoriopedia_alternative = original.name
 
     new.name = new_name
@@ -177,7 +177,6 @@ local function create_infused_thing_with_effect(original, extra_cost)
     new.localised_description = original.localised_description and {"rabbasca-extra.with-ears-description", original.localised_description} or {"rabbasca-extra.with-ears-description-noparam"}
     new.factoriopedia_alternative = original.name
     new.hidden_in_factoriopedia = true
-    new.hidden = new.type ~= "beacon" -- if true, variant is hidden in "Made in" list in tooltips, but hides also hidden in list of beacons affecting a machine
     new.icons = Rabbasca.icons({
         { proto = original },
         { proto = ears_item, scale = 0.3, shift = {0, 12} }
@@ -194,6 +193,7 @@ local function create_infused_thing_with_effect(original, extra_cost)
             end
         end
     end
+    table.insert(new.flags, "not-in-made-in")
     new.factoriopedia_alternative = original.name
     new.energy_source = util.merge{
         original.energy_source,
