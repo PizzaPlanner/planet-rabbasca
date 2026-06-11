@@ -3,7 +3,7 @@ local rebuild_network = require("__planet-rabbasca__.scripts.warp.rebuild-warp-n
 
 local function awake(pylon)
     if pylon.valid and pylon.get_recipe() == nil then
-        pylon.set_recipe("rabbasca-remote-warmup")
+        pylon.set_recipe("rabbasca-warp-sequence")
     end
 end
 --- Last TEST: ././7.5 VS ././5 VS ././4

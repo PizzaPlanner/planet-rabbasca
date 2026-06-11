@@ -6,10 +6,10 @@ local function make_warp_sequence(name, icon, tint)
 return {
     type = "recipe",
     name = name,
-    icons = {
+    icons = Rabbasca.icons({
       { icon = "__rabbasca-assets__/graphics/icons/warp.png", icon_size = 64 },
-      { icon = icon, icon_size = 64, scale = 0.25, shift = { 8, 8 } },
-    },
+      { proto = icon, icon_size = 64, scale = 0.25, shift = { 8, 8 } },
+    }),
     enabled = false,
     hide_from_player_crafting = true,
     hidden = true,
@@ -251,15 +251,16 @@ data:extend {
     group = data.raw["item-group"]["rabbasca-extensions"] and "rabbasca-extensions" or "space",
     order = "03[remote-warping]"
 },
-make_warp_sequence("rabbasca-warp-sequence-building", data.raw["entity-ghost"]["entity-ghost"].icon, {1, 1, 1}),
-make_warp_sequence("rabbasca-warp-sequence-tile", data.raw["tile-ghost"]["tile-ghost"].icon, {1, 0.6, 1}),
-make_warp_sequence("rabbasca-warp-sequence-module", data.raw["item-request-proxy"]["item-request-proxy"].icon, {1, 1, 0.7}),
-make_warp_sequence("rabbasca-warp-sequence-reverse", data.raw["deconstruction-item"]["deconstruction-planner"].icon, {1, 0.3, 0,3}),
-make_warp_sequence("rabbasca-warp-sequence-upgrade", data.raw["upgrade-item"]["upgrade-planner"].icon, {0.5, 1, 0.5}),
+make_warp_sequence("rabbasca-warp-sequence-building", data.raw["entity-ghost"]["entity-ghost"], {1, 1, 1}),
+make_warp_sequence("rabbasca-warp-sequence-tile", data.raw["tile-ghost"]["tile-ghost"], {1, 0.6, 1}),
+make_warp_sequence("rabbasca-warp-sequence-module", data.raw["item-request-proxy"]["item-request-proxy"], {1, 1, 0.7}),
+make_warp_sequence("rabbasca-warp-sequence-reverse", data.raw["deconstruction-item"]["deconstruction-planner"], {1, 0.3, 0,3}),
+make_warp_sequence("rabbasca-warp-sequence-upgrade", data.raw["upgrade-item"]["upgrade-planner"], {0.5, 1, 0.5}),
 {
     type = "recipe",
-    name = "rabbasca-remote-warmup",
-    icon = data.raw["virtual-signal"]["signal-hourglass"].icon,
+    name = "rabbasca-warp-sequence",
+    icon = "__rabbasca-assets__/graphics/icons/warp.png",
+    icon_size = 64,
     enabled = true,
     hidden = false,
     hide_from_player_crafting = true,
@@ -270,8 +271,6 @@ make_warp_sequence("rabbasca-warp-sequence-upgrade", data.raw["upgrade-item"]["u
     ingredients = { },
     results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1 } },
     category = "rabbasca-remote",
-    subgroup = "rabbasca-remote-warping",
-    order = "d[warmup]",
     crafting_machine_tint = {primary = {0.3, 0.35, 0.4}}
 },
 {

@@ -2,7 +2,8 @@
 Version: 0.17.0
 Date: 2026-06-10
   Changes:
-    - Updated ancient vault tips and tricks entry and added various links between factoriopedia entries related to alertness
+    - Updated tips and tricks entries and added various links between factoriopedia entries related to alertness and warping
+    - Renamed Warm-up sequence recipe to Warp sequence, matching the produced dummy item so they share the same factoriopedia entry
   Balancing:
     - Adjusted result chances for energetic residue skimming (spoilage: 6% -> 3.3%, advanced circuit: 6% -> 9%, plastic bottle: 3% -> 4.5%)
   Bugfixes:

@@ -272,7 +272,7 @@ function M.attempt_build_ghost(pylon)
         for _, chunkid in pairs(pdata.chunks) do
             for _, queue in pairs(storage.warp_chunks[pylon.surface_index][chunkid].queue) do
                 if next(queue) ~= nil then
-                    pylon.set_recipe("rabbasca-remote-warmup")
+                    pylon.set_recipe("rabbasca-warp-sequence")
                     return
                 end
             end
