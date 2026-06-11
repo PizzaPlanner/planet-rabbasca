@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.17.0
+Date: 2026-06-10
+  Changes:
+    - Updated ancient vault tips and tricks entry and added various links between factoriopedia entries related to alertness
+  Balancing:
+    - Adjusted result chances for energetic residue skimming (spoilage: 6% -> 3.3%, advanced circuit: 6% -> 9%, plastic bottle: 3% -> 4.5%)
+  Bugfixes:
+    - Fixed crash when another mod modifies icons of some signals
+    - Fixed E.A.R.S. variants not being selectable in some UIs (i.e. Factory Planner)
+---------------------------------------------------------------------------------------------------
 Version: 0.16.3
 Date: 2026-06-08
   Bugfixes:
