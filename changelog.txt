@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.17.1
+Date: 2026-06-11
+  Changes:
+    - Warp inventory uplink can now be placed on space platforms
+    - Added expensive science setting (default off), that adds exoskeleton to athletic science pack ingredients
+---------------------------------------------------------------------------------------------------
 Version: 0.17.0
 Date: 2026-06-10
   Changes:

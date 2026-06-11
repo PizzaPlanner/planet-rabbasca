@@ -106,6 +106,13 @@ data:extend{
   },
   {
     type = "bool-setting",
+    name = "rabbasca-hard-science",
+    setting_type = "startup",
+    default_value = false,
+    order="a[balance]"
+  },
+  {
+    type = "bool-setting",
     name = "rabbasca-warp-core-spoils",
     setting_type = "startup",
     default_value = true,

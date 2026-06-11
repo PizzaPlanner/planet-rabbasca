@@ -75,7 +75,7 @@ data:extend {
     animation_sound = sounds.logistics_chest_open,
     impact_category = "metal",
     opened_duration = logistic_chest_opened_duration,
-    surface_conditions = { Rabbasca.above_harenic_threshold(0.1) },
+    surface_conditions = { { property = "rabbasca-or-space", min = 1, max = 1 } },
     animation =
     {
       layers =

@@ -178,6 +178,7 @@ PlanetsLib:extend({
         ["pressure"] = 20,
         ["magnetic-field"] = 0.01,
         ["harenic-energy-signatures"] = Rabbasca.surface_megawatts(),
+        ["rabbasca-or-space"] = 1,
     },
     surface_render_parameters = {
       shadow_opacity = 0.73,
@@ -237,4 +238,12 @@ data:extend{
   name = "harenic-energy-signatures",
   default_value = 0
 },
+{
+  type = "surface-property",
+  name = "rabbasca-or-space",
+  hidden_in_factoriopedia = true, -- not hidden for space-platform (because not a planet?); set name to empty in locale to actually hide
+  default_value = 0
+},
 }
+
+data.raw["surface"]["space-platform"].surface_properties["rabbasca-or-space"] = 1
