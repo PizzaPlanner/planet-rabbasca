@@ -193,6 +193,7 @@ local function create_infused_thing_with_effect(original, extra_cost)
             end
         end
     end
+    new.flags = new.flags or { }
     table.insert(new.flags, "not-in-made-in")
     new.factoriopedia_alternative = original.name
     new.energy_source = util.merge{
