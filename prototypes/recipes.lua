@@ -91,7 +91,9 @@ data:extend {
             secondary = { 0.78, 0.5, 0.05 },
             tertiary = { 0.8, 0.42, 0.02 },
             quaternary = { 0.78, 0.5, 0.05 },
-        }
+        },
+        subgroup = "rabbasca-processes",
+        order = "r[rabbasca]-a[beta-carotene]",
     },
     {
         type = "recipe",
@@ -114,6 +116,8 @@ data:extend {
         hide_from_player_crafting = true,
         category = "cryogenics",
         surface_conditions = { { property = "magnetic-field", min = 40 } },
+        subgroup = "rabbasca-processes",
+        order = "r[rabbasca]-c[harene]",
     },
     {
         type = "recipe",
@@ -598,7 +602,9 @@ data:extend {
             secondary = {r = 0.745, g = 0.672, b = 0.527, a = 1.000},
             tertiary = {r = 0.894, g = 0.773, b = 0.596, a = 1.000},
             quaternary = {r = 0.812, g = 0.583, b = 0.202, a = 1.000},
-        }
+        },
+        subgroup = "rabbasca-processes",
+        order = "r[rabbasca]-a[omega-carotene]",
     },
 }
 

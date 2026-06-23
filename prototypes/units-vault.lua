@@ -29,8 +29,8 @@ local defender_1 = util.merge{
   }
 }
 defender_1.working_sound = nil
-defender_1.warcry = { filename = "__base__/sound/fight/robot-die-vox-1.ogg" }
-defender_1.dying_sound = { filename = "__base__/sound/fight/robot-selfdestruct-1.ogg", min_volume = 0.4, max_volume = 0.6}
+defender_1.warcry = { filename = "__base__/sound/fight/robot-die-vox-1.ogg", min_volume = 0.4, max_volume = 0.5, aggregation = { max_count = 3, remove = true, volume_reduction_rate = 1 } }
+defender_1.dying_sound = { filename = "__base__/sound/fight/robot-selfdestruct-1.ogg", min_volume = 0.4, max_volume = 0.6, aggregation = { max_count = 3, remove = true, volume_reduction_rate = 1 } }
 defender_1.dying_explosion = { "defender-robot-explosion" }
 defender_1.factoriopedia_simulation = table.deepcopy(data.raw["combat-robot"]["defender"].factoriopedia_simulation)
 defender_1.corpse = nil
@@ -158,6 +158,10 @@ local vault_distractor = util.merge {
   }
 }
 vault_distractor.corpse = nil
+vault_distractor.dying_sound = table.deepcopy(defender_1.dying_sound)
+vault_distractor.destroy_action =  { type = "direct", action_delivery = { type = "instant", source_effects = { type = "create-explosion", entity_name = "defender-robot-explosion" } } }
+vault_distractor.in_motion.scale = 0.25
+vault_distractor.idle.scale = 0.25
 
 local defender_heavy = util.merge {
     table.deepcopy(defender_2), 
@@ -323,7 +327,7 @@ defender_spawny.attack_parameters = {
   }
 }
 defender_spawny.attack_parameters.animation.scale = 2
-defender_spawny.run_animation.scale = 2
+defender_spawny.run_animation.scale = 5
 
 local defender_3 = util.merge { 
   defender_2,

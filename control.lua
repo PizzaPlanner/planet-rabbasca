@@ -132,8 +132,11 @@ local function on_pylon_capture_ended(id)
   storage.captured_pylon_cleanups[id] = nil
   if not game.surfaces[data.surface] then return end
   local pylon = game.surfaces[data.surface].find_entity({name = "rabbasca-warp-pylon", quality = data.quality}, data.position)
-  if pylon and settings.global["rabbasca-deconstruct-captured-pylons"].value then
-    pylon.order_deconstruction(pylon.force)
+  if pylon then
+    warp.register_pylon(pylon)
+    if settings.global["rabbasca-deconstruct-captured-pylons"].value then
+      pylon.order_deconstruction(pylon.force)
+    end
   end
 end
 

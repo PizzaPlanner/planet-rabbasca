@@ -1,4 +1,18 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.17.3
+Date: 2026-06-23
+  Changes:
+    - Hacking progress bar on enemy pylons is now easier to see
+    - Hacks now give visual feedback when interrupted (killed) by enemies
+    - Reduced volume of defender bot warcries and dying sounds
+    - vault distractors no longer leave behind a corpse
+  Balancing:
+    - Decreased time it takes to capture enemy pylons (60s -> 50s)
+    - Increased health of attempted hacks (access key: 100 -> 120, security key: 800 -> 1000)
+    - Vault access console crafting speed no longer scales with quality, so security key upkeep cost stays fixed
+  Bugfixes:
+    - Fixed pylons not being usable after capture without being deconstructed and rebuilt first
+---------------------------------------------------------------------------------------------------
 Version: 0.17.2
 Date: 2026-06-12
   Bugfixes:

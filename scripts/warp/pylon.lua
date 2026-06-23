@@ -255,9 +255,13 @@ end
 function M.attempt_build_ghost(pylon)
     local pdata = storage.warp_storage[pylon.unit_number]
     if not pdata then
-        game.print("[ERROR] Pylon broken: "..pylon.gps_tag)
-        pylon.set_recipe(nil)
-        return
+        M.register_pylon(pylon) -- register when not caught by an event. i.e. directly after capture without deconstructing it first
+        pdata = storage.warp_storage[pylon.unit_number]
+        if not pdata then
+            game.print("[ERROR] Pylon broken: "..pylon.gps_tag)
+            pylon.set_recipe(nil)
+            return
+        end
     end
     local inventory = storage.warp_inventory
     local range = Rabbasca.get_warp_radius(pylon.quality)

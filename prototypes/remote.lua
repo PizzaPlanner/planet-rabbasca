@@ -251,9 +251,9 @@ data:extend {
     group = data.raw["item-group"]["rabbasca-extensions"] and "rabbasca-extensions" or "space",
     order = "03[remote-warping]"
 },
-make_warp_sequence("rabbasca-warp-sequence-building", data.raw["entity-ghost"]["entity-ghost"], {1, 1, 1}),
-make_warp_sequence("rabbasca-warp-sequence-tile", data.raw["tile-ghost"]["tile-ghost"], {1, 0.6, 1}),
-make_warp_sequence("rabbasca-warp-sequence-module", data.raw["item-request-proxy"]["item-request-proxy"], {1, 1, 0.7}),
+make_warp_sequence("rabbasca-warp-sequence-building",data.raw["entity-ghost"]["entity-ghost"], {1, 1, 1}),
+make_warp_sequence("rabbasca-warp-sequence-tile",    data.raw["tile-ghost"]["tile-ghost"], {1, 0.6, 1}),
+make_warp_sequence("rabbasca-warp-sequence-module",  data.raw["item-request-proxy"]["item-request-proxy"], {1, 1, 0.7}),
 make_warp_sequence("rabbasca-warp-sequence-reverse", data.raw["deconstruction-item"]["deconstruction-planner"], {1, 0.3, 0,3}),
 make_warp_sequence("rabbasca-warp-sequence-upgrade", data.raw["upgrade-item"]["upgrade-planner"], {0.5, 1, 0.5}),
 {

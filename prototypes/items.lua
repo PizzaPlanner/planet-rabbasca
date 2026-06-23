@@ -540,7 +540,7 @@ util.merge{
     },
     ammo_category = "bullet",
     shoot_protected = true,
-    reload_time = 2 * second
+    reload_time = 10 * second
 },
 Rabbasca.make_trigger_item({
   name = "rabbasca-security-modulator",
