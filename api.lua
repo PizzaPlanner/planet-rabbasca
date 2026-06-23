@@ -44,7 +44,7 @@ end
 
 if not data then return end
 
-local recycling = require("__quality__.prototypes.recycling")
+local recycling = require("__recycler__.recycling")
 
 local function bunnyhop_range(value)
 return {
@@ -143,9 +143,8 @@ data:extend{
       allow_decomposition = false,
       always_show_products = true,
       ingredients = { },
-      category = "rabbasca-vault-extraction",
+      categories = { "rabbasca-vault-extraction" },
       subgroup = "rabbasca-vault-extraction",
-      result_is_always_fresh = true,
       auto_recycle = false, 
   }
 }
@@ -226,7 +225,7 @@ local function create_infused_thing_with_effect(original, extra_cost)
         results = { { type = "item", name = new_name, amount = 1 } },
         main_product = new_name,
         hide_from_player_crafting = true,
-        category = "install-ears-core",
+        categories = { "install-ears-core" },
         maximum_productivity = 1
     }
     data:extend {
@@ -258,8 +257,8 @@ function Rabbasca.make_complex_machinery(proto)
   local recipe = data.raw["recipe"][proto.name]
   if not recipe then return end
   log("Add complex-machinery to additional_categories of: "..recipe.name)
-  recipe.additional_categories = recipe.additional_categories or { }
-  table.insert(recipe.additional_categories, "complex-machinery")
+  recipe.categories = recipe.categories or { }
+  table.insert(recipe.categories, "complex-machinery")
 end
 
 function Rabbasca.make_trigger_item(item, effect_id)

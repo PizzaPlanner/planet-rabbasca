@@ -65,7 +65,7 @@ data:extend {
         results = { { type = "item", name = "carbon", amount = 10 } },
         main_product = "carbon",
         hide_from_player_crafting = true,
-        category = "smelting",
+        categories = { "smelting" },
         allow_productivity = true,
         auto_recycle = false,
     },
@@ -82,7 +82,7 @@ data:extend {
         results = { { type = "fluid", name = "beta-carotene", amount = 60 } },
         main_product = "beta-carotene",
         hide_from_player_crafting = true,
-        category = "organic-or-chemistry",
+        categories = { "organic", "chemistry" },
         allow_productivity = true,
         auto_recycle = false,
         crafting_machine_tint =
@@ -109,12 +109,12 @@ data:extend {
         results = { 
             { type = "fluid", name = "harene", amount = 25 },
             {type = "fluid",  name = "fluoroketone-hot", amount = 1000, ignored_by_productivity = 1000 },
-            {type = "item",  name = "harene-cryo-container-empty", amount = 1, probability = 0.2, ignored_by_productivity = 1 },
+            {type = "item",  name = "harene-cryo-container-empty", amount = 1, independent_probability = 0.2, ignored_by_productivity = 1 },
         },
         allow_productivity = true,
         main_product = "harene",
         hide_from_player_crafting = true,
-        category = "cryogenics",
+        categories = { "cryogenics" },
         surface_conditions = { { property = "magnetic-field", min = 40 } },
         subgroup = "rabbasca-processes",
         order = "r[rabbasca]-c[harene]",
@@ -137,7 +137,7 @@ data:extend {
         surface_conditions = { { property = "pressure", min = 300 } },
         allow_productivity = true,
         hide_from_player_crafting = true,
-        category = "crafting",
+        categories = { "crafting" },
     },
     {
         type = "recipe",
@@ -150,12 +150,12 @@ data:extend {
             {type = "fluid", name = "harenic-lava", amount = 500 },
         },
         results = { 
-            {type = "item",  name = "harene-cryo-container-filled", amount = 1, probability = 0.75 },
+            {type = "item",  name = "harene-cryo-container-filled", amount = 1, independent_probability = 0.75 },
         },
         allow_productivity = false,
         main_product = "harene-cryo-container-filled",
         hide_from_player_crafting = true,
-        category = "metallurgy",
+        categories = { "metallurgy" },
         spoil_ticks = 30 * second,
         spoil_result = "harene-cryo-container-empty",
         surface_conditions = { Rabbasca.above_harenic_threshold(0.1) },
@@ -177,7 +177,7 @@ data:extend {
             { type = "fluid", name = "molten-iron", amount = 20 },
         },
         main_product = "haronite-plate",
-        category = "metallurgy",
+        categories = { "metallurgy" },
         surface_conditions = { Rabbasca.above_harenic_threshold(0.1) },
     },
     {
@@ -193,7 +193,7 @@ data:extend {
             { type = "item", name = "haronite-rocket-frame", amount = 15  },
         },
         main_product = "haronite-rocket-frame",
-        category = "metallurgy",
+        categories = { "metallurgy" },
         surface_conditions = { Rabbasca.above_harenic_threshold() },
     },
     {
@@ -211,12 +211,12 @@ data:extend {
         results = { { type = "item", name = "machining-assembler", amount = 1 } },
         surface_conditions = { Rabbasca.above_harenic_threshold() },
         main_product = "machining-assembler",
-        category = "crafting-with-fluid",
+        categories = { "crafting-with-fluid" },
     },
     {
         type = "recipe",
         name = "solid-fuel-from-energetic-residue",
-        category = "chemistry",
+        categories = { "chemistry" },
         energy_required = 3,
         ingredients =
         {
@@ -256,7 +256,7 @@ data:extend {
             { type = "item", name = "ears-subcore-reactor-equipment", amount = 1 },
         },
         main_product = "ears-subcore-reactor-equipment",
-        category = "crafting",
+        categories = { "crafting" },
     },
     {
         type = "recipe",
@@ -275,7 +275,7 @@ data:extend {
         },
         -- hide_from_player_crafting = true,
         main_product = "bunnyhop-engine-equipment",
-        category = "crafting",
+        categories = { "crafting" },
     },
     {
         type = "recipe",
@@ -291,7 +291,7 @@ data:extend {
             { type = "item", name = "rabbasca-turbofuel", amount = 1 },
         },
         allow_productivity = true,
-        category = "chemistry",
+        categories = { "chemistry" },
         crafting_machine_tint =
         {
             primary = { 0.65, 0.31, 0.92},
@@ -311,12 +311,11 @@ data:extend {
             {type = "fluid", name = "harene-gas", amount = 10 },
         },
         results = { 
-            { type = "item", name = "rabbasca-turbofish", amount = 3, ignored_by_productivity = 2 },
+            { type = "item", name = "rabbasca-turbofish", amount = 3, ignored_by_productivity = 2, always_fresh = true },
         },
         main_product = "rabbasca-turbofish",
-        category = "organic-or-chemistry",
+        categories = { "organic", "chemistry" },
         allow_productivity = true,
-        result_is_always_fresh = true,
         subgroup = "nauvis-agriculture",
         order = "b[nauvis-agriculture]-b[turbofish-breeding]",
         auto_recycle = false,
@@ -340,7 +339,7 @@ data:extend {
             { type = "item", name = "protein-powder", amount = 5 },
         },
         main_product = "protein-powder",
-        category = "crafting",
+        categories = { "crafting" },
         allow_productivity = true,
         auto_recycle = false
     },
@@ -354,7 +353,7 @@ data:extend {
         },
         results = { {type = "item", name = "harene-ears-core", amount = 1 } },
         main_product = "harene-ears-core",
-        category = "crafting",
+        categories = { "crafting" },
     },
     {
         type = "recipe",
@@ -372,7 +371,7 @@ data:extend {
         results = { { type = "fluid", name = "lubricant", amount = 10 } },
         crafting_machine_tint = data.raw["recipe"]["lubricant"] and table.deepcopy(data.raw["recipe"]["lubricant"].crafting_machine_tint),
         main_product = "lubricant",
-        category = "chemistry",
+        categories = { "chemistry" },
         subgroup = "rabbasca-processes",
         order = "r[alternate-uses]-[lubricant]"
 
@@ -398,7 +397,7 @@ data:extend {
             tertiary = { 0.05, 1, 0.15 },
             quaternary = { 0, 0.96, 0.18 },
         },
-        category = "organic-or-chemistry",
+        categories = { "organic", "chemistry" },
     },
     {
         type = "recipe",
@@ -411,7 +410,7 @@ data:extend {
         results = {
             { type = "item", name = "plastic-bottle", amount = 3 }
         },
-        category = "crafting",
+        categories = { "crafting" },
     },
     {
         type = "recipe",
@@ -429,15 +428,15 @@ data:extend {
         },
         results = {
             { type = "fluid", name = "energetic-residue", amount = 90 },
-            { type = "item", name = "spoilage", amount = 1, probability = 0.033 },
-            { type = "item", name = "advanced-circuit", amount = 1, probability = 0.09 },
-            { type = "item", name = "electronic-circuit", amount = 1, probability = 0.04 },
-            { type = "item", name = "plastic-bottle", amount = 1, probability = 0.045 },
+            { type = "item", name = "spoilage", amount = 1, independent_probability = 0.033 },
+            { type = "item", name = "advanced-circuit", amount = 1, independent_probability = 0.09 },
+            { type = "item", name = "electronic-circuit", amount = 1, independent_probability = 0.04 },
+            { type = "item", name = "plastic-bottle", amount = 1, independent_probability = 0.045 },
         },
         allow_quality = false,
         hide_from_player_crafting = true,
         subgroup = "rabbasca-processes",
-        category = "crafting-with-fluid",
+        categories = { "crafting-with-fluid" },
         order = "r[alternate-uses]-[skimming]"
     },
     {
@@ -454,7 +453,7 @@ data:extend {
         results = {
             { type = "item", name = "athletic-science-pack", amount = 3 }
         },
-        category = "crafting-with-fluid",
+        categories = { "crafting-with-fluid" },
         allow_productivity = true
     },
     {
@@ -469,7 +468,7 @@ data:extend {
         },
         results = { {type = "item", name = "vault-access-key", amount = 2} },
         main_product = "vault-access-key",
-        category = "crafting-with-fluid",
+        categories = { "crafting-with-fluid" },
         allow_productivity = true,
     },
     {
@@ -484,7 +483,7 @@ data:extend {
         },
         results = { {type = "item", name = "vault-security-key", amount = 1} },
         main_product = "vault-security-key",
-        category = "crafting-with-fluid",
+        categories = { "crafting-with-fluid" },
         allow_productivity = true,
     },
 }
@@ -494,7 +493,7 @@ data:extend {
         type = "recipe",
         name = "harenic-stabilizer",
         main_product = "harenic-stabilizer",
-        category = "chemistry",
+        categories = { "chemistry" },
         hide_from_player_crafting = true,
         enabled = false,
         energy_required = 7,
@@ -510,7 +509,7 @@ data:extend {
         name = "rabbasca-energetic-concrete",
         enabled = false,
         main_product = "rabbasca-energetic-concrete",
-        category = "crafting-with-fluid",
+        categories = { "crafting-with-fluid" },
         hide_from_player_crafting = true,
         energy_required = 5,
         results = {{type = "item", name = "rabbasca-energetic-concrete", amount = 10 }},
@@ -531,7 +530,7 @@ data:extend {
             { icon = "__base__/graphics/icons/stone.png", icon_size = 64, scale = 0.5, shift = {-12, 12} },
             { icon = "__space-age__/graphics/icons/calcite.png", icon_size = 64, scale = 0.5, shift = {12, 12} },
         },
-        category = "chemistry",
+        categories = { "chemistry" },
         hide_from_player_crafting = true,
         energy_required = 3,
         results = {
@@ -571,7 +570,7 @@ data:extend {
             { type = "item", name = "rabbasca-hyperfuel", amount = 1 },
         },
         allow_productivity = false,
-        category = "chemistry-or-cryogenics",
+        categories = { "chemistry", "cryogenics" },
         crafting_machine_tint =
         {
             primary = {r = 0.710, g = 0.633, b = 0.482, a = 1.000},
@@ -595,7 +594,7 @@ data:extend {
         },
         allow_productivity = false,
         hide_from_player_crafting = true,
-        category = "chemistry-or-cryogenics",
+        categories = { "chemistry", "cryogenics" },
         crafting_machine_tint =
         {
             primary = {r = 0.710, g = 0.633, b = 0.482, a = 1.000},

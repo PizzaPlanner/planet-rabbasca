@@ -458,7 +458,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
     spoil_result = "harene-cryo-container-empty",
 },
 
-util.merge { data.raw["tool"]["automation-science-pack"], {
+util.merge { data.raw["item"]["automation-science-pack"], {
   name = "athletic-science-pack",
   icon = "__rabbasca-assets__/graphics/recolor/icons/athletic-science-pack.png",
   icon_size = 64,
@@ -544,7 +544,7 @@ util.merge{
 },
 Rabbasca.make_trigger_item({
   name = "rabbasca-security-modulator",
-  category = "rabbasca-security",
+  categories = { "rabbasca-security" },
   order = "b[vault-access-key]",
   icons = {
     {icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png", icon_size = 64, shift = {-8,  0}, scale = 0.4 },
@@ -554,7 +554,7 @@ Rabbasca.make_trigger_item({
 },"rabbasca_on_modulate_vault_security"),
 Rabbasca.make_trigger_item({
   name = "rabbasca-quality-assurance",
-  category = "rabbasca-security",
+  categories = { "rabbasca-security" },
   order = "b[vault-access-key]",
   icons = {
     {icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png", icon_size = 64, shift = {-8,  0}, scale = 0.4 },

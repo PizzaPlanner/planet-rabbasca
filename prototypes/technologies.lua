@@ -39,7 +39,7 @@ data:extend {
     research_trigger =
     {
       type = "mine-entity",
-      entity = "rabbasca-turbofish",
+      entities = { "rabbasca-turbofish" },
     }
 },
 {
@@ -155,7 +155,7 @@ data:extend {
     research_trigger =
     {
       type = "mine-entity",
-      entity = "carotenoid-ore",
+      entities = { "carotenoid-ore" },
     }
 },
 {

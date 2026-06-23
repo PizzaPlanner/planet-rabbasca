@@ -133,12 +133,11 @@ local access_console = util.merge{
     name = "rabbasca-vault-console",
     type = "assembling-machine",
     max_health = 7200,
-    healing_per_tick = -72 / second, -- does not do anything; just for factoriopedia
+    healing_per_tick = 0, -- TODO: Check! Behaviour changed with 2.1
     production_health_effect = {
       producing = -4 / second, -- Influenced by physical resistance, updated in data-final-fixes
       not_producing = -72 / second
     },
-    enable_logistic_control_behavior = false,
     -- show_recipe_icon = false,
     crafting_speed_quality_multiplier = { }, -- filled in final-fixes
     result_inventory_size = 0,
@@ -182,7 +181,7 @@ access_console.created_effect = {
     }
   }
 }
-access_console.flags = { "placeable-player", "not-deconstructable", "not-repairable",  "not-rotatable", "player-creation", "placeable-off-grid", "not-in-kill-statistics" }
+access_console.flags = { "placeable-player", "not-deconstructable", "not-repairable",  "not-rotatable", "player-creation", "placeable-off-grid", "not-in-kill-statistics", "no-logistic-connection" }
 access_console.circuit_connector = nil
 access_console.circuit_connector_flipped = nil
 access_console.allowed_effects = { }

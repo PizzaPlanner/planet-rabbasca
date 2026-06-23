@@ -16,13 +16,12 @@ return {
     hide_from_stats = true,
     hide_from_signal_gui = true,
     hidden_in_factoriopedia = true,
-    result_is_always_fresh = true,
     energy_required = 0.5,
     ingredients = { },
-    results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1 } },
+    results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1, always_fresh = true } },
     main_product = "rabbasca-warp-sequence",
     crafting_machine_tint = {primary = tint or {1, 1, 1}},
-    category = "rabbasca-remote",
+    categories = { "rabbasca-remote" },
     subgroup = "rabbasca-remote-warping",
     order = "c[sequence]",
 }
@@ -72,11 +71,9 @@ data:extend {
     logistic_mode = "requester",
     open_sound = sounds.metallic_chest_open,
     close_sound = sounds.metallic_chest_close,
-    animation_sound = sounds.logistics_chest_open,
     impact_category = "metal",
-    opened_duration = logistic_chest_opened_duration,
     surface_conditions = { { property = "rabbasca-or-space", min = 1, max = 1 } },
-    animation =
+    picture =
     {
       layers =
       {
@@ -119,7 +116,7 @@ data:extend {
     energy_required = 8,
     enabled = false,
     hide_from_player_crafting = true,
-    category = "complex-machinery",
+    categories = { "complex-machinery" },
     ingredients = { { type = "item", name = "rabbasca-warp-core", amount = 10 }, { type = "item", name = "steel-plate", amount = 20 }, { type = "item", name = "processing-unit", amount = 5 } },
     results = { { type = "item", name = "rabbasca-warp-uplink", amount = 1 } }
   },
@@ -224,11 +221,11 @@ data:extend {
         { type = "item", name = "haronite-plate",  amount = 4 },
     },
     results = { { type = "item", name = "rabbasca-warp-pylon", amount = 1 } },
-    category = "complex-machinery"
+    categories = { "complex-machinery" }
   },
   Rabbasca.make_trigger_item({
     name = "rabbasca-warp-sequence",
-    category = "rabbasca-remote",
+    categories = { "rabbasca-remote" },
     subgroup = "rabbasca-remote-warping",
     order = "b[warp-sequence]",
     icons = warp_icons,
@@ -266,11 +263,10 @@ make_warp_sequence("rabbasca-warp-sequence-upgrade", data.raw["upgrade-item"]["u
     hide_from_player_crafting = true,
     hide_from_stats = true,
     hide_from_signal_gui = true,
-    result_is_always_fresh = true,
     energy_required = 7,
     ingredients = { },
-    results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1 } },
-    category = "rabbasca-remote",
+    results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1, always_fresh = true } },
+    categories = { "rabbasca-remote" },
     crafting_machine_tint = {primary = {0.3, 0.35, 0.4}}
 },
 {
@@ -292,7 +288,7 @@ data:extend {
     type = "recipe",
     name = "rabbasca-warp-pylon-indicator",
     enabled = false,
-    category = "parameters", -- can not be crafted, just for unlocking the icon in menus?
+    categories = { "parameters" }, -- can not be crafted, just for unlocking the icon in menus?
     hidden_in_factoriopedia = true,
     hidden = true,
     hide_from_player_crafting = true,

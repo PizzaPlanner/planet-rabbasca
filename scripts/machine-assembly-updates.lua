@@ -26,11 +26,8 @@ end
 local assembled_categories = data.raw["assembling-machine"]["assembling-machine-3"].crafting_categories
 local function is_assembled(recipe)
     for _, category in pairs(assembled_categories) do
-        if not recipe.category or (recipe.category == category) then return true end
-        if recipe.additional_categories then 
-            for _, add in pairs(recipe.additional_categories) do
-                if add == category then return true end
-            end
+        for _, add in pairs(recipe.categories or { }) do
+            if add == category then return true end
         end
     end
     return false

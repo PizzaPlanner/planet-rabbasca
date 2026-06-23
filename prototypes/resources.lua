@@ -43,11 +43,11 @@ battle_scrap.minable =
   mining_time = 0.75,
   results =
   {
-    { type = "item", name = "firearm-magazine", amount = 1, probability = 0.15 },
-    { type = "item", name = "grenade", amount = 1, probability = 0.13 },
-    { type = "item", name = "rocket", amount = 1, probability = 0.09 },
-    { type = "item", name = "flamethrower-ammo", amount = 1, probability = 0.07 },
-    { type = "item", name = "vault-access-key", amount = 1, probability = 0.06 },
+    { type = "item", name = "firearm-magazine", amount = 1, independent_probability = 0.15 },
+    { type = "item", name = "grenade", amount = 1, independent_probability = 0.13 },
+    { type = "item", name = "rocket", amount = 1, independent_probability = 0.09 },
+    { type = "item", name = "flamethrower-ammo", amount = 1, independent_probability = 0.07 },
+    { type = "item", name = "vault-access-key", amount = 1, independent_probability = 0.06 },
   }
 }
 battle_scrap.collision_mask = { layers = { resource = true } }
@@ -65,7 +65,7 @@ local harene_resource = {
   name = "harene-vent",
   icons = {{ icon = "__space-age__/graphics/icons/fluorine-vent.png", icon_size = 64, tint = color }},
   flags = {"placeable-neutral"},
-  category = "basic-fluid",
+  categories = { "basic-fluid" },
   subgroup = "mineable-fluids",
   order="a-b-f",
   infinite = true,
