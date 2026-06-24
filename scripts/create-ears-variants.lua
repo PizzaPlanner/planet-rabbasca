@@ -81,7 +81,7 @@ for _, thing in pairs(data.raw["rocket-silo"]) do
     if silo then
       local entity = data.raw["rocket-silo"][silo]
       entity.rocket_entity = "rabbasca-rocket-silo-rocket"
-      entity.to_be_inserted_to_rocket_inventory_size = entity.to_be_inserted_to_rocket_inventory_size * 2
+      -- entity.to_be_inserted_to_rocket_inventory_size = entity.to_be_inserted_to_rocket_inventory_size * 2
     end
   end
 end

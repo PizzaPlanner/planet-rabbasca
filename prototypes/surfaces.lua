@@ -86,13 +86,13 @@ data:extend {
       autoplace = { probability_expression = "rabbasca_carrot_noise" }
     }
   },
-  util.merge{
-    data.raw["optimized-decorative"]["fulgoran-gravewort"],
-    {
-      name = "rabbasca-gravewort",
-      autoplace = { probability_expression = "rabbasca_carrot_noise" }
-    }
-  },
+  -- util.merge{
+  --   data.raw["optimized-decorative"]["fulgoran-gravewort"],
+  --   {
+  --     name = "rabbasca-gravewort",
+  --     autoplace = { probability_expression = "rabbasca_carrot_noise" }
+  --   }
+  -- },
 }
 
 local map_gen = {
@@ -127,7 +127,7 @@ local map_gen = {
           ["rabbasca-small-rock"] = {},
           ["rabbasca-dune-decal"] = {},
           ["rabbasca-asterisk-mini"] = {},
-          ["rabbasca-gravewort"] = {},
+          -- ["rabbasca-gravewort"] = {},
         }
       },
       entity =
@@ -176,6 +176,7 @@ PlanetsLib:extend({
         ["solar-power"] = 0,
         ["day-night-cycle"] = 12 * minute,
         ["pressure"] = 20,
+        ["robot-energy-usage"] = 3,
         ["magnetic-field"] = 0.01,
         ["harenic-energy-signatures"] = Rabbasca.surface_megawatts(),
         ["rabbasca-or-space"] = 1,

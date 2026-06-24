@@ -41,7 +41,7 @@ data:extend {
     {
         type = "recipe",
         name = "rabbasca-energetic-concrete-mix",
-        category = "chemistry",
+        categories = { "chemistry" },
         main_product = "rabbasca-energetic-concrete-mix",
         hide_from_player_crafting = true,
         enabled = false,

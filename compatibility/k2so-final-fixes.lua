@@ -9,12 +9,12 @@ data.raw["item"]["haronite-plate"].icon = nil
 
 if data.raw["ammo"]["kr-rifle-magazine"] then
     table.insert(data.raw["resource"]["rabbascan-scrap"].minable.results,
-        { type = "item", name = "kr-rifle-magazine", amount = 1, probability = 0.12 }
+        { type = "item", name = "kr-rifle-magazine", amount = 1, independent_probability = 0.12 }
     )
 end
 
 if data.raw["ammo"]["kr-anti-materiel-rifle-magazine"] then
     table.insert(data.raw["resource"]["rabbascan-scrap"].minable.results,
-        { type = "item", name = "kr-anti-materiel-rifle-magazine", amount = 1, probability = 0.08 }
+        { type = "item", name = "kr-anti-materiel-rifle-magazine", amount = 1, independent_probability = 0.08 }
     )
 end

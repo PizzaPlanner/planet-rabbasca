@@ -32,7 +32,7 @@ data:extend {
   sprite =
   {
     filename = "__space-age__/graphics/equipment/fusion-reactor-equipment.png",
-    size = 512,
+    size = 256,
     priority = "medium",
     scale = 0.5
   },

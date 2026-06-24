@@ -1,4 +1,5 @@
-require ("__base__.prototypes.entity.assemblerpipes")
+local pic = require ("__base__.prototypes.entity.assembler-pictures")
+require ("__base__.prototypes.entity.pipecovers")
 
 local assembler = util.merge { data.raw["assembling-machine"]["assembling-machine-3"],
 {
@@ -21,14 +22,14 @@ assembler.fluid_boxes = {
 {
   volume = 1000,
   render_layer = "object-under",
-  pipe_picture = util.merge { assembler2pipepictures(), { 
+  pipe_picture = util.merge { pic.assembler2pipepictures, { 
     north = { shift = util.by_pixel(0, 28), filename = "__base__/graphics/entity/pipe/pipe-ending-down.png", width = 128, height = 128,  },
     east  = { shift = util.by_pixel(-24.5 - 6, 1), },
     west  = { shift = util.by_pixel(25.75 + 6, 1), },
     south = { shift = util.by_pixel(0, -31.25 - 6), },
   } },
   pipe_covers = util.merge { pipecoverspictures(), {
-    north = { layers = {{ filename = "__core__/graphics/empty.png" }, { filename = "__core__/graphics/empty.png", width = 64, height = 64, }}},
+    north = { layers = {{ filename = "__core__/graphics/empty.png", width = 64, height = 64 }, { filename = "__core__/graphics/empty.png", width = 64, height = 64, }}},
     east  = { layers = {{ shift = util.by_pixel(-6, 0), }, { shift = util.by_pixel(-6, 0), }}},
     west  = { layers = {{ shift = util.by_pixel( 6, 0), }, { shift = util.by_pixel( 6, 0), }}},
     south = { layers = {{ shift = util.by_pixel(0, -6), }, { shift = util.by_pixel(0, -6), }}},

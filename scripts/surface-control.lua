@@ -3,7 +3,7 @@ local output = { }
 function output.rabbasca_udpate_vault_force(e, force)
   if (not e) or e.name ~= "rabbasca-vault-crafter" then return end
   e.force = force
-  e.active = force ~= game.forces.rabbascans
+  e.disabled_by_script = force == game.forces.rabbascans
 end
 
 function output.upgrade_vault_quality(vault, quality)

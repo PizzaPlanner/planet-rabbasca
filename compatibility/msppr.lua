@@ -13,7 +13,7 @@ data:extend({
         type = "recipe",
         name = "msppr-rabbasca",
         subgroup = "science-pack",
-        category = "rabbasca-vault-extraction",
+        categories = { "rabbasca-vault-extraction" },
         surface_conditions = { Rabbasca.above_harenic_threshold() },
         enabled = false,
         ingredients = {

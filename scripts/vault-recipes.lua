@@ -132,8 +132,8 @@ data:extend {
           { proto = data.raw["virtual-signal"]["signal-hourglass"] },
           { proto = data.raw["ammo"]["vault-security-key"], scale = 0.4, shift = { 8, 8 } }
         }),
-        enabled = true,
-        category = "rabbasca-vault-hacking",
+        enabled = false,
+        categories = { "rabbasca-vault-hacking" },
         hide_from_player_crafting = true,
         energy_required = 15,
         ingredients = {{ type = "item", name = "vault-security-key", amount = 1 }},
