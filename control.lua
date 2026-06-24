@@ -194,6 +194,13 @@ script.on_event(defines.events.on_surface_created, function(event)
   end
 end)
 
+-- counteract the natural evolution progression over time
+script.on_nth_tick(60 * 60 * 5, function(_)
+  local surface = game.planets["rabbasca"] and game.planets["rabbasca"].surface
+  if not surface then return end
+  rutil.update_alertness(surface)
+end)
+
 local function give_starter_items()
   if not Rabbasca.is_aps_planet() then return end
   if not remote.interfaces["freeplay"] then return end

@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.17.4
+Date: 2026-06-24
+  Bugfixes:
+    - Fixed another case where turrets shot more hacking keys than neccessary
+    - Fixed evolution on rabbasca would not match intended values when planet is untouched for long periods of time
+---------------------------------------------------------------------------------------------------
 Version: 0.17.3
 Date: 2026-06-23
   Changes:
