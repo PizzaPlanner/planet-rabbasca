@@ -518,6 +518,10 @@ data:extend {
       type = "unlock-recipe",
       recipe = "vault-security-key",
     },
+    {
+      type = "unlock-recipe",
+      recipe = "rabbasca-extend-hack-vault-security-key",
+    },
   },
   unit = {
     count = 400,

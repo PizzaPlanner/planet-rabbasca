@@ -291,8 +291,13 @@ data:extend {
     categories = { "parameters" }, -- can not be crafted, just for unlocking the icon in menus?
     hidden_in_factoriopedia = true,
     hidden = true,
+    requires_ingredients_to_unlock_results = false,
     hide_from_player_crafting = true,
-    results = { { type = "item", name = "rabbasca-warp-pylon", amount = 1 }, },
+    results = { 
+      { type = "item", name = "haronite-plate", amount = 1 },
+      { type = "item", name = "rabbasca-warp-core", amount = 1 },
+      { type = "item", name = "rabbasca-warp-pylon", amount = 1 },
+    },
     main_product = "rabbasca-warp-pylon"
   }
 }

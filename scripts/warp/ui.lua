@@ -1,5 +1,3 @@
-if not settings.global["rabbasca-debug-mode"].value then return end
-
 local GUI_NAME = "rabbasca_warp_queue"
 local BUTTON_NAME = "rabbasca_warp_inventory"
 
@@ -14,26 +12,44 @@ end
 
 local function create_gui(player, pylon)
     destroy_gui(player)
+    local is_debugging = settings.global["rabbasca-debug-mode"].value == true
+    local anchor = 
+        pylon.type == "assembling-machine" and (pylon.get_recipe() and defines.relative_gui_type.assembling_machine_gui or defines.relative_gui_type.assembling_machine_select_recipe_gui)
+        or defines.relative_gui_type.container_gui
     local inventory_frame = player.gui.relative.add{
         type = "frame",
         name = BUTTON_NAME,
         direction = "vertical",
+        caption = { is_debugging and "rabbasca-extra.warp-inventory" or "rabbasca-extra.warp-inventory-nodebug" },
         anchor = {
-            gui = defines.relative_gui_type.assembling_machine_gui,
+            gui = anchor,
             position = defines.relative_gui_position.right
         }
-    }
+    }.add{type = "frame", style = "entity_frame"}
+    game.print(is_debugging)
 
-    inventory_frame.add{
-        type = "button",
-        name = "rabbasca_open_warp_inventory",
-        caption = "Show warp inventory"
+    local inv = inventory_frame.add{
+        type = "inventory",
+        slots_per_row = 8,
+        handle_cursor_transfer = is_debugging,
+        handle_cursor_split = is_debugging,
+        handle_open_item = is_debugging,
+        handle_open_mod_item = is_debugging,
+        handle_send_stack_to_trash = is_debugging,
+        hand_send_stacks_to_trash = is_debugging,
     }
+    inv.inventory = storage.warp_inventory
+    inv.style.natural_height = 5 * 64
+    inv.style.vertically_stretchable = false
+
+    if storage.warp_inventory then
+        storage.warp_inventory.sort_and_merge()
+    end
 
     local items = { }
     local id = pylon.unit_number
     local pdata = storage.warp_storage[id]
-    if not pdata then return end
+    if not (pdata and is_debugging) then return end
     for _, chunkid in pairs(pdata.chunks) do
         for qname, queue in pairs(storage.warp_chunks[pylon.surface_index][chunkid].queue) do 
             for name, qq in pairs(queue) do
@@ -60,7 +76,7 @@ local function create_gui(player, pylon)
         caption = "Warp Queue",
         direction = "vertical",
         anchor = {
-            gui = defines.relative_gui_type.assembling_machine_gui,
+            gui = anchor,
             position = defines.relative_gui_position.right
         }
     }
