@@ -258,7 +258,7 @@ make_warp_sequence("rabbasca-warp-sequence-upgrade", data.raw["upgrade-item"]["u
     name = "rabbasca-warp-sequence",
     icon = "__rabbasca-assets__/graphics/icons/warp.png",
     icon_size = 64,
-    enabled = true,
+    enabled = false,
     hidden = false,
     hide_from_player_crafting = true,
     hide_from_stats = true,

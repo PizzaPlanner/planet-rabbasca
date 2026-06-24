@@ -24,7 +24,7 @@ Rabbasca.create_vault_recipe("rabbasca-core-extraction-protocol", {
       { type = "item",  name = "rabbasca-warp-core", amount = 10 },
   },
   results = { 
-      { type = "item", name = "rabbasca-core-extraction-protocol", amount = 1 },
+      { type = "item", name = "rabbasca-core-extraction-protocol", amount = 1, always_fresh = true },
   },
   energy_required = 60,
   allow_productivity = false,

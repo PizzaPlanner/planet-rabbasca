@@ -40,6 +40,7 @@ local function handle_script_events(event)
     if recipe.name == "rabbasca-quality-assurance" then
       rutil.upgrade_vault_quality(from, quality)
     elseif recipe.name == "rabbasca-core-extraction-protocol" then
+      from.force.set_script_visible({ type = "tile", name = "harenic-lava" }, true)
       local consoles = from.surface.find_entities_filtered{ name = { "rabbasca-vault-spawner", "rabbasca-vault-console" }, area = from.bounding_box }
       for _, console in pairs(consoles) do
         console.destroy { }

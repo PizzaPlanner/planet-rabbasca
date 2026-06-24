@@ -458,6 +458,10 @@ data:extend {
     },
     {
       type = "unlock-recipe",
+      recipe = "rabbasca-warp-sequence",
+    },
+    {
+      type = "unlock-recipe",
       recipe = "rabbasca-warp-pylon-recycling",
     },
     {

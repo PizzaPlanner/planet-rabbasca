@@ -80,7 +80,7 @@ Rabbasca.create_vault_recipe("rabbasca-security-modulation-up", {
       { type = "item",  name = "haronite-plate", amount = 1 },
   },
   results = { 
-      { type = "item", name = "rabbasca-security-modulator", amount = 1 },
+      { type = "item", name = "rabbasca-security-modulator", amount = 1, always_fresh = true },
   },
   energy_required = 60,
   allow_productivity = false,
@@ -97,7 +97,7 @@ Rabbasca.create_vault_recipe("rabbasca-security-modulation-down", {
       { type = "item",  name = "haronite-plate", amount = 1 },
   },
   results = { 
-      { type = "item", name = "rabbasca-security-modulator", amount = 1 },
+      { type = "item", name = "rabbasca-security-modulator", amount = 1, always_fresh = true },
   },
   energy_required = 60,
   allow_productivity = false,
@@ -113,7 +113,7 @@ Rabbasca.create_vault_recipe("rabbasca-quality-assurance", {
       { type = "item",  name = "rabbasca-warp-core", amount = 3 },
   },
   results = { 
-      { type = "item", name = "rabbasca-quality-assurance", amount = 1 },
+      { type = "item", name = "rabbasca-quality-assurance", amount = 1, always_fresh = true },
   },
   energy_required = 60,
   allow_productivity = false,
