@@ -86,14 +86,16 @@ data:extend {
       autoplace = { probability_expression = "rabbasca_carrot_noise" }
     }
   },
-  -- util.merge{
-  --   data.raw["optimized-decorative"]["fulgoran-gravewort"],
-  --   {
-  --     name = "rabbasca-gravewort",
-  --     autoplace = { probability_expression = "rabbasca_carrot_noise" }
-  --   }
-  -- },
+  util.merge{
+    data.raw["optimized-decorative"]["small-fulgoran-gravewort"],
+    {
+      name = "rabbasca-gravewort",
+      autoplace = { probability_expression = "rabbasca_carrot_noise" }
+    }
+  },
 }
+
+data.raw["optimized-decorative"]["rabbasca-gravewort"].collision_mask = table.deepcopy(data.raw["optimized-decorative"]["rabbasca-asterisk-mini"].collision_mask)
 
 local map_gen = {
     cliff_settings = {},
@@ -165,7 +167,7 @@ PlanetsLib:extend({
     order = gleba.order .. "-r[rabbasca]",
     label_orientation = 0.14,
     magnitude = gleba.magnitude*3/5,
-    persistent_ambient_sounds=data.raw["space-platform-hub"]["space-platform-hub"].persistent_ambient_sounds,
+    persistent_ambient_sounds= table.deepcopy(data.raw["space-platform-hub"]["space-platform-hub"].persistent_ambient_sounds),
     localised_description={"planetslib-templates.moon-description",{"space-location-description.rabbasca"},"[planet="..gleba.name.."]"},
     asteroid_spawn_definitions = spawn_definitions,
     asteroid_spawn_influence = 0.7,
@@ -176,7 +178,7 @@ PlanetsLib:extend({
         ["solar-power"] = 0,
         ["day-night-cycle"] = 12 * minute,
         ["pressure"] = 20,
-        ["robot-energy-usage"] = 3,
+        ["robot-energy-usage"] = 4,
         ["magnetic-field"] = 0.01,
         ["harenic-energy-signatures"] = Rabbasca.surface_megawatts(),
         ["rabbasca-or-space"] = 1,
@@ -187,7 +189,7 @@ PlanetsLib:extend({
       clouds = nil,
       fog = nil,
       day_night_cycle_color_lookup = {
-          {0.0, "__rabbasca-assets__/graphics/recolor/textures/lut-rabbasca-day.png"},
+          {0.0,  "__rabbasca-assets__/graphics/recolor/textures/lut-rabbasca-day.png"},
           {0.25, "__rabbasca-assets__/graphics/recolor/textures/lut-rabbasca-day.png"},
           {0.45, "__rabbasca-assets__/graphics/recolor/textures/lut-rabbasca.png"},
           {0.55, "__rabbasca-assets__/graphics/recolor/textures/lut-rabbasca.png"},

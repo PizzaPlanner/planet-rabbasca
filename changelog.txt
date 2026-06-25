@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.18.2
+Date: 2026-06-24
+  Changes:
+    - Rabbasca now works with quality mod disabled
+    - Removed setting to toggle harenic lava unlock method. Old method is no longer available
+  Balancing:
+    - Reduced robot energy usage (5x -> 4x)
+---------------------------------------------------------------------------------------------------
 Version: 0.18.1
 Date: 2026-06-24
   Bugfixes:

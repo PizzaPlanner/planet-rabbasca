@@ -761,15 +761,10 @@ data:extend {
     name = "rabbasca-quality-assurance",
     icons = {
       { icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
-      { icon = data.raw["virtual-signal"]["signal-any-quality"].icon, icon_size = 64, shift = {32, 32}, scale = 0.75 },
     },
     prerequisites = { "interplanetary-construction-1", "electromagnetic-science-pack" },
     effects =
     {
-      {
-        type = "unlock-recipe",
-        recipe = "rabbasca-quality-assurance",
-      },
     },
     unit = {
       time = 60,

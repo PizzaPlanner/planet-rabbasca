@@ -103,22 +103,6 @@ Rabbasca.create_vault_recipe("rabbasca-security-modulation-down", {
   allow_productivity = false,
   order = "z[effects]-m[down]"
 })
-Rabbasca.create_vault_recipe("rabbasca-quality-assurance", {
-  icons = Rabbasca.icons({
-    {icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64},
-    {proto = data.raw["virtual-signal"]["signal-any-quality"], shift = {8, 8}, scale = 0.4 },
-  }),
-  ingredients = {
-      { type = "item", name = "vault-security-key", amount = 10 },
-      { type = "item",  name = "rabbasca-warp-core", amount = 3 },
-  },
-  results = { 
-      { type = "item", name = "rabbasca-quality-assurance", amount = 1, always_fresh = true },
-  },
-  energy_required = 60,
-  allow_productivity = false,
-  order = "z[effects]-q[quality]"
-})
 
 data:extend {
     {

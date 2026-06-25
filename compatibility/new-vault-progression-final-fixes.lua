@@ -1,5 +1,3 @@
-if not settings.startup["rabbasca-enable-new-vault-progression"].value then return end
-
 local vault = data.raw["assembling-machine"]["rabbasca-vault-crafter"]
 local spawner = data.raw["unit-spawner"]["rabbasca-vault-spawner"]
 vault.resistances = { }
@@ -8,7 +6,8 @@ for _, damage in pairs(data.raw["damage-type"]) do
   table.insert(vault.resistances, { type = damage.name, percent = 100 })
   if damage.name == "electric" then
     -- https://forums.factorio.com/viewtopic.php?p=693026
-    table.insert(spawner.resistances, { type = damage.name, decrease = 1000000 - spawner.max_health * 10 * (1 + spawner.overkill_fraction) })
+    -- health can up to 10x at max. evolution
+    table.insert(spawner.resistances, { type = damage.name, decrease = 1000000 - spawner.max_health * 10 * (1 + spawner.overkill_fraction) }) 
   else
     table.insert(spawner.resistances, { type = damage.name, percent = 100 })
   end
