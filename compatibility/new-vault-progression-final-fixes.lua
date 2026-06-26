@@ -6,8 +6,8 @@ for _, damage in pairs(data.raw["damage-type"]) do
   table.insert(vault.resistances, { type = damage.name, percent = 100 })
   if damage.name == "electric" then
     -- https://forums.factorio.com/viewtopic.php?p=693026
-    -- health can up to 10x at max. evolution
-    table.insert(spawner.resistances, { type = damage.name, decrease = 1000000 - spawner.max_health * 10 * (1 + spawner.overkill_fraction) }) 
+    -- health can up to 10x at max. evolution, and must scale with quality
+    table.insert(spawner.resistances, { type = damage.name, decrease = 900000 }) 
   else
     table.insert(spawner.resistances, { type = damage.name, percent = 100 })
   end
