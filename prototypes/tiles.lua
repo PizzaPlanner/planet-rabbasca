@@ -1,6 +1,11 @@
+local tile_collision_masks = require("__base__/prototypes/tile/tile-collision-masks")
+local tile_sounds = require("__space-age__/prototypes/tile/tile-sounds")
+local tile_trigger_effects = require("__space-age__/prototypes/tile/tile-trigger-effects")
+
 -- Some globals black magic or something happening here, required for water borders
 table.insert(water_tile_type_names, "rabbasca-harenic-sludge")
 table.insert(water_tile_type_names, "harenic-lava")
+table.insert(water_tile_type_names, "rabbasca-fertile")
 
 local lava_effect = util.merge { data.raw["tile-effect"]["lava"],
 {
@@ -58,11 +63,37 @@ util.merge{ table.deepcopy(data.raw["tile"]["volcanic-pumice-stones"]), {
     autoplace = { probability_expression = "rabbasca_rocky" },
     map_color = {0.07, 0.061, 0.1},
 }},
-util.merge{ table.deepcopy(data.raw["tile"]["midland-yellow-crust-2"]), {
-    name = "rabbasca-fertile",
-    autoplace = { probability_expression = "rabbasca_fertile" },
-    map_color = {0.61, 0.282, 0.1},
-}},
+{
+  type = "tile",
+  name = "rabbasca-fertile",
+  order = "c[gleba-land-tiles]-a[highland-dark-rock]",
+  subgroup = "gleba-tiles",
+  collision_mask = tile_collision_masks.ground(),
+  layer = 0,
+  layer_group = "water-overlay",
+  -- sprite_usage_surface = "rabbasca",
+  variants = tile_variations_template_with_transitions_and_effect_map(
+    "__rabbasca-assets__/graphics/recolor/textures/rabbasca-fertile.png",
+    "__space-age__/graphics/terrain/effect-maps/water-gleba-mask.png",
+    {
+      max_size = 4,
+      [1] = { weights = {0.085, 0.085, 0.085, 0.085, 0.087, 0.085, 0.065, 0.085, 0.045, 0.045, 0.045, 0.045, 0.005, 0.025, 0.045, 0.045 } },
+      [2] = { probability = 1, weights = {0.018, 0.020, 0.015, 0.025, 0.015, 0.020, 0.025, 0.015, 0.025, 0.025, 0.010, 0.025, 0.020, 0.025, 0.025, 0.010 }, },
+      [4] = { probability = 0.1, weights = {0.018, 0.020, 0.015, 0.025, 0.015, 0.020, 0.025, 0.015, 0.025, 0.025, 0.010, 0.025, 0.020, 0.025, 0.025, 0.010 }, },
+      --[8] = { probability = 1.00, weights = {0.090, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.025, 0.125, 0.005, 0.010, 0.100, 0.100, 0.010, 0.020, 0.020} },
+    }
+  ),
+  autoplace =
+  {
+    probability_expression = "rabbasca_fertile"
+  },
+  walking_sound = tile_sounds.walking.dry_rock,
+  landing_steps_sound = tile_sounds.landing.rock,
+  map_color = {0.61, 0.282, 0.1},
+  walking_speed_modifier = 1,
+  vehicle_friction_modifier = 1,
+  trigger_effect = tile_trigger_effects.dirt_2_trigger_effect()
+},
 util.merge { 
     table.deepcopy(data.raw["tile"]["concrete"]),
     {

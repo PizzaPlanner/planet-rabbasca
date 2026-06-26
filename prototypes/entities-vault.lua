@@ -462,17 +462,30 @@ vault_core.graphics_set = {
       },
     },
 }}
-local capture_bot = {
+
+local cb_graphics = { 
+  filename = "__rabbasca-assets__/graphics/textures/hack.png", 
+  width = 882 / 7,
+  height = 819 / 7,
+  line_length = 7,
+  frame_count = 48,
+  scale = 0.5,
+  draw_as_glow = true, 
+  blend_mode = "additive",
+  tint = { 1, 0, 0 }
+}
+local capture_bot ={
   type = "capture-robot",
   icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png",
   icon_size = 64,
   name = "rabbasca-capture-robot",
-  flags = {"placeable-player", "player-creation", "placeable-off-grid", "not-on-map", "not-repairable"},
+  flags = {"placeable-player", "player-creation", "placeable-off-grid", "not-repairable"},
   capture_speed = 1,
   max_health = 120,
   speed = 0.01,
   hidden_in_factoriopedia = true,
   alert_when_damaged = false,
+  capture_animation = cb_graphics,
   dying_explosion = { name = "capture-robot-explosion" },
   created_effect = {
     type = "direct",
@@ -491,12 +504,13 @@ local capture_bot_2 = {
   icon = "__Krastorio2Assets__/icons/cards/advanced-tech-card.png",
   icon_size = 64,
   name = "rabbasca-capture-robot-2",
-  flags = {"placeable-player", "player-creation", "placeable-off-grid", "not-on-map", "not-repairable"},
+  flags = {"placeable-player", "player-creation", "placeable-off-grid", "not-repairable"},
   capture_speed = 1.4,
   max_health = 1000,
   speed = 0.01,
   hidden_in_factoriopedia = true,
   alert_when_damaged = false,
+  capture_animation = cb_graphics,
   dying_explosion = { name = "capture-robot-explosion" },
   created_effect = {
     type = "direct",
