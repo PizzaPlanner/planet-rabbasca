@@ -26,7 +26,6 @@ local function create_gui(player, pylon)
             position = defines.relative_gui_position.right
         }
     }.add{type = "frame", style = "entity_frame"}
-    game.print(is_debugging)
 
     local inv = inventory_frame.add{
         type = "inventory",
@@ -36,7 +35,7 @@ local function create_gui(player, pylon)
         handle_open_item = is_debugging,
         handle_open_mod_item = is_debugging,
         handle_send_stack_to_trash = is_debugging,
-        hand_send_stacks_to_trash = is_debugging,
+        handle_send_stacks_to_trash = is_debugging,
     }
     inv.inventory = storage.warp_inventory
     inv.style.natural_height = 5 * 64

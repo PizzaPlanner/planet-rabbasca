@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.18.3
+Date: 2026-06-26
+  Changes:
+    - Updated to Factorio 2.1.8
+  Bugfixes:
+    - Fixed nauvis soundtrack would play on rabbasca
+    - Removed a debug message
+---------------------------------------------------------------------------------------------------
 Version: 0.18.2
 Date: 2026-06-24
   Changes:
