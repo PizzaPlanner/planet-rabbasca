@@ -92,7 +92,7 @@ data:extend {
     order = "a[fulgora]-b[decorative]",
     collision_box = {{-0.5, -0.5}, {0.5, 0.5}},
     collision_mask = {layers={water_tile=true}, colliding_with_tiles_only=true},
-    autoplace = { probability_expression = "rabbasca_carrot_noise", tile_restriction = { "rabbasca-fertile" } },
+    autoplace = { probability_expression = "rabbasca_carrot_noise * rpi(0.72) * decorative_knockout", tile_restriction = { "rabbasca-fertile" } },
     pictures = util.spritesheets_to_pictures({{path = "__rabbasca-assets__/graphics/recolor/entities/fulgoran-gravewort", frame_count = 7}})
   },
 }
@@ -149,6 +149,59 @@ local map_gen = {
       }
     }
 }
+local platform_render = table.deepcopy(data.raw.planet["nauvis"].platform_surface_render_parameters)
+platform_render.platform_backdrop =
+{
+  emission_scales_with_shadow = false,
+  radius = 417,
+  rotation_seconds = -1175,
+  light_radius = 10,
+  cloudiness = 0.1,
+  surface_vertical_offset = 0.1,
+  cloud_vertical_offset = 0.05,
+  specular_intensity = 0,
+  atmosphere_color = {0.052, 0.023, 0.067, 0.03},
+  cloud_flow_intensity = 0.05,
+  cloud_panning_rate = -0.025,
+  planet_axis = {5.0, 9.0},
+  planet_axis_deviation_amplitude = {1.4, 2.6},
+  planet_axis_deviation_seconds = {320.5*2/4.66, 285*2/4.66},
+  position = {-300, 250},
+  parallax_strength = {0.95, 0.95},
+  light_direction = {-0.42, 0.23, 0.67},
+  light_intensity_contrast = 0.4,
+  planet_surface =
+  {
+    filename = "__rabbasca-assets__/graphics/recolor/textures/space-planet.png",
+    width = 2048,
+    height = 1024
+  },
+  planet_normal = nil,
+  planet_emission =
+  {
+    filename = "__rabbasca-assets__/graphics/recolor/textures/space-planet-emission.png",
+    width = 2048,
+    height = 1024
+  },
+  global_cloud =
+  {
+    filename = "__space-age__/graphics/space/vulcanus-cloud.png",
+    width = 2048,
+    height = 1024
+  },
+  global_cloud_normal =
+  {
+    filename = "__space-age__/graphics/space/vulcanus-cloud-normal.png",
+    width = 2048,
+    height = 1024
+  },
+  global_cloud_flow =
+  {
+    filename = "__space-age__/graphics/space/vulcanus-cloud-flow.png",
+    width = 2048,
+    height = 1024
+  }
+}
 
 local spawn_definitions = table.deepcopy(gleba.asteroid_spawn_definitions)
 PlanetsLib:extend({
@@ -157,8 +210,8 @@ PlanetsLib:extend({
     name = "rabbasca",
     icon = "__rabbasca-assets__/graphics/by-talandar/rabbasca64.png",
     icon_size = 64,
-    starmap_icon = "__rabbasca-assets__/graphics/by-talandar/rabbasca2048.png",
-		starmap_icon_size = 2048,
+    starmap_icon = "__rabbasca-assets__/graphics/by-talandar/rabbasca256.png",
+		starmap_icon_size = 256,
     draw_orbit = true,
     solar_power_in_space = gleba.solar_power_in_space,
     auto_save_on_first_trip = true,
@@ -171,6 +224,7 @@ PlanetsLib:extend({
     localised_description={"planetslib-templates.moon-description",{"space-location-description.rabbasca"},"[planet="..gleba.name.."]"},
     asteroid_spawn_definitions = spawn_definitions,
     asteroid_spawn_influence = 0.7,
+
     -- robot energy usage = gravity/pressure*100, gravity > 0.1 (allow chests), robots should be expensive and limited by energy field
     -- on x8+(?) energy usage, normal robots are stuck in recharge loop
     surface_properties = {
@@ -197,7 +251,7 @@ PlanetsLib:extend({
       },
     },
     map_gen_settings = map_gen,
-    parked_platforms_orientation = 0.27,
+    parked_platforms_orientation = 0.55,
     orbit = {
       orientation = 0.9,
       distance = 1.8,
@@ -212,6 +266,7 @@ PlanetsLib:extend({
         scale = 0.25,
       }
     },
+    platform_surface_render_parameters = platform_render,
     platform_procession_set =
     {
       arrival = {"planet-to-platform-b"},
