@@ -41,7 +41,7 @@ data:extend{
   {
     type = "noise-expression",
     name = "rabbasca_carrot_noise",
-    expression = "(rabbasca_fertile > 0.8) * aquilo_spot_noise{seed = 821,\z
+    expression = "(rabbasca_fertile > 0.9) * aquilo_spot_noise{seed = 821,\z
                                     count = 6 + 3 * sqrt(control:rabbasca_carotenoids:frequency),\z
                                     skip_offset = 0,\z
                                     region_size = 44,\z

@@ -41,14 +41,14 @@ data:extend {
     data.raw["optimized-decorative"]["yellow-lettuce-lichen-cups-3x3"],
     {
       name = "rabbasca-yellow-lettuce-lichen-3x3",
-      autoplace = { probability_expression = "(rabbasca_fertile > 1.1) * rpi(0.6) * decorative_knockout" }
+      autoplace = { probability_expression = "(rabbasca_fertile > 1.2) * rpi(0.6) * decorative_knockout", tile_restriction = { "rabbasca-fertile" } }
     }
   },
   util.merge{
     data.raw["optimized-decorative"]["yellow-lettuce-lichen-cups-6x6"],
     {
       name = "rabbasca-yellow-lettuce-lichen-6x6",
-      autoplace = { probability_expression = "(rabbasca_fertile > 1.2) * rpi(0.4) * decorative_knockout" }
+      autoplace = { probability_expression = "(rabbasca_fertile > 1.3) * rpi(0.4) * decorative_knockout", tile_restriction = { "rabbasca-fertile" } }
     }
   },
   util.merge{
@@ -83,19 +83,19 @@ data:extend {
     data.raw["optimized-decorative"]["brown-asterisk-mini"],
     {
       name = "rabbasca-asterisk-mini",
-      autoplace = { probability_expression = "rabbasca_carrot_noise" }
+      autoplace = { probability_expression = "rabbasca_carrot_noise", tile_restriction = { "rabbasca-fertile" } }
     }
   },
-  util.merge{
-    data.raw["optimized-decorative"]["small-fulgoran-gravewort"],
-    {
-      name = "rabbasca-gravewort",
-      autoplace = { probability_expression = "rabbasca_carrot_noise" }
-    }
+  {
+    type = "optimized-decorative",
+    name = "rabbasca-gravewort",
+    order = "a[fulgora]-b[decorative]",
+    collision_box = {{-0.5, -0.5}, {0.5, 0.5}},
+    collision_mask = {layers={water_tile=true}, colliding_with_tiles_only=true},
+    autoplace = { probability_expression = "rabbasca_carrot_noise", tile_restriction = { "rabbasca-fertile" } },
+    pictures = util.spritesheets_to_pictures({{path = "__rabbasca-assets__/graphics/recolor/entities/fulgoran-gravewort", frame_count = 7}})
   },
 }
-
-data.raw["optimized-decorative"]["rabbasca-gravewort"].collision_mask = table.deepcopy(data.raw["optimized-decorative"]["rabbasca-asterisk-mini"].collision_mask)
 
 local map_gen = {
     cliff_settings = {},
@@ -129,7 +129,7 @@ local map_gen = {
           ["rabbasca-small-rock"] = {},
           ["rabbasca-dune-decal"] = {},
           ["rabbasca-asterisk-mini"] = {},
-          -- ["rabbasca-gravewort"] = {},
+          ["rabbasca-gravewort"] = {},
         }
       },
       entity =
