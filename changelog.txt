@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.19.0
+Date: ????
+  Changes:
+    - New graphics for planet in space, vault hacking animation and fertile terrain
+    - Added darkmode setting for map view (default off)
+    - Added setting to add athletic science pack to ingredients of late game researches
+  Bugfixes:
+    - Fixed another case where turrets shot more hacking keys than neccessary
+---------------------------------------------------------------------------------------------------
 Version: 0.18.3
 Date: 2026-06-26
   Changes:

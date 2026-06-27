@@ -6,6 +6,8 @@ local tile_trigger_effects = require("__space-age__/prototypes/tile/tile-trigger
 table.insert(water_tile_type_names, "rabbasca-harenic-sludge")
 table.insert(water_tile_type_names, "harenic-lava")
 
+local is_dark_mode = settings.startup["rabbasca-map-dark-mode"].value
+
 local lava_effect = util.merge { data.raw["tile-effect"]["lava"],
 {
   name = "harenic-lava",
@@ -73,7 +75,7 @@ util.merge{table.deepcopy(data.raw["tile"]["ammoniacal-ocean"]), {
   },
   walking_sound = tile_sounds.walking.dry_rock,
   landing_steps_sound = tile_sounds.landing.rock,
-  map_color = {0.21, 0.21, 0.21},
+  map_color = is_dark_mode and {0.07, 0.061, 0.1} or {0.21, 0.21, 0.21},
   walking_speed_modifier = 1,
   vehicle_friction_modifier = 1,
   trigger_effect = tile_trigger_effects.dirt_2_trigger_effect()
@@ -103,7 +105,7 @@ util.merge{table.deepcopy(data.raw["tile"]["ammoniacal-ocean"]), {
   },
   walking_sound = tile_sounds.walking.dry_rock,
   landing_steps_sound = tile_sounds.landing.rock,
-  map_color = {0.19, 0.19, 0.20},
+  map_color = is_dark_mode and {0.07, 0.061, 0.1} or {0.19, 0.19, 0.20},
   walking_speed_modifier = 1,
   vehicle_friction_modifier = 1,
   trigger_effect = tile_trigger_effects.dirt_2_trigger_effect()

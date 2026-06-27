@@ -63,6 +63,14 @@ data:extend{
     order="a[balance]"
   },
   {
+    type = "bool-setting",
+    name = "rabbasca-expand-athletic-science-usage",
+    setting_type = "startup",
+    default_value = false,
+    allow_blank = false,
+    order="a[balance]"
+  },
+  {
     type = "string-setting",
     name = "rabbasca-orbits",
     setting_type = "startup",
@@ -108,6 +116,13 @@ data:extend{
     name = "rabbasca-warp-core-spoils",
     setting_type = "startup",
     default_value = true,
+    order="u[ux]"
+  },
+  {
+    type = "bool-setting",
+    name = "rabbasca-map-dark-mode",
+    setting_type = "startup",
+    default_value = false,
     order="u[ux]"
   },
   {
