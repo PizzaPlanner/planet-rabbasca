@@ -5,7 +5,6 @@ local tile_trigger_effects = require("__space-age__/prototypes/tile/tile-trigger
 -- Some globals black magic or something happening here, required for water borders
 table.insert(water_tile_type_names, "rabbasca-harenic-sludge")
 table.insert(water_tile_type_names, "harenic-lava")
-table.insert(water_tile_type_names, "rabbasca-fertile")
 
 local lava_effect = util.merge { data.raw["tile-effect"]["lava"],
 {
@@ -48,20 +47,71 @@ util.merge{table.deepcopy(data.raw["tile"]["ammoniacal-ocean"]), {
   map_color = { 0.4, 0.1, 0.65 },
   fluid = "energetic-residue"
 }},
-util.merge{ table.deepcopy(data.raw["tile"]["volcanic-ash-flats"]), {
-    name = "rabbasca-rough",
-    autoplace = { probability_expression = "rabbasca_rocky + rabbasca_rocky_variance" },
-    map_color = {0.07, 0.06, 0.1},
-}},
+{
+  type = "tile",
+  name = "rabbasca-rough",
+  order = "c[gleba-land-tiles]-a[highland-dark-rock]",
+  subgroup = "gleba-tiles",
+  collision_mask = tile_collision_masks.ground(),
+  layer = 55,
+  layer_group = "ground-natural",
+  -- sprite_usage_surface = "rabbasca",
+  variants = tile_variations_template_with_transitions(
+    "__rabbasca-assets__/graphics/recolor/textures/rabbasca-rough.png",
+    {
+      max_size = 4,
+      [1] = { weights = {0.085, 0.085, 0.085, 0.085, 0.087, 0.085, 0.065, 0.085, 0.045, 0.045, 0.045, 0.045, 0.005, 0.025, 0.045, 0.045 } },
+      [2] = { probability = 1, weights = {0.018, 0.020, 0.015, 0.025, 0.015, 0.020, 0.025, 0.015, 0.025, 0.025, 0.010, 0.025, 0.020, 0.025, 0.025, 0.010 }, },
+      [4] = { probability = 0.1, weights = {0.018, 0.020, 0.015, 0.025, 0.015, 0.020, 0.025, 0.015, 0.025, 0.025, 0.010, 0.025, 0.020, 0.025, 0.025, 0.010 }, },
+    }
+  ),
+  transitions = table.deepcopy(data.raw["tile"]["volcanic-pumice-stones"].transitions),
+  transitions_between_transitions = table.deepcopy(data.raw["tile"]["volcanic-pumice-stones"].transitions_between_transitions),
+  autoplace =
+  {
+    probability_expression = "rabbasca_rocky"
+  },
+  walking_sound = tile_sounds.walking.dry_rock,
+  landing_steps_sound = tile_sounds.landing.rock,
+  map_color = {0.21, 0.21, 0.21},
+  walking_speed_modifier = 1,
+  vehicle_friction_modifier = 1,
+  trigger_effect = tile_trigger_effects.dirt_2_trigger_effect()
+},
+{
+  type = "tile",
+  name = "rabbasca-rough-2",
+  order = "c[gleba-land-tiles]-a[highland-dark-rock]",
+  subgroup = "gleba-tiles",
+  collision_mask = tile_collision_masks.ground(),
+  layer = 56,
+  layer_group = "ground-natural",
+  variants = tile_variations_template_with_transitions(
+    "__rabbasca-assets__/graphics/recolor/textures/rabbasca-rough-2.png",
+    {
+      max_size = 4,
+      [1] = { weights = {0.085, 0.085, 0.085, 0.085, 0.087, 0.085, 0.065, 0.085, 0.045, 0.045, 0.045, 0.045, 0.005, 0.025, 0.045, 0.045 } },
+      [2] = { probability = 1, weights = {0.018, 0.020, 0.015, 0.025, 0.015, 0.020, 0.025, 0.015, 0.025, 0.025, 0.010, 0.025, 0.020, 0.025, 0.025, 0.010 }, },
+      [4] = { probability = 0.1, weights = {0.018, 0.020, 0.015, 0.025, 0.015, 0.020, 0.025, 0.015, 0.025, 0.025, 0.010, 0.025, 0.020, 0.025, 0.025, 0.010 }, },
+    }
+  ),
+  transitions = table.deepcopy(data.raw["tile"]["volcanic-pumice-stones"].transitions),
+  transitions_between_transitions = table.deepcopy(data.raw["tile"]["volcanic-pumice-stones"].transitions_between_transitions),
+  autoplace =
+  {
+    probability_expression = "rabbasca_rocky + rabbasca_rocky_variance"
+  },
+  walking_sound = tile_sounds.walking.dry_rock,
+  landing_steps_sound = tile_sounds.landing.rock,
+  map_color = {0.19, 0.19, 0.20},
+  walking_speed_modifier = 1,
+  vehicle_friction_modifier = 1,
+  trigger_effect = tile_trigger_effects.dirt_2_trigger_effect()
+},
 util.merge{ table.deepcopy(data.raw["tile"]["volcanic-ash-cracks"]), {
     name = "rabbasca-wasted",
     autoplace = nil,
-    map_color = {0.05, 0.01, 0.04},
-}},
-util.merge{ table.deepcopy(data.raw["tile"]["volcanic-pumice-stones"]), {
-    name = "rabbasca-rough-2",
-    autoplace = { probability_expression = "rabbasca_rocky" },
-    map_color = {0.07, 0.061, 0.1},
+    
 }},
 {
   type = "tile",
@@ -69,8 +119,8 @@ util.merge{ table.deepcopy(data.raw["tile"]["volcanic-pumice-stones"]), {
   order = "c[gleba-land-tiles]-a[highland-dark-rock]",
   subgroup = "gleba-tiles",
   collision_mask = tile_collision_masks.ground(),
-  layer = 0,
-  layer_group = "water-overlay",
+  layer = 44,
+  layer_group = "ground-natural",
   -- sprite_usage_surface = "rabbasca",
   variants = tile_variations_template_with_transitions_and_effect_map(
     "__rabbasca-assets__/graphics/recolor/textures/rabbasca-fertile.png",
@@ -85,7 +135,7 @@ util.merge{ table.deepcopy(data.raw["tile"]["volcanic-pumice-stones"]), {
   ),
   autoplace =
   {
-    probability_expression = "rabbasca_fertile"
+    probability_expression = "rabbasca_fertile * 1.1"
   },
   walking_sound = tile_sounds.walking.dry_rock,
   landing_steps_sound = tile_sounds.landing.rock,
@@ -127,18 +177,29 @@ util.merge {
 }
 }
 
-local lava_transition = { spritesheet = "__rabbasca-assets__/graphics/recolor/textures/lava-stone-lightmap.png" }
-local lava_patch =
-{
-  filename = "__rabbasca-assets__/graphics/recolor/textures/lava-patch.png",
-  scale = 0.5,
-  width = 64,
-  height = 64
-}
-
-for _, tile in pairs({ "rabbasca-rough", "rabbasca-rough-2", "rabbasca-wasted" }) do
-  data.raw["tile"][tile].transitions[2].lightmap_layout = lava_transition
-  data.raw["tile"][tile].transitions_between_transitions[1].water_patch = lava_patch 
-end
+local dirt_transitions_1 = tile_variations_template_with_transitions(
+  "__space-age__/graphics/terrain/vulcanus/volcanic-ash-dark.png",
+  {
+    max_size = 4,
+    [1] = { weights = {0.085, 0.085, 0.085, 0.085, 0.087, 0.085, 0.065, 0.085, 0.045, 0.045, 0.045, 0.045, 0.005, 0.025, 0.045, 0.045 } },
+    [2] = { probability = 1, weights = {0.018, 0.020, 0.015, 0.025, 0.015, 0.020, 0.025, 0.015, 0.025, 0.025, 0.010, 0.025, 0.020, 0.025, 0.025, 0.010 }, },
+    [4] = { probability = 0.1, weights = {0.018, 0.020, 0.015, 0.025, 0.015, 0.020, 0.025, 0.015, 0.025, 0.025, 0.010, 0.025, 0.020, 0.025, 0.025, 0.010 }, },
+  }
+).transition
+dirt_transitions_1.transition_group = 1
+dirt_transitions_1.to_tiles = { "rabbasca-rough-2" }
+table.insert(data.raw["tile"]["rabbasca-rough"].transitions, dirt_transitions_1)
+local dirt_transitions_2 = tile_variations_template_with_transitions (
+  "__space-age__/graphics/terrain/vulcanus/volcanic-pumice-stones.png",
+  {
+    max_size = 4,
+    [1] = { weights = {0.085, 0.085, 0.085, 0.085, 0.087, 0.085, 0.065, 0.085, 0.045, 0.045, 0.045, 0.045, 0.005, 0.025, 0.045, 0.045 } },
+    [2] = { probability = 1, weights = {0.018, 0.020, 0.015, 0.025, 0.015, 0.020, 0.025, 0.015, 0.025, 0.025, 0.010, 0.025, 0.020, 0.025, 0.025, 0.010 }, },
+    [4] = { probability = 0.1, weights = {0.018, 0.020, 0.015, 0.025, 0.015, 0.020, 0.025, 0.015, 0.025, 0.025, 0.010, 0.025, 0.020, 0.025, 0.025, 0.010 }, },
+  }
+).transition
+dirt_transitions_2.to_tiles = { "rabbasca-rough" }
+dirt_transitions_2.transition_group = 1
+table.insert(data.raw["tile"]["rabbasca-rough-2"].transitions, dirt_transitions_2)
 
 data.raw["tile"]["haronite-plate"].bound_decoratives = nil
