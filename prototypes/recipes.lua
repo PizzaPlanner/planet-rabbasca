@@ -20,7 +20,7 @@ data:extend {
         type = "item-subgroup",
         name = "rabbasca-processes",
         group = "intermediate-products",
-        order = data.raw["item-subgroup"]["fulgora-processes"].order .."-b"
+        order = "l-rabbasca"
     },
     {
         type = "item-subgroup",
@@ -228,8 +228,8 @@ data:extend {
         },
         allow_productivity = true,
         icons = Rabbasca.icons({
-            { icon = "__base__/graphics/icons/solid-fuel.png", scale = 0.8 },
-            { proto = data.raw["fluid"]["energetic-residue"], scale = 0.35, shift = { -8, -8 } }
+            { icon = "__base__/graphics/icons/solid-fuel.png" },
+            { proto = data.raw["fluid"]["energetic-residue"], scale = 0.5, shift = { -8, -8 } }
         }),
         subgroup = "fluid-recipes",
         enabled = false,
@@ -360,7 +360,7 @@ data:extend {
         name = "lubricant-from-energetic-residue",
         icons = Rabbasca.icons({ 
             { proto = data.raw["fluid"]["lubricant"] },
-            { proto = data.raw["fluid"]["energetic-residue"], scale = 0.3, shift = { -8, -8 } },
+            { proto = data.raw["fluid"]["energetic-residue"], scale = 0.5, shift = { -8, -8 } },
         }),
         enabled = false,
         energy_required = 3.5,
@@ -417,9 +417,9 @@ data:extend {
         name = "rabbasca-residue-skimming",
         icons = Rabbasca.icons({
             { proto = data.raw["fluid"]["energetic-residue"], scale = 0.5, shift = {-3, -8} },
-            { proto = data.raw["item"]["plastic-bottle"], scale = 0.4, shift = {-12, 12} },
-            { proto = data.raw["item"]["spoilage"], scale = 0.4, shift = {12, -3} },
-            { proto = data.raw["item"]["advanced-circuit"], scale = 0.4, shift = {8, 9} },
+            { proto = data.raw["item"]["plastic-bottle"], scale = 0.75, shift = {-8, 8} },
+            { proto = data.raw["item"]["spoilage"], scale = 0.75, shift = {8, -3} },
+            { proto = data.raw["item"]["advanced-circuit"], scale = 0.75, shift = {8, 9} },
         }),
         enabled = false,
         energy_required = 1.5,
@@ -525,10 +525,10 @@ data:extend {
         name = "haronite-decomposition",
         enabled = false,
         icons = {
-            { icon = "__rabbasca-assets__/graphics/recolor/icons/harene-gas.png", icon_size = 64, scale = 0.7, shift = {0, 4} },
-            { icon = "__rabbasca-assets__/graphics/recolor/icons/haronite.png", icon_size = 64, scale = 0.4, shift = {0, -12} },
-            { icon = "__base__/graphics/icons/stone.png", icon_size = 64, scale = 0.5, shift = {-12, 12} },
-            { icon = "__space-age__/graphics/icons/calcite.png", icon_size = 64, scale = 0.5, shift = {12, 12} },
+            { icon = "__rabbasca-assets__/graphics/recolor/icons/harene-gas.png", icon_size = 64, scale = 0.75, shift = {0, 4} },
+            { icon = "__rabbasca-assets__/graphics/recolor/icons/haronite.png", icon_size = 64, scale = 0.4, shift = {0, -8} },
+            { icon = "__base__/graphics/icons/stone.png", icon_size = 64, scale = 0.5, shift = {-8, 8} },
+            { icon = "__space-age__/graphics/icons/calcite.png", icon_size = 64, scale = 0.5, shift = {8, 8} },
         },
         categories = { "chemistry" },
         hide_from_player_crafting = true,

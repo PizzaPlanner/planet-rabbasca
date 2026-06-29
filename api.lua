@@ -165,7 +165,7 @@ local function create_infused_thing_with_effect(original, extra_cost)
     new_item.hidden_in_factoriopedia = true
     new_item.icons = Rabbasca.icons({
         { proto = item },
-        { proto = ears_item, scale = 0.3, shift = {0, 12} }
+        { proto = ears_item, scale = 0.5, shift = {8, 8} }
     })
     new_item.place_result = new_name
     new_item.subgroup = (new_item.subgroup or "unknown") .. "-with-ears-core"
@@ -178,7 +178,7 @@ local function create_infused_thing_with_effect(original, extra_cost)
     new.hidden_in_factoriopedia = true
     new.icons = Rabbasca.icons({
         { proto = original },
-        { proto = ears_item, scale = 0.3, shift = {0, 12} }
+        { proto = ears_item, scale = 0.5, shift = {8, 8} }
     })
     new.no_ears_upgrade = true
     new.fast_replaceable_group = (original.fast_replaceable_group or original.name) .. "-with-ears" -- ignores tile restrictions in upgrades, so we cannot upgrade from base variants
@@ -294,32 +294,49 @@ function Rabbasca.make_trigger_item(item, effect_id)
     item }
 end
 
-function Rabbasca.icons(data)
+function Rabbasca.animation_layer(location, data)
+    local result = require(location)
+    result.filename = location..".png"
+    result.frame_count = result.sprite_count
+    result.shift = data.shift or result.shift
+    local corrected_shift = data.scale and {result.shift[1] * data.scale / result.scale, result.shift[2] * data.scale / result.scale}
+    result.shift = data.shift or corrected_shift or result.shift or { 0, 0 }
+    return util.merge { result, data }
+end
+
+function Rabbasca.icons(data, expected_icon_size)
     local icons = { }
-    local shift_multiplier = 1
+    local expected_icon_size = expected_icon_size or 64
     for _, entry in pairs(data) do
-        if entry.shift_multiplier then shift_multiplier = entry.shift_multiplier
-        elseif entry.icon then
-            local scale = 64 / (entry.icon_size or 64) * (entry.scale or 1)
-            table.insert(icons, { icon = entry.icon, icon_size = entry.icon_size, tint = entry.tint, shift = entry.shift, scale = entry.scale and scale })
+        if entry.icon then
+            local icon_size = entry.icon_size or 64
+            local default_scale = (expected_icon_size / 2) / icon_size
+            local scale = default_scale * (entry.scale or 1)
+            table.insert(icons, { icon = entry.icon, icon_size = icon_size, tint = entry.tint, shift = entry.shift, scale = scale, default_scale = default_scale })
         elseif entry.proto then 
             if entry.proto.icons then
                 for _, icon in pairs(entry.proto.icons) do
-                    local scale = 64 / (icon.icon_size or 64) * (entry.scale or 1) * (entry.scale or 1) * (icon.scale or 1) -- Why squared scale??
+                    local icon_size = (icon.icon_size or 64)
+                    local default_scale = (expected_icon_size / 2) / icon_size
+                    local prev_scale = icon.default_scale or default_scale
+                    local scale = default_scale * (icon.scale or prev_scale) / prev_scale * (entry.scale or 1)
                     local shift_a = (entry.shift or {0, 0})
                     local shift_b = (icon.shift or {0, 0})
                     local shift = {shift_a[1] + shift_b[1], shift_a[2] + shift_b[2]}
-                    table.insert(icons, { icon = icon.icon, icon_size = icon.icon_size, tint = entry.tint, shift = shift, scale = entry.scale and scale })
+                    table.insert(icons, { icon = icon.icon, icon_size = icon_size, tint = entry.tint, shift = shift, scale = scale, default_scale = default_scale })
                 end
             elseif entry.proto.icon then
-                local scale = 64 / (entry.proto.icon_size or 64) * (entry.scale or 1)
-                table.insert(icons, { icon = entry.proto.icon, icon_size = entry.proto.icon_size, tint = entry.tint, shift = entry.shift, scale = entry.scale and scale })
+                local icon_size = entry.proto.icon_size or 64
+                local default_scale = (expected_icon_size / 2) / icon_size
+                local scale = default_scale * (entry.scale or 1)
+                table.insert(icons, { icon = entry.proto.icon, icon_size = icon_size, tint = entry.tint, shift = entry.shift, scale = scale, default_scale = default_scale })
             end
         end
     end
     for _, entry in pairs(icons) do
         if entry.shift then
-            entry.shift = { entry.shift[1] * shift_multiplier, entry.shift[2] * shift_multiplier }
+            entry.shift = { entry.shift[1] * expected_icon_size / 64, entry.shift[2] * expected_icon_size / 64 }
+            -- entry.scale = (entry.scale or 1) / target_scale
         end
     end
     return icons

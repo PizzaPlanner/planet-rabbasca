@@ -228,6 +228,7 @@ local vault_crafter = {
   energy_usage = "1MW",
   allow_copy_paste = true,
   module_slots = 2,
+  trash_inventory_size = 10,
   disabled_when_recipe_not_researched = true,
   autoplace = { probability_expression = "rabbasca_vaults > 0.85", force = "neutral" },
   flags = { "placeable-player", "not-rotatable"},
@@ -383,7 +384,7 @@ local vault_core = util.merge{
   name = "rabbasca-vault-meltdown",
   icons = {
     { icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64 },
-    { icon = data.raw["virtual-signal"]["signal-explosion"].icon, icon_size = 64, scale = 0.3, shift = { 8, 8 } }
+    { icon = data.raw["virtual-signal"]["signal-explosion"].icon, icon_size = 64, scale = 0.5, shift = { 8, 8 } }
   },
   hidden = true,
   hidden_in_factoriopedia = true,

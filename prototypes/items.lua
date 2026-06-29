@@ -291,7 +291,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
     type = "item",
     icons = {
       { icon = "__rabbasca-assets__/graphics/recolor/icons/harene-gas.png", icon_size = 64 },
-      { icon = "__space-age__/graphics/icons/nutrients.png", scale = 0.3, icon_size = 64  }
+      { icon = "__space-age__/graphics/icons/nutrients.png", scale = 0.5, icon_size = 64  }
     },
     name = "protein-powder",
     stack_size = 200,
@@ -487,7 +487,8 @@ util.merge{
     order = "a[vault-access-key]",
     icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png",
     icon_size = 64,
-    stack_size = 20,        
+    stack_size = 20,     
+    flags = { "hide-from-bonus-gui" },
     ammo_type = {
       action = {
         action_delivery = {
@@ -519,6 +520,7 @@ util.merge{
     subgroup = "rabbasca-security",
     order = "a[vault-security-key]",
     stack_size = 20,
+    flags = { "hide-from-bonus-gui" },
     ammo_type = {
       action = {
         action_delivery = {
