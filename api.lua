@@ -151,44 +151,37 @@ data:extend{
 }
 end
 
-local function create_infused_thing_with_effect(original, extra_cost)
-    if original.no_ears_upgrade or original.hidden then return nil end 
-    local item = data.raw["item"][original.name]
-    -- TODO: should no subgroup be supported? 
-    if (not item) or item.hidden or not item.subgroup then return nil end
-    local new_name = "harene-infused-"..original.name
+local function energy_source_matches(e1, e2)
+    return e1.energy_source and e2.energy_source 
+    and e1.energy_source.type == "electric" and e2.energy_source.type == "electric" 
+    and e1.energy_usage == e2.energy_usage
+end
+
+local function create_ears_entity(original, replacement_for)
     local new = table.deepcopy(original)
     if not Rabbasca.require_ears_flooring(new) then return nil end
-    local ears_item = data.raw["item"]["harene-ears-core"]
-    local new_item = table.deepcopy(item)
-    new_item.name = new_name
-    new_item.hidden_in_factoriopedia = true
-    new_item.icons = Rabbasca.icons({
-        { proto = item },
-        { proto = ears_item, scale = 0.5, shift = {8, 8} }
-    })
-    new_item.place_result = new_name
-    new_item.subgroup = (new_item.subgroup or "unknown") .. "-with-ears-core"
-    new_item.factoriopedia_alternative = original.name
-
-    new.name = new_name
+    new.name = "harene-infused-"..original.name
+    local item_name = replacement_for or new.name 
+    local is_replacement = replacement_for ~= nil
+    if data.raw[original.type][new.name] then return end
     new.localised_name = {"rabbasca-extra.with-ears", original.localised_name or {"entity-name." .. original.name}}
     new.localised_description = original.localised_description and {"rabbasca-extra.with-ears-description", original.localised_description} or {"rabbasca-extra.with-ears-description-noparam"}
     new.factoriopedia_alternative = original.name
     new.hidden_in_factoriopedia = true
     new.icons = Rabbasca.icons({
         { proto = original },
-        { proto = ears_item, scale = 0.5, shift = {8, 8} }
+        { proto = data.raw["item"]["harene-ears-core"], scale = 0.5, shift = { -8, 8 } }
     })
     new.no_ears_upgrade = true
-    new.fast_replaceable_group = (original.fast_replaceable_group or original.name) .. "-with-ears" -- ignores tile restrictions in upgrades, so we cannot upgrade from base variants
+    new.fast_replaceable_group = (original.fast_replaceable_group or original.name) .. "-with-ears" -- bots ignore tile restrictions on upgrades, so we cannot upgrade from base variants
     new.next_upgrade = nil
-    new.placeable_by = { item = new_name, count = 1 }
-    if new.minable.result == original.name then new.minable.result = new_name end
+    new.placeable_by = { item = item_name, count = 1 } -- for pipette, always point at original
+    if new.minable.result == original.name then new.minable.result = item_name
+    elseif is_replacement and new.minable.result then new.minable.result = item_name end
     if new.minable.results then
         for _, entry in pairs(new.minable.results) do
-            if entry.name and entry.name == original.name then
-                entry.name = new_name
+            if entry.name and (entry.name == original.name or is_replacement) then
+                entry.name = item_name
             end
         end
     end
@@ -203,6 +196,51 @@ local function create_infused_thing_with_effect(original, extra_cost)
         Rabbasca.only_on_harenic_surface(new, 0.1)
     end
 
+    -- If the original entity uses PL's replacement feature, copy the replacements for EARS variants.
+    -- i.e. if we just made furnace-with-ears and some mod does 
+    -- PlanetsLib.assign_entity_replacement("my-planet", "furnace", "giga-furnace")
+    -- and giga-furnace is EARS-able and does not differ in energy consumption or type, add giga-furnace-with-ears and
+    -- PlanetsLib.assign_entity_replacement("my-planet", "furnace-with-ears", "giga-furnace-with-ears") 
+    local pl_replacements = PlanetsLib.constants.on_entity_placed_on_planet_replacements
+    if pl_replacements then
+        for planet, t in pairs(pl_replacements) do
+            for replaced_entity, rep in pairs(t) do
+                local original_replacement = replaced_entity == original.name and rep and rep.enabled and rep.entity ~= replaced_entity and data.raw[original.type][rep.entity]
+                if original_replacement and energy_source_matches(original, original_replacement) and not original_replacement.no_ears_upgrade then
+                    local new_replacement = create_ears_entity(original_replacement, new.name)
+                    if new_replacement then
+                        data.extend{ new_replacement }
+                        PlanetsLib.assign_entity_replacement(planet, new.name, new_replacement.name)
+                    -- EARS variant of replacement entity already exists (i.e. for PlanetsLib.assign_entity_replacement("my-planet", "furnace", "electric-furnace"))
+                    elseif data.raw[original.type]["harene-infused-"..original_replacement] then
+                        PlanetsLib.assign_entity_replacement(planet, new.name, "harene-infused-"..original_replacement)
+                    end
+                end
+            end
+        end
+    end
+
+    return new
+end
+
+local function create_infused_thing_with_effect(original, extra_cost)
+    if original.no_ears_upgrade or original.hidden then return nil end 
+    local item = data.raw["item"][original.name]
+    -- TODO: should no subgroup be supported? 
+    if (not item) or item.hidden or not item.subgroup then return nil end
+    local new = create_ears_entity(original)
+    if not new then return end
+    local new_item = table.deepcopy(item)
+    new_item.name = new.name
+    new_item.hidden_in_factoriopedia = true
+    new_item.icons = Rabbasca.icons({
+        { proto = item },
+        { proto = data.raw["item"]["harene-ears-core"], scale = 0.5, shift = { -8, 8 } }
+    })
+    new_item.place_result = new.name
+    new_item.subgroup = (new_item.subgroup or "unknown") .. "-with-ears-core"
+    new_item.factoriopedia_alternative = original.name
+
 
     if not data.raw["item-subgroup"][new_item.subgroup] then
         data:extend { util.merge {
@@ -215,15 +253,15 @@ local function create_infused_thing_with_effect(original, extra_cost)
     end
     local new_recipe = {
         type = "recipe",
-        name = new_name,
+        name = new.name,
         enabled = false,
         energy_required = 30,
         ingredients = util.merge {
             extra_cost,
             { { type = "item", name = original.name, amount = 1 } },
         },
-        results = { { type = "item", name = new_name, amount = 1 } },
-        main_product = new_name,
+        results = { { type = "item", name = new.name, amount = 1 } },
+        main_product = new.name,
         hide_from_player_crafting = true,
         categories = { "install-ears-core" },
         maximum_productivity = 1
@@ -234,7 +272,7 @@ local function create_infused_thing_with_effect(original, extra_cost)
       new_recipe
     }
     recycling.generate_recycling_recipe(new_recipe)
-    return new_name
+    return new.name
 end
 
 -- set prototype.no_ears_upgrade = true to skip ears variant creation
