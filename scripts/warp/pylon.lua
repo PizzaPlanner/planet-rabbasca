@@ -59,7 +59,7 @@ local function try_deconstruct(data, name, quality, inventory, pylon)
         else
             return false, status_invalid_target
         end
-    elseif not data.is_tile then
+    elseif not data.is_tile then -- Buildings
         for k = 1, entity.get_max_inventory_index() do 
             local spill_inventory = entity.get_inventory(k)
             if spill_inventory then entity.surface.spill_inventory { position = entity.position, inventory = spill_inventory, force = pylon.force } end
@@ -70,14 +70,22 @@ local function try_deconstruct(data, name, quality, inventory, pylon)
         end
         local surface, position = entity.surface, entity.position
         local size = { entity.bounding_box.right_bottom.x - entity.bounding_box.left_top.x, entity.bounding_box.right_bottom.y - entity.bounding_box.left_top.y }
-        local result = entity.mine{ inventory = inventory }
-        if result then 
+        local result = false
+        if (entity.type == "assembling-machine" or entity.type == "furnace" or entity.type == "rocket-silo") and entity.is_crafting() then
+            local temp = game.create_inventory(64)
+            result = entity.mine{ inventory = temp }
+            surface.spill_inventory { position = position, inventory = temp, force = pylon.force }
+            temp.destroy()
+        else
+            result = entity.mine{ inventory = inventory }
+        end
+        if result then
             play_smoke(surface, position, math.max(size[1], size[2]))
             return true, status_ok
         else
             return false, status_invalid_target
         end
-    else
+    else -- Tiles
         local name, count  = data.name, data.count
         if entity.surface.get_tile(entity.position.x, entity.position.y).name ~= name then
             return false -- prevent deconstructing hidden tiles first
@@ -86,7 +94,6 @@ local function try_deconstruct(data, name, quality, inventory, pylon)
         c = { x = c.x + 0.5, y = c.y + 0.5}
         local objs = entity.surface.find_entities_filtered{ area = {left_top = {c.x - 0.3, c.y - 0.3}, right_bottom = {c.x + 0.3, c.y + 0.3}}, collision_mask = "object" }
         if #objs > 0 then return false end
-        
         local inserted = inventory.insert({name = name, count = count})
         if inserted == count then
             local hidden = entity.hidden_tile
