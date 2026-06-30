@@ -291,7 +291,7 @@ util.merge { data.raw["item"]["rocket-fuel"],
     type = "item",
     icons = {
       { icon = "__rabbasca-assets__/graphics/recolor/icons/harene-gas.png", icon_size = 64 },
-      { icon = "__space-age__/graphics/icons/nutrients.png", scale = 0.5, icon_size = 64  }
+      { icon = "__space-age__/graphics/icons/nutrients.png", scale = 0.3, icon_size = 64, shift = {0, -1}  }
     },
     name = "protein-powder",
     stack_size = 200,

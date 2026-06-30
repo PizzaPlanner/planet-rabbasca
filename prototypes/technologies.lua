@@ -11,6 +11,10 @@ data:extend {
         space_location = "rabbasca",
         use_icon_overlay_constant = true
       },
+      {
+        type = "unlock-travel-to-space-platforms",
+        modifier = true
+      }
     },
     unit = {
         count = 400,
