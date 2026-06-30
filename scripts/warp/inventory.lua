@@ -1,7 +1,10 @@
 local M = { }
 
 function M.is_proto_supported(proto)
-    return proto.place_result or proto.place_as_tile_result or proto.type == "module"
+    if proto.place_result then 
+        return storage.inventory_filter[proto.place_result.type] ~= true
+    end
+    return proto.place_as_tile_result or proto.type == "module"
 end
 
 function M.logistics_group_name()
@@ -10,6 +13,18 @@ end
 
 function M.init_inventory()
     storage.inventory_warpers = { }
+    storage.inventory_filter = {
+        ["capture-robot"] = true,
+        ["combat-robot"] = true,
+        ["construction-robot"] = true,
+        ["logistic-robot"] = true,
+        ["car"] = true,
+        ["spider-vehicle"] = true,
+        ["unit"] = true,
+        ["spider-unit"] = true,
+        ["segmented-unit"] = true,
+        ["character"] = true,
+    }
     storage.invetory_logistic_section = storage.invetory_logistic_section or { }
     for _, surface in pairs(game.surfaces) do
         for _, e in pairs(surface.find_entities_filtered { name = "rabbasca-warp-uplink" }) do
@@ -17,7 +32,25 @@ function M.init_inventory()
         end
     end
 
-    if storage.warp_inventory then return end
+    if storage.warp_inventory then
+        local recovery_surface = game.surfaces["rabbasca"] or game.surfaces["nauvis"]
+        local spilled = 0
+        for i = 1, #storage.warp_inventory do
+            local stack = storage.warp_inventory[i]
+            if stack.valid_for_read and not M.is_proto_supported(stack.prototype) then
+                if recovery_surface then 
+                    spilled = spilled + stack.count
+                    if #recovery_surface.spill_item_stack({position = {0, 0}, stack = stack, drop_full_stack = true }) > 0 then
+                        stack.clear()
+                    end
+                end
+            end
+        end
+        if spilled > 0 and recovery_surface then
+            game.print("[planet=rabbasca]: "..tostring(spilled).. " invalid items in [virtual-signal=rabbasca-warp-inventory] were recovered here: [gps=0,0,"..recovery_surface.name.."]")
+        end
+        return
+    end
     storage.warp_inventory = game.create_inventory(512, { "rabbasca-extra.warp-inventory" })
 end
 
