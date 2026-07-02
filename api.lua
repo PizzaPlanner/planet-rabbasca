@@ -201,7 +201,7 @@ local function create_ears_entity(original, replacement_for)
     -- PlanetsLib.assign_entity_replacement("my-planet", "furnace", "giga-furnace")
     -- and giga-furnace is EARS-able and does not differ in energy consumption or type, add giga-furnace-with-ears and
     -- PlanetsLib.assign_entity_replacement("my-planet", "furnace-with-ears", "giga-furnace-with-ears") 
-    local pl_replacements = PlanetsLib.constants.on_entity_placed_on_planet_replacements
+    local pl_replacements = PlanetsLib and PlanetsLib.constants and PlanetsLib.constants.on_entity_placed_on_planet_replacements
     if pl_replacements then
         for planet, t in pairs(pl_replacements) do
             for replaced_entity, rep in pairs(t) do
@@ -211,8 +211,8 @@ local function create_ears_entity(original, replacement_for)
                     if new_replacement then
                         data.extend{ new_replacement }
                         PlanetsLib.assign_entity_replacement(planet, new.name, new_replacement.name)
-                    -- EARS variant of replacement entity already exists (i.e. for PlanetsLib.assign_entity_replacement("my-planet", "furnace", "electric-furnace"))
                     elseif data.raw[original.type]["harene-infused-"..original_replacement] then
+                        -- EARS variant of replacement entity already exists (i.e. for PlanetsLib.assign_entity_replacement("my-planet", "furnace", "electric-furnace"))
                         PlanetsLib.assign_entity_replacement(planet, new.name, "harene-infused-"..original_replacement)
                     end
                 end

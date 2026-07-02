@@ -108,8 +108,8 @@ data:extend {
         },
         results = { 
             { type = "fluid", name = "harene", amount = 25 },
-            {type = "fluid",  name = "fluoroketone-hot", amount = 1000, ignored_by_productivity = 1000 },
-            {type = "item",  name = "harene-cryo-container-empty", amount = 1, independent_probability = 0.2, ignored_by_productivity = 1 },
+            { type = "fluid",  name = "fluoroketone-hot", amount = 1000, ignored_by_productivity = 1000 },
+            { type = "item",  name = "harene-cryo-container-empty", amount = 1, independent_probability = 0.36, ignored_by_productivity = 1 },
         },
         allow_productivity = true,
         main_product = "harene",
@@ -150,7 +150,9 @@ data:extend {
             {type = "fluid", name = "harenic-lava", amount = 500 },
         },
         results = { 
-            {type = "item",  name = "harene-cryo-container-filled", amount = 1, independent_probability = 0.75 },
+            {type = "item",  name = "harene-cryo-container-filled", amount = 1, shared_probability = { min = 0, max = 0.75 } },
+            {type = "item",  name = "harene-cryo-container-empty", amount = 1, shared_probability = { min = 0.75, max = 1 } },
+            {type = "item",  name = "harenic-stabilizer", amount = 4, shared_probability = { min = 0.75, max = 1 } },
         },
         allow_productivity = false,
         main_product = "harene-cryo-container-filled",

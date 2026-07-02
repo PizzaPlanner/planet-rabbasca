@@ -68,7 +68,7 @@ util.merge{table.deepcopy(data.raw["tile"]["ammoniacal-ocean"]), {
     }
   ),
   transitions = table.deepcopy(data.raw["tile"]["volcanic-pumice-stones"].transitions),
-  transitions_between_transitions = table.deepcopy(data.raw["tile"]["volcanic-pumice-stones"].transitions_between_transitions),
+  -- transitions_between_transitions = table.deepcopy(data.raw["tile"]["volcanic-pumice-stones"].transitions_between_transitions),
   autoplace =
   {
     probability_expression = "rabbasca_rocky"
@@ -98,7 +98,7 @@ util.merge{table.deepcopy(data.raw["tile"]["ammoniacal-ocean"]), {
     }
   ),
   transitions = table.deepcopy(data.raw["tile"]["volcanic-pumice-stones"].transitions),
-  transitions_between_transitions = table.deepcopy(data.raw["tile"]["volcanic-pumice-stones"].transitions_between_transitions),
+  -- transitions_between_transitions = table.deepcopy(data.raw["tile"]["volcanic-pumice-stones"].transitions_between_transitions),
   autoplace =
   {
     probability_expression = "rabbasca_rocky + rabbasca_rocky_variance"

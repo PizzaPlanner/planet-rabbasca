@@ -212,7 +212,6 @@ PlanetsLib:extend({
     icon_size = 64,
     starmap_icon = "__rabbasca-assets__/graphics/by-talandar/rabbasca256.png",
 		starmap_icon_size = 256,
-    draw_orbit = true,
     solar_power_in_space = gleba.solar_power_in_space,
     auto_save_on_first_trip = true,
     gravity_pull = 10,
@@ -252,6 +251,7 @@ PlanetsLib:extend({
     },
     map_gen_settings = map_gen,
     parked_platforms_orientation = 0.55,
+    draw_orbit = false,
     orbit = {
       orientation = 0.9,
       distance = 1.8,
@@ -261,9 +261,9 @@ PlanetsLib:extend({
       },
       sprite = {
         type = "sprite",
-        filename = "__rabbasca-assets__/graphics/by-talandar/rabbasca64.png",
-        size = 64,
-        scale = 0.25,
+        filename = "__rabbasca-assets__/graphics/textures/kryzeth-rabbasca-orbit.png",
+        size = 470,
+        scale = 0.26,
       }
     },
     platform_surface_render_parameters = platform_render,
