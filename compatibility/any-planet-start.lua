@@ -5,7 +5,7 @@ utils.ignore_multiplier("military")
 utils.ignore_multiplier("electric-mining-drill")
 utils.set_trigger("oil-processing", {
     type = "mine-entity",
-    entity = "harene-vent"
+    entities = { "harene-vent" }
 })
 utils.set_prerequisites("chemical-science-pack", { "engine", "rabbascan-vault-access", "energetic-residue" })
 utils.add_prerequisites("rabbasca-healthy-fluids", { "oil-processing" })
