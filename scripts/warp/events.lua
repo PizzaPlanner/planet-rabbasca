@@ -88,6 +88,17 @@ script.on_configuration_changed(function(_)
   rebuild_network.rebuild_network()
 end)
 
+local module_events = {
+  "item-request-proxy-updated",
+  "item-request-proxy-created",
+  "item-request-proxy-removed"
+}
+
+script.on_event(module_events, function(event)
+  if not (event.proxy_target and event.proxy_target.valid) then return end
+  M.mark_chunk_dirty(event.proxy_target.surface_index, M.chunk_id(event.proxy_target.position))
+end)
+
 script.on_event(defines.events.on_marked_for_upgrade, function(event)
   M.mark_chunk_dirty(event.entity.surface_index, M.chunk_id(event.entity.position))
 end)

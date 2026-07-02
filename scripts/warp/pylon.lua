@@ -29,6 +29,35 @@ local function play_smoke(surface, position, size)
     }
 end
 
+local function pylon_pickup_stack(pylon, stack, fallback_spill_position)
+    local trash = pylon.get_inventory(defines.inventory.crafter_trash)
+    if stack.valid_for_read and M.is_proto_supported(stack.prototype) then
+        storage.warp_inventory.transfer_from_stack(stack)
+    end
+    if stack.valid_for_read then
+        trash.transfer_from_stack(stack)
+    end
+    if stack.valid_for_read then
+        pylon.surface.spill_item_stack{ position = fallback_spill_position or {0, 0}, stack = stack, force = pylon.force }
+    end
+end
+
+local function pylon_pickup_inventory(pylon, from_inventory, fallback_spill_position)
+    local trash = pylon.get_inventory(defines.inventory.crafter_trash)
+    for i = 1, #from_inventory do
+        local stack = from_inventory[i]
+        if stack.valid_for_read and M.is_proto_supported(stack.prototype) then
+            storage.warp_inventory.transfer_from_stack(stack)
+        end
+        if stack.valid_for_read then
+            trash.transfer_from_stack(stack)
+        end
+        if stack.valid_for_read then
+            pylon.surface.spill_item_stack{ position = fallback_spill_position or {0, 0}, stack = stack, force = pylon.force }
+        end
+    end
+end
+
 local function try_deconstruct(data, name, quality, inventory, pylon)
     if not data.entity.to_be_deconstructed() then return false, status_invalid_target end
     local entity = data.entity
@@ -112,21 +141,23 @@ local function try_deconstruct(data, name, quality, inventory, pylon)
 
 end
 
-local function clear_plans(request, inventory, index)
-    local old_plans = request.insert_plan
-    for i, plan in pairs(old_plans) do
-        for j, ii in pairs(plan.items.in_inventory) do
-            if ii.inventory == inventory and ii.stack == index then
-                plan.items.in_inventory[j] = nil
-                table.remove(plan.items.in_inventory, j)
+local function clear_plans(request, inventory, index, decon_only)
+    if not decon_only then
+        local old_plans = request.insert_plan
+        for i, plan in pairs(old_plans) do
+            for j, ii in pairs(plan.items.in_inventory) do
+                if ii.inventory == inventory and ii.stack == index then
+                    plan.items.in_inventory[j] = nil
+                    table.remove(plan.items.in_inventory, j)
+                end
+            end
+            if #plan.items.in_inventory == 0 then
+                old_plans[i] = nil
+                table.remove(old_plans, i)
             end
         end
-        if #plan.items.in_inventory == 0 then
-            old_plans[i] = nil
-            table.remove(old_plans, i)
-        end
+        request.insert_plan = old_plans
     end
-    request.insert_plan = old_plans
 
     local old_plans = request.removal_plan
     for i, plan in pairs(old_plans) do
@@ -151,9 +182,9 @@ local function try_warp_module(data, name, quality, inventory, pylon)
     for _, plan in pairs(request.insert_plan) do
         if plan.items.in_inventory then
             local name, quality = plan.id.name, plan.id.quality or "normal"
-            for i, stack in pairs(plan.items.in_inventory) do
+            for i, pos in pairs(plan.items.in_inventory) do
                 local item_with_quality = { name = name, quality = quality }
-                local inventory_id, where, count = stack.inventory, stack.stack, stack.count or 1
+                local inventory_id, where, count = pos.inventory, pos.stack, pos.count or 1
                 -- TODO: Restrict to modules? Note: inventory defines overlap between type, need to check type as well
                 local target_inventory = target.get_inventory(inventory_id)
                 if target_inventory and inventory.get_item_count(item_with_quality) >= count then
@@ -161,15 +192,33 @@ local function try_warp_module(data, name, quality, inventory, pylon)
                     local temp = game.create_inventory(1)
                     temp.insert({name = name, count = removed, quality = quality})
                     if target_inventory[where + 1].swap_stack(temp[1]) then
-                        target.surface.spill_inventory { position = target.position, inventory = temp }
+                        pylon_pickup_inventory(pylon, temp, target.position)
                         temp.destroy()
                         clear_plans(request, inventory_id, where)
                         play_smoke(target.surface, target.position, 1)
                         return true, status_ok
                     else
-                        target.surface.spill_inventory { position = target.position, inventory = temp }
+                        pylon_pickup_inventory(pylon, temp, target.position)
                         temp.destroy()
                         -- game.print("[ERROR] Could not warp module into target inventory at "..target.gps_tag)
+                    end
+                end
+            end
+        end
+    end
+    for _, plan in pairs(request.removal_plan) do
+        if plan.items.in_inventory then
+            for i, pos in pairs(plan.items.in_inventory) do
+                local inventory_id, where, count = pos.inventory, pos.stack, pos.count or 1
+                -- TODO: Restrict to modules? Note: inventory defines overlap between type, need to check type as well
+                local target_inventory = target.get_inventory(inventory_id)
+                if target_inventory then
+                    local stack = target_inventory[where + 1]
+                    local into_inv = stack.type == "module" and storage.warp_inventory or pylon.get_inventory(defines.inventory.crafter_trash)
+                    if into_inv.transfer_from_stack(stack) > 0 then
+                        clear_plans(request, inventory_id, where, true)
+                        play_smoke(target.surface, target.position, 1)
+                        return true, status_ok
                     end
                 end
             end

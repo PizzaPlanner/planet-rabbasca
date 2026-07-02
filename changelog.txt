@@ -1,12 +1,26 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.19.0
-Date: ????
+Date: 2026-07-02
   Changes:
     - New graphics for planet in space, vault hacking animation and fertile terrain
+    - Added orbit visualization in space map (Thanks Kryzeth)
+    - Updated various icons
+    - Increased vault trash inventory size to 10
+    - Items that ended up in warp inventory by mistake will now be recovered on mod version updates
     - Added darkmode setting for map view (default off)
-    - Added setting to add athletic science pack to ingredients of late game researches
+    - Added setting to add athletic science pack to ingredients of late game researches (default off)
+    - Moon discovery rabbasca tech now unlocks space platform travel
+    - Warp sequence: modules can now also warp and de-warp all inventory items, similar to construction robots
+  Balancing:
+    - When filled harene cryo-container recipe fails it now returns most of the ingredients
+    - Increased chance of getting an empty cryo-container back when crafting purified harene (20% -> 36%)
   Bugfixes:
+    - Fixed that de-warping an assembler that is currently crafting would put the ingredients into warp inventory
     - Fixed another case where turrets shot more hacking keys than neccessary
+    - Fixed vault keys being shown in bonus GUI
+    - Fixed that vehicles and bots could be put into warp inventory
+    - Fixed crash with Any Planet Start introduced with 2.1 (Thanks code-assassin)
+    - Fixed various issues with pylons warping modules and inventory items (now relies on Item Request Proxy Events mod)
 ---------------------------------------------------------------------------------------------------
 Version: 0.18.3
 Date: 2026-06-26

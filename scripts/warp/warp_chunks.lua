@@ -125,7 +125,7 @@ function M.get_warp_cache(entity)
             entity = entity.surface.get_tile(entity.position.x, entity.position.y)
         elseif entity.name == "item-on-ground" then
             local proto = entity.stack.prototype
-            local is_trash = not M.is_proto_supported(proto) 
+            local is_trash = not M.is_proto_supported(proto)
             return { entity = entity, name = "item-on-ground", count = 1, quality = "normal", queue = "decon", position = entity.position, is_trash = is_trash }
         elseif entity.type == "lane-splitter" 
             or entity.type == "linked-belt" 
