@@ -71,7 +71,8 @@ local function try_deconstruct(data, name, quality, inventory, pylon)
         local surface, position = entity.surface, entity.position
         local size = { entity.bounding_box.right_bottom.x - entity.bounding_box.left_top.x, entity.bounding_box.right_bottom.y - entity.bounding_box.left_top.y }
         local result = false
-        if (entity.type == "assembling-machine" or entity.type == "furnace" or entity.type == "rocket-silo") and entity.is_crafting() then
+        if ((entity.type == "assembling-machine" or entity.type == "furnace" or entity.type == "rocket-silo") and entity.is_crafting())
+        or entity.type == "mining-drill" then
             local temp = game.create_inventory(64)
             result = entity.mine{ inventory = temp }
             surface.spill_inventory { position = position, inventory = temp, force = pylon.force }
