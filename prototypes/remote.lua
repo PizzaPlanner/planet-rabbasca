@@ -125,7 +125,7 @@ data:extend {
     name = "rabbasca-warp-pylon",
     icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon.png",
     icon_size = 64,
-    flags = { "not-rotatable", "placeable-player", "player-creation" },
+    flags = { "placeable-player", "player-creation" },
     crafting_categories = { "rabbasca-remote" },
     minable = { result = "rabbasca-warp-pylon", mining_time = 1 },
     placeable_by = { item = "rabbasca-warp-pylon", count = 1 },
