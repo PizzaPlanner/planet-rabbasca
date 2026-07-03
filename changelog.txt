@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.19.1
+Date: 2026-07-03
+  Bugfixes:
+    - Fixed tips and tricks for rabbasca were in the wrong category
+    - Fixed that de-warping a mining drill that is currently mining would put the ingredients into warp inventory
+---------------------------------------------------------------------------------------------------
 Version: 0.19.0
 Date: 2026-07-02
   Changes:

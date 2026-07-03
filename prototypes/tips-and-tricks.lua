@@ -44,7 +44,7 @@ data:extend {
 {
     type = "tips-and-tricks-item",
     name = "rabbasca-briefing",
-    categories = { "space-age" },
+    category = "space-age",
     tag = "[planet=rabbasca]",
     indent = 0,
     order = "r[rabbasca]-a",
@@ -57,7 +57,7 @@ data:extend {
 {
     type = "tips-and-tricks-item",
     name = "rabbasca-vaults",
-    categories = { "space-age" },
+    category = "space-age",
     tag = "[entity=rabbasca-vault-crafter]",
     indent = 1,
     order = "r[rabbasca]-b",
@@ -69,7 +69,7 @@ data:extend {
 {
     type = "tips-and-tricks-item",
     name = "rabbasca-bunnyhop",
-    categories = { "space-age" },
+    category = "space-age",
     tag = "[item=bunnyhop-engine]",
     indent = 1,
     order = "r[rabbasca]-c",
@@ -81,7 +81,7 @@ data:extend {
 {
     type = "tips-and-tricks-item",
     name = "rabbasca-warp-inventory",
-    categories = { "space-age" },
+    category = "space-age",
     tag = "[item=rabbasca-warp-sequence]",
     indent = 1,
     order = "r[rabbasca]-d",
