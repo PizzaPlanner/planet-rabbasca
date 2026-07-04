@@ -101,6 +101,7 @@ local function handle_script_events(event)
       position = pos,
       force = game.forces.rabbascans or game.forces.enemy,
       snap_to_grid = true,
+      quality = event.source_entity and event.source_entity.quality or "normal"
     }
     if not spawner then return end
     surface.set_tiles(tiles)
