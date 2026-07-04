@@ -4,6 +4,8 @@ Date: 2026-07-04
   Backported:
     - Fixed that de-warping some entities that are currently working would put their contents into warp inventory
     - Fixed that vehicles and bots could be put into warp inventory
+    - Fixed enemy warp pylons would always be spawned in normal quality
+    - Fixed various issues with pylons warping modules and inventory items (now relies on Item Request Proxy Events mod)
     - Items that ended up in warp inventory by mistake will now be recovered on mod version updates
     - Removed not-rotatable flag from warp pylon
 ---------------------------------------------------------------------------------------------------

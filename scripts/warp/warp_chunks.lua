@@ -8,13 +8,25 @@ function M.init_storage()
     M.init_inventory()
 end
 
+function M.visualize_chunk(chunk, surface, color, ttl)
+    rendering.draw_rectangle {
+        color = color,
+        filled = true,
+        left_top = chunk.area[1],
+        right_bottom = chunk.area[2],
+        surface = surface,
+        time_to_live = ttl,
+        draw_on_ground = true
+}
+end
+
 function M.mark_chunk_dirty(surface_id, chunk_id, min_ticks_passed)
     if not (storage.warp_chunks[surface_id] and storage.warp_chunks[surface_id][chunk_id]) then return end
     local c = storage.warp_chunks[surface_id][chunk_id]
     if game.tick - c.last_update > (min_ticks_passed or 0) then
         c.last_update = math.huge
         table.insert(storage.warp_chunks[surface_id].dirty, chunk_id)
-        -- game.print("Chunk recalc [gps="..c.area[1][1]..","..c.area[1][2]..",rabbasca]")
+        -- M.visualize_chunk(c, surface_id, { 0.2, 0.2, 0.2, 0.8 }, 10)
     end
 end
 
@@ -125,7 +137,7 @@ function M.get_warp_cache(entity)
             entity = entity.surface.get_tile(entity.position.x, entity.position.y)
         elseif entity.name == "item-on-ground" then
             local proto = entity.stack.prototype
-            local is_trash = not M.is_proto_supported(proto) 
+            local is_trash = not M.is_proto_supported(proto)
             return { entity = entity, name = "item-on-ground", count = 1, quality = "normal", queue = "decon", position = entity.position, is_trash = is_trash }
         elseif entity.type == "lane-splitter" 
             or entity.type == "linked-belt" 

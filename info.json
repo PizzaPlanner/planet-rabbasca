@@ -13,6 +13,7 @@
         "PlanetsLib", 
         "Krastorio2Assets", 
         "rabbasca-assets >= 1.8.0",
+        "item-request-proxy-events",
         "tile-upgrade-planner-muluna >= 1.0.1",
         "? any-planet-start",
         "(?) planet-muluna",
