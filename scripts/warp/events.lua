@@ -6,7 +6,6 @@ local function awake(pylon)
         pylon.set_recipe("rabbasca-warp-sequence")
     end
 end
---- Last TEST: ././7.5 VS ././5 VS ././4
 
 script.on_nth_tick(20, function(event)
   for i, warper in pairs(storage.inventory_warpers) do
@@ -26,9 +25,8 @@ script.on_nth_tick(20, function(event)
   for surface, chunks in pairs(storage.warp_chunks) do
     for i, chunk in pairs(chunks.dirty) do
       if chunks[chunk] then
+        -- M.visualize_chunk(chunks[chunk], surface, { 0, 0.15, 0.3, 0.8}, 20)
         chunks[chunk].last_update = event.tick
-        chunks.dirty[i] = nil
-        table.remove(chunks.dirty, i)
         local area = chunks[chunk].area
         for qid, _ in pairs(chunks[chunk].queue) do chunks[chunk].queue[qid] = { } end
         local is_empty = true
@@ -52,6 +50,7 @@ script.on_nth_tick(20, function(event)
           end
         end
       end
+      table.remove(chunks.dirty, i)
       if i > 5 then break end
     end
   end

@@ -5,6 +5,7 @@ Date: 2026-07-04
     - Removed not-rotatable flag from warp pylons
   Bugfixes:
     - Fixed enemy warp pylons would always be spawned in normal quality
+    - Fixed a case where warp pylons would not process newly placed ghosts
 ---------------------------------------------------------------------------------------------------
 Version: 0.19.1
 Date: 2026-07-03
