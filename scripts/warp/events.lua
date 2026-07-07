@@ -83,6 +83,13 @@ script.on_event(build_events, function(event)
   end
 end)
 
+script.on_event(defines.events.script_raised_teleported, function(event)
+  if event.entity.name == "rabbasca-warp-pylon" then
+    M.unregister_pylon(event.entity.unit_number)
+    M.register_pylon(event.entity)
+  end
+end)
+
 script.on_configuration_changed(function(_)
   rebuild_network.rebuild_network()
 end)
