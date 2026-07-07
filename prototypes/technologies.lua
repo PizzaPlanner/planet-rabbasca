@@ -499,7 +499,7 @@ data:extend {
   icon = "__Krastorio2Assets__/technologies/advanced-tech-card.png",
   icon_size = 256,
   prerequisites = { "rabbascan-vault-access" },
-  level = 1,
+  localised_description = { "technology-description.rabbasca-document-forging-one" },
   effects =
   {
     {

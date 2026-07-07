@@ -1,6 +1,5 @@
 local hit_effects = require("__base__.prototypes.entity.hit-effects")
 local sounds = require("__base__.prototypes.entity.sounds")
-local logistic_chest_opened_duration = 7
 
 local function make_warp_sequence(name, icon, tint)
 return {
@@ -8,7 +7,7 @@ return {
     name = name,
     icons = Rabbasca.icons({
       { icon = "__rabbasca-assets__/graphics/icons/warp.png", icon_size = 64 },
-      { proto = icon, icon_size = 64, scale = 0.25, shift = { 8, 8 } },
+      { proto = icon, icon_size = 64, scale = 0.5, shift = { 0, 0 } },
     }),
     enabled = false,
     hide_from_player_crafting = true,

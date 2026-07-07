@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.19.4
+Date: 2026-07-07
+  Changes:
+    - Added descriptions to initial techs about access key acquisition
+    - Added compatibility for warp pylon to be teleported by mods (i.e.  Even Pickier Dollies)
+    - [with even pickier dollies] blacklisted vault and access consoles from being moved
+  Bugfixes:
+    - Fixed warp sequence icons being too small
+---------------------------------------------------------------------------------------------------
 Version: 0.19.3
 Date: 2026-07-06
   Bugfixes:
