@@ -211,9 +211,9 @@ local function create_ears_entity(original, replacement_for)
                     if new_replacement then
                         data.extend{ new_replacement }
                         PlanetsLib.assign_entity_replacement(planet, new.name, new_replacement.name)
-                    elseif data.raw[original.type]["harene-infused-"..original_replacement] then
+                    elseif data.raw[original.type]["harene-infused-"..original_replacement.name] then
                         -- EARS variant of replacement entity already exists (i.e. for PlanetsLib.assign_entity_replacement("my-planet", "furnace", "electric-furnace"))
-                        PlanetsLib.assign_entity_replacement(planet, new.name, "harene-infused-"..original_replacement)
+                        PlanetsLib.assign_entity_replacement(planet, new.name, "harene-infused-"..original_replacement.name)
                     end
                 end
             end
