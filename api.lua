@@ -350,7 +350,9 @@ function Rabbasca.icons(data, expected_icon_size)
             local icon_size = entry.icon_size or 64
             local default_scale = (expected_icon_size / 2) / icon_size
             local scale = default_scale * (entry.scale or 1)
-            table.insert(icons, { icon = entry.icon, icon_size = icon_size, tint = entry.tint, shift = entry.shift, scale = scale, default_scale = default_scale })
+            table.insert(icons, { icon = entry.icon, icon_size = icon_size, tint = entry.tint, shift = entry.shift, scale = scale, default_scale = default_scale, floating = entry.floating, draw_background = entry.draw_background })
+        elseif entry.constant then
+            table.insert(icons, { icon = "__core__/graphics/icons/technology/constants/constant-"..entry.constant..".png", icon_size = 128, scale = 0.5, shift = { 12.5, 12.5 }, floating = true })
         elseif entry.proto then 
             if entry.proto.icons then
                 for _, icon in pairs(entry.proto.icons) do
@@ -361,7 +363,7 @@ function Rabbasca.icons(data, expected_icon_size)
                     local shift_a = (entry.shift or {0, 0})
                     local shift_b = (icon.shift or {0, 0})
                     local shift = {shift_a[1] + shift_b[1], shift_a[2] + shift_b[2]}
-                    table.insert(icons, { icon = icon.icon, icon_size = icon_size, tint = entry.tint, shift = shift, scale = scale, default_scale = default_scale })
+                    table.insert(icons, { icon = icon.icon, icon_size = icon_size, tint = entry.tint, shift = shift, scale = scale, default_scale = default_scale, floating = icon.floating, draw_background = icon.draw_background })
                 end
             elseif entry.proto.icon then
                 local icon_size = entry.proto.icon_size or 64

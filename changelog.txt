@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.20.0
+Date: 2026-07-09
+  Changes:
+    - Added Rabbasca underground as recommended dependency
+    - Removed Rabbasca item category setting is now hidden and force-disabled when underground is enabled
+---------------------------------------------------------------------------------------------------
 Version: 0.19.5
 Date: 2026-07-08
   Bugfixes:

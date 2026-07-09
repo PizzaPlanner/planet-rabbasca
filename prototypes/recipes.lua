@@ -1,6 +1,6 @@
 require("__planet-rabbasca__.scripts.vault-recipes")
 
-if settings.startup["rabbasca-no-extra-category"].value == false then
+if mods["rabbasca-underground"] or (settings.startup["rabbasca-no-extra-category"].value == false) then
 data:extend {
     {
         type = "item-group",

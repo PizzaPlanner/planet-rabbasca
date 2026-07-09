@@ -36,6 +36,7 @@ data:extend {
     type = "virtual-signal",
     name = "rabbasca-warp-inventory",
     icon = "__rabbasca-assets__/graphics/icons/warp.png",
+    icon_size = 64,
     subgroup = "pictographs",
     order = "r[warp-inventory]"
   },
