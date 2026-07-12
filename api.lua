@@ -161,8 +161,6 @@ local function create_ears_entity(original, replacement_for)
     local new = table.deepcopy(original)
     if not Rabbasca.require_ears_flooring(new) then return nil end
     new.name = "harene-infused-"..original.name
-    local item_name = replacement_for or new.name 
-    local is_replacement = replacement_for ~= nil
     if data.raw[original.type][new.name] then return end
     new.localised_name = {"rabbasca-extra.with-ears", original.localised_name or {"entity-name." .. original.name}}
     new.localised_description = original.localised_description and {"rabbasca-extra.with-ears-description", original.localised_description} or {"rabbasca-extra.with-ears-description-noparam"}
@@ -175,13 +173,16 @@ local function create_ears_entity(original, replacement_for)
     new.no_ears_upgrade = true
     new.fast_replaceable_group = (original.fast_replaceable_group or original.name) .. "-with-ears" -- bots ignore tile restrictions on upgrades, so we cannot upgrade from base variants
     new.next_upgrade = nil
-    new.placeable_by = { item = item_name, count = 1 } -- for pipette, always point at original
-    if new.minable.result == original.name then new.minable.result = item_name
-    elseif is_replacement and new.minable.result then new.minable.result = item_name end
-    if new.minable.results then
-        for _, entry in pairs(new.minable.results) do
-            if entry.name and (entry.name == original.name or is_replacement) then
-                entry.name = item_name
+    new.placeable_by = replacement_for and replacement_for.placeable_by or { item = new.name, count = 1 } -- for pipette, always point at original
+    if replacement_for then
+        new.minable = replacement_for.minable
+    elseif new.minable then
+        if new.minable.result == original.name then new.minable.result = new.name end
+        if new.minable.results then
+            for _, entry in pairs(new.minable.results) do
+                if entry.name and entry.name == original.name then
+                    entry.name = new.name
+                end
             end
         end
     end
@@ -207,7 +208,7 @@ local function create_ears_entity(original, replacement_for)
             for replaced_entity, rep in pairs(t) do
                 local original_replacement = replaced_entity == original.name and rep and rep.enabled and rep.entity ~= replaced_entity and data.raw[original.type][rep.entity]
                 if original_replacement and energy_source_matches(original, original_replacement) and not original_replacement.no_ears_upgrade then
-                    local new_replacement = create_ears_entity(original_replacement, new.name)
+                    local new_replacement = create_ears_entity(original_replacement, new)
                     if new_replacement then
                         data.extend{ new_replacement }
                         PlanetsLib.assign_entity_replacement(planet, new.name, new_replacement.name)

@@ -1,6 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.20.2
+Date: 2026-07-12
+  Bugfixes:
+    - Fixed another crash related to entity replacement compatibility
+---------------------------------------------------------------------------------------------------
 Version: 0.20.1
-Date: 2026-07-09
+Date: 2026-07-12
   Changes:
     - When a warp sequence causes an inventory to be spilled to the ground, spilled items will now be stacked in most cases
     - Machining assembler can now also craft machines of type reactor, fusion-reactor and fusion-generator (as long as they can also be crafted in normal assemblers)
