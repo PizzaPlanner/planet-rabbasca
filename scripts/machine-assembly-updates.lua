@@ -1,4 +1,4 @@
-local categories = {
+local ASSEMBLED_TYPES = {
     "assembling-machine",
     "furnace",
     "lab",
@@ -14,19 +14,28 @@ local categories = {
     "burner-generator",
     "generator",
     "boiler",
+    "reactor",
+    "fusion-generator",
+    "fusion-reactor",
 }
-
 local function is_machine(name)
-    for _, category in pairs(categories) do
+    for _, category in pairs(ASSEMBLED_TYPES) do
         if data.raw[category] and data.raw[category][name] then return true end
     end
     return false
 end
 
-local assembled_categories = data.raw["assembling-machine"]["assembling-machine-3"].crafting_categories
+local ASSEMBLED_CATEGORIES = {
+    "crafting",
+    "advanced-crafting",
+    "crafting-with-fluid"
+}
 local function is_assembled(recipe)
-    for _, category in pairs(assembled_categories) do
-        for _, add in pairs(recipe.categories or { }) do
+    -- recipe.categories defaults to { "crafting" } if not defined. the case for base game machines
+    if not recipe.categories then return true end
+
+    for _, category in pairs(ASSEMBLED_CATEGORIES) do
+        for _, add in pairs(recipe.categories) do
             if add == category then return true end
         end
     end

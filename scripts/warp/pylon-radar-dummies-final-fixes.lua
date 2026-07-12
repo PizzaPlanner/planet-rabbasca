@@ -1,5 +1,12 @@
 local pylon = data.raw["assembling-machine"]["rabbasca-warp-pylon"]
 if not pylon then return end
+
+local res = { }
+for _, damage in pairs(data.raw["damage-type"]) do
+  table.insert(res, { type = damage.name, percent = 100 })
+end
+
+
 for _, quality in pairs(data.raw["quality"]) do
 data:extend {
   {
@@ -18,6 +25,7 @@ data:extend {
     recharge_minimum = "1MW",
     robot_slots_count = 0,
     material_slots_count = 0,
+    resistances = res,
     request_to_open_door_timeout = 0,
     spawn_and_station_height = 0,
     charge_approach_distance = 0,

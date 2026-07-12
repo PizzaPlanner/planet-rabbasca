@@ -53,7 +53,7 @@ local function pylon_pickup_inventory(pylon, from_inventory, fallback_spill_posi
             trash.transfer_from_stack(stack)
         end
         if stack.valid_for_read then
-            pylon.surface.spill_item_stack{ position = fallback_spill_position or {0, 0}, stack = stack, force = pylon.force }
+            pylon.surface.spill_item_stack{ position = fallback_spill_position or {0, 0}, stack = stack, force = pylon.force, drop_full_stack = true }
         end
     end
 end
@@ -91,7 +91,7 @@ local function try_deconstruct(data, name, quality, inventory, pylon)
     elseif not data.is_tile then -- Buildings
         for k = 1, entity.get_max_inventory_index() do 
             local spill_inventory = entity.get_inventory(k)
-            if spill_inventory then entity.surface.spill_inventory { position = entity.position, inventory = spill_inventory, force = pylon.force } end
+            if spill_inventory then entity.surface.spill_inventory { position = entity.position, inventory = spill_inventory, force = pylon.force, drop_full_stack = true } end
         end
         if entity.type == "inserter" and entity.held_stack.valid_for_read then
             entity.surface.spill_item_stack{ position = entity.position, stack = entity.held_stack, force = pylon.force }
@@ -104,7 +104,7 @@ local function try_deconstruct(data, name, quality, inventory, pylon)
         or entity.type == "mining-drill" then
             local temp = game.create_inventory(64)
             result = entity.mine{ inventory = temp }
-            surface.spill_inventory { position = position, inventory = temp, force = pylon.force }
+            surface.spill_inventory { position = position, inventory = temp, force = pylon.force, drop_full_stack = true }
             temp.destroy()
         else
             result = entity.mine{ inventory = inventory }

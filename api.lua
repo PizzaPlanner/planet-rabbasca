@@ -290,12 +290,12 @@ function Rabbasca.create_ears_variant(thing, tech, extra_cost)
     return new_thing
 end
 
-function Rabbasca.make_complex_machinery(proto)
-  if not proto then return end
-  local recipe = data.raw["recipe"][proto.name]
+function Rabbasca.make_complex_machinery(recipe)
   if not recipe then return end
-  log("Add complex-machinery to additional_categories of: "..recipe.name)
-  recipe.categories = recipe.categories or { }
+  log("Add complex-machinery to categories of: "..recipe.name)
+
+  -- if not defined, { "crafting" } is default. add explicitly so target still craftable by Hand / AM1-3
+  recipe.categories = recipe.categories or { "crafting" }
   table.insert(recipe.categories, "complex-machinery")
 end
 

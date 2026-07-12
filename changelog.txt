@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.20.1
+Date: 2026-07-09
+  Changes:
+    - When a warp sequence causes an inventory to be spilled to the ground, spilled items will now be stacked in most cases
+    - Machining assembler can now also craft machines of type reactor, fusion-reactor and fusion-generator (as long as they can also be crafted in normal assemblers)
+  Bugfixes:
+    - Fixed dummy entities to show pylon warp range could be damaged
+    - Fixed machining assembler could not craft many base game machines
+---------------------------------------------------------------------------------------------------
 Version: 0.20.0
 Date: 2026-07-09
   Changes:
