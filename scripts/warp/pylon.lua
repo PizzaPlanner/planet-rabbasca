@@ -215,11 +215,15 @@ local function try_warp_module(data, name, quality, inventory, pylon)
                 local target_inventory = target.get_inventory(inventory_id)
                 if target_inventory then
                     local stack = target_inventory[where + 1]
-                    local into_inv = stack.type == "module" and storage.warp_inventory or pylon.get_inventory(defines.inventory.crafter_trash)
-                    if into_inv.transfer_from_stack(stack) > 0 then
+                    if stack.valid_for_read then
+                        local into_inv = stack.type == "module" and storage.warp_inventory or pylon.get_inventory(defines.inventory.crafter_trash)
+                        if into_inv.transfer_from_stack(stack) > 0 then
+                            clear_plans(request, inventory_id, where, true)
+                            play_smoke(target.surface, target.position, 1)
+                            return true, status_ok
+                        end
+                    else -- item got removed before plan could execute
                         clear_plans(request, inventory_id, where, true)
-                        play_smoke(target.surface, target.position, 1)
-                        return true, status_ok
                     end
                 end
             end
