@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.20.4
+Date: 2026-07-14
+  Bugfixes:
+    - Temporarily disabled warping items into rocket silo's rocket inventory, which caused a crash
+---------------------------------------------------------------------------------------------------
 Version: 0.20.3
 Date: 2026-07-14
   Bugfixes:

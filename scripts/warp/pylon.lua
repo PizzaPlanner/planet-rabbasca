@@ -192,7 +192,18 @@ local function try_warp_module(data, name, quality, inventory, pylon)
                     local removed = inventory.remove({name = name, count = count, quality = quality})
                     local temp = game.create_inventory(1)
                     temp.insert({name = name, count = removed, quality = quality})
-                    if target_inventory[where + 1].swap_stack(temp[1]) then
+                    if where + 1 > #target_inventory then -- rocket silo
+                        -- TODO: Rocket inventory is weird. gets resized by requests handled via bots but cannot be resized via resize()?
+                        -- do nothing for now
+                        
+                        -- local transferred = target_inventory.transfer_from_inventory(temp)
+                        -- inventory.transfer_from_inventory(temp) -- put remaining items back
+                        -- if transferred > 0 then
+                        --     clear_plans(request, inventory_id, where)
+                        --     play_smoke(target.surface, target.position, 1)
+                        --     return true, status_ok
+                        -- end
+                    elseif target_inventory[where + 1].swap_stack(temp[1]) then
                         pylon_pickup_inventory(pylon, temp, target.position)
                         temp.destroy()
                         clear_plans(request, inventory_id, where)
