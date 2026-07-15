@@ -4,7 +4,10 @@ function M.is_proto_supported(proto)
     if proto.place_result then 
         return storage.inventory_filter[proto.place_result.type] ~= true
     end
-    return proto.place_as_tile_result or proto.type == "module"
+    if proto.place_as_tile_result then
+        return storage.inventory_filter_tiles[proto.name] ~= true
+    end
+    return proto.type == "module"
 end
 
 function M.logistics_group_name()
@@ -24,6 +27,11 @@ function M.init_inventory()
         ["spider-unit"] = true,
         ["segmented-unit"] = true,
         ["character"] = true,
+    }
+    storage.inventory_filter_tiles = {
+        ["haronite-plate"] = true,
+        ["space-platform-foundation"] = true,
+        ["low-density-space-platform-foundation"] = true,
     }
     storage.invetory_logistic_section = storage.invetory_logistic_section or { }
     for _, surface in pairs(game.surfaces) do
@@ -52,6 +60,17 @@ function M.init_inventory()
         return
     end
     storage.warp_inventory = game.create_inventory(512, { "rabbasca-extra.warp-inventory" })
+end
+
+function M.clean_leaked_inventories()
+    local leaked = 0
+    for _, temp_inv in pairs(game.get_script_inventories("planet-rabbasca")["planet-rabbasca"] or { }) do
+        if temp_inv and temp_inv ~= storage.warp_inventory then
+            leaked = leaked + 1
+            temp_inv.destroy()
+        end
+    end 
+    log("Purged "..leaked.." leaked inventories")
 end
 
 function M.update_logistic_section()

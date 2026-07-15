@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.20.5
+Date: 2026-07-15
+  Changes:
+    - Tiles that can only be placed in space can no longer be put into warp inventory
+  Bugfixes:
+    - Fixed last bugfix creating large amounts of temporary inventories
+---------------------------------------------------------------------------------------------------
 Version: 0.20.4
 Date: 2026-07-14
   Bugfixes:

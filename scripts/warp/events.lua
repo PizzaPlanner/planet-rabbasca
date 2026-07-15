@@ -92,6 +92,7 @@ end)
 
 script.on_configuration_changed(function(_)
   rebuild_network.rebuild_network()
+  M.clean_leaked_inventories()
 end)
 
 local module_events = {

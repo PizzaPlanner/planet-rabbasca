@@ -195,6 +195,8 @@ local function try_warp_module(data, name, quality, inventory, pylon)
                     if where + 1 > #target_inventory then -- rocket silo
                         -- TODO: Rocket inventory is weird. gets resized by requests handled via bots but cannot be resized via resize()?
                         -- do nothing for now
+                        pylon_pickup_inventory(pylon, temp, target.position)
+                        temp.destroy()
                         
                         -- local transferred = target_inventory.transfer_from_inventory(temp)
                         -- inventory.transfer_from_inventory(temp) -- put remaining items back
