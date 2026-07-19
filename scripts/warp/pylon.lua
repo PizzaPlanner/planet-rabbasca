@@ -250,6 +250,7 @@ end
 
 local function try_upgrade(data, name, quality, inventory, pylon)
     local entity, count = data.entity, data.count
+    if pylon == entity then return false end -- can not upgrade itself, would invalidate the reference
     local new_proto, new_quality = entity.get_upgrade_target()
     if not new_proto then return false, status_invalid_target end
     if new_proto.name ~= data.name or new_quality.name ~= data.quality then return end -- upgrade changed since indexing?

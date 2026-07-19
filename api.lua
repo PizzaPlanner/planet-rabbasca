@@ -168,7 +168,7 @@ local function create_ears_entity(original, replacement_for)
     new.hidden_in_factoriopedia = true
     new.icons = Rabbasca.icons({
         { proto = original },
-        { proto = data.raw["item"]["harene-ears-core"], scale = 0.5, shift = { -8, 8 } }
+        { proto = data.raw["item"]["harene-ears-core"], scale = 0.5, shift = { 0, 8 } }
     })
     new.no_ears_upgrade = true
     new.fast_replaceable_group = (original.fast_replaceable_group or original.name) .. "-with-ears" -- bots ignore tile restrictions on upgrades, so we cannot upgrade from base variants
@@ -236,7 +236,7 @@ local function create_infused_thing_with_effect(original, extra_cost)
     new_item.hidden_in_factoriopedia = true
     new_item.icons = Rabbasca.icons({
         { proto = item },
-        { proto = data.raw["item"]["harene-ears-core"], scale = 0.5, shift = { -8, 8 } }
+        { proto = data.raw["item"]["harene-ears-core"], scale = 0.5, shift = { 0, 8 } }
     })
     new_item.place_result = new.name
     new_item.subgroup = (new_item.subgroup or "unknown") .. "-with-ears-core"

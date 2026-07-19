@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.20.6
+Date: ????
+  Changes:
+    - Reverted icons of EARS variants due to the indicator overlapping with the quality indicator
+  Bugfixes:
+    - Warp pylons can no longer upgrade themselves (but can still upgrade other pylons and everything else)
+---------------------------------------------------------------------------------------------------
 Version: 0.20.5
 Date: 2026-07-15
   Changes:
