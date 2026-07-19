@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.20.6
-Date: ????
+Date: 2026-07-20
   Changes:
     - Reverted icons of EARS variants due to the indicator overlapping with the quality indicator
   Bugfixes:
