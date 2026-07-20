@@ -5,6 +5,7 @@ local console = data.raw["assembling-machine"]["rabbasca-vault-console"]
 for _, quality in pairs(data.raw["quality"]) do
   local multiplier = quality.default_multiplier or (1 + 0.3 * quality.level)
   warp_pylon.crafting_speed_quality_multiplier[quality.name] = 1
+  warp_pylon.radius_visualisation_specification.distance_quality_multiplier[quality.name] = Rabbasca.get_warp_radius(quality) / Rabbasca.get_warp_radius()
   console.crafting_speed_quality_multiplier[quality.name] = 1
   bunnyhop_engine.custom_tooltip_fields[1].quality_values[quality.name] = {"tooltip-value.bunnyhop-engine-weight-multiplier", tostring(multiplier * 100)}
   warp_pylon.custom_tooltip_fields[1].quality_values[quality.name] = {"tooltip-value.rabbasca-warp-pylon-range", tostring(Rabbasca.get_warp_radius(quality) * 2)}

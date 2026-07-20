@@ -144,6 +144,7 @@ data:extend {
     radius_visualisation_specification = {
       sprite = data.raw["utility-sprites"]["default"].construction_radius_visualization,
       distance = Rabbasca.get_warp_radius(),
+      distance_quality_multiplier = { }
     },
     custom_tooltip_fields = {
       {
