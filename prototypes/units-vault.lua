@@ -259,77 +259,107 @@ defender_ouchy.attack_parameters = util.merge {
   }
 }
 
-local defender_spawny = util.merge {
-    table.deepcopy(defender_ouchy), 
-{
-    name = "vault-defender-spawny",
-    icon = "__base__/graphics/icons/destroyer.png",
-    order = "r[rabbasca]-d",
-    max_health = 320,
+local defender_spawny = {
+    type = "unit",
+    name = "rabbasca-vault-warp-spawner-inactive",
+    icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon-2.png",
+    icon_size = 64,
+    subgroup = "enemies",
+    order = "r[rabbasca]-b0",
+    flags = { "not-rotatable" },
+    factoriopedia_alternative = "rabbasca-vault-warp-spawner",
+    max_health = 2336,
+    -- healing_per_tick = -800 / minute,
     move_while_shooting = false,
-    healing_per_tick = -16 / second,
-    movement_speed = 1.4,
-    distance_per_frame = 0.4,
-    distraction_cooldown = 20,
-    min_pursue_time = 15 * second,
-    max_pursue_distance = 30,
-  }
-}
-defender_spawny.created_effect = {
-  type = "direct",
-  action_delivery =
-  {
-    type = "instant",
-    source_effects =
-    {
-      { type = "create-entity", entity_name = "vault-defender-3", offset_deviation = {{-12, -12}, {12, 12}}, repeat_count = 3 },
-      { type = "create-entity", entity_name = "vault-defender-heavy", offset_deviation = {{-7, -7}, {7, 7}}, repeat_count = 2 },
-    }
-  }
-}
-defender_spawny.resistances = {
-  { type = "physical", percent = 25, decrease = 4 },
-  { type = "explosion", percent = 5 },
-  { type = "fire", percent = 5 },
-  { type = "poison", percent = 100 },
-  { type = "acid", percent = 100 },
-  { type = "laser", percent = 33 },
-  { type = "electric", percent = 75 },
-}
-defender_spawny.attack_parameters = {
-  type = "projectile",
-  animation = table.deepcopy(data.raw["combat-robot"]["destroyer"].idle),
-  activation_type = "throw",
-  cooldown = 8 * second,
-  cooldown_deviation = 0.3,
-  projectile_center = {0, 1},
-  projectile_creation_distance = 0.6,
-  range = 5,
-  warmup = 1 * second,
-  ammo_category = "capsule",
-  ammo_type =
-  {
-    target_type = "position",
-    action =
-    {
+    movement_speed = 0,
+    distance_per_frame = 0,
+    distraction_cooldown = 3 * second,
+    vision_distance = 10,
+    has_belt_immunity = true,
+    min_pursue_time = 10 * second,
+    max_pursue_distance = 12,
+    call_for_help_radius = 16,
+    collision_box = {{-0.8, -0.8},{0.8, 0.8}},
+    selection_box = {{-1, -1},{1, 1}},
+    ai_settings = {
+      join_attacks = false
+    },
+    created_effect = {
       type = "direct",
       action_delivery =
       {
         type = "instant",
-        target_effects =
+        source_effects =
         {
+          { type = "script", effect_id = "rabbasca_init_dormant_pylon", repeat_count = 1 },
+          { type = "create-entity", entity_name = "vault-defender-3", offset_deviation = {{-12, -12}, {12, 12}}, repeat_count = 3 },
+          { type = "create-entity", entity_name = "vault-defender-heavy", offset_deviation = {{-7, -7}, {7, 7}}, repeat_count = 2 },
+        }
+      }
+    },
+    run_animation = {
+      layers = {
+        {
+            filename = "__rabbasca-assets__/graphics/by-hurricane/conduit-animation-2.png",
+            frame_count = 60,
+            line_length = 10,
+            width = 200,
+            height = 290,
+            scale = 1.0/3,
+            flags = {"no-scale"},
+            shift = {0, -0.5},
+        },
+        {
+            filename = "__rabbasca-assets__/graphics/by-hurricane/conduit-hr-shadow.png",
+            repeat_count = 60,
+            width = 600,
+            height = 400,
+            scale = 1.0/3,
+            draw_as_shadow = true,
+            shift = {0, -0.5},
+        },
+      }
+    },
+    attack_parameters = {
+      type = "projectile",
+      range = 48,
+      cooldown = 1 * second,
+      animation = {
+        filename = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon-2.png",
+        priority = "low",
+        width = 64,
+        height = 64,
+        frame_count = 1,
+        direction_count = 1,
+        shift = { 0, 0 },
+        scale = 1
+      },
+      ammo_category = "seismic",
+      ammo_type = {
+        action =
+        {
+          type = "direct",
+          action_delivery =
           {
-              type = "script",
-              effect_id = "rabbasca_summon_pylon_grid_aligned",
-              repeat_count = 1,
+            type = "instant",
+            source_effects = {
+              { type = "script", effect_id = "rabbasca_summon_pylon_grid_aligned", repeat_count = 1 }
+            }
           }
         }
       }
+    },
+    resistances = {
+      { type = "physical", percent = 99 },
+      { type = "explosion", percent = 10, decrease = 80 },
+      { type = "fire", percent = 25 },
+      { type = "poison", percent = 100 },
+      { type = "acid", percent = 100 },
+      { type = "laser", percent = 99 },
+      { type = "electric", percent = 30 },
+      { type = "impact", percent = 5 },
     }
-  }
 }
-defender_spawny.attack_parameters.animation.scale = 2
-defender_spawny.run_animation.scale = 5
 
 local defender_3 = util.merge { 
   defender_2,
@@ -404,9 +434,11 @@ local function localize_adds(thing)
   thing.localised_description = { "", { "entity-description."..thing.name }, { "rabbasca-extra.robot-description-with-adds" } }
   for _, add in pairs(thing.created_effect.action_delivery.source_effects) do
     local name = add.entity_name
-    local count = add.repeat_count
-    local spawns_with = { "rabbasca-extra.robot-add-description", name, tostring(count) }
-    table.insert(thing.localised_description, spawns_with)
+    if name then
+      local count = add.repeat_count or 1
+      local spawns_with = { "rabbasca-extra.robot-add-description", name, tostring(count) }
+      table.insert(thing.localised_description, spawns_with)
+    end
   end
 
 end

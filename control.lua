@@ -83,28 +83,33 @@ local function handle_script_events(event)
         } -- this seems to ignore buildability
       end
     end
+  elseif effect_id == "rabbasca_init_dormant_pylon" then
+    local from = event.source_entity
+    if not from then return end
+    local pos = { x = from.position.x + math.random(-8, 8), y = from.position.y + math.random(-12, 4) } -- seems to always spawn below, so randomize upwards
+    pos = from.surface.find_non_colliding_position("rabbasca-vault-warp-spawner", pos, 6, 1, true)
+    if pos then from.teleport(pos) end
   elseif effect_id == "rabbasca_summon_pylon_grid_aligned" then
-    local pos = event.target_position or event.source_position
+    local pos = event.source_entity and event.source_entity.position
     if not pos then return end
-    pos = {pos.x + math.random(-8, 8), pos.y + math.random(-8, 8)}
     local surface = game.surfaces[event.surface_index]
-    pos = surface.find_non_colliding_position("rabbasca-vault-warp-spawner", pos, 12, 1, true)
-    if not pos then return end
-    local tiles = {
-      { position = {pos.x, pos.y}, name = "rabbasca-energetic-concrete" },
-      { position = {pos.x+ 1, pos.y}, name = "rabbasca-energetic-concrete" },
-      { position = {pos.x, pos.y+ 1}, name = "rabbasca-energetic-concrete" },
-      { position = {pos.x+ 1, pos.y+ 1}, name = "rabbasca-energetic-concrete" },
-    }
-
+    local quality = event.source_entity and event.source_entity.quality or "normal"
+    if event.source_entity then event.source_entity.destroy { } end
     local spawner = surface.create_entity {
       name = "rabbasca-vault-warp-spawner",
       position = pos,
       force = game.forces.rabbascans or game.forces.enemy,
       snap_to_grid = true,
-      quality = event.source_entity and event.source_entity.quality or "normal"
+      quality = quality
     }
     if not spawner then return end
+    local pos = spawner.position
+    local tiles = {
+      { position = {pos.x, pos.y}, name = "rabbasca-energetic-concrete" },
+      { position = {pos.x- 1, pos.y}, name = "rabbasca-energetic-concrete" },
+      { position = {pos.x, pos.y- 1}, name = "rabbasca-energetic-concrete" },
+      { position = {pos.x- 1, pos.y- 1}, name = "rabbasca-energetic-concrete" },
+    }
     surface.set_tiles(tiles)
     for _, player in pairs(game.connected_players) do
         player.add_custom_alert(spawner, { type = "entity", name = "rabbasca-vault-warp-spawner" }, { "rabbasca-extra.alert-enemy-spawner" }, true)

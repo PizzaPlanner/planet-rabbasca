@@ -12,6 +12,7 @@ for _, damage in pairs(data.raw["damage-type"]) do
     table.insert(spawner.resistances, { type = damage.name, percent = 100 })
   end
 end
+vault.is_military_target = false
 
 Rabbasca.create_vault_recipe("rabbasca-core-extraction-protocol", {
   ingredients = {

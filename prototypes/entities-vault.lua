@@ -37,9 +37,9 @@ local spawner = util.merge{
   spawning_cooldown = {5 * second, 0.7 * second},
   overkill_fraction = 0,
   max_count_of_owned_units = 20,
-  max_count_of_owned_defensive_units = 1,
-  max_friends_around_to_spawn = 8,
-  max_defensive_friends_around_to_spawn = 1,
+  max_count_of_owned_defensive_units = 3,
+  max_friends_around_to_spawn = 64,
+  max_defensive_friends_around_to_spawn = 64,
   captured_spawner_entity = "rabbasca-vault-console",
   time_to_capture = 20 * second,
   spawning_radius = 12,
@@ -102,11 +102,11 @@ spawner.result_units = {
     {evolution_factor = 0.7, spawn_weight = 0.15},
     {evolution_factor = 1, spawn_weight = 1},
   }},
-{ unit = "vault-defender-spawny", spawn_points = {
-    {evolution_factor = 0.4, spawn_weight = 0},
-    {evolution_factor = 0.75, spawn_weight = 0.1}, 
+{ unit = "rabbasca-vault-warp-spawner-inactive", spawn_points = {
+    {evolution_factor = 0.45, spawn_weight = 0},
+    {evolution_factor = 0.75, spawn_weight = 0.03}, 
     {evolution_factor = 0.9, spawn_weight = 0.1},
-    {evolution_factor = 1, spawn_weight = 0.05},
+    {evolution_factor = 1, spawn_weight = 0.33},
   }},
 }
 spawner.graphics_set =
@@ -298,7 +298,7 @@ local pylon = util.merge{
   icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon-2.png",
   icon_size = 64,
   max_health = 2336, -- will be much higher due to evolution
-  healing_per_tick = -35 / second,
+  healing_per_tick = -120 / second,
   spawning_cooldown = {5 * second, 1.5 * second},
   time_to_capture = 50 * second,
   max_count_of_owned_units = 16,
@@ -307,7 +307,7 @@ local pylon = util.merge{
   captured_spawner_entity = "rabbasca-warp-pylon",
   collision_box = {{-0.8, -0.8},{0.8, 0.8}},
   selection_box = {{-1, -1},{1, 1}},
-  order = "r[rabbasca]-b"
+  order = "r[rabbasca]-b1"
 }}
 pylon.flags = { "placeable-enemy" }
 pylon.created_effect = nil
@@ -345,7 +345,7 @@ pylon.graphics_set =
     layers =
     {
       {
-          filename = "__rabbasca-assets__/graphics/by-hurricane/conduit-animation.png",
+          filename = "__rabbasca-assets__/graphics/by-hurricane/conduit-animation-2.png",
           frame_count = 60,
           line_length = 10,
           width = 200,
@@ -373,7 +373,7 @@ pylon.graphics_set =
           blend_mode = "additive-soft",
           scale = 1.0/3,
           shift = {0, -0.5},
-          tint = {1.0, 0.11, 0.32}
+          tint = {0.64, 0.43, 0.11}
       },
     },
 }}
