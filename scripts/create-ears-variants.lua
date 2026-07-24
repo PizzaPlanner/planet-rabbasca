@@ -26,62 +26,53 @@ local costs = {
 }
 
 local high_energy_threshold = util.parse_energy(Rabbasca.high_energy_device_threshold())
+local max_energy_threshold = util.parse_energy(Rabbasca.max_energy_device_threshold())
+
+local devices = {["skipped"] = {}, ["too_expensive"] = {}, ["low"] = {}, ["medium"] = {}, ["high"] = {} }
+local function create_variant_by_threshold(thing, low, high, max)
+  if thing.energy_source.type ~= "electric" then return end
+  local energy = util.parse_energy(thing.energy_usage or thing.energy_per_rotaion or thing.energy_per_movement or "100GW")
+  local setting = (energy > max_energy_threshold and max and { tech = max.tech, cost = max.cost, level = "high" })
+              or (energy <= max_energy_threshold and energy > high_energy_threshold and high and { tech = high.tech, cost = high.cost, level = "medium" })
+              or (energy <= high_energy_threshold and low and { tech = low.tech, cost = low.cost, level = "low" })
+              or { tech = nil, cost = nil, level = "too_expensive" } -- still create but hide for migration purposes
+  local variant = Rabbasca.create_ears_variant(thing, setting.tech and "rabbasca-ears-technology-"..setting.tech, costs[setting.cost])
+  if variant then 
+    table.insert(devices[setting.level], thing.name)
+    return variant.name
+  else
+    table.insert(devices["skipped"], thing.name)
+  end
+end
 
 -- set prototype.no_ears_upgrade = true or prototype.hidden = true to skip ears variant creation
 
 for _, thing in pairs(data.raw["inserter"]) do
-  if thing.energy_source.type == "electric" then
-    Rabbasca.create_ears_variant(thing, "rabbasca-ears-technology-2", costs[1])
-  end
+  create_variant_by_threshold(thing, { tech = 2, cost = 1 }, { tech = 3, cost = 3 }, nil)
 end
 for _, thing in pairs(data.raw["assembling-machine"]) do
-  if thing.energy_source.type == "electric" then
-    local energy = util.parse_energy(thing.energy_usage)
-    if energy > high_energy_threshold then
-      Rabbasca.create_ears_variant(thing, "rabbasca-ears-technology-3", costs[3])
-    else
-      Rabbasca.create_ears_variant(thing, "rabbasca-ears-technology-1", costs[2])
-    end
-  end
+  create_variant_by_threshold(thing, { tech = 1, cost = 2 }, { tech = 3, cost = 3 }, nil)
 end
 for _, thing in pairs(data.raw["furnace"]) do
-  if thing.energy_source.type == "electric" then
-    local energy = util.parse_energy(thing.energy_usage)
-    if energy > high_energy_threshold then
-      Rabbasca.create_ears_variant(thing, "rabbasca-ears-technology-3", costs[3])
-    else
-      Rabbasca.create_ears_variant(thing, "rabbasca-ears-technology-1", costs[2])
-    end
-  end
+  create_variant_by_threshold(thing, { tech = 1, cost = 2 }, { tech = 3, cost = 3 }, nil)
 end
 for _, thing in pairs(data.raw["lab"]) do
-  if thing.energy_source.type == "electric" then
-    local energy = util.parse_energy(thing.energy_usage)
-    local lab = energy > high_energy_threshold 
-      and Rabbasca.create_ears_variant(thing, "rabbasca-ears-technology-3", costs[3])
-      or  Rabbasca.create_ears_variant(thing, "rabbasca-ears-technology-2", costs[2])
-    if lab then
-      data.raw["lab"][lab].science_pack_drain_rate_percent = math.max(1, (data.raw["lab"][lab].science_pack_drain_rate_percent or 100) * 0.85)
-    end
+  local lab = create_variant_by_threshold(thing, { tech = 2, cost = 2 }, { tech = 3, cost = 3 }, nil)
+  if lab then
+    data.raw["lab"][lab].science_pack_drain_rate_percent = math.max(1, (data.raw["lab"][lab].science_pack_drain_rate_percent or 100) * 0.85)
   end
 end
 for _, thing in pairs(data.raw["beacon"]) do
-  if thing.energy_source.type == "electric" then
-    local energy = util.parse_energy(thing.energy_usage)
-    if energy > high_energy_threshold then
-      Rabbasca.create_ears_variant(thing, "rabbasca-ears-technology-3", costs[3])
-    else
-      Rabbasca.create_ears_variant(thing, "rabbasca-ears-technology-2", costs[2])
-    end
-  end
+  create_variant_by_threshold(thing, { tech = 2, cost = 2 }, { tech = 3, cost = 3 }, nil)
 end
 for _, thing in pairs(data.raw["rocket-silo"]) do
   if thing.rocket_entity == "rocket-silo-rocket" then
-    local silo = Rabbasca.create_ears_variant(thing, "rabbasca-ears-technology-3", costs[3])
+    local silo = create_variant_by_threshold(thing, { tech = 3, cost = 3 }, { tech = 3, cost = 3 }, nil)
     if silo then
       local entity = data.raw["rocket-silo"][silo]
       entity.rocket_entity = "rabbasca-rocket-silo-rocket"
-      -- entity.to_be_inserted_to_rocket_inventory_size = entity.to_be_inserted_to_rocket_inventory_size * 2
     end
   end
 end
+
+log("EARS variants: "..serpent.line(devices))

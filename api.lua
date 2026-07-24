@@ -10,6 +10,7 @@ function Rabbasca.parent() return settings.startup["rabbasca-orbits"].value end
 function Rabbasca.surface_megawatts() return settings.startup["rabbasca-surface-megawatts"].value end
 function Rabbasca.get_warp_radius(quality) return math.min(160, 40 + (quality and quality.level or 0) * 5) end
 function Rabbasca.high_energy_device_threshold() return "3.75MW" end
+function Rabbasca.max_energy_device_threshold() return tostring(Rabbasca.surface_megawatts()).."MW" end
 function Rabbasca.alertness_modulation_step() return 10 end
 function Rabbasca.alertness_modulation_max() return 50 end
 
@@ -230,6 +231,14 @@ local function create_infused_thing_with_effect(original, extra_cost)
     if (not item) or item.hidden or not item.subgroup then return nil end
     local new = create_ears_entity(original)
     if not new then return end
+    if not extra_cost then
+        new.hidden = true
+        new.hidden_in_factoriopedia = true
+        new.placeable_by = nil
+        new.minable = original.minable
+        data:extend { new }
+        return new.name
+    end
     local new_item = table.deepcopy(item)
     new_item.name = new.name
     new_item.hidden_in_factoriopedia = true
@@ -278,6 +287,7 @@ end
 -- set prototype.no_ears_upgrade = true to skip ears variant creation
 -- should be called in data-updates or later to ensure crafter item exists
 function Rabbasca.create_ears_variant(thing, tech, extra_cost)
+    if thing.energy_source.type ~= "electric" then return end
     local new_thing = create_infused_thing_with_effect(thing, extra_cost)
     if new_thing and data.raw["technology"][tech] then
         local unlocks = data.raw["technology"][tech].effects
@@ -291,12 +301,12 @@ function Rabbasca.create_ears_variant(thing, tech, extra_cost)
 end
 
 function Rabbasca.make_complex_machinery(recipe)
-  if not recipe then return end
-  log("Add complex-machinery to categories of: "..recipe.name)
+  if not recipe then return false end
 
   -- if not defined, { "crafting" } is default. add explicitly so target still craftable by Hand / AM1-3
   recipe.categories = recipe.categories or { "crafting" }
   table.insert(recipe.categories, "complex-machinery")
+  return true
 end
 
 function Rabbasca.make_trigger_item(item, effect_id)
