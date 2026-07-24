@@ -34,3 +34,4 @@ require("scripts.not-on-my-lawn")
 require("scripts.machine-assembly-updates")
 
 require("compatibility.crushing-industry-updates")
+require("compatibility.carna-updates")
