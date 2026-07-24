@@ -246,6 +246,31 @@ data:extend {
     },
     {
         type = "recipe",
+        name = "rabbasca-explosives-from-energetic-residue",
+        categories = { "chemistry" },
+        energy_required = 4,
+        ingredients =
+        {
+            {type = "item", name = "carbon", amount = 5 },
+            {type = "item", name = "sulfur", amount = 6 },
+            {type = "fluid", name = "energetic-residue", amount = 20 },
+        },
+        results =
+        {
+            { type = "item", name = "explosives", amount = 2 }
+        },
+        allow_productivity = true,
+        icons = Rabbasca.icons({
+            { icon = "__base__/graphics/icons/explosives.png" },
+            { proto = data.raw["fluid"]["energetic-residue"], scale = 0.5, shift = { -8, -8 } }
+        }),
+        subgroup = "raw-material",
+        enabled = false,
+        order = "b[chemistry]-e[explosives]-r[rabbasca]",
+        crafting_machine_tint = data.raw["recipe"]["explosives"].crafting_machine_tint
+    },
+    {
+        type = "recipe",
         name = "ears-subcore-reactor-equipment",
         enabled = false,
         energy_required = 10,

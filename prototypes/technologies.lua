@@ -266,6 +266,27 @@ data:extend {
 },
 {
     type = "technology",
+    name = "rabbasca-explosives",
+    icons = Rabbasca.icons{{proto = data.raw["technology"]["explosives"] }},
+    prerequisites = { "athletic-science-pack", "military-science-pack", "chemical-science-pack" },
+    effects =
+    {
+      { type = "unlock-recipe", recipe = "rabbasca-explosives-from-energetic-residue" }
+    },
+    unit = {
+        count = 250,
+        time = 30,
+        ingredients = {
+            {"automation-science-pack", 1},
+            {"logistic-science-pack", 1},
+            {"chemical-science-pack", 1},
+            {"military-science-pack", 1},
+            {"athletic-science-pack", 1},
+        }
+    },
+},
+{
+    type = "technology",
     name = "energetic-residue",
     icon = "__rabbasca-assets__/graphics/recolor/icons/energetic-residue.png",
     icon_size = 64,
