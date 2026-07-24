@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.20.7
+Date: 2026-07-24
+  Changes:
+    - Radius indicator for quality warp pylons now shows the correct range
+    - [with k2so] Added recipe to craft coke from carbon and carotenoid
+    - [with k2so] Added recipe to extract rare metal ore from vaults
+---------------------------------------------------------------------------------------------------
 Version: 0.20.6
 Date: 2026-07-20
   Changes:
