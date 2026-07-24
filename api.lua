@@ -117,7 +117,6 @@ function Rabbasca.ears_flooring_rule(bbox)
     { 
         area = bbox, 
         required_tiles = { layers = { harene = true } },
-        colliding_tiles = { layers = { is_object = true } }, -- must not be empty??
         remove_on_collision = true 
     }
 end
