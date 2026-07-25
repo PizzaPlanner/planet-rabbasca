@@ -1,4 +1,18 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.21.0
+Date: 2026-07-25
+  Changes:
+    - Removed vault support requester in favor of a dormant version of vault protection pylon
+    - Dormant vault protection pylon turns into vault protection pylon when a threat is nearby, otherwise it stays around forever
+    - Updated visuals of vault protection pylons
+    - Added a recipe and technology for crafting explosives locally
+    - Bunnyhop engine on cooldown message now also shows current/max weight
+    - [with carna] Banned carnan spire on rabbasca and underground
+  Balancing:
+    - EARS variants are no longer craftable for machines with energy consumption higher than what the harenic energy field provides (30MW default)
+    - EARS variants of inserters consuming more than 3.75MW are now unlocked in EARS core 3 tech and cost the same as other variants unlocked from that tech
+    - Increased health loss of vault protection pylons (-35/s -> -120/s)
+---------------------------------------------------------------------------------------------------
 Version: 0.20.7
 Date: 2026-07-24
   Changes:
