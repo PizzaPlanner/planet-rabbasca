@@ -47,9 +47,8 @@ data:extend{
     type = "double-setting",
     name = "rabbasca-surface-megawatts",
     setting_type = "startup",
-    -- hidden = true,
     default_value = 30,
-    minimum_value = 0.01,
+    minimum_value = 10,
     maximum_value = 50000,
     allow_blank = false,
     order="a[balance]"
