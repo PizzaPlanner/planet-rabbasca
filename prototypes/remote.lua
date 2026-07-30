@@ -15,7 +15,7 @@ return {
     hide_from_stats = true,
     hide_from_signal_gui = true,
     hidden_in_factoriopedia = true,
-    energy_required = 0.5,
+    energy_required = 0.25,
     ingredients = { },
     results = { {type = "item", name = "rabbasca-warp-sequence", amount = 1, always_fresh = true } },
     main_product = "rabbasca-warp-sequence",
@@ -283,6 +283,9 @@ make_warp_sequence("rabbasca-warp-sequence-upgrade", data.raw["upgrade-item"]["u
     filename = "__rabbasca-assets__/graphics/textures/warp-smoke.png"
 },
 }
+
+local uplink = data.raw["logistic-container"]["rabbasca-warp-uplink"]
+PlanetsLib.create_planet_entity_variant("space-platform", uplink, { render_not_in_network_icon = false }, "rabbasca-entity-replacements")
 
 data:extend {
   {

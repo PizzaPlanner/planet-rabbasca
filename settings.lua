@@ -5,6 +5,15 @@ end
 data:extend{
   {
     type = "bool-setting",
+    name = "rabbasca-entity-replacements",
+    setting_type = "startup",
+    default_value = true,
+    hidden = true,
+    allow_blank = false,
+    order="x[compat]"
+  },
+  {
+    type = "bool-setting",
     name = "rabbasca-cap-bunnyhop-research",
     setting_type = "startup",
     default_value = false,

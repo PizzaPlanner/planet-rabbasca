@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.21.1
+Date: 2026-07-31
+  Changes:
+    - Warp inventory uplink no longer shows the "not in logistics network" warning when placed in space
+  Balancing:
+    - Reduced crafting time of non-warmup warp sequences (0.5s -> 0.25s)
+---------------------------------------------------------------------------------------------------
 Version: 0.21.0
 Date: 2026-07-25
   Changes:
