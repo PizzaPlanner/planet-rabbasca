@@ -39,7 +39,7 @@ local function create_variant_by_threshold(thing, low, high, max)
   local variant = Rabbasca.create_ears_variant(thing, setting.tech and "rabbasca-ears-technology-"..setting.tech, costs[setting.cost])
   if variant then 
     table.insert(devices[setting.level], thing.name)
-    return variant.name
+    return variant
   else
     table.insert(devices["skipped"], thing.name)
   end
