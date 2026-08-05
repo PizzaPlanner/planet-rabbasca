@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.21.3
+Date: 2026-08-05
+  Changes:
+    - Raised minimum factorio version to 2.1.13 and added adopted 2.1.13 api changes
+  Bugfixes:
+    - Added missing locale for controls.give-bunnyhop-engine
+---------------------------------------------------------------------------------------------------
 Version: 0.21.2
 Date: 2026-08-04
   Bugfixes:
