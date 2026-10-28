@@ -15,28 +15,19 @@ end
 vault.is_military_target = false
 
 Rabbasca.create_vault_recipe("rabbasca-core-extraction-protocol", {
+  icons = Rabbasca.icons({
+      { icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64 },
+      { proto = data.raw["virtual-signal"]["signal-explosion"], scale = 0.75, shift = { 6, 6 } }
+    }),
   ingredients = {
       { type = "item", name = "vault-security-key", amount = 100 },
       { type = "item",  name = "rabbasca-warp-core", amount = 10 },
+      { type = "item",  name = "explosives", amount = 250 },
   },
-  results = { 
-      { type = "item", name = "rabbasca-core-extraction-protocol", amount = 1, always_fresh = true, show_details_in_recipe_tooltip = false },
-  },
+  raise_on_crafted = true,
   energy_required = 60,
   allow_productivity = false,
   order = "z[effects]-z[bye]"
-})
-data:extend({
-    Rabbasca.make_trigger_item({
-      name = "rabbasca-core-extraction-protocol",
-      subgroup = "rabbasca-vault-extraction",
-      hidden = false,
-      order = "z[bye]",
-      icons = Rabbasca.icons({
-        { icon = "__Krastorio2Assets__/icons/entities/stabilizer-charging-station.png", icon_size = 64 },
-        { proto = data.raw["virtual-signal"]["signal-explosion"], scale = 0.75, shift = { 6, 6 } }
-      })
-    },"rabbasca_on_modulate_vault_security")
 })
 
 table.insert(data.raw["technology"]["rabbasca-quality-assurance"].effects, { type = "unlock-recipe", recipe = "rabbasca-core-extraction-protocol" })

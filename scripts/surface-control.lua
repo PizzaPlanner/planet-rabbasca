@@ -83,8 +83,20 @@ function output.register_alertable(entity)
     }
     storage.alertness_data.vaults[id] = { entity.surface, entity.position, visual }
   elseif entity.name == "rabbasca-vault-meltdown" then
+    entity.force = game.forces.rabbascans
     local id, _, _ = script.register_on_object_destroyed(entity)
-    storage.alertness_data.meltdowns[id] = { entity.surface, entity.position }
+    local visual = rendering.draw_arc {
+      min_radius = 0,
+      max_radius = 42,
+      color = { 1, 0.15, 0.0, 0.4 },
+      start_angle = -math.pi * 0.5,
+      angle = math.pi * 2,
+      target = { type = "entity", entity = entity },
+      surface = entity.surface,
+      only_in_alt_mode = false,
+      render_mode = "chart",
+    }
+    storage.alertness_data.meltdowns[id] = { entity.surface, entity.position, visual }
   end
   output.update_alertness(entity.surface, entity.position)
 end
@@ -227,6 +239,11 @@ end
 script.on_nth_tick(120, function(_)
   if not storage.alertness_data then return end
   for _, v in pairs(storage.alertness_data.vaults) do
+    if v[3] and v[3].valid and v[3].target.entity.valid then
+      v[3].angle = math.pi * (2 * (v[3].target.entity.get_health_ratio() or 1))
+    end
+  end
+  for _, v in pairs(storage.alertness_data.meltdowns) do
     if v[3] and v[3].valid and v[3].target.entity.valid then
       v[3].angle = math.pi * (2 * (v[3].target.entity.get_health_ratio() or 1))
     end

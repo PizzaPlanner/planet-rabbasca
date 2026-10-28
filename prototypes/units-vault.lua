@@ -291,9 +291,7 @@ local defender_spawny = {
         type = "instant",
         source_effects =
         {
-          { type = "script", effect_id = "rabbasca_init_dormant_pylon", repeat_count = 1 },
-          { type = "create-entity", entity_name = "vault-defender-3", offset_deviation = {{-12, -12}, {12, 12}}, repeat_count = 3 },
-          { type = "create-entity", entity_name = "vault-defender-heavy", offset_deviation = {{-7, -7}, {7, 7}}, repeat_count = 2 },
+          { type = "script", effect_id = "rabbasca_init_dormant_pylon" },
         }
       }
     },
@@ -424,8 +422,69 @@ defender_3.attack_parameters = {
   }
 }
 
+
+local defender_panicky = {
+    type = "unit",
+    name = "rabbasca-vault-panic-dummy",
+    -- icon = "__rabbasca-assets__/graphics/by-hurricane/conduit-icon-2.png",
+    -- icon_size = 64,
+    hidden = true,
+    subgroup = "enemies",
+    order = "r[rabbasca]-dx",
+    flags = { "not-on-map", "not-repairable" },
+    max_health = 10,
+    movement_speed = 0,
+    distance_per_frame = 0,
+    distraction_cooldown = 3 * second,
+    vision_distance = 10,
+    has_belt_immunity = true,
+    min_pursue_time = 10 * second,
+    max_pursue_distance = 12,
+    call_for_help_radius = 16,
+    collision_box = {{-0.8, -0.8},{0.8, 0.8}},
+    selection_box = {{-1, -1},{1, 1}},
+    run_animation = { 
+      filename = "__core__/graphics/empty.png",
+      priority = "very-low",
+      height = 1,
+      width = 1,
+    },
+    attack_parameters = util.merge {
+      vault_distractor.attack_parameters,
+      {
+        range = 7,
+        damage_modifier = 0,
+        animation = { 
+          filename = "__core__/graphics/empty.png",
+          priority = "very-low",
+          height = 1,
+          width = 1,
+        }
+      }
+    },
+    ai_settings = {
+      join_attacks = false
+    },
+    created_effect = {
+      type = "direct",
+      action_delivery =
+      {
+        type = "instant",
+        source_effects =
+        {
+          { type = "create-entity", entity_name = "big-strafer-pentapod", as_enemy = true, probability = 0.06, offset_deviation = { {-12, -12}, {12, 12} } },
+          { type = "create-entity", entity_name = "big-stomper-pentapod", as_enemy = true, probability = 0.02, offset_deviation = { {-12, -12}, {12, 12} } },
+          { type = "create-entity", entity_name = "behemoth-biter", as_enemy = true, probability = 0.1, offset_deviation = { {-8, -8}, {8, 8} } },
+          { type = "create-entity", entity_name = "behemoth-spitter", as_enemy = true, probability = 0.1, offset_deviation = { {-8, -8}, {8, 8} } },
+          { type = "create-entity", entity_name = "rabbasca-warp-grenade-fissure", as_enemy = false, probability = 0.61, offset_deviation = { {-16, -16}, {16, 16} }, repeat_count = 3, repeat_count_deviation = 2 },
+          { type = "damage", damage = {amount = 500000, type = "electric"} } -- self destruct
+        }
+      }
+    },
+}
+
 data:extend{
-  vault_distractor, 
+  vault_distractor, defender_panicky,
   defender_1, defender_2, defender_3, defender_spawny,
   defender_heavy, defender_ouchy
 }

@@ -35,13 +35,6 @@ local function handle_script_events(event)
     if not recipe then return end
     if recipe.name == "rabbasca-quality-assurance" then
       rutil.upgrade_vault_quality(from, quality)
-    elseif recipe.name == "rabbasca-core-extraction-protocol" then
-      from.force.set_script_visible({ type = "tile", name = "harenic-lava" }, true)
-      local consoles = from.surface.find_entities_filtered{ name = { "rabbasca-vault-spawner", "rabbasca-vault-console" }, area = from.bounding_box }
-      for _, console in pairs(consoles) do
-        console.destroy { }
-      end
-      from.die(from.force, from)
     else
       local max = Rabbasca.alertness_modulation_max() / Rabbasca.alertness_modulation_step()
       local offset = recipe.name == "rabbasca-security-modulation-up" and 1 or -1
@@ -85,6 +78,7 @@ local function handle_script_events(event)
     local pos = { x = from.position.x + math.random(-8, 8), y = from.position.y + math.random(-12, 4) } -- seems to always spawn below, so randomize upwards
     pos = from.surface.find_non_colliding_position("rabbasca-vault-warp-spawner", pos, 6, 1, true)
     if pos then from.teleport(pos) end
+    from.force = game.forces.rabbascans -- will not inherit force when created via trigger
   elseif effect_id == "rabbasca_summon_pylon_grid_aligned" then
     local pos = event.source_entity and event.source_entity.position
     if not pos then return end
@@ -144,6 +138,22 @@ local function on_pylon_capture_ended(id)
 end
 
 script.on_event(defines.events.on_script_trigger_effect, handle_script_events)
+
+script.on_event(prototypes.recipe["rabbasca-core-extraction-protocol"].on_crafted_event, function(event)
+  local force = event.entity.force
+  local quality = event.entity.quality
+    force.set_script_visible({ type = "tile", name = "harenic-lava" }, true)
+    local consoles = event.entity.surface.find_entities_filtered{ name = { "rabbasca-vault-spawner", "rabbasca-vault-console" }, area = event.entity.bounding_box }
+    for _, console in pairs(consoles) do
+      console.destroy { }
+    end
+    event.entity.die(force, event.entity)
+    if quality and quality.level >= 5 then
+      for _, player in pairs(force.connected_players) do
+        player.unlock_achievement("rabbasca-meltdown")
+      end
+    end
+end)
 
 script.on_event(defines.events.on_object_destroyed, function(event)
   if event.type == defines.target_type.entity then

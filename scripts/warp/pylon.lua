@@ -283,6 +283,11 @@ local function try_build_ghost(data, name, quality, inventory, pylon)
     end
     local size = { bbox.right_bottom.x - bbox.left_top.x, bbox.right_bottom.y - bbox.left_top.y }
     play_smoke(surface, position, math.max(size[1], size[2]))
+    if name == "rabbasca-warp-pylon" then
+        for _, player in pairs(pylon.force.connected_players) do
+            player.unlock_achievement("rabbasca-build-more-pylons")
+        end
+    end
     return true, status_ok
 end
 

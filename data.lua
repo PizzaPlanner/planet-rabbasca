@@ -15,6 +15,7 @@ require("prototypes.technologies")
 require("prototypes.equipment")
 require("prototypes.tips-and-tricks")
 require("prototypes.ambient-sounds")
+require("prototypes.achievements")
 
 if mods["any-planet-start"] then
     APS.add_planet{

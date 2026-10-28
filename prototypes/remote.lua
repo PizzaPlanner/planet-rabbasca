@@ -157,6 +157,7 @@ data:extend {
     module_slots = 7,
     allowed_effects = { "speed" },
     allowed_module_categories = { "rabbasca-speedup" },
+    match_animation_speed_to_activity = false,
     effect_receiver = { 
       uses_beacon_effects = false,
       uses_module_effects = true,
@@ -166,8 +167,14 @@ data:extend {
       {
         inventory_index = defines.inventory.crafter_modules,
         max_icons_per_row = 7,
-        max_icon_rows = 2,
+        max_icon_rows = 1,
         scale = 0.25
+      },
+      {
+        inventory_index = defines.inventory.crafter_trash,
+        max_icons_per_row = 4,
+        max_icon_rows = 1,
+        scale = 0.25,
       }
     },
     surface_conditions = {

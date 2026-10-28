@@ -35,3 +35,4 @@ require("scripts.machine-assembly-updates")
 
 require("compatibility.crushing-industry-updates")
 require("compatibility.carna-updates")
+require("compatibility.tellus-updates")

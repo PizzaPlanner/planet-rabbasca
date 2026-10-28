@@ -11,11 +11,6 @@ for _, quality in pairs(data.raw["quality"]) do
   warp_pylon.custom_tooltip_fields[1].quality_values[quality.name] = {"tooltip-value.rabbasca-warp-pylon-range", tostring(Rabbasca.get_warp_radius(quality) * 2)}
 end
 
-local vault_core = data.raw["unit-spawner"]["rabbasca-vault-meltdown"]
-for _, damage in pairs(data.raw["damage-type"]) do
-  table.insert(vault_core.resistances, { type = damage.name, percent = 100 })
-end
-
 data.raw["recipe"]["rabbasca-warp-pylon-recycling"].hidden = false
 data.raw["recipe"]["rabbasca-warp-pylon-recycling"].hidden_in_factoriopedia = false
 data.raw["recipe"]["rabbasca-warp-pylon-recycling"].hide_from_player_crafting = true

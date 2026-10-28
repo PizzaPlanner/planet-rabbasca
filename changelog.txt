@@ -1,4 +1,21 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.24.0
+Date: 2026-10-28
+  Changes:
+    - Added 3 achievements
+    - Exposed vault cores now spawn with four protection pylons
+    - Exposed vault cores are no longer invulnerable to damage
+    - Exposed vault cores now also spawn warp core anomaly leakages
+    - Creatures spawned by vault cores are now hostile and will fight players and rabbascan defenses
+    - [with tellus] exposed vault cores can now also spawn behemoth wasps
+    - Raised minimum factorio version to 2.1.24
+  Bugfixes:
+    - Warp pylon animation no longer speeds up alongside the crafting speed
+  Balancing:
+    - Core extraction protocol recipe now also takes 250 explosives
+    - Reduced health loss of exposed vault cores (-1000/s -> -10/s)
+    - Vault protection pylons no longer spawn with 5 extra defenders
+---------------------------------------------------------------------------------------------------
 Version: 0.23.2
 Date: 2026-10-19
   Changes:

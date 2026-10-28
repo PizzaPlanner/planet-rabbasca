@@ -288,9 +288,7 @@ local vault_crafter = {
   dying_trigger_effect = {
     type = "create-entity",
     entity_name = "rabbasca-vault-meltdown",
-    as_enemy = true,
     ignore_no_enemies_mode = true,
-    protected = true,
   }
 }
 
@@ -381,6 +379,18 @@ pylon.graphics_set =
     },
 }}
 
+local cb_graphics = { 
+  filename = "__rabbasca-assets__/graphics/textures/hack.png", 
+  width = 882 / 7,
+  height = 819 / 7,
+  line_length = 7,
+  frame_count = 48,
+  scale = 0.5,
+  draw_as_glow = true, 
+  blend_mode = "additive",
+  tint = { 1, 0, 0 }
+}
+
 local vault_core = util.merge{ 
   table.deepcopy(pylon), 
 {
@@ -392,9 +402,10 @@ local vault_core = util.merge{
   hidden = true,
   hidden_in_factoriopedia = true,
   max_health = 3000, -- Will always be *10 due to forced max evolution
-  healing_per_tick = -1000 / second,
-  spawning_cooldown = {0.3 * second, 0.3 * second},
+  healing_per_tick = -10 / second,
+  spawning_cooldown = {0.85 * second, 0.85 * second},
   max_count_of_owned_units = 64,
+  max_count_of_owned_defensive_units = 12,
   max_friends_around_to_spawn = 128,
   spawning_radius = 8,
   collision_box = {{-0.4, -0.4},{0.4, 0.4}},
@@ -430,22 +441,36 @@ vault_core.created_effect = {
         ignore_no_enemies_mode = true,
       }
     },
+    {
+      type = "instant",
+      source_effects = {
+        type = "create-entity",
+        entity_name = "rabbasca-vault-warp-spawner-inactive",
+        offsets = { {-10, -10}, {-10, 10}, {10, -10}, {10, 10} },
+      }
+    },
   }
 }
 vault_core.dying_trigger_effect = require("__planet-rabbasca__.prototypes.meltdown")
-vault_core.resistances = { } -- filled later
+vault_core.resistances = { { type = "impact", percent = -400 }, { type = "physical", percent = -150 }, { type = "explosion", percent = 98 }  }
+vault_core.attack_reaction = { range = 255, action = { 
+  type = "direct",
+  action_delivery =
+  {
+    type = "instant",
+    target_effects =
+    { 
+      type = "create-entity", 
+      entity_name = "rabbasca-vault-panic-dummy", 
+      as_enemy = false, 
+      offset_deviation = { {-8, -8}, {8, 8} },
+      probability = 0.22
+    },
+  } } 
+}
 vault_core.result_units = {
-{ unit = "big-strafer-pentapod", spawn_points = {
-  {evolution_factor = 0, spawn_weight = 0.3},
-  }},
-{ unit = "big-stomper-pentapod", spawn_points = {
-  {evolution_factor = 0, spawn_weight = 0.3},
-  }},
-{ unit = "behemoth-biter", spawn_points = {
-  {evolution_factor = 0, spawn_weight = 0.3},
-  }},
-{ unit = "behemoth-spitter", spawn_points = {
-    {evolution_factor = 0, spawn_weight = 0.3},
+{ unit = "rabbasca-vault-panic-dummy", spawn_points = {
+  {evolution_factor = 0, spawn_weight = 1}, -- Spawn other units as members of enemy faction
   }},
 }
 vault_core.graphics_set = {
@@ -454,7 +479,7 @@ vault_core.graphics_set = {
     {
       {
           filename = "__rabbasca-assets__/graphics/by-hurricane/conduit-emission.png",
-          frame_count = 60,
+          frame_count = 48,
           line_length = 10,
           width = 200,
           height = 290,
@@ -464,20 +489,17 @@ vault_core.graphics_set = {
           shift = {0, -0.5},
           tint = {1.0, 0, 0}
       },
+      util.merge {
+        cb_graphics,
+        { shift = { 0, 0 }, blend_mode = "additive-soft", scale = 2.5, animation_speed = 2 }
+      },
+      util.merge {
+        cb_graphics,
+        { shift = { 0, 0 }, blend_mode = "additive-soft", scale = 2, run_mode = "backward", animation_speed = 2.5 }
+      },
     },
 }}
 
-local cb_graphics = { 
-  filename = "__rabbasca-assets__/graphics/textures/hack.png", 
-  width = 882 / 7,
-  height = 819 / 7,
-  line_length = 7,
-  frame_count = 48,
-  scale = 0.5,
-  draw_as_glow = true, 
-  blend_mode = "additive",
-  tint = { 1, 0, 0 }
-}
 local capture_bot ={
   type = "capture-robot",
   icon = "__Krastorio2Assets__/icons/cards/optimization-tech-card.png",
