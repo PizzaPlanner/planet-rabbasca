@@ -4,7 +4,8 @@ Rabbasca = {
     bunnyhop = { },
     warpers = helpers.stage == "runtime" and prototypes.mod_data["rabbasca-warpers"].data,
     warper_names = helpers.stage == "runtime" and { pylons = { }, uplinks = { } },
-    events = helpers.stage == "runtime" and require("__planet-rabbasca__.scripts.event_handler_plus")
+    events = helpers.stage == "runtime" and require("__planet-rabbasca__.scripts.event_handler_plus"),
+    ears_variants = helpers.stage == "prototype" and { }
 }
 
 if helpers.stage == "runtime" then
@@ -243,12 +244,6 @@ local function create_infused_thing_with_effect(original, extra_cost)
     if (not item) or item.hidden or not item.subgroup then return nil end
     local new = create_ears_entity(original)
     if not new then return end
-    -- RenaiTransportation looks up a thrower's range by entity name (mod-data "RTRealRange<name>"):
-    -- without its own entry the copy crashes Renai when built
-    local range = data.raw["mod-data"] and data.raw["mod-data"]["RTRealRange" .. original.name]
-    if range then
-        data:extend { { type = "mod-data", name = "RTRealRange" .. new.name, data = table.deepcopy(range.data) } }
-    end
     if not extra_cost then
         new.hidden = true
         new.hidden_in_factoriopedia = true
@@ -321,6 +316,12 @@ function Rabbasca.create_ears_variant(thing, tech, extra_cost)
             recipe = new_thing.."-recycling",
             hidden = true
         })
+    end
+    if new_thing then 
+        Rabbasca.ears_variants[thing.name] = {
+            name = new_thing,
+            type = thing.type
+        }
     end
     return new_thing
 end

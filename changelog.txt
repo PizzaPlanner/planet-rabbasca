@@ -8,6 +8,8 @@ Date: 2026-10-29
   Bugfixes:
     - Fixed bunnyhop return points would reset on character death
     - Fixed the range to check whether character collides with anything near the return point being too small
+    - Fixed planet discovery tech icon missing a shadow (Thanks MeteorSwarm)
+    - [with RenaiTransportation] Fixed crash when placing EARS variant of a thrower and them being nonfunctional (Thanks GreenTech-Solutions)
 ---------------------------------------------------------------------------------------------------
 Version: 0.24.0
 Date: 2026-10-28

@@ -39,6 +39,7 @@ biochamber.energy_source.burnt_inventory_size = biochamber.energy_source.burnt_i
 require("scripts.create-ears-variants")
 require("scripts.warp.pylon-radar-dummies-final-fixes")
 
+require("__planet-rabbasca__.compatibility.renai-final-fixes")
 require("__planet-rabbasca__.compatibility.vesta-final-fixes")
 require("__planet-rabbasca__.compatibility.muluna-final-fixes")
 require("__planet-rabbasca__.compatibility.pelagos-final-fixes")
