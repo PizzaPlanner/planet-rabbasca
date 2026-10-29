@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.24.1
+Date: 2026-10-29
+  Changes:
+    - When leaving a planet via rocket silo, the silo's position will be used as return point for the bunnyhop engine
+    - When the bunnyhop engine has no return point for a planet yet, it will jump to the location of a cargo landing pad if one exists
+    - Added command /rabbasca_list_bunnyhop_targets
+  Bugfixes:
+    - Fixed bunnyhop return points would reset on character death
+    - Fixed the range to check whether character collides with anything near the return point being too small
+---------------------------------------------------------------------------------------------------
 Version: 0.24.0
 Date: 2026-10-28
   Changes:

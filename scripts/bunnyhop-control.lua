@@ -105,6 +105,13 @@ function M.clear_bunnyhop_ui(player)
     M.register_bunnyhop_handler()
 end
 
+local function get_hop_data(player)
+  local pid = player.index
+  storage.last_bunnyhops = storage.last_bunnyhops or { }
+  storage.last_bunnyhops[pid] = storage.last_bunnyhops[pid] or {}
+  return storage.last_bunnyhops[pid]
+end
+
 local function get_max_range_and_weight(force)
   local all_techs = force.technologies
   local range = 0
@@ -184,40 +191,43 @@ local function on_charge_bunnyhop(event)
 
     if not planet or not game.planets[planet] then return end
 
-    local surface = game.planets[planet].surface or game.planets[planet].create_surface()
-    if not surface then return end
-    local cid = character.unit_number
-    storage.last_bunnyhops = storage.last_bunnyhops or { }
-    storage.last_bunnyhops[cid] = storage.last_bunnyhops[cid] or {}
-    storage.last_bunnyhops[cid][character.surface_index] = character.position
-    storage.last_bunnyhops[cid]["next_cooldown"] = settings.global["rabbasca-bunnyhop-cooldown"].value * 60 + game.tick
+    local to_surface = game.planets[planet].surface or game.planets[planet].create_surface()
+    if not to_surface then return end
+    local last_hops = get_hop_data(player)
+    last_hops[character.surface_index] = character.position
+    last_hops["next_cooldown"] = settings.global["rabbasca-bunnyhop-cooldown"].value * 60 + game.tick
 
-    local offset = storage.last_bunnyhops[cid][surface.index]
-    if not (offset and offset.x and offset.y) then offset = {x = 0, y = 0} end
-    local radius = 3
-    if not surface.is_chunk_generated({ offset.x / 32, offset.y / 32 }) then
-      surface.request_to_generate_chunks(offset, radius / 32)
-      surface.force_generate_chunk_requests()
+    local offset = last_hops[to_surface.index]
+    if not offset then 
+      for _, e in pairs(to_surface.find_entities_filtered{ name = "cargo-landing-pad", force = character.force }) do
+        offset = (e.valid and e.position) or offset
+      end
     end
-    local start_pos = surface.find_non_colliding_position("character", offset, radius, 1) or {x = 0, y = 0}
+    offset = offset or { x = 0, y = 0 }
+    local radius = 3
+    if not to_surface.is_chunk_generated({ offset.x / 32, offset.y / 32 }) then
+      to_surface.request_to_generate_chunks(offset, radius)
+      to_surface.force_generate_chunk_requests()
+    end
+    offset = to_surface.find_non_colliding_position("character", offset, radius * 16, 1)
     
-    -- Teleport player
-    if not player.teleport(start_pos, surface) then 
+    if offset and player.teleport(offset, to_surface) then
+      last_hops[to_surface.index] = offset
+    else
       player.print({"rabbasca-extra.bunnyhop-error"})
     end
 end
 
 function M.attempt_bunnyhop(player)
     if not player.character then return end
-    local cid = player.character.unit_number
-    local last_hops = storage.last_bunnyhops and storage.last_bunnyhops[cid] or { }
+    local last_hops = get_hop_data(player)
     local cooldown_until = last_hops["next_cooldown"] or 0
     local armor = player.get_inventory(defines.inventory.character_armor)[1]
     if armor and armor.valid_for_read and armor.grid then
       for _, eq in pairs(armor.grid.equipment) do
         if eq.name == "bunnyhop-engine-equipment" then
           if cooldown_until > game.tick then
-            local seconds = math.ceil((storage.last_bunnyhops[cid]["next_cooldown"] - game.tick) / 60)
+            local seconds = math.ceil((cooldown_until - game.tick) / 60)
             local max_range, max_weight = get_max_range_and_weight(player.force)
             max_weight = max_weight * (eq.quality.default_multiplier or 1)
             local _, weight = get_character_weight_label(player.character, max_weight)
@@ -288,5 +298,26 @@ function M.show_bunnyhop_ui(player, equipment)
     recalc_bunnyhoppers()
     M.register_bunnyhop_handler()
 end
+
+script.on_event(defines.events.on_rocket_launch_ordered, function(event)
+  if not event.player_index then return end
+  local player = game.players[event.player_index]
+  if not player then return end
+  local last_hops = get_hop_data(player)
+  last_hops[event.rocket_silo.surface_index] = event.rocket_silo.position
+  game.print(serpent.block(storage.last_bunnyhops))
+end)
+
+commands.add_command("rabbasca_list_bunnyhop_targets", nil, function(command)
+    local player = game.get_player(command.player_index)
+    if not player then return end
+    player.print("[shortcut=activate-bunnyhop-engine] targets:")
+    for key, value in pairs(get_hop_data(player)) do
+      local surface = game.get_surface(key)
+      if key ~= "next_cooldown" and surface then
+        player.print(string.format("[gps=%d,%d,%s]", value.x or 0, value.y or 0, surface.name))
+      end
+    end
+end)
 
 return M
